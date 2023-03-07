@@ -33,4 +33,7 @@ Contents
 ### Sign up
 - As an unregistered and unauthorized user, I want the ability to sign up for the website by utilizing a sign-up form.
   - When I am on the `sign-up` page:
-  - I would like to be prompted to enter my first-name, last-name, username, email, and password in a well-formatted sign-up form.
+    - I would like to be prompted to enter my first-name, last-name, username, email, and password in a well-formatted sign-up form.
+    - I would like to be logged in upon successful sign-up so that I can access all of the site's features.
+  - When I enter invalid data into the sign-up form:
+    - I would like the form to show me which validations I've failed to meet.
