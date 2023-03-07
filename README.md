@@ -9,6 +9,9 @@ Contents
 - [Feature List](#feature-list)
 - [User Stories](#user-stories)
 
+## Database Diagram
+![database diagram](dbdiagram.png)
+
 ## Feature List
 - **Users:**
   - Users can sign up, log in, and log out.
