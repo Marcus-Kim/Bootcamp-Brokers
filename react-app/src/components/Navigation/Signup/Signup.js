@@ -3,14 +3,40 @@ import Chart from './darkgreenchart.PNG'
 import './Signup.css'
 import { useMenu } from '../../../context/MenuContext'
 import { NavLink } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { signUp } from '../../../store/session'
+import { useNavigate } from 'react-router-dom'
 
 export default function Signup() {
-  const [firstName, setFirstName] = useState("")  
-  const [lastName, setLastName] = useState("")
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const sessionUser = useSelector((state) => state.session.user)
+
+  const [name, setName] = useState("")
   const { menuOpen } = useMenu()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [errors, setErrors] = useState([])
 
+  // if (sessionUser) navigate("/home")
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (password === confirmPassword) {
+      const data = await dispatch(signUp(name, email, password));
+      if (data) {
+        setErrors(data)
+        if (!errors) {
+          navigate("/home")
+        }
+        }
+    } else {
+        setErrors(['Confirm Password field must be the same as the Password field']);
+    }
+  };
+    
+  
 
   return (
     <>
@@ -25,27 +51,22 @@ export default function Signup() {
           <img className="darkgreen-chart" src={Chart} alt="" />
       </div>
       <div className = "right-signup">
-        <h3>Enter Your first and last name as they appear on your government ID.</h3>
-        <form className='signup-form' action="">
+        <h3>Enter your information as they appear on your government ID</h3>
+        <form className='signup-form' onSubmit={handleSubmit} action="">
+          <ul>
+          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+          </ul>
           <div >
 
           </div>
             <span>
-            <input
-                className="first-last" 
-                type="text" 
-                placeholder="First name"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                />
             <input 
-                className="first-last" 
-                style={{marginLeft: 10}}
+                className="signup-email"
                 type="text" 
-                placeholder="Last name"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-            />
+                placeholder="Full Name"
+                value={name}
+                onChange={(e => setName(e.target.value))}
+                />
             </span>
             <div>
                 <input 
@@ -66,13 +87,23 @@ export default function Signup() {
                 onChange={(e) => setPassword(e.target.value)}
                 />
             </div>
+
+            <div>
+                <input 
+                className="signup-email"
+                type="password" 
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+            </div>
             
             <div className="already-started">
             <p>Already started?</p>
             <NavLink to="/login" style={{fontWeight: 'bold'}}>Log in to complete your application</NavLink>
             </div>
             <div>
-            <button className="submit-signup">Continue</button>
+            <button type="submit" className="submit-signup">Continue</button>
             </div>
             
 

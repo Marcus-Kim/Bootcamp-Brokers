@@ -3,8 +3,11 @@ import logo from './logo.png'
 import { NavLink } from 'react-router-dom'
 import './UserHomePage.css'
 import UserHomePage from './UserHomePage'
+import { useSelector, useDispatch } from 'react-redux'
 
 export default function UserHomePageNav() {
+    
+
     return (
     <>
         <div className="homepage-navigationcontainer">

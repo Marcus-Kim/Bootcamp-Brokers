@@ -4,12 +4,41 @@ import './Login.css'
 import { useNavigate } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import { useMenu } from '../../../context/MenuContext'
+import { useDispatch } from 'react-redux'
+import { login } from '../../../store/session'
+import { ErrorResponse } from '@remix-run/router'
 
 export default function Login() {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [errors, setErrors] = useState([])
   const { menuOpen } = useMenu()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const data = await dispatch(login(email, password));
+    if (data) {
+        setErrors(data)
+    } 
+    navigate("/home")
+  }
+
+  useEffect(() => {
+    const errors = [
+        "Email must have at least 4 characters and be no more than 30 characters",
+        "Email must be a valid email",
+        "Password is required"
+    ]
+
+    if (email.length > 4) errors.splice(errors.indexOf("Email must have at least 4 characters and be no more than 30 characters"), 1)
+    if (email.includes('@') || email.includes('.com')) errors.splice(errors.indexOf("Email must be a valid email"), 1)
+    if (password.length > 0) errors.splice(errors.indexOf("Password is required"), 1)
+
+    setErrors(errors)
+
+  }, [email, password])
 
 
   return (
@@ -19,7 +48,10 @@ export default function Login() {
         <div className='login-rightcontainer'>
             <div style={{marginLeft: '5%'}}>
             <h2 style={{fontFamily: 'Montserrat'}}>Log in to Bootcamp Brokers</h2>
-            <form >
+            <ul>
+            {(errors.map((error, idx) => <li key={idx}>{error}</li>))}
+            </ul>
+            <form onSubmit={handleSubmit} >
                 <label 
                 style={{display: 'block', fontFamily: 'sans-serif', fontSize: '13px', marginBottom: '10px'}} 
                 htmlFor="email"
@@ -59,7 +91,7 @@ export default function Login() {
                 Keep me logged in for up to 30 days
                 </label>
 
-                <button className="login-button">Log In</button>
+                <button type="submit" className="login-button">Log In</button>
                 
                 <button style={{marginLeft: '30px'}} onClick={() => navigate("/home")} className="login-button">Demo User</button>
 
