@@ -2,8 +2,11 @@ import React, {useState, useEffect} from 'react'
 import './ChatBubble.css'
 import Bubble from './chat.png'
 
+
+
 const { Configuration, OpenAIApi } = require("openai");
-const openaiApiKey = process.env.OPENAI_API_KEY;
+const openaiApiKey = process.env.OPENAI_API_KEY || "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"
+
 const configuration = new Configuration({
   apiKey: openaiApiKey,
 });
@@ -15,6 +18,7 @@ export default function ChatBubble() {
     const [inputValue, setInputValue] = useState("")
     const currentDate = new Date().toLocaleDateString
     const [isModalOpen, setIsModalOpen] = useState(false);
+    
 
     const handleChatClick = () => {
       setIsModalOpen(true);
@@ -25,6 +29,7 @@ export default function ChatBubble() {
     };
 
     const sendMessage = async(chatHistory) => {
+
         // add the user's message to the chat log array
         setChatHistory((prevMessages) => [
             ...prevMessages, 
@@ -33,7 +38,7 @@ export default function ChatBubble() {
                 isUser: true
             }
         ]);
-    
+
         const headers = {
             "Content-Type": "application/json",
             "User-Agent": "OpenAI-API-Client",

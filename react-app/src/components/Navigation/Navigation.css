@@ -70,6 +70,7 @@
     gap: 15px;
     justify-content: flex-end;
     width: fit-content;
+    margin-right: 10px;
 }
 
 .right-sidebuttons {
