@@ -1,7 +1,195 @@
-.profile-dropdown {
-  position: absolute;
+.name-logo-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    border-right: solid;
+    border-width: 1px;
 }
 
-.hidden {
-  display: none;
+.nav-font {
+    color: black;
+    font-family: sans-serif;
+    font-size: 18px;
+    text-decoration: none;
 }
+
+.nav-font:hover {
+    color: #28C02C;
+    cursor: pointer;
+}
+
+.nav-link {
+    align-items: center;
+    align-content: center;
+    background-color: white;
+    border-bottom: solid 1px black;
+    display: flex;
+    justify-content: space-between;
+    line-height: 65px;
+    padding-left: 1.5%;
+    padding-right: 1.5%;
+    position: fixed;
+    width: 97vw;
+    top: 0px;
+    z-index: 999;
+}
+
+.leftside-nav {
+    display: flex;
+    gap: 20px;
+}
+
+#login {
+    background-color: white;
+    border-width: 1px;
+    color: black;
+}
+
+.logo {
+    align-items: center;
+    background: none;
+    display: flex;
+    height: 65px;
+    width: 65px;
+    justify-content: center;
+}
+
+.logo:hover {
+    /* background: #28C02C; */
+}
+
+.past-vertical {
+    display: flex;
+    gap: 20px;
+}
+
+.rightside-nav {
+    align-items: center;
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    width: fit-content;
+    margin-right: 10px;
+}
+
+.right-sidebuttons {
+    border: 2px solid rgb(0,0,0);
+    border-radius: 24px;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-weight: bold;
+    height: 44px;
+    width: 102px;
+}
+
+#signup {
+    background-color: black;
+    color: white;
+    margin-left: 10px;
+}
+
+/* ------- HAMBURGER MENU w/ animations ------- */
+
+.burger {
+    display: none;
+    outline: none;
+    height: 30px;
+    width: 30px;
+    border: 0px;
+    margin: 0 24px;
+    background: transparent;
+    transition: all 250ms ease-out;
+    cursor: pointer;
+}
+  
+.burger:before, .burger:after {
+    content: '';
+    width: 30px;
+    height: 2.4px;
+    position: absolute;
+    background: #1a1a1a;
+    transition: all 250ms ease-out;
+    will-change: transform;
+}
+  
+.burger:before {
+    transform: translateY(6.5px);
+}
+  
+.burger:after {
+    transform: translateY(-6.5px);
+}
+
+#top-bar,
+#bottom-bar {
+  height: 3px;
+  width: 30px;
+  background-color: black;
+}
+
+#top-bar {
+  margin-bottom: 10px;
+}
+  
+/* line transition  */
+  
+.active.burger:before {
+    transform: translateY(0) rotate(45deg);
+}
+  
+.active.burger:after {
+    transform: translateY(0) rotate(-45deg);
+} 
+
+@media screen and (max-width: 1024px) {
+    .nav-font {
+        display: none;
+    }
+  
+    #login {
+        display: none;
+    }
+
+    .logo {
+      border-right: unset
+    }
+  
+    .burger {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 0 24px;
+    }
+  
+    .login-and-signup {
+      display: none;
+    }
+  }
+  
+  .dropdown {
+    color: #000000;
+    display: flex;
+    flex-direction: column;
+    font-size: 36px;
+    font-family: "Capsule Sans Text",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-weight: 350;
+    font-stretch: normal;
+    line-height: 34px;
+    margin: 80px 30px ;
+    text-decoration: none;
+  }
+
+  .dropdown > a {
+    font-weight: 300;
+    margin-top: 15px;
+    padding: 5px 0px;
+    text-decoration: none;
+  }
+  
+  .dropdown > a:hover {
+    color: #28C02C;
+  }
+  
+
+

@@ -1,0 +1,59 @@
+
+.left-loginpicture {
+    flex: 1 1 50%;
+    height: 100vh;
+    object-fit: cover;
+    overflow: hidden;
+    width: 50%;
+}
+
+.login-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100vh;
+    
+}
+
+.right-login {
+    display: flex;
+    justify-content: start;
+    
+}
+
+.login-rightcontainer {
+    display: flex;
+    flex: 1 1 50%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    margin-bottom: 200px;
+}
+
+.login-input {
+    display: 'block';
+    width: 450px;
+    border: 1px solid lightgray;
+    border-radius: 6px;
+    height: 30px;
+}
+
+.login-button {
+    margin-top: 40px;
+    margin-bottom: 30px;
+    height: 44px;
+    width: 132px;
+    line-height: 20px;
+    background-color: black;
+    color: white;
+    border-radius: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Hidden class toggle must be at bottom of this stylesheet to override other rules */
+
+.hidden {
+    display: none;
+}

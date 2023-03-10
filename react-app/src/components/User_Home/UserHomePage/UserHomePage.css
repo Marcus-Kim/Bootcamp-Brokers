@@ -1,0 +1,20 @@
+.homepage-navigationcontainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.homepage-rightcontainer {
+    display: flex;
+    gap: 30px;
+    margin-right: 3%;
+}
+
+.home-nav {
+    text-decoration: solid;
+    font-size: 13px;
+    font-weight: 400;
+    font-family: sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+}

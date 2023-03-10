@@ -1,0 +1,41 @@
+.stock-page-main-container {
+    margin-top: 100px;
+    margin-left: 300px;
+    width: 650px;
+}
+
+.key-stats-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.key-stat-title-div {
+    padding: 20px 0 20px  0;
+    border-bottom: solid black 1px;
+    font-size: 20pt;
+
+}
+
+.stat-value-container {
+    display: grid;
+    grid-gap: 15px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.purchase-container {
+    position: fixed;
+    width: 270px;
+    height: 400px;
+    border: solid 1px black;
+    top: 100px;
+    right: 150px;
+    border-radius: 5px;
+    background-color: rgb(30,33,35);
+}
