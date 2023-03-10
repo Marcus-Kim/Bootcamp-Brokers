@@ -4,8 +4,6 @@ import Bubble from './chat.png'
 import dotenv from 'dotenv';
 dotenv.config({ path: '../../../../.env' });
 
-
-
 const { Configuration, OpenAIApi } = require("openai");
 const openaiApiKey = process.env.OPENAI_API_KEY
 
