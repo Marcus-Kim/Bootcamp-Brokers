@@ -5,7 +5,7 @@ import Bubble from './chat.png'
 
 
 const { Configuration, OpenAIApi } = require("openai");
-const openaiApiKey = process.env.OPENAI_API_KEY || "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"
+const openaiApiKey = process.env.OPENAI_API_KEY
 
 const configuration = new Configuration({
   apiKey: openaiApiKey,
@@ -18,12 +18,12 @@ export default function ChatBubble() {
     const [inputValue, setInputValue] = useState("")
     const currentDate = new Date().toLocaleDateString
     const [isModalOpen, setIsModalOpen] = useState(false);
-    
+
 
     const handleChatClick = () => {
       setIsModalOpen(true);
     };
-  
+
     const handleCloseModal = () => {
       setIsModalOpen(false);
     };
@@ -32,9 +32,9 @@ export default function ChatBubble() {
 
         // add the user's message to the chat log array
         setChatHistory((prevMessages) => [
-            ...prevMessages, 
+            ...prevMessages,
             {
-                text: inputValue, 
+                text: inputValue,
                 isUser: true
             }
         ]);
@@ -49,7 +49,7 @@ export default function ChatBubble() {
         model: "gpt-3.5-turbo",
         messages: [
             {
-                role: "system", 
+                role: "system",
                 content: `Sydney is a chatbot that is helpful, creative, clever, and very friendly and loves to assist people on the financial stock trading website Bootcamp Brokers:`
             },
             {
@@ -112,11 +112,11 @@ export default function ChatBubble() {
         sendMessage();
         setInputValue("");
     };
-    
+
       const handleChange = e => {
         setInputValue(e.target.value);
       };
-    
+
 
 
     return (
@@ -158,5 +158,3 @@ export default function ChatBubble() {
     </div>
     )
 }
-
-
