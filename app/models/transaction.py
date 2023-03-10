@@ -14,4 +14,4 @@ class Transaction(db.Model):
     date = db.Column(db.Date, default=datetime.now(tz=None), nullable=False)
 
     stock = db.relationship("Stock", uselist=False, back_populates="transaction")
-    user = db.relationship("User", back_populates='transaction')
+    user = db.relationship("User", back_populates='transactions')
