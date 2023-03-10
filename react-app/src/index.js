@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import MenuProvider from "./context/MenuContext";
 
 import { ModalProvider, Modal } from "./context/Modal";
 import configureStore from "./store";
@@ -24,10 +25,12 @@ function Root() {
 	return (
 		<ModalProvider>
 			<Provider store={store}>
+				<MenuProvider>
 				<BrowserRouter>
 					<App />
 					<Modal />
 				</BrowserRouter>
+				</MenuProvider>
 			</Provider>
 		</ModalProvider>
 	);

@@ -1,0 +1,16 @@
+* {
+    font-family: "Capsule Sans Text",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    color: #000000;
+}
+
+body {
+    margin: 0;
+}
+
+.block {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
