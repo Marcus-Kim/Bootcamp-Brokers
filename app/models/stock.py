@@ -19,3 +19,4 @@ class Stock(db.Model):
             secondary=watchlist_stocks,
             back_populates='stocks'
         )
+    portfolios = db.relationship("PortfolioShare", back_populates="stocks")
