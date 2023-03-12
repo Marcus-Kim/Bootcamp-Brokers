@@ -23,14 +23,12 @@ export default function FinanceAPIProvider({children}) {
   // CASH_FLOW -- API returns incoming cash flow data
   // NEWS_SENTIMENT -- API returns FInancial news data on the ticker
   // EARNINGS -- API Returns Companies financial earnings
-
+  
 
   const fetchStockData = async() => {
     const apiUrl = `https://www.alphavantage.co/query?function=${queryType}&symbol=${ticker}&apikey=${apiKey}`;
     const response = await fetch(apiUrl)
-
     const json = await response.json()
-
     return json
   }
   
