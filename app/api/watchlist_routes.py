@@ -11,10 +11,8 @@ watchlist_routes = Blueprint('watchlists', __name__)
 ##? Haven't tested on postman yet
 ##? Needs Seeder files
 
-@watchlist_routes(f'/<int:id>')
+@watchlist_routes.route('/<int:id>')
 @login_required
 def watchlist_by_id(id):
     watchlist = Watchlist.query.get(id)
     return watchlist.to_dict()
-
-
