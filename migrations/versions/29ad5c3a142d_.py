@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 372dcd1d3bfc
+Revision ID: 29ad5c3a142d
 Revises: 
-Create Date: 2023-03-12 13:40:45.791363
+Create Date: 2023-03-12 16:31:31.978444
 
 """
 from alembic import op
@@ -14,7 +14,7 @@ SCHEMA = os.environ.get("SCHEMA")
 
 
 # revision identifiers, used by Alembic.
-revision = '372dcd1d3bfc'
+revision = '29ad5c3a142d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -49,8 +49,8 @@ def upgrade():
     op.create_table('portfolios',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.Column('profit_loss', sa.Float(asdecimal=True, decimal_return_scale=2), nullable=False),
     sa.Column('cash_balance', sa.Float(asdecimal=True, decimal_return_scale=2), nullable=False),
+    sa.Column('initial_principle', sa.Float(asdecimal=True, decimal_return_scale=2), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
