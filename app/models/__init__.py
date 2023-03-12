@@ -4,3 +4,8 @@ from .db import environment, SCHEMA
 from .stock import Stock
 from .transaction import Transaction
 from .watchlist import Watchlist
+from .chat_gpt import Chat_GPT
+from .message import Message
+from .portfolio import Portfolio
+from .portfolio_shares import PortfolioShare
+from .portfolio_value import PortfolioValue
