@@ -22,7 +22,7 @@ export default function IndividualStockPage() {
 
     useEffect(() => {
         dispatch(thunkGetStockFundamentals(tickerCap))
-        dispatch(thunkGetStockIntraDay(tickerCap, "5min"))
+        // dispatch(thunkGetStockIntraDay(tickerCap, "5min"))
     }, [dispatch, ticker])
 
 
