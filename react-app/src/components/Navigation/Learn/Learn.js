@@ -2,13 +2,18 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useFinanceAPI } from '../../../context/FinanceApiContext';
 import { NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { thunkGetStockNews } from '../../../store/stock';
 
 export default function Learn() {
+  const dispatch = useDispatch()
   const {ticker, setTicker} = useFinanceAPI()
   const {queryType, setQueryType} = useFinanceAPI()
   const {fetchStockData, fetchStockNewsData} = useFinanceAPI()
   const [data, setData] = useState([null]);
   const [errors, setErrors] = useState([]);
+
+  const stocks = useSelector(state => state.stocks)
 
   //Query Types:
   // TIME_SERIES_INTRADAY -- API Returns the intraday stock price data
@@ -22,22 +27,24 @@ export default function Learn() {
   // CASH_FLOW -- API returns incoming cash flow data
   // NEWS_SENTIMENT -- API returns FInancial news data on the ticker
   // EARNINGS -- API Returns Companies financial earnings
-
+  console.log('stocks', stocks)
   
 
   useEffect(() => {
-    async function fetchData() {
-      // setQueryType("TIME_SERIES_DAILY_ADJUSTED") // set the type of query you want
-      // setInterval() // set time frame for intraday end point
-      // setTicker() // set ticker you want to set it to 
+    dispatch(thunkGetStockNews(ticker))
 
-      const json = await fetchStockNewsData()
+    // async function fetchData() {
+    //   // setQueryType("TIME_SERIES_DAILY_ADJUSTED") // set the type of query you want
+    //   // setInterval() // set time frame for intraday end point
+    //   // setTicker() // set ticker you want to set it to 
 
-      setData(json)
-    }
-    fetchData()
+    //   const json = await fetchStockNewsData()
+
+    //   setData(json)
+    // }
+    // fetchData()
     
-  }, [fetchStockNewsData])
+  }, [fetchStockNewsData, dispatch])
 
   if (!data) return null;
 
