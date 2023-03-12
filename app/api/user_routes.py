@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify
 from flask_login import login_required
-from app.models import User
+from app.models import User, Watchlist
+from .watchlist_routes import watchlist_routes
 
 user_routes = Blueprint('users', __name__)
 
@@ -28,13 +29,13 @@ def user(id):
 ##* Get all users watchlist / on dashboard page
 ##? Havent tested on postman yet
 ##? Needs seeder files
-@watchlist_routes('/<int:userId>/watchlist/')
+@watchlist_routes.route('/<int:userId>/watchlist/')
 @login_required
-def all_watchlists_by_user(userId)
+def all_watchlists_by_user(userId):
     user = User.query.get(userId)
 
     watchlist_data = [watchlist.to_dict() for watchlist in user.watchlist ]
-    
+
 
     # watchlist = Watchlist.query.filter_by(user_id=user_id).all()
     # watchlist_data = [stock.to_dict() for stock in watchlist]

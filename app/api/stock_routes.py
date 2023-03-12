@@ -5,10 +5,10 @@ from app.models import Stock
 stock_routes = Blueprint('stocks', __name__)
 apiKey = "CRN1I5X51XQTTFBH"
 
-@stock_routes.route('/stock/news/<str:ticker>')
-@login_required
+# @stock_routes.route('/stock/news/<str:ticker>')
+# @login_required
 
-def stock_news():
+# def stock_news():
 
 #       const fetchStockData = async() => {
 #     const apiUrl = `https://www.alphavantage.co/query?function=${queryType}&symbol=${ticker}&apikey=${apiKey}`;
