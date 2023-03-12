@@ -3,7 +3,9 @@ import { useState, useEffect } from 'react'
 import { useFinanceAPI } from '../../../context/FinanceApiContext';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { thunkGetStockNews } from '../../../store/stock';
+import { thunkGetStockFundamentals, thunkGetStockNews,thunkGetStockIntraDay  } from '../../../store/stock';
+
+
 
 export default function Learn() {
   const dispatch = useDispatch()
@@ -12,6 +14,7 @@ export default function Learn() {
   const {fetchStockData, fetchStockNewsData} = useFinanceAPI()
   const [data, setData] = useState([null]);
   const [errors, setErrors] = useState([]);
+  const {interval, setInterval} = useFinanceAPI()
 
   const stocks = useSelector(state => state.stocks)
 
@@ -31,7 +34,9 @@ export default function Learn() {
   
 
   useEffect(() => {
-    dispatch(thunkGetStockNews(ticker))
+    // dispatch(thunkGetStockNews(ticker))
+    // dispatch(thunkGetStockIntraDay(ticker, interval))
+    dispatch(thunkGetStockFundamentals(ticker))
 
     // async function fetchData() {
     //   // setQueryType("TIME_SERIES_DAILY_ADJUSTED") // set the type of query you want
