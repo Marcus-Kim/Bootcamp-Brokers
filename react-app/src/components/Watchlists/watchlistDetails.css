@@ -1,0 +1,20 @@
+.watchlist-details-container {
+  margin-top: 66px;
+  flex-direction: row;
+}
+
+.watchlist-details-content-container {
+  max-width: 53%;
+  margin: auto;
+  padding-top: 80px;
+  display: flex;
+  flex-direction: row;
+}
+
+.watchlist-details-content {
+  width: 70%
+}
+
+.watchlist-details-lists {
+  width: 30%
+}
