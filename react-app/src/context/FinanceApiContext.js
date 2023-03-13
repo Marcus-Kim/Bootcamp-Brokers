@@ -1,4 +1,3 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
 
 export const AlphaVantageAPIContext = createContext()
 export const useFinanceAPI = () => useContext(AlphaVantageAPIContext)
@@ -13,7 +12,7 @@ export default function FinanceAPIProvider({children}) {
 
   //Query Types:
   // TIME_SERIES_INTRADAY -- API Returns the intraday stock price data
-  // TIME_SERIES_DAILY_ADJUSTED -- API Returns Daily stock price data 
+  // TIME_SERIES_DAILY_ADJUSTED -- API Returns Daily stock price data
   // OVERVIEW -- API returns Company Financial Overview Data and Key Finance Ratios and Metrics
   // TIME_SERIES_WEEKLY -- API Returns weekly stock price data
   // TIME_SERIES_MONTHLY -- API Returns Monthly Stock price data
@@ -23,7 +22,7 @@ export default function FinanceAPIProvider({children}) {
   // CASH_FLOW -- API returns incoming cash flow data
   // NEWS_SENTIMENT -- API returns FInancial news data on the ticker
   // EARNINGS -- API Returns Companies financial earnings
-  
+
 
   const fetchStockData = async() => {
     const apiUrl = `https://www.alphavantage.co/query?function=${queryType}&symbol=${ticker}&apikey=${apiKey}`;
@@ -31,8 +30,8 @@ export default function FinanceAPIProvider({children}) {
     const json = await response.json()
     return json
   }
-  
-  // Grabs most recent stock news data 
+
+  // Grabs most recent stock news data
   const fetchStockNewsData = async () => {
     const apiURL = `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=${ticker}&apikey=${apiKey}`
     const response = await fetch(apiURL)
@@ -48,8 +47,8 @@ export default function FinanceAPIProvider({children}) {
     const json = await response.json()
     return json
   }
-  
-  
+
+
 
 
   return (

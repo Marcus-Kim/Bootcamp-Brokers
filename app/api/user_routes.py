@@ -29,30 +29,34 @@ def user(id):
 ##* Get all users watchlist / on dashboard page
 ##? Havent tested on postman yet
 ##? Needs seeder files
-@watchlist_routes.route('/<int:userId>/watchlist/')
-@login_required
+@user_routes.route('/<int:userId>/watchlists/')
+# @login_required
 def all_watchlists_by_user(userId):
-    user = User.query.get(userId)
+    # user = User.query.get(userId)
 
-    watchlist_data = [watchlist.to_dict() for watchlist in user.watchlist ]
+    # user_dict = user.to_dict()
+    # print('USER DICT VARIABLE: ', user_dict)
+    # print('USER DICT ONE LINE: ', user.to_dict())
+
+    # watchlist_data = [watchlist.to_dict() for watchlist in user.watchlists]
 
 
-    # watchlist = Watchlist.query.filter_by(user_id=user_id).all()
-    # watchlist_data = [stock.to_dict() for stock in watchlist]
-    # return jsonify(watchlist_data)
+    watchlists = Watchlist.query.filter_by(user_id=userId).all()
+    watchlist_data = [watchlist.to_dict() for watchlist in watchlists]
+    return jsonify(watchlist_data)
 
 
-    user: {
-        watchlist: {
-            watchlist_shares: {
+    # user: {
+    #     watchlist: {
+    #         watchlist_shares: {
 
-            }
-        },
-        portfolio: {
-            portfolio_shares: {
-                stocks: {}
-            },
-            portfolio_value: {}
-        },
-        transactions: {}
-    }
+    #         }
+    #     },
+    #     portfolio: {
+    #         portfolio_shares: {
+    #             stocks: {}
+    #         },
+    #         portfolio_value: {}
+    #     },
+    #     transactions: {}
+    # }

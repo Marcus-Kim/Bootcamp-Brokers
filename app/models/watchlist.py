@@ -17,3 +17,10 @@ class Watchlist(db.Model):
         secondary=watchlist_stocks,
         back_populates='watchlists'
     )
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'list_name': self.list_name,
+            'user_id': self.user_id
+        }
