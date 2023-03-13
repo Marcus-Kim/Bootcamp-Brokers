@@ -42,3 +42,6 @@ class Portfolio(db.Model):
             'cash_balance': self.cash_balance,
             'initial_principle': self.initial_principle
         }
+
+    def add_stock(self, ticker, num_shares):
+        pass
