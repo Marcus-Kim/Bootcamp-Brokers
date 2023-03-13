@@ -16,7 +16,7 @@ def seed_stocks():
             ticker=stock['ticker'],
             company_name=stock['company_name'],
             current_price=stock['current_price'],
-            daily_change=stock['daily_price']
+            daily_change=stock['daily_change']
         ))
     
     db.session.commit()
