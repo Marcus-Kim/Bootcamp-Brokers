@@ -47,8 +47,10 @@ def seed():
 def undo():
     undo_users()
     undo_stocks()
+    undo_portfolios()
     undo_transactions()
     undo_portfolio_shares()
+    undo_portfolios_values()
     undo_watchlists()
     undo_watchlist_stocks()
     # Add other undo functions here
