@@ -14,3 +14,11 @@ class PortfolioValue(db.Model):
     date = db.Column(db.Date, default=datetime.now(tz=None), nullable=False)
 
     portfolio = db.relationship("Portfolio", back_populates="portfolio_values")
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'portfolio_id': self.portfolio_id,
+            'current_balance': self.current_balance,
+            'date': self.date
+        }
