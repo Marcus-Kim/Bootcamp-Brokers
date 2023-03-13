@@ -1,8 +1,10 @@
 from flask import Blueprint, jsonify
 from flask_login import login_required
 from app.models import User, Watchlist
+from app.models.watchlist_stock import watchlist_stocks
 from .watchlist_routes import watchlist_routes
-
+from sqlalchemy.sql import text
+from app.models.db import db
 user_routes = Blueprint('users', __name__)
 
 
@@ -29,24 +31,23 @@ def user(id):
 ##* Get all users watchlist / on dashboard page
 ##? Havent tested on postman yet
 ##? Needs seeder files
-@user_routes.route('/<int:userId>/watchlists/')
+@user_routes.route('/<int:userId>/watchlists')
 # @login_required
 def all_watchlists_by_user(userId):
-    # user = User.query.get(userId)
-
-    # user_dict = user.to_dict()
-    # print('USER DICT VARIABLE: ', user_dict)
-    # print('USER DICT ONE LINE: ', user.to_dict())
-
-    # watchlist_data = [watchlist.to_dict() for watchlist in user.watchlists]
-
-
+    """Get all watchlists by user id (aggregate data)"""
     watchlists = Watchlist.query.filter_by(user_id=userId).all()
 
-    # for watchlist in watchlists:
-
-
     watchlist_data = [watchlist.to_dict() for watchlist in watchlists]
+
+    #? Modifying the 'watchlist_data' to include the related tickers list
+    for watchlist in watchlist_data:
+        watchlist_id = watchlist['id']
+        sql = text(f'SELECT * FROM watchlist_stocks WHERE watchlist_stocks.watchlist_id = {watchlist_id}')
+        result = db.session.execute(sql)
+        watchlist_stocks = [dict(row) for row in result]
+        watchlist_ticker_list = [ stock['ticker_id'] for stock in watchlist_stocks]
+        watchlist['tickers'] = watchlist_ticker_list
+
     return jsonify(watchlist_data)
 
 
