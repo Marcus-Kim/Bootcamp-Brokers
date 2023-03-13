@@ -4,15 +4,23 @@ from app.models import Portfolio, PortfolioValue, db
 
 portfolio_routes = Blueprint('portfolio', __name__)
 
-# Get historical portfolio value by portfolio id
+# Get historical portfolio value by user id
 @portfolio_routes.route('/history')
 @login_required
 def portfolio_historical_value_by_id():
-    """Route for getting historical portfolio value by portfolio id"""
+    """Route for getting historical portfolio value by user id"""
     portfolio = Portfolio.query.filter_by(user_id=current_user.id).first()
     portfolio_values = PortfolioValue.query.filter_by(portfolio_id=portfolio.id).all()
 
     return [p.to_dict() for p in portfolio_values]
+
+# Get portfolio of current user
+@portfolio_routes.route('/')
+@login_required
+def get_user_portfolio():
+    """Route for getting a portfolio by id"""
+    portfolio = Portfolio.query.get(current_user.id)
+    return portfolio.to_dict()
 
 from datetime import datetime
 # Log current value of portfolio to portfolio_values table
@@ -33,13 +41,3 @@ def create_portfolio_snapshot():
         }
     except:
         raise Exception('Error adding portfolio value to portfolio_values table')
-
-
-
-# Get portfolio of current user
-@portfolio_routes.route('/')
-@login_required
-def get_user_portfolio():
-    """Route for getting a portfolio by id"""
-    portfolio = Portfolio.query.get(current_user.id)
-    return portfolio.to_dict()
