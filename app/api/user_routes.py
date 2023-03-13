@@ -29,7 +29,7 @@ def user(id):
 ##* Get all users watchlist / on dashboard page
 ##? Havent tested on postman yet
 ##? Needs seeder files
-@user_routes.route('/<int:userId>/watchlist/')
+@user_routes.route('/<int:userId>/watchlists/')
 # @login_required
 def all_watchlists_by_user(userId):
     # user = User.query.get(userId)
@@ -43,10 +43,6 @@ def all_watchlists_by_user(userId):
 
     watchlists = Watchlist.query.filter_by(user_id=userId).all()
     watchlist_data = [watchlist.to_dict() for watchlist in watchlists]
-    print([watchlist.to_dict() for watchlist in watchlists])
-    for list in watchlist_data:
-        list.append({'hello': 'hi'})
-        print(list)
     return jsonify(watchlist_data)
 
 
