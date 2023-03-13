@@ -20,9 +20,10 @@ class Portfolio(db.Model):
     def profit_loss(self):
         # Calculate the profit/loss based on current portfolio state
         total_stock_value = sum(
-            stock.current_price * share.shares for share in self.portfolio_shares for stock in share.stocks
+            share.stocks.current_price * share.shares for share in self.portfolio_shares
         )
         return self.initial_principle - (total_stock_value + self.cash_balance)
+
     
     def to_dict(self):
         return {
