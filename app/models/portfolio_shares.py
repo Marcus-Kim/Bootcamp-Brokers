@@ -14,3 +14,11 @@ class PortfolioShare(db.Model):
 
     portfolio = db.relationship("Portfolio", back_populates="portfolio_shares")
     stocks = db.relationship("Stock", back_populates="portfolios")
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'portfolio_id': self.id,
+            'ticker_id': self.ticker_id,
+            'shares': self.shares
+        }

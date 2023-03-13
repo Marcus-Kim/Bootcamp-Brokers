@@ -12,3 +12,12 @@ class Message(db.Model):
 
     user = db.relationship("User", back_populates='messages')
     chat_gpt_instance = db.relationship("Chat_GPT", back_populates='messages')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'chat_gpt_instance': self.chat_gpt_instance,
+            'message': self.message,
+            'created_at': self.created_at
+        }

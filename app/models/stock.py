@@ -20,3 +20,11 @@ class Stock(db.Model):
             back_populates='stocks'
         )
     portfolios = db.relationship("PortfolioShare", back_populates="stocks")
+
+    def to_dict(self):
+        return {
+            'ticker': self.ticker,
+            'company_name': self.company_name,
+            'current_price': self.current_price,
+            'daily_change': self.daily_change
+        }

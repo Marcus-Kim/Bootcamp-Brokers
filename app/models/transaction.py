@@ -15,3 +15,12 @@ class Transaction(db.Model):
 
     stock = db.relationship("Stock", uselist=False, back_populates="transactions")
     user = db.relationship("User", back_populates='transactions')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'ticker_id': self.ticker_id,
+            'shares': self.shares,
+            'date': self.date
+        }
