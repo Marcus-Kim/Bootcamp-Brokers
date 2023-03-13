@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 08d70f0346f7
+Revision ID: 47d9ff0c47f1
 Revises: 
-Create Date: 2023-03-12 17:05:44.650513
+Create Date: 2023-03-13 13:22:22.772545
 
 """
 from alembic import op
@@ -13,9 +13,8 @@ environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
 
-
 # revision identifiers, used by Alembic.
-revision = '08d70f0346f7'
+revision = '47d9ff0c47f1'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -44,7 +43,9 @@ def upgrade():
     op.create_table('messages',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.Column('message', sa.Text(), nullable=True),
+    sa.Column('created_at', sa.Date(), nullable=False),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('portfolios',
@@ -52,7 +53,7 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('cash_balance', sa.Float(asdecimal=True, decimal_return_scale=2), nullable=False),
     sa.Column('initial_principle', sa.Float(asdecimal=True, decimal_return_scale=2), nullable=False),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('transactions',
@@ -62,14 +63,14 @@ def upgrade():
     sa.Column('shares', sa.Integer(), nullable=False),
     sa.Column('date', sa.Date(), nullable=False),
     sa.ForeignKeyConstraint(['ticker_id'], ['stocks.ticker'], ),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('watchlists',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('list_name', sa.String(length=100), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('list_name')
     )
@@ -84,7 +85,7 @@ def upgrade():
     sa.Column('portfolio_id', sa.Integer(), nullable=False),
     sa.Column('ticker_id', sa.String(length=10), nullable=False),
     sa.Column('shares', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['portfolio_id'], ['portfolios.id'], ),
+    sa.ForeignKeyConstraint(['portfolio_id'], ['portfolios.id'], ondelete='CASCADE'),
     sa.ForeignKeyConstraint(['ticker_id'], ['stocks.ticker'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -93,14 +94,14 @@ def upgrade():
     sa.Column('portfolio_id', sa.Integer(), nullable=False),
     sa.Column('current_balance', sa.Float(asdecimal=True, decimal_return_scale=2), nullable=False),
     sa.Column('date', sa.Date(), nullable=False),
-    sa.ForeignKeyConstraint(['portfolio_id'], ['portfolios.id'], ),
+    sa.ForeignKeyConstraint(['portfolio_id'], ['portfolios.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('watchlist_stocks',
     sa.Column('ticker_id', sa.String(length=10), nullable=False),
     sa.Column('watchlist_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['ticker_id'], ['stocks.ticker'], ),
-    sa.ForeignKeyConstraint(['watchlist_id'], ['watchlists.id'], ),
+    sa.ForeignKeyConstraint(['watchlist_id'], ['watchlists.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('ticker_id', 'watchlist_id')
     )
     if environment == "production":

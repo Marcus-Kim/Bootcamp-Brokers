@@ -10,6 +10,7 @@ from .api.auth_routes import auth_routes
 from .api.stock_routes import stock_routes
 from .api.watchlist_routes import watchlist_routes
 from .api.transaction_routes import transaction_routes
+from .api.portfolio_routes import portfolio_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -34,6 +35,7 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(stock_routes, url_prefix='/api/stocks')
 app.register_blueprint(watchlist_routes, url_prefix='/api/watchlist')
 app.register_blueprint(transaction_routes, url_prefix='/api/transactions')
+app.register_blueprint(portfolio_routes, url_prefix='/api/portfolio')
 db.init_app(app)
 Migrate(app, db)
 

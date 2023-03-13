@@ -13,10 +13,18 @@ class Stock(db.Model):
     current_price = db.Column(db.Float(asdecimal=True, decimal_return_scale=2), nullable=False)
     daily_change = db.Column(db.Float(asdecimal=True, decimal_return_scale=2), nullable=False)
 
-    transaction = db.relationship("Transaction", back_populates="stock")
+    transactions = db.relationship("Transaction", back_populates="stock")
     watchlists = db.relationship(
             'Watchlist',
             secondary=watchlist_stocks,
             back_populates='stocks'
         )
     portfolios = db.relationship("PortfolioShare", back_populates="stocks")
+
+    def to_dict(self):
+        return {
+            'ticker': self.ticker,
+            'company_name': self.company_name,
+            'current_price': self.current_price,
+            'daily_change': self.daily_change
+        }
