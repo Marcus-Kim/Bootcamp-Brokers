@@ -1,19 +1,12 @@
 """empty message
 
-<<<<<<<< HEAD:migrations/versions/d7079353f011_.py
-Revision ID: d7079353f011
-Revises:
-Create Date: 2023-03-13 10:53:58.110207
-========
-Revision ID: 1eeed0948f44
+Revision ID: 47d9ff0c47f1
 Revises: 
-Create Date: 2023-03-13 12:37:25.057442
->>>>>>>> jason:migrations/versions/1eeed0948f44_.py
+Create Date: 2023-03-13 13:22:22.772545
 
 """
 from alembic import op
 import sqlalchemy as sa
-
 
 import os
 environment = os.getenv("FLASK_ENV")
@@ -21,11 +14,7 @@ SCHEMA = os.environ.get("SCHEMA")
 
 
 # revision identifiers, used by Alembic.
-<<<<<<<< HEAD:migrations/versions/d7079353f011_.py
-revision = 'd7079353f011'
-========
-revision = '1eeed0948f44'
->>>>>>>> jason:migrations/versions/1eeed0948f44_.py
+revision = '47d9ff0c47f1'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -42,10 +31,6 @@ def upgrade():
     sa.UniqueConstraint('company_name'),
     sa.UniqueConstraint('ticker')
     )
-
-    if environment == "production":
-        op.execute(f"ALTER TABLE stocks SET SCHEMA {SCHEMA};")
-
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=40), nullable=False),
@@ -55,10 +40,6 @@ def upgrade():
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
-
-    if environment == "production":
-        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
-
     op.create_table('messages',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -67,10 +48,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
-
-    if environment == "production":
-        op.execute(f"ALTER TABLE messages SET SCHEMA {SCHEMA};")
-
     op.create_table('portfolios',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -79,10 +56,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
-
-    if environment == "production":
-        op.execute(f"ALTER TABLE portfolios SET SCHEMA {SCHEMA};")
-
     op.create_table('transactions',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -93,10 +66,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
-
-    if environment == "production":
-        op.execute(f"ALTER TABLE transactions SET SCHEMA {SCHEMA};")
-
     op.create_table('watchlists',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('list_name', sa.String(length=100), nullable=False),
@@ -105,20 +74,12 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('list_name')
     )
-
-    if environment == "production":
-        op.execute(f"ALTER TABLE watchlists SET SCHEMA {SCHEMA};")
-
     op.create_table('chat_gpt',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('last_message_id', sa.String(length=255), nullable=True),
     sa.ForeignKeyConstraint(['last_message_id'], ['messages.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-
-    if environment == "production":
-        op.execute(f"ALTER TABLE chat_gpt SET SCHEMA {SCHEMA};")
-
     op.create_table('portfolio_shares',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('portfolio_id', sa.Integer(), nullable=False),
@@ -128,10 +89,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['ticker_id'], ['stocks.ticker'], ),
     sa.PrimaryKeyConstraint('id')
     )
-
-    if environment == "production":
-        op.execute(f"ALTER TABLE portfolio_shares SET SCHEMA {SCHEMA};")
-
     op.create_table('portfolio_values',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('portfolio_id', sa.Integer(), nullable=False),
@@ -140,10 +97,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['portfolio_id'], ['portfolios.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
-
-    if environment == "production":
-        op.execute(f"ALTER TABLE portfolio_values SET SCHEMA {SCHEMA};")
-
     op.create_table('watchlist_stocks',
     sa.Column('ticker_id', sa.String(length=10), nullable=False),
     sa.Column('watchlist_id', sa.Integer(), nullable=False),
@@ -151,14 +104,9 @@ def upgrade():
     sa.ForeignKeyConstraint(['watchlist_id'], ['watchlists.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('ticker_id', 'watchlist_id')
     )
-<<<<<<<< HEAD:migrations/versions/d7079353f011_.py
-
-    if environment == "production":
-        op.execute(f"ALTER TABLE watchlist_stocks SET SCHEMA {SCHEMA};")
-========
     if environment == "production":
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
->>>>>>>> jason:migrations/versions/1eeed0948f44_.py
+
     # ### end Alembic commands ###
 
 
