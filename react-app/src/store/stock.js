@@ -1,12 +1,11 @@
-const apiKey = "CRN1I5X51XQTTFBH"
-const apiKey2 = "BYS7R29VDVBEP38O"
-const apiKey3 = "3M5OB7SQ4L0ZKJQH"
+const apiKey = "0MPIU2TLAS20RTTM"
 
 
 
 // constants
 const GET_STOCK_INTRADAY = 'stocks/GET_STOCK_INTRADAY'
 const GET_STOCK_DAILY = 'stocks/GET_STOCK_DAILY'
+const GET_STOCK_WEEKLY = 'stocks/GET_STOCK_WEEKLY'
 const GET_STOCK_NEWS = 'stocks/GET_STOCKNEWS'
 const GET_STOCK_FUNDAMENTALS = 'stocks/GET_STOCK_FUNDAMENTALS'
 const GET_BTC_PRICE = 'stocks/GET_BTC_PRICE'
@@ -20,6 +19,11 @@ const actionGetStockIntraday = (stocks) => ({
 
 const actionGetStockDaily = (stocks) => ({
     type: GET_STOCK_DAILY,
+    stocks
+})
+
+const actionGetStockWeekly = (stocks) => ({
+    type: GET_STOCK_WEEKLY,
     stocks
 })
 
@@ -38,6 +42,8 @@ const actionGetBTCPrice = (BTC) => ({
     type: GET_BTC_PRICE,
     BTC
 })
+
+
 
 
 // thunks
@@ -62,12 +68,22 @@ export const thunkGetStockIntraDay = (ticker, interval) => async (dispatch) => {
 }
 
 export const thunkGetStockDaily = ticker => async (dispatch) => {
-    const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${ticker}&outputsize=compact&apikey=${apiKey2}`)
+    const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${ticker}&outputsize=compact&apikey=${apiKey}`)
 
     if (response.ok) {
         const Daily = await response.json()
         dispatch(actionGetStockDaily(Daily))
         return Daily
+    }
+}
+
+export const thunkGetStockWeekly = ticker => async (dispatch) => {
+    const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=${ticker}&apikey=${apiKey}`)
+
+    if (response.ok) {
+        const Weekly = await response.json()
+        dispatch(actionGetStockWeekly(Weekly))
+        return Weekly
     }
 }
 
@@ -82,7 +98,7 @@ export const thunkGetStockFundamentals = (ticker) => async (dispatch) => {
 }
 
 export const thunkGetBTCPrice = () => async (dispatch) => {
-    const response = await fetch(`https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=USD&apikey=${apiKey3}`)
+    const response = await fetch(`https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=USD&apikey=${apiKey}`)
 
     if (response.ok) {
         const BTCPrice = await response.json()
@@ -95,9 +111,10 @@ const initialState = {
     stockNews: {},
     stockIntraDay: {},
     stockDaily: {},
+    stockWeekly: {},
+    stockMonthly: {},
     stockFundamentals: {},
-    BTCPrice: {}
-
+    BTCPrice: {},
 }
 
 // reducers

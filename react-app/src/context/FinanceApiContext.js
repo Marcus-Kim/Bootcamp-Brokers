@@ -49,9 +49,6 @@ export default function FinanceAPIProvider({children}) {
     return json
   }
 
-
-
-
   return (
     <AlphaVantageAPIContext.Provider
     value={{
