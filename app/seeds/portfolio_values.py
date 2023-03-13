@@ -16,14 +16,14 @@ def seed_portfolio_values():
         {'portfolio_id': 3, 'current_balance': 3300, 'date': datetime(2023, 3, 11)},
         {'portfolio_id': 3, 'current_balance': 2800, 'date': datetime(2023, 3, 12)},
     ]
-    
+
     for portfolio_value in portfolios_values:
         db.session.add(PortfolioValue(
             portfolio_id=portfolio_value['portfolio_id'],
             current_balance=portfolio_value['current_balance'],
             date=portfolio_value['date']
         ))
-    
+
     db.session.commit()
 
 
@@ -35,8 +35,8 @@ def seed_portfolio_values():
 # it will reset the primary keys for you as well.
 def undo_portfolios_values():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.portfolios_values RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.portfolio_values RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute(text("DELETE FROM portfolios_values"))
-        
+        db.session.execute(text("DELETE FROM portfolio_values"))
+
     db.session.commit()

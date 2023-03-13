@@ -15,3 +15,6 @@ watchlist_stocks = db.Table(
         primary_key=True
     )
 )
+
+if environment == "production":
+    watchlist_stocks = SCHEMA
