@@ -13,8 +13,8 @@ def seed_portfolios():
     for portfolio in portfolios:
         db.session.add(Portfolio(
             user_id=portfolio['user_id'],
-            ticker_id=portfolio['cash_balance'],
-            shares=portfolio['initial_principle']
+            cash_balance=portfolio['cash_balance'],
+            initial_principle=portfolio['initial_principle']
         ))
     
     db.session.commit()
