@@ -12,9 +12,38 @@
 }
 
 .watchlist-details-content {
-  width: 70%
+  width: 70%;
+  margin-right: 40px;
+  display: flex;
+  flex-direction: column;
 }
+
+
 
 .watchlist-details-lists {
   width: 30%
+}
+
+.watchlist-details-name {
+  font-size: larger;
+}
+
+.watchlist-details-name-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.watchlist-details-item-count {
+  font-size: small;
+  color: gray;
+}
+
+.watchlist-details-list-header-name {
+  text-align: left;
+}
+
+.watchlist-details-list-header,
+.watchlist-details-list-header-market-cap,
+.watchlist-details-list-header-symbol {
+  text-align: right;
 }
