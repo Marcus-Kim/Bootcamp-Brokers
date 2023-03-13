@@ -6,14 +6,14 @@ import LineChart from "./LineChart";
 
 
 
-export default function DailyChart({ ticker }) {
+export default function DailyData({ ticker }) {
 
     const dispatch = useDispatch()
 
 
-    useEffect(() => {
+    // useEffect(() => {
 
-    }, [dispatch, ticker])
+    // }, [dispatch, ticker])
 
 
 
@@ -21,7 +21,7 @@ export default function DailyChart({ ticker }) {
         <div>
             <h3>Daily Chart Component Loaded!</h3>
             <LineChart />
-            <Line></Line>
+            {/* <Line></Line> */}
             <p>{ ticker }</p>
         </div>
     )
