@@ -14,10 +14,13 @@ import { CategoryScale } from 'chart.js';
 
 export default function UserHomePage() {
   const [price, setPrice] = useState(5)
+  const [hoverIndex, setHoverIndex] = useState(null);
   const [graph, setGraph] = useState([])
   const BTC = useSelector(state => state.stocks.BTCPrice)
   const SPY = useSelector(state => state.stocks.stockDaily)
   const today = new Date().toISOString().substring(0, 10)
+
+
 
 
   const mockData = () => {
@@ -39,10 +42,9 @@ export default function UserHomePage() {
     mockData()
   }, [])
 
-  console.log(graph)
 
   const chartData = {
-    labels: graph.map((data) => data.x.split(" ")[0]),
+    labels: graph.map((data) => data.x),
     datasets:[
       {
           type: "line",
@@ -61,57 +63,63 @@ export default function UserHomePage() {
   }
 
 
-  // const chartOptions = {
-  //   maintainAspectRatio: false,
-  //   responsive: true,
-  //   scales: {
-  //     x: {
-  //       grid: {
-  //         display: false,
-  //         color: '#white' // set the default color of gridlines
-  //       },
-  //       ticks: {
-  //         color: 'white', // set the color of tick labels
-  //         display: false
-  //       }
-  //     },
-  //     y: {
-  //       grid: {
-  //         display: false
-  //       },
-  //       ticks: {
-  //         color: 'white', // set the color of tick labels
-  //         display: false
-  //       }
-  //     }
-  //   },
-  //   interaction: {
-  //     intersect: false,
-  //     mode: "nearest",
-  //     axis: "x",
-      
-  //   },
-  //   layout: {
-  //     padding: {
-  //       top: 20,
-  //       right: 20,
-  //       bottom: 20,
-  //       left: 20,
-  //     },
-  //   },
-  //   plugins: {
-  //     tooltip: {
-  //       enabled: false,
-  //     },
-  //     legend: {
-  //       display: false,
-  //     },
-  //     datalabels: {
-  //       display: false,
-  //     },
+  const chartOptions = {
+    maintainAspectRatio: false,
+    responsive: true,
+    scales: {
+      x: {
+        grid: {
+          display: false,
+          color: '#white' // set the default color of gridlines
+        },
+        ticks: {
+          color: 'white', // set the color of tick labels
+          display: false
+        }
+      },
+      y: {
+        grid: {
+          display: false
+        },
+        ticks: {
+          color: 'white', // set the color of tick labels
+          display: false
+        }
+      }
+    },
+    interaction: {
+      intersect: false,
+      mode: "nearest",
+      axis: "x",
+      onHover: (event, chartElement) => {
+        if (chartElement.length > 0) {
+          setPrice(chartElement[0].parsed.y);
+        } else {
+          setPrice(5);
+        }
+      }
+    },
+    layout: {
+      padding: {
+        top: 20,
+        right: 20,
+        bottom: 20,
+        left: 20,
+      },
+    },
+    plugins: {
+      tooltip: {
+        enabled: false,
+      },
+      legend: {
+        display: false,
+      },
+      datalabels: {
+        display: false,
+      },
 
-  //   },
-  // };
+    },
+  };
 
   if (!BTC || !SPY) return null;
 
@@ -128,7 +136,7 @@ export default function UserHomePage() {
         </div>
         <Line
         data={chartData}
-        // options={chartOptions}
+        options={chartOptions}
         />
 
       </div>
