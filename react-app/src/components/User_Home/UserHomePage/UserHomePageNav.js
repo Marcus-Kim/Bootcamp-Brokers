@@ -10,6 +10,8 @@ export default function UserHomePageNav() {
 
     return (
     <>
+    <div className="home-container">
+    
         <div style={{paddingTop: '67px'}} className="homepage-navigationcontainer">
             <div style={{marginLeft: '3%'}}>
             <img className='logo' src={logo} alt="logo" />
@@ -26,6 +28,7 @@ export default function UserHomePageNav() {
         </div>
 
     <UserHomePage/>
+    </div>
     </>
     )
 }

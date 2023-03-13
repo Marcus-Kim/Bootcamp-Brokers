@@ -1,204 +1,136 @@
-import React from 'react'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react';
 import { useFinanceAPI } from '../../../context/FinanceApiContext';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkGetBTCPrice } from '../../../store/stock';
 import { thunkGetStockIntraDay } from '../../../store/stock';
 import { thunkGetStockDaily } from '../../../store/stock';
-
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
+import Triangle from './triangle-16.png';
 import { Line } from 'react-chartjs-2';
+import Chart from 'chart.js/auto';
+import { CategoryScale } from 'chart.js';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+
 
 export default function UserHomePage() {
-  const [graphData, setGraphData] = useState([])
-  const chartRef = useRef(null);
-  const [hoverIndex, setHoverIndex] = useState(null)
-  const [verticalLinePos, setVerticalLinePos] = useState(null)
-  const dispatch = useDispatch()
+  const [price, setPrice] = useState(5)
+  const [graph, setGraph] = useState([])
   const BTC = useSelector(state => state.stocks.BTCPrice)
   const SPY = useSelector(state => state.stocks.stockDaily)
   const today = new Date().toISOString().substring(0, 10)
 
-  const now = new Date();
-  const labels = []
-  const data = []
 
-  // Starts with 4:00 AM
+  const mockData = () => {
+    let data = []
 
+    let value = 10000
+    for (let i = 0; i < 60 * 12; i += 15) {
+      let date = new Date();
+      date.setHours(4);
+      date.setMinutes(0);
+      value+= Math.floor(Math.random() * (15000 - 5000 + 1)) + 5000
 
-  now.setHours(4);
-  now.setMinutes(0);
-
-  for (let i = 0; i < 60 * 12; i += 15) {
-    const time = new Date(now.getTime() + i * 60 * 1000); // Add 5 minutes to each label
-    labels.push(time.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }));
-    data.push(Math.floor(Math.random() * (15000 - 5000 + 1)) + 5000); // generate random data for each interval
+      data.push({x: date, y: value})
+    }
+    setGraph(data)
   }
-
   
+  useEffect(() => {
+    mockData()
+  }, [])
+
+  console.log(graph)
 
   const chartData = {
-    labels: labels,
-    datasets: [
-      // {
-      //   label: "Hover Dot",
-      //   data: data,
-      //   pointBackgroundColor: 'white',
-      //   // pointRadius: 8,
-      //   // pointHoverRadius: 6,
-      //   // pointBorderWidth: 2,
-      //   // pointBorderColor: 'rgba(75,192,192,1)',
-      //   // pointBackgroundColor: 'green',
-      //   tension: 0.1,
-      //   showLine: true,
-      // },
+    labels: graph.map((data) => data.x.split(" ")[0]),
+    datasets:[
       {
-        type: "line",
-        data: data,
-        backgroundColor: "green",
-        borderColor: "#5AC53B",
-        borderWidth: 2,
-        pointBorderColor: 'rgba(0, 0, 0, 0)',
-        pointBackgroundColor: 'rgba(0, 0, 0, 0)',
-        pointHoverBackgroundColor: 'green',
-        pointHoverBorderColor: 'green',
-        pointHoverBorderWidth: 4,
-        pointHoverRadius: 6
-      },
-      {
-        pointStyle: "line",
-        data: data,
+          type: "line",
+          data: graph.map((data) => data.y),
+          backgroundColor: "black",
+          borderColor: "#5AC53B",
+          borderWidth: 2,
+          pointBorderColor: 'rgba(0, 0, 0, 0)',
+          pointBackgroundColor: 'rgba(0, 0, 0, 0)',
+          pointHoverBackgroundColor: '#5AC53B',
+          pointHoverBorderColor: '#000000',
+          pointHoverBorderWidth: 4,
+          pointHoverRadius: 6
       }
     ]
   }
 
-  const chartOptions = {
-    maintainAspectRatio: false,
-    responsive: true,
-    elements: {
-      line: {
-        borderWidth: 2,
-        borderColor: 'white',
-        fill: false
-      }
-    },
-    tooltips: {
-      mode: "index",
-      intersect: false
-    },
-    datasets: {
-      point: {
-        radius: 0
-      }
-    },
-    scales: {
-      x: {
-        grid: {
-          display: false,
-          color: '#white' // set the default color of gridlines
-        },
-        ticks: {
-          color: 'white', // set the color of tick labels
-          display: false
-        }
-      },
-      y: {
-        grid: {
-          display: false
-        },
-        ticks: {
-          color: 'white', // set the color of tick labels
-          display: false
-        }
-      }
-    },
-    interaction: {
-      intersect: false,
-      mode: "nearest",
-      axis: "x",
-      onHover: (event, chartElements) => {
-        if (chartElements.length) {
-          const { x, y } = chartElements[0].element;
-          const chartInstance = chartRef.current.chartInstance;
-          const activePoint = chartInstance.getElementAtEvent(event);
-          const dataIndex = activePoint[0].index;
-          setHoverIndex(dataIndex);
-          setVerticalLinePos(x);
-        } else {
-          setHoverIndex(null);
-          setVerticalLinePos(null);
-        }
-      },
-    },
-    plugins: {
-      tooltip: {
-        enabled: false,
-        custom: function (tooltipModel) {
-          if (tooltipModel.body && tooltipModel.body.length) {
-            const label = tooltipModel.dataPoints[0].label;
-            tooltipModel.title = label;
-          }
-        }
-      },
-      legend: {
-        display: false
-      }
-    },
-    layout: {
-      padding: {
-        top: 20,
-        right: 20,
-        bottom: 20,
-        left: 20
-      },
-      // onResize: (chart, size) => {
-      //   chart.options.scales.x.grid.color = hoverIndex !== null ? 'white' : '#707070';
-      //   chart.update();
-      // }
+
+  // const chartOptions = {
+  //   maintainAspectRatio: false,
+  //   responsive: true,
+  //   scales: {
+  //     x: {
+  //       grid: {
+  //         display: false,
+  //         color: '#white' // set the default color of gridlines
+  //       },
+  //       ticks: {
+  //         color: 'white', // set the color of tick labels
+  //         display: false
+  //       }
+  //     },
+  //     y: {
+  //       grid: {
+  //         display: false
+  //       },
+  //       ticks: {
+  //         color: 'white', // set the color of tick labels
+  //         display: false
+  //       }
+  //     }
+  //   },
+  //   interaction: {
+  //     intersect: false,
+  //     mode: "nearest",
+  //     axis: "x",
       
-    }
-  };
+  //   },
+  //   layout: {
+  //     padding: {
+  //       top: 20,
+  //       right: 20,
+  //       bottom: 20,
+  //       left: 20,
+  //     },
+  //   },
+  //   plugins: {
+  //     tooltip: {
+  //       enabled: false,
+  //     },
+  //     legend: {
+  //       display: false,
+  //     },
+  //     datalabels: {
+  //       display: false,
+  //     },
 
+  //   },
+  // };
 
-  // useEffect(() => {
-  //   dispatch(thunkGetBTCPrice())
-  //   dispatch(thunkGetStockDaily('SPY'))
-    
-  // }, [dispatch])
-
-  if (!BTC) return null
-  if (!SPY) return null
+  if (!BTC || !SPY) return null;
 
   return (
     <div className="homepage-container">
       <div className="chart-container">
+        <div className="portfolio-data-container">
+        <div className="price">${price.toFixed(2)}</div>
+          <div>
+            <span>
+              <img className="green-triangle" src={Triangle} alt="" />
+            </span>
+            </div> 
+        </div>
         <Line
         data={chartData}
-        options={chartOptions}
+        // options={chartOptions}
         />
-        {verticalLinePos !== null && (
-          <div className="chart-vertical-line" style={{ left: `${verticalLinePos}px` }}></div>
-        )}
+
       </div>
       <div className="change-timeline-button">
         <span>

@@ -1,11 +1,11 @@
-const apiKey = "0MPIU2TLAS20RTTM"
-
+const apiKey="0MPIU2TLAS20RTTM"
 
 
 
 // constants
 const GET_STOCK_INTRADAY = 'stocks/GET_STOCK_INTRADAY'
 const GET_STOCK_DAILY = 'stocks/GET_STOCK_DAILY'
+const GET_STOCK_WEEKLY = 'stocks/GET_STOCK_WEEKLY'
 const GET_STOCK_NEWS = 'stocks/GET_STOCKNEWS'
 const GET_STOCK_FUNDAMENTALS = 'stocks/GET_STOCK_FUNDAMENTALS'
 const GET_BTC_PRICE = 'stocks/GET_BTC_PRICE'
@@ -19,6 +19,11 @@ const actionGetStockIntraday = (stocks) => ({
 
 const actionGetStockDaily = (stocks) => ({
     type: GET_STOCK_DAILY,
+    stocks
+})
+
+const actionGetStockWeekly = (stocks) => ({
+    type: GET_STOCK_WEEKLY,
     stocks
 })
 
@@ -37,6 +42,8 @@ const actionGetBTCPrice = (BTC) => ({
     type: GET_BTC_PRICE,
     BTC
 })
+
+
 
 
 // thunks
@@ -70,6 +77,16 @@ export const thunkGetStockDaily = ticker => async (dispatch) => {
     }
 }
 
+export const thunkGetStockWeekly = ticker => async (dispatch) => {
+    const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=${ticker}&apikey=${apiKey}`)
+
+    if (response.ok) {
+        const Weekly = await response.json()
+        dispatch(actionGetStockWeekly(Weekly))
+        return Weekly
+    }
+}
+
 export const thunkGetStockFundamentals = (ticker) => async (dispatch) => {
     const response = await fetch(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${ticker}&apikey=${apiKey}`)
 
@@ -94,9 +111,10 @@ const initialState = {
     stockNews: {},
     stockIntraDay: {},
     stockDaily: {},
+    stockWeekly: {},
+    stockMonthly: {},
     stockFundamentals: {},
-    BTCPrice: {}
-
+    BTCPrice: {},
 }
 
 // reducers
