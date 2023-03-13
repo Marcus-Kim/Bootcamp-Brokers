@@ -18,3 +18,11 @@
     font-weight: bold;
     cursor: pointer;
 }
+
+
+.indexes-container {
+    width: 1010px;
+    background-color: antiquewhite;
+    display: flex;
+    justify-content: space-between;
+}
