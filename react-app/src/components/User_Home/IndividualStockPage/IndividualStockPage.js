@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useFinanceAPI } from "../../../context/FinanceApiContext";
 import "./IndividualStockPage.css"
 import { thunkGetStockNews, thunkGetStockFundamentals, thunkGetStockIntraDay, thunkGetStockDaily } from "../../../store/stock";
-import DailyData from "./charts/DailyData";
+import OneDayChart from "./charts/OneDayChart";
 
 
 export default function IndividualStockPage() {
@@ -19,8 +19,8 @@ export default function IndividualStockPage() {
     // const stockIntraDay = useSelector(state => state.stocks.stockIntraDay)
     const stockDaily = useSelector(state => state.stocks.stockDaily)
 
-    console.log("stockFundamentals :", stockFundamentals)
-    console.log("stockDaily: ", stockDaily)
+    // console.log("stockFundamentals :", stockFundamentals)
+    // console.log("stockDaily: ", stockDaily)
 
     useEffect(() => {
         dispatch(thunkGetStockFundamentals(tickerCap))
@@ -39,7 +39,7 @@ export default function IndividualStockPage() {
         <div className="stock-page-main-container">
             <h1>{stockFundamentals["Symbol"]}</h1>
             <div>
-                <DailyData ticker={tickerCap} />
+                <OneDayChart ticker={tickerCap} />
                 <button>1D</button>
                 <button>1W</button>
                 <button>1M</button>
