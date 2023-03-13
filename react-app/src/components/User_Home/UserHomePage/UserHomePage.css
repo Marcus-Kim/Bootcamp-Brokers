@@ -1,3 +1,8 @@
+.home-container {
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+}
+
 .homepage-navigationcontainer {
     display: flex;
     justify-content: space-between;
@@ -7,7 +12,7 @@
 .homepage-rightcontainer {
     display: flex;
     gap: 30px;
-    margin-right: 3%;
+    
 }
 
 .home-nav {
@@ -30,6 +35,19 @@
 .chart-container {
     width: 1200px;
     height: 700px;
-    background-color: black;
+    background-color: white;
+    text-decoration: none;
+}
+
+.price {
+    font-size: 32px;
+    font-family: "Montserrat";
+    color: black;
     
+}
+
+.green-triangle {
+    color: rgb(0, 200, 5);
+    width: 12px;
+    height: 12px;
 }
