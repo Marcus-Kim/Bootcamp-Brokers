@@ -14,6 +14,7 @@ import Signup from './components/Navigation/Signup/Signup';
 import UserHomePageNav from "./components/User_Home/UserHomePage/UserHomePageNav";
 import IndividualStockPage from './components/User_Home/IndividualStockPage/IndividualStockPage'
 import NotFound from './components/Navigation/NotFound/NotFound'
+import WatchlistDetails from './components/Watchlists/WatchlistDetails'
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
           <Route path="/signup" element={<Signup />}></Route>
           <Route path="/home" element={<UserHomePageNav />}></Route>
           <Route path="/stocks/:ticker" element={<IndividualStockPage />} />
+          <Route path="/watchlists/:watchlistId" element={<WatchlistDetails />} />
           <Route path='*' exact={true} element={<NotFound />} />
         </Routes>
       )}
