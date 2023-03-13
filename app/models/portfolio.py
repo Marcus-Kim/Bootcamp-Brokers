@@ -8,7 +8,7 @@ class Portfolio(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id"), ondelete='CASCADE'), nullable=False)
     cash_balance = db.Column(db.Float(asdecimal=True, decimal_return_scale=2), nullable=False)
     initial_principle = db.Column(db.Float(asdecimal=True, decimal_return_scale=2), nullable=False)
 

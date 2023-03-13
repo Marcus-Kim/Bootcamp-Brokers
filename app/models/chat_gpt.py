@@ -6,4 +6,4 @@ class Chat_GPT(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     last_message_id = db.Column(db.String(255), db.ForeignKey(add_prefix_for_prod('messages.id')))
 
-    messages = db.relationship("Message", back_populates='chat_gpt')
+    messages = db.relationship("Message", back_populates='chat_gpt_instance')
