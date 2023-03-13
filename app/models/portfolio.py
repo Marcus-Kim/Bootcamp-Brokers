@@ -23,3 +23,12 @@ class Portfolio(db.Model):
             stock.current_price * share.shares for share in self.portfolio_shares for stock in share.stocks
         )
         return self.initial_principle - (total_stock_value + self.cash_balance)
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'profit_loss': self.profit_loss,
+            'cash_balance': self.cash_balance,
+            'initial_principle': self.initial_principle
+        }
