@@ -52,3 +52,6 @@ class Post(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     author = db.relationship('User', back_populates='posts')
 ```
+
+## Association Objects vs Association Tables
+

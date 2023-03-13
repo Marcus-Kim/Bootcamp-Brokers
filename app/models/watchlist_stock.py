@@ -11,7 +11,7 @@ watchlist_stocks = db.Table(
     db.Column(
         'watchlist_id',
         db.Integer,
-        db.ForeignKey(add_prefix_for_prod('watchlists.id')),
+        db.ForeignKey(add_prefix_for_prod('watchlists.id'), ondelete='CASCADE'),
         primary_key=True
     )
 )

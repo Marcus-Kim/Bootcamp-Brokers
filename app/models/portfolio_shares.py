@@ -8,7 +8,7 @@ class PortfolioShare(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    portfolio_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("portfolios.id")), nullable=False)
+    portfolio_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("portfolios.id"), ondelete='CASCADE'), nullable=False)
     ticker_id = db.Column(db.String(10), db.ForeignKey(add_prefix_for_prod("stocks.ticker")), nullable=False)
     shares = db.Column(db.Integer, nullable=False)
 

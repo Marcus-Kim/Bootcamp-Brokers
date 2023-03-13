@@ -13,7 +13,7 @@ class Stock(db.Model):
     current_price = db.Column(db.Float(asdecimal=True, decimal_return_scale=2), nullable=False)
     daily_change = db.Column(db.Float(asdecimal=True, decimal_return_scale=2), nullable=False)
 
-    transaction = db.relationship("Transaction", back_populates="stock")
+    transactions = db.relationship("Transaction", back_populates="stock")
     watchlists = db.relationship(
             'Watchlist',
             secondary=watchlist_stocks,
