@@ -34,7 +34,7 @@ def delete_watchlist_by_id(id):
     return "Successfully Deleted"
 
 @watchlist_routes.route('/', methods=['POST'])
-# @login_required
+@login_required
 def create_watchlist():
     """Route for creating a watchlist"""
     res = request.get_json()
@@ -45,7 +45,7 @@ def create_watchlist():
     return new_watchlist.to_dict()
 
 @watchlist_routes.route('/<int:id>', methods=['PUT'])
-# @login_required
+@login_required
 def update_watchlist(id):
     """Route for updating a watchlist by id"""
     res = request.get_json()
