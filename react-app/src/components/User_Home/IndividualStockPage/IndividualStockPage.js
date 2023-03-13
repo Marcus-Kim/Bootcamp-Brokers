@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux"
 import { useFinanceAPI } from "../../../context/FinanceApiContext";
 import "./IndividualStockPage.css"
-import { thunkGetStockNews, thunkGetStockFundamentals, thunkGetStockIntraDay } from "../../../store/stock";
+import { thunkGetStockNews, thunkGetStockFundamentals, thunkGetStockIntraDay, thunkGetStockDaily } from "../../../store/stock";
+import DailyData from "./charts/DailyData";
 
 
 export default function IndividualStockPage() {
@@ -15,24 +16,37 @@ export default function IndividualStockPage() {
     // console.log("tickerCap: ", tickerCap)
 
     const stockFundamentals = useSelector(state => state.stocks.stockFundamentals)
-    const stockIntraDay = useSelector(state => state.stocks.stockIntraDay)
+    // const stockIntraDay = useSelector(state => state.stocks.stockIntraDay)
+    const stockDaily = useSelector(state => state.stocks.stockDaily)
 
-    // console.log("stockFundamentals :", stockFundamentals)
-    // console.log("stockIntraday: ", stockIntraDay)
+    console.log("stockFundamentals :", stockFundamentals)
+    console.log("stockDaily: ", stockDaily)
 
     useEffect(() => {
         dispatch(thunkGetStockFundamentals(tickerCap))
         // dispatch(thunkGetStockIntraDay(tickerCap, "5min"))
+        dispatch(thunkGetStockDaily(tickerCap))
     }, [dispatch, ticker])
 
 
 
     if (!stockFundamentals) return null
+    if (!stockDaily) return null
+    if (!stockDaily["Time Series (Daily)"]) return null
 
 
     return (
         <div className="stock-page-main-container">
             <h1>{stockFundamentals["Symbol"]}</h1>
+            <div>
+                <DailyData ticker={tickerCap} />
+                <button>1D</button>
+                <button>1W</button>
+                <button>1M</button>
+                <button>3M</button>
+                <button>1Y</button>
+                <button>5Y</button>
+            </div>
 
             <h3>About</h3>
             <p>
@@ -43,18 +57,19 @@ export default function IndividualStockPage() {
                     Key Statistics
                  </div>
                  <div className="stat-value-container">
-                    <div>
+                    <div className="stat-box">
                         <div>Market Cap </div>
                         <div>{Number(stockFundamentals["MarketCapitalization"]).toLocaleString()}</div>
                     </div>
-                    <div>
+                    <div className="stat-box">
                         <div>Price-Earning ratio </div>
-                        <div>{`${stockFundamentals["PERatio"]}`}</div>
+                        <div>{stockFundamentals["PERatio"]}</div>
                     </div>
-                    <div>
-                        <div>Average Volume </div>
+                    <div className="stat-box">
+                        <div>Volume </div>
+                        <div>{Number(stockDaily["Time Series (Daily)"]["2023-03-08"]["6. volume"]).toLocaleString()}</div>
                     </div>
-                    <div>
+                    <div className="stat-box">
                         <div>Dividend yield </div>
                         <div>{+stockFundamentals["DividendYield"] !== 0
                                 ? `${+stockFundamentals["DividendYield"] * 100} %`
@@ -63,23 +78,19 @@ export default function IndividualStockPage() {
                     </div>
                     <div className="stat-box">
                         <div>Today High </div>
-                        {/* <div>${data["Time Series (Daily)"]["2023-03-08"]["2. high"]}</div> */}
+                        <div>${stockDaily["Time Series (Daily)"]["2023-03-08"]["2. high"]}</div>
                     </div>
-                    <div>
+                    <div className="stat-box">
                         <div>Today Low </div>
-                        {/* <div>${data["Time Series (Daily)"]["2023-03-08"]["3. low"]}</div> */}
+                        <div>${stockDaily["Time Series (Daily)"]["2023-03-08"]["3. low"]}</div>
                     </div>
-                    <div>
-                        <div>Volume </div>
-                        {/* <div>{data["Time Series (Daily)"]["2023-03-08"]["6. volume"]}</div> */}
-                    </div>
-                    <div>
+                    <div className="stat-box">
                         <div>Today Open </div>
-                        {/* <div>${data["Time Series (Daily)"]["2023-03-08"]["1. open"]}</div> */}
+                        <div>${stockDaily["Time Series (Daily)"]["2023-03-08"]["1. open"]}</div>
                     </div>
-                    <div>
+                    <div className="stat-box">
                         <div>Today Close </div>
-                        {/* <div>{data["Time Series (Daily)"]["2023-03-08"]["4. close"]}</div> */}
+                        <div>${stockDaily["Time Series (Daily)"]["2023-03-08"]["4. close"]}</div>
                     </div>
                 </div>
                 <div className="purchase-container">

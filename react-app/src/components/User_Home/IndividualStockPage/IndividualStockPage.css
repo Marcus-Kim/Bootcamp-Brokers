@@ -27,6 +27,7 @@
 .stat-box {
     display: flex;
     flex-direction: column;
+    gap: 5px;
 }
 
 .purchase-container {

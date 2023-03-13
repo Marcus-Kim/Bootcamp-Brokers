@@ -1,6 +1,5 @@
-const apiKey = "CRN1I5X51XQTTFBH"
-const apiKey2 = "BYS7R29VDVBEP38O"
-const apiKey3 = "3M5OB7SQ4L0ZKJQH"
+const apiKey = "0MPIU2TLAS20RTTM"
+
 
 
 
@@ -16,7 +15,7 @@ const GET_BTC_PRICE = 'stocks/GET_BTC_PRICE'
 const actionGetStockIntraday = (stocks) => ({
     type: GET_STOCK_INTRADAY,
     stocks
-}) 
+})
 
 const actionGetStockDaily = (stocks) => ({
     type: GET_STOCK_DAILY,
@@ -43,7 +42,7 @@ const actionGetBTCPrice = (BTC) => ({
 // thunks
 export const thunkGetStockNews = ticker => async (dispatch) => {
     const response = await fetch(`https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=${ticker}&apikey=${apiKey}`)
-    
+
     if (response.ok) {
         const stockNews = await response.json()
         dispatch(actionGetStockNews(stockNews))
@@ -53,7 +52,7 @@ export const thunkGetStockNews = ticker => async (dispatch) => {
 
 export const thunkGetStockIntraDay = (ticker, interval) => async (dispatch) => {
     const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${ticker}&interval=${interval}&apikey=${apiKey}`)
-    
+
     if (response.ok) {
         const IntraDay = await response.json()
         dispatch(actionGetStockIntraday(IntraDay))
@@ -62,7 +61,7 @@ export const thunkGetStockIntraDay = (ticker, interval) => async (dispatch) => {
 }
 
 export const thunkGetStockDaily = ticker => async (dispatch) => {
-    const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${ticker}&outputsize=compact&apikey=${apiKey2}`)
+    const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${ticker}&outputsize=compact&apikey=${apiKey}`)
 
     if (response.ok) {
         const Daily = await response.json()
@@ -73,7 +72,7 @@ export const thunkGetStockDaily = ticker => async (dispatch) => {
 
 export const thunkGetStockFundamentals = (ticker) => async (dispatch) => {
     const response = await fetch(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${ticker}&apikey=${apiKey}`)
-    
+
     if (response.ok) {
         const StockFundamentals = await response.json()
         dispatch(actionGetStockFundamentals(StockFundamentals))
@@ -82,7 +81,7 @@ export const thunkGetStockFundamentals = (ticker) => async (dispatch) => {
 }
 
 export const thunkGetBTCPrice = () => async (dispatch) => {
-    const response = await fetch(`https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=USD&apikey=${apiKey3}`)
+    const response = await fetch(`https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=USD&apikey=${apiKey}`)
 
     if (response.ok) {
         const BTCPrice = await response.json()
@@ -129,9 +128,7 @@ export default function stocksReducer(state = initialState, action) {
             return newState
         }
 
-    default: 
-        return state 
+    default:
+        return state
     }
 }
-
-
