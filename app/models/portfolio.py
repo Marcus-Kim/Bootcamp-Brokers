@@ -17,12 +17,21 @@ class Portfolio(db.Model):
     portfolio_values = db.relationship("PortfolioValue", back_populates="portfolio")
 
     @property
-    def profit_loss(self):
-        # Calculate the profit/loss based on current portfolio state
+    def total_stock_value(self):
         total_stock_value = sum(
             share.stocks.current_price * share.shares for share in self.portfolio_shares
         )
-        return self.initial_principle - (total_stock_value + self.cash_balance)
+        return total_stock_value
+    
+    @property
+    def overall_value(self):
+        overall_value = self.total_stock_value + self.cash_balance
+        return overall_value
+
+    @property
+    def profit_loss(self):
+        # Calculate the profit/loss based on current portfolio state
+        return self.initial_principle - (self.overall_value)
 
     
     def to_dict(self):
