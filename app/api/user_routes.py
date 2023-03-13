@@ -42,6 +42,10 @@ def all_watchlists_by_user(userId):
 
 
     watchlists = Watchlist.query.filter_by(user_id=userId).all()
+
+    # for watchlist in watchlists:
+
+
     watchlist_data = [watchlist.to_dict() for watchlist in watchlists]
     return jsonify(watchlist_data)
 
