@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask_login import login_required, current_user
-from app.models import Portfolio, PortfolioValue, db
+from app.models import Portfolio, PortfolioValue, PortfolioShare, db
 
 portfolio_routes = Blueprint('portfolio', __name__)
 
@@ -14,6 +14,16 @@ def portfolio_historical_value_by_id():
 
     return [p.to_dict() for p in portfolio_values]
 
+# Get portfolio holdings data
+@portfolio_routes.route('/holdings')
+@login_required
+def holdings():
+    """Route for getting portfolio holdings"""
+    portfolio = Portfolio.query.filter_by(user_id=current_user.id).first()
+    portfolio_shares = PortfolioShare.query.filter_by(portfolio_id=portfolio.id).all()
+
+    return [s.to_dict() for s in portfolio_shares]
+
 # Get portfolio of current user
 @portfolio_routes.route('/')
 @login_required
@@ -22,8 +32,8 @@ def get_user_portfolio():
     portfolio = Portfolio.query.get(current_user.id)
     return portfolio.to_dict()
 
-from datetime import datetime
 # Log current value of portfolio to portfolio_values table
+from datetime import datetime
 @portfolio_routes.route('/create-snapshot', methods=['POST'])
 @login_required
 def create_portfolio_snapshot():
