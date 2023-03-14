@@ -190,6 +190,8 @@
   .dropdown > a:hover {
     color: #28C02C;
   }
+
+  .hidden {
+    display: none;
+  }
   
-
-

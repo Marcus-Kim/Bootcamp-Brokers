@@ -192,8 +192,6 @@ export default function UserHomePage() {
   return (
     <div className="leftside-container">
       <div className="chart-container">
-        
-
         <div className="real-chart-container">
         <div className="portfolio-data-container">
         <div className="price">${price.toFixed(2)}</div>
@@ -207,15 +205,11 @@ export default function UserHomePage() {
         <Line
           data={chartData}
           options={chartOptions}
-
           />
         </div>
-         
         </div>
         <div className="watchlist-container">Watchlist Container</div>
-
       </div>
-
       <div style={{marginTop: '5%', width: 1000}} className="change-timeline-button">
         <span >
           <button className="profile-timeline">1D</button>

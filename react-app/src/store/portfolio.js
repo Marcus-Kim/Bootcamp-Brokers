@@ -47,7 +47,7 @@ export const thunkGetPortfolioHistoricalValues = () => async (dispatch) => {
 
     if (response.ok) {
         const historicalValues = await response.json()
-        dispatch(actionGetPortfolioHistoricalValues(historicalValues))
+        await dispatch(actionGetPortfolioHistoricalValues(historicalValues))
         return historicalValues
     }
 }
