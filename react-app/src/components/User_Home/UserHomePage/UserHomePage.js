@@ -9,7 +9,7 @@ import Chart from 'chart.js/auto';
 import { CategoryScale } from 'chart.js';
 import { thunkGetNasdaq } from '../../../store/stock';
 import { thunkGetSPY } from '../../../store/stock';
-import { thunkGetRandomStockNews } from '../../../store/stock';
+import { thunkGetStockNews } from '../../../store/stock'
 
 
 export default function UserHomePage() {
@@ -25,7 +25,7 @@ export default function UserHomePage() {
   const yesterday = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
   const yesterdayString = yesterday.toISOString().substring(0, 10);
-  const cashBalance = useSelector(state => state.porfolio.port)
+  const portfolio = useSelector(state => state.portfolio)
   
   
 
@@ -59,7 +59,7 @@ export default function UserHomePage() {
     dispatch(thunkGetBTCPrice())
     dispatch(thunkGetNasdaq())
     dispatch(thunkGetSPY())
-    dispatch(thunkGetRandomStockNews())
+    dispatch(thunkGetStockNews())
   }, [dispatch])
 
   const verticalLinePlugin = {
@@ -221,7 +221,7 @@ export default function UserHomePage() {
 
       <div className='buying-power'>
       <span>Buying Power</span>
-      <span>$0.00</span>
+      <span>{ portfolio.cash_balance }</span>
       </div>
 
       <hr style={{border: 'none', borderTop: "1px solid #d3d3d3"}} />
