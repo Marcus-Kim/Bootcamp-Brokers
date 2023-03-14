@@ -154,7 +154,7 @@ export const thunkGetSPY = () => async (dispatch) => {
 
     if (response.ok) {
         const Daily = await response.json()
-        dispatch(actionGetStockDaily(Daily))
+        dispatch(actionGetSpy(Daily))
         return Daily
     }
 }
@@ -164,7 +164,7 @@ export const thunkGetNasdaq = () => async (dispatch) => {
 
     if (response.ok) {
         const Daily = await response.json()
-        dispatch(actionGetStockDaily(Daily))
+        dispatch(actionGetNasdaq(Daily))
         return Daily
     }
 }
@@ -188,6 +188,15 @@ export const thunkGetOneYearStockData = (ticker) => async (dispatch) => {
         const result = await response.json()
         dispatch(actionGetOneYearStockData(result))
         return result
+    }
+}
+export const thunkGetRandomStockNews = () => async (dispatch) => {
+    const response = await fetch(`https://www.alphavantage.co/query?function=NEWS_SENTIMENT&apikey=${apiKey}`)
+
+    if (response.ok) {
+        const stockNews = await response.json()
+        dispatch(actionGetRandomStockNews(stockNews))
+        return stockNews
     }
 }
 
