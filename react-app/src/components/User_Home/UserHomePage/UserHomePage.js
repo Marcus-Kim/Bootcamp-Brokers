@@ -167,7 +167,6 @@ export default function UserHomePage() {
         },
       },
     },
-    
     plugins: {
       tooltips: {
         mode: "index",
