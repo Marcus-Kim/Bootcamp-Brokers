@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 47d9ff0c47f1
+Revision ID: 141e481c4715
 Revises:
-Create Date: 2023-03-13 13:22:22.772545
+Create Date: 2023-03-14 08:50:05.448189
 
 """
 from alembic import op
@@ -14,7 +14,7 @@ SCHEMA = os.environ.get("SCHEMA")
 
 
 # revision identifiers, used by Alembic.
-revision = '47d9ff0c47f1'
+revision = '141e481c4715'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -98,16 +98,6 @@ def upgrade():
     if environment == "production":
         op.execute(f"ALTER TABLE watchlists SET SCHEMA {SCHEMA};")
 
-    op.create_table('chat_gpt',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('last_message_id', sa.String(length=255), nullable=True),
-    sa.ForeignKeyConstraint(['last_message_id'], ['messages.id'], ),
-    sa.PrimaryKeyConstraint('id')
-    )
-
-    if environment == "production":
-        op.execute(f"ALTER TABLE chat_gpt SET SCHEMA {SCHEMA};")
-
     op.create_table('portfolio_shares',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('portfolio_id', sa.Integer(), nullable=False),
@@ -143,7 +133,6 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE watchlist_stocks SET SCHEMA {SCHEMA};")
-
     # ### end Alembic commands ###
 
 
@@ -152,7 +141,6 @@ def downgrade():
     op.drop_table('watchlist_stocks')
     op.drop_table('portfolio_values')
     op.drop_table('portfolio_shares')
-    op.drop_table('chat_gpt')
     op.drop_table('watchlists')
     op.drop_table('transactions')
     op.drop_table('portfolios')
