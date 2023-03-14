@@ -23,6 +23,8 @@ export default function WatchlistDetails() {
     return null
   }
 
+  if (!selectedWatchlist) return null;
+
 
   return (
     <div className="watchlist-details-container">
@@ -68,7 +70,7 @@ export default function WatchlistDetails() {
           </table>
         </div>
         <div className='watchlist-details-lists'> {/* LIST COMPONENT */}
-          <Watchlists />
+          <Watchlists watchlists={watchlists}/>
         </div>
       </div>
     </div>
