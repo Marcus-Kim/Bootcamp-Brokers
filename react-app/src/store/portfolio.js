@@ -73,7 +73,7 @@ export const thunkGetPortfolioHoldings = () => async (dispatch) => {
 
 // Get Portfolio of Current User
 export const thunkGetUserPortfolio = () => async (dispatch) => {
-    const response = await fetch(`/api/portfolio`)
+    const response = await fetch(`/api/portfolio/`)
 
     if (response.ok) {
         const portfolio = await response.json()

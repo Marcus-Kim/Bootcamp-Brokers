@@ -7,6 +7,7 @@ import { ModalProvider, Modal } from "./context/Modal";
 import FinanceAPIProvider from "./context/FinanceApiContext";
 import configureStore from "./store";
 import * as sessionActions from "./store/session";
+import * as portfolioActions from "./store/portfolio";
 import App from "./App";
 import "./index.css";
 
@@ -16,6 +17,7 @@ const store = configureStore();
 if (process.env.NODE_ENV !== "production") {
 	window.store = store;
 	window.sessionActions = sessionActions;
+	window.portfolioActions = portfolioActions;
 }
 
 // Wrap the application with the Modal provider and render the Modal component
