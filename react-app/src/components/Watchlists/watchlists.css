@@ -38,3 +38,7 @@
   background-color: rgb(194, 194, 194);
   border-radius: 2px;
 }
+
+.watchlist-item-name {
+  text-align: center;
+}
