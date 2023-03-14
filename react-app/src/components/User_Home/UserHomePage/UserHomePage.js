@@ -10,6 +10,7 @@ import { CategoryScale } from 'chart.js';
 import { thunkGetNasdaq } from '../../../store/stock';
 import { thunkGetSPY } from '../../../store/stock';
 import { thunkGetStockNews } from '../../../store/stock'
+import Watchlists from '../../Watchlists/Watchlists';
 
 
 export default function UserHomePage() {
@@ -17,6 +18,7 @@ export default function UserHomePage() {
   const [price, setPrice] = useState(5)
   const [hoverIndex, setHoverIndex] = useState(null);
   const [graph, setGraph] = useState([])
+  const watchlists = useSelector(state => state.watchlist)
   const BTC = useSelector(state => state.stocks.BTCPrice)
   const SPY = useSelector(state => state.stocks.SPY) // This is not working
   const Nasdaq = useSelector(state => state.stocks.Nasdaq) // This is not working
@@ -242,7 +244,9 @@ export default function UserHomePage() {
           ))}
         </div>
       </div>
-      <div className="watchlist-container">Watchlist Container</div>
+      <div className="watchlist-container">
+        <Watchlists watchlists={watchlists}/>
+      </div>
     </div>
   )  
 }

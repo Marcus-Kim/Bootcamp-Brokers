@@ -1,8 +1,8 @@
 .home-container {
     display: flex;
     flex-direction: column;
-    margin-left: 3%;
-    margin-right: 3%;
+    margin-left: 30px;
+    margin-right: 30px;
     max-width: 95%;
     width: 100%;
 }
@@ -68,7 +68,7 @@
     font-size: 32px;
     font-family: Sans-Serif;
     color: black;
-    font-weight: bold;
+    font-weight: 400;
 }
 
 .green-triangle {
@@ -106,15 +106,13 @@
     height: 100%;
 }
 
-
-.real-chart-container {
-    width: 1000px;
-    height: 250px;
-}
-
 .leftside-container {
     height: 100%;
     width: 1000px;
+}
+
+.line-chart-container {
+    height: 100%;
 }
 
 .news-card {
@@ -157,8 +155,19 @@
 .watchlist-container {
     display: flex;
     border: 1px solid gray;
+    overflow-y: scroll;
     flex-direction: column;
-    width: 100%;
+    margin-left: 20px;
     max-width: 100%;
+    min-width: 239px;
     height: 100%;
+    width: 100%;
+    /* Hide scrollbar */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.watchlist-container::-webkit-scrollbar {
+    /* Hide scrollbar */
+    display: none;  /* Safari and Chrome */
 }
