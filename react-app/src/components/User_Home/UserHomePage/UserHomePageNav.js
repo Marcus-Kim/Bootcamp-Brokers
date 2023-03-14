@@ -9,25 +9,22 @@ export default function UserHomePageNav() {
     
 
     return (
-    <>
         <div className="home-container">
-        <div style={{paddingTop: '67px', marginBottom: '30px'}} className="homepage-navigationcontainer">
-            <div>
-            <img className='logo' src={logo} alt="logo" />
+            <div style={{paddingTop: '67px', marginBottom: '30px'}} className="homepage-navigationcontainer">
+                <div>
+                <img className='logo' src={logo} alt="logo" />
+                </div>
+                
+                <span className="homepage-rightcontainer">
+                    <NavLink className="home-nav">Rewards</NavLink>
+                    <NavLink className="home-nav">Investing</NavLink>
+                    <NavLink className="home-nav">Spending</NavLink>
+                    <NavLink className="home-nav">Retirement</NavLink>
+                    <NavLink className="home-nav">Notifications</NavLink>
+                    <NavLink className="home-nav">Account</NavLink>
+                </span>
             </div>
-            
-            <span className="homepage-rightcontainer">
-                <NavLink className="home-nav">Rewards</NavLink>
-                <NavLink className="home-nav">Investing</NavLink>
-                <NavLink className="home-nav">Spending</NavLink>
-                <NavLink className="home-nav">Retirement</NavLink>
-                <NavLink className="home-nav">Notifications</NavLink>
-                <NavLink className="home-nav">Account</NavLink>
-            </span>
+            <UserHomePage/>
         </div>
-        <UserHomePage/>
-        </div>
-    
-    </>
     )
 }

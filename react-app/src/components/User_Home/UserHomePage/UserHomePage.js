@@ -7,9 +7,9 @@ import Triangle from './triangle-16.png';
 import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import { CategoryScale } from 'chart.js';
-import { thunkGetNasdaq } from '../../../store/stock';
-import { thunkGetSPY } from '../../../store/stock';
-import { thunkGetRandomStockNews } from '../../../store/stock';
+// import { thunkGetNasdaq } from '../../../store/stock';
+// import { thunkGetSPY } from '../../../store/stock';
+// import { thunkGetRandomStockNews } from '../../../store/stock';
 
 
 export default function UserHomePage() {
@@ -56,9 +56,9 @@ export default function UserHomePage() {
   useEffect(() => {
     mockData()
     dispatch(thunkGetBTCPrice())
-    dispatch(thunkGetNasdaq())
-    dispatch(thunkGetSPY())
-    dispatch(thunkGetRandomStockNews())
+    // dispatch(thunkGetNasdaq())
+    // dispatch(thunkGetSPY())
+    // dispatch(thunkGetRandomStockNews())
     
   }, [dispatch])
 
