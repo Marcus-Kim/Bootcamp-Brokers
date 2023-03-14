@@ -3,16 +3,6 @@ import './ChatBubble.css'
 import Bubble from './chat.png'
 import { useSelector, useDispatch } from 'react-redux';
 
-
-const { Configuration, OpenAIApi } = require("openai");
-const openaiApiKey = process.env.OPENAI_API_KEY
-
-const configuration = new Configuration({
-  apiKey: openaiApiKey,
-});
-const openai = new OpenAIApi(configuration);
-
-
 export default function ChatBubble() {
     const [chatHistory, setChatHistory] = useState([])
     const [inputValue, setInputValue] = useState("")
@@ -49,7 +39,7 @@ export default function ChatBubble() {
 
     try {
         const response = await fetch(
-            "/api/messages",
+            "/api/messages/",
             {
                 method: "POST",
                 headers,
@@ -60,11 +50,21 @@ export default function ChatBubble() {
             throw new Error("Network response was not ok");
         }
 
+        const responseData = await response.json();
+        const botResponse = responseData.message;
+        setChatHistory((prevMessages) => [
+          ...prevMessages,
+          {
+            text: botResponse,
+            isUser: false,
+          },
+        ]);
+
         // If the message was stored successfully, clear the input field
         setInputValue("")
         } catch (error) {
           console.error("Error:", error);
-        }        
+        }
     };
 
     const handleSubmit = e => {
