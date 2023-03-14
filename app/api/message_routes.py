@@ -16,13 +16,26 @@ openai.Model.list()
 message_routes = Blueprint('messages', __name__)
 
 # Get Chat history of user
-@message_routes.route('/<int:id>')
+@message_routes.route('/')
 @login_required
 def get_all_chats():
-    pass
+    """Route for getting all the chat history with the bot based on userId"""
+    user_idvar = 1
 
+    messages = Message.query.filter_by(user_id=user_idvar).all()
+
+    return [m.to_dict() for m in messages]
 
 # Delete chat history of user
+@message_routes.route("/<int:id>")
+@login_required
+def delete_message_by_id(id):
+    """ Deletes a message by message Id """
+    message = Message.query.get(id)
+
+    db.session.delete(message)
+    db.session.commit()
+    return "Successfully deleted"
 
 # Create chat history of user
 @message_routes.route('/', methods=['POST'])

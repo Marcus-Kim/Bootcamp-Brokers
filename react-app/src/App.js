@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {Route, Routes} from 'react-router-dom'
-
+import ChatBubble from "./components/SplashPage/ChatGPT/ChatBubble";
 import { authenticate } from "./store/session";
 
 import './App.css';
@@ -34,6 +34,7 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
+      <ChatBubble/>
 
       {isLoaded && (
         <Routes>
