@@ -64,28 +64,31 @@ export const thunkGetPortfolioHoldings = () => async (dispatch) => {
 }
 
 // Get Portfolio of Current User
-export const thunkGetUserPortfolio = (portfolioId) => async (dispatch) => {
-    const response = await fetch(`/api/portfolio/${portfolioId}`)
+export const thunkGetUserPortfolio = () => async (dispatch) => {
+    const response = await fetch(`/api/portfolio`)
 
     if (response.ok) {
         const portfolio = await response.json()
-        dispatch(actionGetUserPortfolio(portfolio))
+        await dispatch(actionGetUserPortfolio(portfolio))
         return portfolio
     }
 }
 
 // Buy a stock
-export const thunkBuyStock = (portfolio) => async (dispatch) => {
+export const thunkBuyStock = (ticker, shares) => async (dispatch) => {
     const response = await fetch('/api/portfolio/buy', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({
+            ticker,
+            shares
+        })
     })
     if (response.ok) {
         const portfolio = await response.json()
-        dispatch(actionBuyStock(portfolio))
+        await dispatch(actionBuyStock(portfolio))
         return portfolio
     }
 }
