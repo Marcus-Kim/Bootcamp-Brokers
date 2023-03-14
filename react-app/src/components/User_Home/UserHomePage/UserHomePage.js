@@ -9,7 +9,7 @@ import Chart from 'chart.js/auto';
 import { CategoryScale } from 'chart.js';
 import { thunkGetNasdaq } from '../../../store/stock';
 import { thunkGetSPY } from '../../../store/stock';
-import { thunkGetStockNews } from '../../../store/stock'
+import { thunkGetRandomStockNews } from '../../../store/stock'
 import Watchlists from '../../Watchlists/Watchlists';
 
 
@@ -61,7 +61,7 @@ export default function UserHomePage() {
     dispatch(thunkGetBTCPrice())
     dispatch(thunkGetNasdaq())
     dispatch(thunkGetSPY())
-    dispatch(thunkGetStockNews())
+    dispatch(thunkGetRandomStockNews())
   }, [dispatch])
 
   const verticalLinePlugin = {
