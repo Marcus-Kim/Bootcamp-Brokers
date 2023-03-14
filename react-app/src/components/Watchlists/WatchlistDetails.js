@@ -10,20 +10,19 @@ export default function WatchlistDetails() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector(state => state.session.user.id)
-  const watchlists = useSelector(state => Object.values(state.watchlist))
+  const watchlists = useSelector(state => state.watchlist)
   const { watchlistId } = useParams()
 
-  const selectedWatchlist = watchlists[watchlistId]
+  const selectedWatchlist = watchlists[+watchlistId]
+  console.log('SELECTED WATCHLIST', selectedWatchlist)
 
   useEffect(() => {
     dispatch(thunkGetAllWatchlistsUserId(user))
   }, [dispatch])
 
-  if (!watchlists.length) {
-    return null
-  }
-
+  if (!watchlists) return null
   if (!selectedWatchlist) return null;
+  if (!user) return null;
 
 
   return (
@@ -63,7 +62,6 @@ export default function WatchlistDetails() {
                     <div className='watchlist-detail-stock-delete-button'>x</div>
                   </div>
                 </tr>
-
               )
             })}
             </tbody>

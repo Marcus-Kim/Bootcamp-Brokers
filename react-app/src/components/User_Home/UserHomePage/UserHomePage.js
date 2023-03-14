@@ -7,9 +7,9 @@ import Triangle from './triangle-16.png';
 import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import { CategoryScale } from 'chart.js';
-// import { thunkGetNasdaq } from '../../../store/stock';
-// import { thunkGetSPY } from '../../../store/stock';
-// import { thunkGetRandomStockNews } from '../../../store/stock';
+import { thunkGetNasdaq } from '../../../store/stock';
+import { thunkGetSPY } from '../../../store/stock';
+import { thunkGetStockNews } from '../../../store/stock'
 
 
 export default function UserHomePage() {
@@ -25,6 +25,7 @@ export default function UserHomePage() {
   const yesterday = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
   const yesterdayString = yesterday.toISOString().substring(0, 10);
+  const portfolio = useSelector(state => state.portfolio)
   
   
 
@@ -56,10 +57,9 @@ export default function UserHomePage() {
   useEffect(() => {
     mockData()
     dispatch(thunkGetBTCPrice())
-    // dispatch(thunkGetNasdaq())
-    // dispatch(thunkGetSPY())
-    // dispatch(thunkGetRandomStockNews())
-    
+    dispatch(thunkGetNasdaq())
+    dispatch(thunkGetSPY())
+    dispatch(thunkGetStockNews())
   }, [dispatch])
 
   const verticalLinePlugin = {
@@ -82,9 +82,6 @@ export default function UserHomePage() {
       }
     },
   };
-  
-
-
 
   const chartData = {
     labels: graph.map((data) => data.x),
@@ -104,7 +101,6 @@ export default function UserHomePage() {
       }
     ]
   }
-
 
   const chartOptions = {
     maintainAspectRatio: false,
@@ -222,10 +218,10 @@ export default function UserHomePage() {
         </span>
         <hr style={{border: 'none', borderTop: "1px solid #d3d3d3"}} />
       </div>
-      
+
       <div className='buying-power'>
       <span>Buying Power</span>
-      <span>$0.00</span>
+      <span>{ portfolio.cash_balance }</span>
       </div>
 
       <hr style={{border: 'none', borderTop: "1px solid #d3d3d3"}} />

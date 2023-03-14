@@ -15,13 +15,20 @@ import UserHomePageNav from "./components/User_Home/UserHomePage/UserHomePageNav
 import IndividualStockPage from './components/User_Home/IndividualStockPage/IndividualStockPage'
 import NotFound from './components/Navigation/NotFound/NotFound'
 import WatchlistDetails from './components/Watchlists/WatchlistDetails'
+import { thunkGetPortfolioHistoricalValues, thunkGetPortfolioHoldings, thunkGetUserPortfolio } from "./store/portfolio";
 
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  
+  // Populate redux store with user details on mount
   useEffect(() => {
-    dispatch(authenticate()).then(() => setIsLoaded(true));
+    dispatch(authenticate())
+      .then(() => dispatch(thunkGetPortfolioHistoricalValues()))
+      .then(() => dispatch(thunkGetPortfolioHoldings()))
+      .then(() => dispatch(thunkGetUserPortfolio()))
+      .then(() => setIsLoaded(true));
   }, [dispatch]);
 
   return (

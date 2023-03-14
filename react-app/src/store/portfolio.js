@@ -1,10 +1,10 @@
 // ACTIONS
-const GET_PORTFOLIO_HISTORICAL_VALUES = 'portfolio/history' // Getting historical portfolio values by user id
-const GET_PORTFOLIO_HOLDINGS = 'portfolio/holdings' // Getting portfolio holdings
-const GET_USER_PORTFOLIO = 'portfolio/user' // Getting user portfolio by id
-const BUY_STOCK = 'portfolio/buy' // Buying a stock
-const SELL_STOCK = 'portfolio/sell' // Selling a stock
-const CREATE_PORTFOLIO_SNAPSHOT = 'portfolio/create-snapshot' // Creating a new snapshot of portfolio current value
+const GET_PORTFOLIO_HISTORICAL_VALUES = 'portfolio/GET_HISTORY' // Getting historical portfolio values by user id
+const GET_PORTFOLIO_HOLDINGS = 'portfolio/GET_PORTFOLIO_HOLDINGS' // Getting portfolio holdings
+const GET_USER_PORTFOLIO = 'portfolio/GET_USER_PORTFOLIO' // Getting user portfolio by id
+const BUY_STOCK = 'portfolio/BUY_STOCK' // Buying a stock
+const SELL_STOCK = 'portfolio/SELL_STOCK' // Selling a stock
+const CREATE_PORTFOLIO_SNAPSHOT = 'portfolio/CREATE_PORTFOLIO_SNAPSHOT' // Creating a new snapshot of portfolio current value
 
 
 // ACTION CREATORS
@@ -23,19 +23,19 @@ const actionGetUserPortfolio = (portfolio) => ({
     portfolio
 })
 
-const actionBuyStock = (portfolio) => ({
+const actionBuyStock = (holding) => ({
     type: BUY_STOCK,
-    portfolio
+    holding
 })
 
-const actionSellStock = (portfolio) => ({
+const actionSellStock = (holding) => ({
     type: SELL_STOCK,
-    portfolio
+    holding
 })
 
-const actionCreatePortfolioSnapshot = (portfolio) => ({
+const actionCreatePortfolioSnapshot = (holdings) => ({
     type: CREATE_PORTFOLIO_SNAPSHOT,
-    portfolio
+    holdings
 })
 
 
@@ -47,8 +47,12 @@ export const thunkGetPortfolioHistoricalValues = () => async (dispatch) => {
 
     if (response.ok) {
         const historicalValues = await response.json()
-        await dispatch(actionGetPortfolioHistoricalValues(historicalValues))
-        return historicalValues
+        const normalizedHistoricalValues = {};
+        historicalValues.forEach(value => {
+            normalizedHistoricalValues[value.id] = value;
+        })
+        await dispatch(actionGetPortfolioHistoricalValues(normalizedHistoricalValues))
+        return normalizedHistoricalValues
     }
 }
 
@@ -58,69 +62,76 @@ export const thunkGetPortfolioHoldings = () => async (dispatch) => {
 
     if (response.ok) {
         const holdings = await response.json()
-        dispatch(actionGetPortfolioHoldings(holdings))
+        const normalizedHoldings = {}
+        holdings.forEach(holding => {
+            normalizedHoldings[holding.id] = holding;
+        })
+        await dispatch(actionGetPortfolioHoldings(normalizedHoldings))
         return holdings
     }
 }
 
 // Get Portfolio of Current User
-export const thunkGetUserPortfolio = (portfolioId) => async (dispatch) => {
-    const response = await fetch(`/api/portfolio/${portfolioId}`)
+export const thunkGetUserPortfolio = () => async (dispatch) => {
+    const response = await fetch(`/api/portfolio/`)
 
     if (response.ok) {
         const portfolio = await response.json()
-        dispatch(actionGetUserPortfolio(portfolio))
+        await dispatch(actionGetUserPortfolio(portfolio))
         return portfolio
     }
 }
 
 // Buy a stock
-export const thunkBuyStock = (portfolio) => async (dispatch) => {
+export const thunkBuyStock = (ticker, shares) => async (dispatch) => {
     const response = await fetch('/api/portfolio/buy', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({
+            ticker,
+            shares
+        })
     })
     if (response.ok) {
-        const portfolio = await response.json()
-        dispatch(actionBuyStock(portfolio))
-        return portfolio
+        const updatedHolding = await response.json()
+        await dispatch(actionBuyStock(updatedHolding))
+        return updatedHolding
     }
 }
 
 // Sell a Stock
-//! Double check that this is correct
-export const thunkSellStock = () => async (portfolio) => {
+export const thunkSellStock = (ticker, shares) => async (dispatch) => {
     const response = await fetch('/api/portfolio/sell', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({
+            ticker,
+            shares
+        })
     })
-
     if (response.ok) {
-        const portfolio = await response.json()
-        dispatch(actionSellStock(portfolio))
-        return portfolio
+        const updatedHolding = await response.json()
+        await dispatch(actionSellStock(updatedHolding))
+        return updatedHolding
     }
 }
 
 // Log current value of portfolio to portfolio_values table
-export const thunkCreatePortfolioSnapshot = (portfolio) => async (dispatch) => {
+export const thunkCreatePortfolioSnapshot = () => async (dispatch) => {
     const response = await fetch('/api/portfolio/create-snapshot', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+        }
     })
 
     if (response.ok) {
         const portfolio = await response.json()
-        dispatch(actionCreatePortfolioSnapshot(portfolio))
+        await dispatch(actionCreatePortfolioSnapshot(portfolio))
         return portfolio
     }
 }
@@ -134,35 +145,41 @@ const initialState = {
 
 // REDUCER
 export default function portfolioReducer(state = initialState, action) {
+    const newState = { ...state }
     switch(action.type) {
         case GET_PORTFOLIO_HISTORICAL_VALUES: {
-            const newState = {...state}
-            newState.historicalValues = {...state.historicalValues, ...action.historicalValues}
+            newState.historicalValues = { ...state.historicalValues, ...action.historicalValues }
             return newState
         }
         case GET_PORTFOLIO_HOLDINGS: {
-            const newState = {...state}
-            newState.holdings = {...state.holdings, ...action.holdings}
+            newState.holdings = { ...state.holdings }
+            newState.holdings = { ...action.holdings }
             return newState
         }
         case GET_USER_PORTFOLIO: {
-            const newState = {...state}
-            newState[action.portfolio.id] = action.portfolio
+            newState.id = action.portfolio.id
+            newState.cash_balance = action.portfolio.cash_balance
+            newState.initial_principle = action.portfolio.initial_principle
+            newState.profit_loss = action.portfolio.profit_loss
+            newState.user_id = action.portfolio.user_id
             return newState
         }
         case BUY_STOCK: {
-            const newState = {...state}
-            newState[action.portfolio.id] = action.portfolio
+            newState.holdings[action.holding.id] = action.holding
             return newState
         }
         case SELL_STOCK: {
-            const newState = {...state}
-            newState[action.portfolio.id] = action.portfolio
+            newState.holdings = { ...state.holdings }
+            if (action.holding.shares == 0) {
+                delete newState.holdings[action.holding.id]
+                return newState;
+            }
+            newState.holdings[action.holding.id] = { ...action.holding }
             return newState
         }
         case CREATE_PORTFOLIO_SNAPSHOT: {
-            const newState = {...state}
-            newState[action.portfolio.id] = action.portfolio
+            newState.holdings = { ...state.holdings }
+            newState.holdings = { ...action.holdings }
             return newState
         }
         default: 

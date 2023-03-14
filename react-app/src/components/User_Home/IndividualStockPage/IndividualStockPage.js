@@ -30,14 +30,25 @@ export default function IndividualStockPage() {
 
     useEffect(() => {
         dispatch(thunkGetStockFundamentals(tickerCap))
-        // dispatch(thunkGetStockIntraDay(tickerCap, "5min"))
         dispatch(thunkGetStockDaily(tickerCap))
     }, [dispatch, ticker])
-
 
     if (!stockFundamentals) return null
     if (!stockDaily) return null
     if (!stockDaily["Time Series (Daily)"]) return null
+
+    const today = new Date();
+    const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
+    // console.log("yesterday: ", yesterday)
+
+    const year = yesterday.getFullYear();
+    const month = (yesterday.getMonth() + 1).toString().padStart(2, '0');
+    const day = yesterday.getDate().toString().padStart(2, '0');
+
+    const yesterdayFormatted = `${year}-${month}-${day}`;
+    // console.log("yesterdayFormatted: ", yesterdayFormatted)
+
+    console.log(stockDaily["Time Series (Daily)"])
 
     const chartObj = {
         "1D": <OneDayChart ticker={tickerCap} />,
@@ -81,7 +92,7 @@ export default function IndividualStockPage() {
                     </div>
                     <div className="stat-box">
                         <div>Volume </div>
-                        <div>{Number(stockDaily["Time Series (Daily)"]["2023-03-08"]["6. volume"]).toLocaleString()}</div>
+                        <div>{Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["6. volume"]).toLocaleString()}</div>
                     </div>
                     <div className="stat-box">
                         <div>Dividend yield </div>
@@ -92,23 +103,58 @@ export default function IndividualStockPage() {
                     </div>
                     <div className="stat-box">
                         <div>Today High </div>
-                        <div>${stockDaily["Time Series (Daily)"]["2023-03-08"]["2. high"]}</div>
+                        <div>${stockDaily["Time Series (Daily)"][yesterdayFormatted]["2. high"]}</div>
                     </div>
                     <div className="stat-box">
                         <div>Today Low </div>
-                        <div>${stockDaily["Time Series (Daily)"]["2023-03-08"]["3. low"]}</div>
+                        <div>${stockDaily["Time Series (Daily)"][yesterdayFormatted]["3. low"]}</div>
                     </div>
                     <div className="stat-box">
                         <div>Today Open </div>
-                        <div>${stockDaily["Time Series (Daily)"]["2023-03-08"]["1. open"]}</div>
+                        <div>${stockDaily["Time Series (Daily)"][yesterdayFormatted]["1. open"]}</div>
                     </div>
                     <div className="stat-box">
                         <div>Today Close </div>
-                        <div>${stockDaily["Time Series (Daily)"]["2023-03-08"]["4. close"]}</div>
+                        <div>${stockDaily["Time Series (Daily)"][yesterdayFormatted]["4. close"]}</div>
                     </div>
                 </div>
                 <div className="purchase-container">
-
+                    <div style={{ borderBottom: "solid 1px rgb(172, 171, 171)" }}>
+                        <div className="purchase-buy-div">Buy {tickerCap}</div>
+                    </div>
+                    <div style= {{ display: "flex" }}>
+                        <div className="left-order-type-div">
+                            Order Type
+                        </div>
+                        <div className="right-order-type-div">
+                            Buy Order Market
+                        </div>
+                    </div>
+                    <div style= {{ display: "flex" }}>
+                        <div className="left-buy-in--div">Buy In</div>
+                        <div></div>
+                    </div>
+                    <div style= {{ display: "flex", borderBottom: "solid 1px rgb(172, 171, 171)" }}>
+                        <div className="left-amount-div">Amount</div>
+                        <div></div>
+                    </div>
+                    <div style= {{ display: "flex" }}>
+                        <div className="left-est-div">
+                            Est.Quantity
+                        </div>
+                        <div className="right-est-div">
+                            0.000000
+                        </div>
+                    </div>
+                    <div className="transaction-button-div">
+                        <button className="purchase-button">Purchase Stock</button>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "center", padding: "10px", borderTop: "1px solid rgb(172, 171, 171)", borderBottom: "1px solid rgb(172, 171, 171)" }}>
+                        <div className="buying-power-div"> buying power available</div>
+                    </div>
+                    <div style={{ display: "flex", padding: "10px", justifyContent: "center", alignItems: "center" }}>
+                        <div className="transaction-bottom-div">Brokerage</div>
+                    </div>
                 </div>
             </div>
         </div>
