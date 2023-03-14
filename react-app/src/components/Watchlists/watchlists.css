@@ -3,5 +3,38 @@
   /* max-height: 1000px; */
   height: 80vh;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 10px;
   position: sticky;
+}
+
+.watchlists-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 27px;
+  border-bottom: 1px solid rgba(99, 99, 99, 0.2);
+}
+
+.watchlists-title {
+  display: flex;
+  align-items: end;
+  text-align: center;
+  font-weight: 700;
+}
+
+.add-watchlist-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  font-size: large;
+  text-align: center;
+  width: 18px;
+  height: 18px;
+}
+
+.add-watchlist-button:hover {
+  background-color: rgb(194, 194, 194);
+  border-radius: 2px;
 }

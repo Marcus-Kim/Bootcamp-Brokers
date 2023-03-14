@@ -10,17 +10,19 @@ export default function WatchlistDetails() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector(state => state.session.user.id)
-  const watchlist = useSelector(state => Object.values(state.watchlist))
+  const watchlists = useSelector(state => Object.values(state.watchlist))
   const { watchlistId } = useParams()
 
-  console.log(watchlist)
+  const selectedWatchlist = watchlists[watchlistId]
+
   useEffect(() => {
-    dispatch(thunkGetAllWatchlistsUserId(watchlistId))
+    dispatch(thunkGetAllWatchlistsUserId(user))
   }, [dispatch])
 
-  if (!watchlist.length) {
+  if (!watchlists.length) {
     return null
   }
+
 
   return (
     <div className="watchlist-details-container">
@@ -28,13 +30,13 @@ export default function WatchlistDetails() {
         <div className='watchlist-details-content'>
           <div className='watchlist-details-content-header'>
             <div className='watchlist-details-name-buttons'>
-              <div className='watchlist-details-name'>{watchlist[0].list_name}</div>
+              <div className='watchlist-details-name'>{selectedWatchlist.list_name}</div>
               <div className='watchlist-details-buttons-conatiner'>
                 <button className='watchlist-details-filters-button'>Filters</button>
                 <button className='watchlist-details-more-button'>Three Dots</button>
               </div>
             </div>
-            <div className="watchlist-details-item-count">{watchlist[0].stocks.length} Items</div>
+            <div className="watchlist-details-item-count">{selectedWatchlist.stocks.length} Items</div>
           </div>
           <table className='watchlist-details-table'>
             <thead className='watchlist-details-table-header'>
@@ -47,7 +49,7 @@ export default function WatchlistDetails() {
               </tr>
             </thead>
             <tbody className='watchlist-details-list-body'>
-              {watchlist[0].stocks.map(stock => {
+              {selectedWatchlist.stocks.map(stock => {
               return (
                 <tr className='watchlist-details-list-row' onClick={e => navigate(`/stocks/${stock.ticker}`)}>
                   <td className='watchlist-details-list-header-name' id='watchlist-details-list-header-name'>{stock.company_name}</td>
