@@ -34,9 +34,68 @@
     position: fixed;
     width: 270px;
     height: 400px;
-    border: solid 1px black;
+    /* padding: 20px; */
     top: 100px;
     right: 150px;
-    border-radius: 5px;
-    background-color: rgb(30,33,35);
+    /* background-color: rgba(232, 232, 232, 0.5); */
+    box-shadow: 0px 0px 0px 10px  rgba(232, 232, 232, 0.2);
+
+}
+
+.purchase-buy-div {
+    padding: 20px 10px;
+    border-bottom: solid 1px rgb(150, 147, 147);
+}
+
+.left-order-type-div {
+    padding: 10px;
+}
+
+.right-order-type-div {
+    padding: 10px;
+    text-align: end;
+}
+
+.left-buy-in--div {
+    padding: 10px;
+}
+
+.left-amount-div {
+    padding: 10px;
+}
+
+.left-est-div {
+    padding: 10px;
+}
+
+.right-est-div {
+    padding: 10px;
+    text-align: right;
+}
+
+.transaction-button-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 10px;
+
+}
+
+.purchase-button {
+    width: 200px;
+    height: 40px;
+    background-color: #00B403;
+    color: white;
+    border-radius: 50px;
+    border: none;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+.purchase-button:hover {
+    background-color: #01a504;
+}
+
+.buying-power-div {
+    padding: 10px;
 }
