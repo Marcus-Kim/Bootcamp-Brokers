@@ -10,7 +10,7 @@ export default function UserHomePageNav() {
 
     return (
         <div className="home-container">
-            <div style={{paddingTop: '67px', marginBottom: '30px'}} className="homepage-navigationcontainer">
+            <div style={{marginBottom: '30px'}} className="homepage-navigationcontainer">
                 <div>
                 <img className='logo' src={logo} alt="logo" />
                 </div>
