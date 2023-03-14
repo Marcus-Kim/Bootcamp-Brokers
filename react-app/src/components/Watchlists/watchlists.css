@@ -1,0 +1,7 @@
+.watchlists-container {
+  /* border: 1px solid black; */
+  /* max-height: 1000px; */
+  height: 80vh;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  position: sticky;
+}
