@@ -21,6 +21,8 @@ import { thunkGetPortfolioHistoricalValues, thunkGetPortfolioHoldings, thunkGetU
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  
+  // Populate redux store with user details on mount
   useEffect(() => {
     dispatch(authenticate())
       .then(() => dispatch(thunkGetPortfolioHistoricalValues()))
