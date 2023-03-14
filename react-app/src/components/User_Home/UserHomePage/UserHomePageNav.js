@@ -4,8 +4,20 @@ import { NavLink } from 'react-router-dom'
 import './UserHomePage.css'
 import UserHomePage from './UserHomePage'
 import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 export default function UserHomePageNav() {
+    const navigate = useNavigate()
+    const user = useSelector(state => state.session)
+    const userArray = Object.values(user)
+
+    useEffect(() => {
+        if (userArray[0] === null) {
+          navigate('/')
+        } else {
+          navigate('/home')
+        }
+      }, [])
     
 
     return (

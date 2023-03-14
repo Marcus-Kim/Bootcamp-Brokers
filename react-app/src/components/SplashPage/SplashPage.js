@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import "./SplashPage.css"
 import picture from './phone.png'
 import match from './match.png'
@@ -11,12 +11,16 @@ import ChatBubble from './ChatGPT/ChatBubble'
 import Crypto from './cryptoassets.jpg'
 import StockPhone from './stockphone.jpg'
 import Fraction from './fraction.png'
-
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 
 export default function SplashPage() {
+  const navigate = useNavigate()
   const { menuOpen } = useMenu();
   const [slidePosition, setSlidePosition] = useState(0);
+  const user = useSelector(state => state.session)
+  const userArray = Object.values(user)
   const images = [
     {
       images: Crypto,
@@ -45,6 +49,18 @@ export default function SplashPage() {
     }
     
   ];
+  
+
+  useEffect(() => {
+    if (userArray[0] === null) {
+      navigate('/')
+    } else {
+      navigate('/home')
+    }
+  }, [])
+
+
+
   const cardWidth = 100 / images.length;
   
 

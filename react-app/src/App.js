@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import {Route, Routes} from 'react-router-dom'
 import ChatBubble from "./components/SplashPage/ChatGPT/ChatBubble";
 import { authenticate } from "./store/session";
+import { useNavigate } from "react-router-dom";
 
 import './App.css';
 import Navigation from './components/Navigation/Navigation';
@@ -20,7 +21,11 @@ import { thunkGetPortfolioHistoricalValues, thunkGetPortfolioHoldings, thunkGetU
 
 function App() {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const [isLoaded, setIsLoaded] = useState(false);
+  
+  
+  
   
   // Populate redux store with user details on mount
   useEffect(() => {
@@ -30,6 +35,9 @@ function App() {
       .then(() => dispatch(thunkGetUserPortfolio()))
       .then(() => setIsLoaded(true));
   }, [dispatch]);
+  
+
+  
 
   return (
     <>
@@ -38,6 +46,7 @@ function App() {
 
       {isLoaded && (
         <Routes>
+          
           <Route exact path ="/" element={<SplashPage/>}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/learn" element={<Learn />}></Route>
