@@ -3,8 +3,8 @@
     flex-direction: column;
     margin-left: 3%;
     margin-right: 3%;
-    width: 100%;
     max-width: 95%;
+    width: 100%;
 }
 
 .homepage-navigationcontainer {
@@ -145,4 +145,12 @@
 
 .home-nav:hover {
     color: rgb(0,200,6)
+}
+
+.watchlist-container {
+    display: flex;
+    border: 1px solid gray;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
 }
