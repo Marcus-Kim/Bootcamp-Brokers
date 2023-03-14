@@ -157,8 +157,11 @@ export default function portfolioReducer(state = initialState, action) {
             return newState
         }
         case GET_USER_PORTFOLIO: {
-            newState.portfolio = { ...state.portfolio }
-            newState.portfolio = { ...action.portfolio } 
+            newState.id = action.portfolio.id
+            newState.cash_balance = action.portfolio.cash_balance
+            newState.initial_principle = action.portfolio.initial_principle
+            newState.profit_loss = action.portfolio.profit_loss
+            newState.user_id = action.portfolio.user_id
             return newState
         }
         case BUY_STOCK: {
