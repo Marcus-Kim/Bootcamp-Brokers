@@ -9,6 +9,8 @@ const GET_STOCK_WEEKLY = 'stocks/GET_STOCK_WEEKLY'
 const GET_STOCK_NEWS = 'stocks/GET_STOCKNEWS'
 const GET_STOCK_FUNDAMENTALS = 'stocks/GET_STOCK_FUNDAMENTALS'
 const GET_BTC_PRICE = 'stocks/GET_BTC_PRICE'
+const GET_ONE_WEEK_CHART_DATA = '/stocks/GET_ONE_WEEK_CHART_DATA'
+const GET_ONE_MONTH_CHART_DATA = '/stocks/GET_ONE_MONTH_CHART_DATA'
 
 
 //actions
@@ -41,6 +43,17 @@ const actionGetStockFundamentals = (stocks) => ({
 const actionGetBTCPrice = (BTC) => ({
     type: GET_BTC_PRICE,
     BTC
+})
+
+// Actions for Chart Data
+const actionGetOneWeekStockData = (stocks) => ({
+    type: GET_ONE_WEEK_CHART_DATA,
+    stocks
+})
+
+const actionGetOneMonthStockData = (stocks) => ({
+    type: GET_ONE_MONTH_CHART_DATA,
+    stocks
 })
 
 
@@ -107,6 +120,30 @@ export const thunkGetBTCPrice = () => async (dispatch) => {
     }
 }
 
+// thunks for charts
+
+// 1 Week Chart
+export const thunkGetOneWeekStockData = (ticker) => async (dispatch) => {
+    const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${ticker}&interval=15min&outputsize=full&apikey=${apiKey}`)
+
+    if (response.ok) {
+        const result = await response.json()
+        dispatch(actionGetOneWeekStockData(result))
+        return result
+    }
+}
+
+// 1 Month Chart
+export const thunkGetOneMonthStockData = (ticker) => async (dispatch) => {
+    const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${ticker}&interval=60min&outputsize=full&apikey=${apiKey}`)
+
+    if (response.ok) {
+        const result = await response.json()
+        dispatch(actionGetOneMonthStockData(result))
+        return result
+    }
+}
+
 const initialState = {
     stockNews: {},
     stockIntraDay: {},
@@ -115,6 +152,8 @@ const initialState = {
     stockMonthly: {},
     stockFundamentals: {},
     BTCPrice: {},
+    oneWeekChartData: {},
+    oneMonthChartData: {}
 }
 
 // reducers
@@ -143,6 +182,21 @@ export default function stocksReducer(state = initialState, action) {
         case GET_BTC_PRICE: {
             const newState = {...state}
             newState.BTCPrice = {...state.BTCPrice, ...action.BTC}
+            return newState
+        }
+        case GET_STOCK_WEEKLY: {
+            const newState = {...state}
+            newState.stockWeekly = {...state.stockWeekly, ...action.stocks}
+            return newState
+        }
+        case GET_ONE_WEEK_CHART_DATA: {
+            const newState = {...state}
+            newState.oneWeekChartData = {...state.oneWeekChartData, ...action.stocks}
+            return newState
+        }
+        case GET_ONE_MONTH_CHART_DATA: {
+            const newState = {...state}
+            newState.oneMonthChartData = {...state.oneMonthChartData, ...action.stocks}
             return newState
         }
 
