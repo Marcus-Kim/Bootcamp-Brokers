@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from flask_login import login_required, current_user
 from app.models import Portfolio, PortfolioValue, PortfolioShare, db
 
@@ -31,6 +31,28 @@ def get_user_portfolio():
     """Route for getting a portfolio by id"""
     portfolio = Portfolio.query.get(current_user.id)
     return portfolio.to_dict()
+
+# Buy a stock
+@portfolio_routes.route('/buy', methods=['POST'])
+@login_required
+def add_stock_to_portfolio():
+    """Route for adding a stock to a user's portfolio"""
+    portfolio = Portfolio.query.filter_by(user_id=current_user.id).first()
+    data = request.json
+    ticker = data['ticker']
+    shares = data['shares']
+    return Portfolio.buy_stock(portfolio, ticker, shares)
+
+# Sell a stock
+@portfolio_routes.route('/sell', methods=['POST'])
+@login_required
+def remove_stock_from_portfolio():
+    """Route for removing shares of a stock from a user's portfolio"""
+    portfolio = Portfolio.query.filter_by(user_id=current_user.id).first()
+    data = request.json
+    ticker = data['ticker']
+    shares = data['shares']
+    return Portfolio.sell_stock(portfolio, ticker, shares)
 
 # Log current value of portfolio to portfolio_values table
 from datetime import datetime
