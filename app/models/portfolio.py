@@ -1,4 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+from .transaction import Transaction
+from .portfolio_shares import PortfolioShare
 
 
 class Portfolio(db.Model):
@@ -44,4 +46,10 @@ class Portfolio(db.Model):
         }
 
     def add_stock(self, ticker, num_shares):
-        pass
+    # Check if value exists in portfolio_shares table
+        table_row = PortfolioShare.query.filter(PortfolioShare.portfolio_id == self.id, PortfolioShare.ticker_id == ticker).first()
+        if table_row:
+            
+            return table_row.to_dict()
+        else:
+            return { 'message': 'Specific stock not found'}
