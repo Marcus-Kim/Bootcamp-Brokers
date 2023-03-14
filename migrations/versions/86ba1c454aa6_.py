@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 63cf7c19fa6f
-Revises: 
-Create Date: 2023-03-14 17:21:55.817482
+Revision ID: 86ba1c454aa6
+Revises:
+Create Date: 2023-03-14 16:01:38.621152
 
 """
 from alembic import op
@@ -14,7 +14,7 @@ SCHEMA = os.environ.get("SCHEMA")
 
 
 # revision identifiers, used by Alembic.
-revision = '63cf7c19fa6f'
+revision = '86ba1c454aa6'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -33,6 +33,7 @@ def upgrade():
     )
     if environment == "production":
         op.execute(f"ALTER TABLE stocks SET SCHEMA {SCHEMA};")
+
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=40), nullable=False),
@@ -44,6 +45,7 @@ def upgrade():
     )
     if environment == "production":
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+
     op.create_table('messages',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -54,6 +56,7 @@ def upgrade():
     )
     if environment == "production":
         op.execute(f"ALTER TABLE messages SET SCHEMA {SCHEMA};")
+
     op.create_table('portfolios',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -64,6 +67,7 @@ def upgrade():
     )
     if environment == "production":
         op.execute(f"ALTER TABLE portfolios SET SCHEMA {SCHEMA};")
+
     op.create_table('transactions',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -76,6 +80,7 @@ def upgrade():
     )
     if environment == "production":
         op.execute(f"ALTER TABLE transactions SET SCHEMA {SCHEMA};")
+
     op.create_table('watchlists',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('list_name', sa.String(length=100), nullable=False),
@@ -86,6 +91,7 @@ def upgrade():
     )
     if environment == "production":
         op.execute(f"ALTER TABLE watchlists SET SCHEMA {SCHEMA};")
+
     op.create_table('portfolio_shares',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('portfolio_id', sa.Integer(), nullable=False),
@@ -97,6 +103,7 @@ def upgrade():
     )
     if environment == "production":
         op.execute(f"ALTER TABLE portfolio_shares SET SCHEMA {SCHEMA};")
+
     op.create_table('portfolio_values',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('portfolio_id', sa.Integer(), nullable=False),
@@ -107,6 +114,7 @@ def upgrade():
     )
     if environment == "production":
         op.execute(f"ALTER TABLE portfolio_values SET SCHEMA {SCHEMA};")
+
     op.create_table('watchlist_stocks',
     sa.Column('ticker_id', sa.String(length=10), nullable=False),
     sa.Column('watchlist_id', sa.Integer(), nullable=False),
