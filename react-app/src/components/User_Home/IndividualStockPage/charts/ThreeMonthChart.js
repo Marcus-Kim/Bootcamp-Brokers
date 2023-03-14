@@ -1,44 +1,47 @@
-import { useEffect } from "react";
-import { Line } from "react-chartjs-2";
+import { useEffect } from "react"
+import { Line } from "react-chartjs-2"
 import { useDispatch, useSelector } from "react-redux"
-import { thunkGetOneMonthStockData } from "../../../../store/stock";
+import { thunkGetStockDaily } from "../../../../store/stock"
 import { Chart as ChartJS } from "chart.js/auto"
 
-export default function OneMonthChart({ ticker }) {
+
+
+export default function ThreeMonthChart({ ticker }) {
 
     const dispatch = useDispatch();
-
-    const monthlyData = useSelector(state => state.stocks.oneMonthChartData)
+    const threeMonthData = useSelector(state => state.stocks.stockDaily)
 
 
     useEffect(() => {
-        dispatch(thunkGetOneMonthStockData(ticker))
+        dispatch(thunkGetStockDaily(ticker))
     }, [dispatch, ticker])
 
-    if (!monthlyData) return null
-    if (!monthlyData["Meta Data"]) return null
-    if (!monthlyData["Time Series (60min)"]) return null
+    if (!threeMonthData) return null
+    if (!threeMonthData["Meta Data"]) return null
+    if (!threeMonthData["Time Series (Daily)"]) return null
 
     const rawData = {}
-    const entries = Object.entries(monthlyData["Time Series (60min)"])
+    const entries = Object.entries(threeMonthData["Time Series (Daily)"])
+    // console.log("entries: ", entries)
 
     entries.forEach(([date, price]) => (
         rawData[date] = Number(price["4. close"]).toFixed(2)
     ))
-    // console.log("month entries: ", entries)
+    // console.log("rawData: ", rawData)
 
     const result = [];
     for (const [key, value] of Object.entries(rawData)) {
         const obj = { date: key, price: parseFloat(value) }
         result.push(obj)
     }
-    const slicedResult = result.slice(0, 319)
+    console.log("result: ", result)
+    const slicedResult = result.slice(0, 60)
 
     let chartData = ({
-        labels: result.map((data) => data.date),
+        labels: slicedResult.map((data) => data.date),
         datasets: [{
             label: "Stock Price",
-            data: result.map((data) => data.price),
+            data: slicedResult.map((data) => data.price),
             // backgroundColor: "black",
             borderColor: "#5AC53B",
             borderWidth: 2,
@@ -73,8 +76,8 @@ export default function OneMonthChart({ ticker }) {
 
     return (
         <div>
-            <h2>One Month Chart Component</h2>
-            <Line data={chartData} options={chartData.options} ></Line>
+            <h3>Three Month Chart Component</h3>
+            <Line data={chartData} options ={chartData.options} ></Line>
         </div>
     )
 }

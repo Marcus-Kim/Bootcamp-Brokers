@@ -14,6 +14,7 @@ const GET_ONE_MONTH_CHART_DATA = '/stocks/GET_ONE_MONTH_CHART_DATA'
 const GET_RANDOM_STOCK_NEWS = 'stocks/GET_RANDOM_STOCK_NEWS'
 const GET_SPY = 'stocks/GET_SPY'
 const GET_NASDAQ = 'stocks/GET_NASDAQ'
+const GET_ONE_YEAR_CHART_DATA = "/stocks/GET_ONE_YEAR_CHART_DATA"
 
 
 //actions
@@ -57,6 +58,11 @@ const actionGetOneMonthStockData = (stocks) => ({
     stocks
 })
 
+const actionGetOneYearStockData = (stocks) => ({
+    type: GET_ONE_YEAR_CHART_DATA,
+    stocks
+})
+
 
 const actionGetRandomStockNews = (news) => ({
     type: GET_RANDOM_STOCK_NEWS,
@@ -66,12 +72,12 @@ const actionGetRandomStockNews = (news) => ({
 const actionGetSpy = (stocks) => ({
     type: GET_SPY,
     stocks
-}) 
+})
 
 const actionGetNasdaq = (stocks) => ({
     type: GET_NASDAQ,
     stocks
-}) 
+})
 
 // thunks
 export const thunkGetStockNews = ticker => async (dispatch) => {
@@ -174,6 +180,17 @@ export const thunkGetOneMonthStockData = (ticker) => async (dispatch) => {
     }
 }
 
+// 1 Year Chart
+export const thunkGetOneYearStockData = (ticker) => async (dispatch) => {
+    const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${ticker}&outputsize=full&apikey=${apiKey}`)
+
+    if (response.ok) {
+        const result = await response.json()
+        dispatch(actionGetOneYearStockData(result))
+        return result
+    }
+}
+
 const initialState = {
     stockNews: {},
     stockIntraDay: {},
@@ -186,7 +203,8 @@ const initialState = {
     SPY: {},
     Nasdaq: {},
     oneWeekChartData: {},
-    oneMonthChartData: {}
+    oneMonthChartData: {},
+    oneYearChartData: {}
 }
 
 // reducers
@@ -246,7 +264,12 @@ export default function stocksReducer(state = initialState, action) {
             const newState = {...state}
             newState.SPY = {...state.SPY, ...action.stocks}
             return newState
+        }        case GET_ONE_YEAR_CHART_DATA: {
+            const newState = {...state}
+            newState.oneYearChartData = {...state.oneYearChartData, ...action.stocks}
+            return newState
         }
+
     default:
         return state
     }

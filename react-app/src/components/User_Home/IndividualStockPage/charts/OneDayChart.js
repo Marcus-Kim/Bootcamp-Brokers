@@ -37,6 +37,7 @@ export default function OneDayChart({ ticker }) {
 
     console.log("result: ", result)
 
+
     let chartData = ({
         labels: result.map((data) => data.time),
         datasets: [{
@@ -55,7 +56,8 @@ export default function OneDayChart({ ticker }) {
         options:{
             scales:{
                 x: {
-                    display: false
+                    display: false,
+                    reverse: true
                 },
                 y: {
                     display: false

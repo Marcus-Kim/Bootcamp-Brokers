@@ -57,7 +57,8 @@ export default function OneWeekChart({ ticker }) {
         options:{
             scales:{
                 x: {
-                    display: false
+                    display: false,
+                    reverse: true
                 },
                 y: {
                     display: false
