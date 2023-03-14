@@ -224,9 +224,18 @@ export default function UserHomePage() {
         </div>
         <hr style={{border: 'none', borderTop: "1px solid #d3d3d3"}} />
         <div className="indexes-container">
-          <span className="indexes">S&P 500 ${SPY?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
-          <span className="indexes">Nasdaq ${Nasdaq?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
-          <span className="indexes">Bitcoin ${parseFloat(BTC?.["Realtime Currency Exchange Rate"]?.["5. Exchange Rate"])}</span>
+          <span className="indexes">
+            <span>S&P 500</span>
+            <span className="index-price">${SPY?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
+          </span>
+          <span className="indexes">
+            <span>Nasdaq</span>
+            <span className="index-price">${Nasdaq?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
+          </span>
+          <span className="indexes">
+            <span>Bitcoin</span>
+            <span className="index-price">${parseFloat(BTC?.["Realtime Currency Exchange Rate"]?.["5. Exchange Rate"])}</span>
+          </span>
         </div>
         <div className="news-container">
           {randomNews?.["feed"]?.slice(0,10).map(news => (
