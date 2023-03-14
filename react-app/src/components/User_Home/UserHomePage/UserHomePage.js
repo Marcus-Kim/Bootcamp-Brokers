@@ -223,11 +223,11 @@ export default function UserHomePage() {
         </div>
         <hr className="break"/>
         <div className="cash-container">
-          <h2>Cash</h2>
+          <h2 className="section-header">Cash</h2>
         </div>
         <hr className="break"/>
         <div className="news-container">
-          <h2>News</h2>
+          <h2 className="section-header">News</h2>
           {randomNews?.["feed"]?.slice(0,10).map(news => (
             <div className="news-card">
               <hr />

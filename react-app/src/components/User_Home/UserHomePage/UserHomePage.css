@@ -173,6 +173,11 @@
     font-weight: bold;
 }
 
+.section-header {
+    font-size: 24px;
+    font-weight: 500;
+}
+
 .watchlist-container {
     display: flex;
     border: 1px solid #E3E9ED;
