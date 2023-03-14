@@ -1,43 +1,38 @@
 import { useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux"
-import { thunkGetOneWeekStockData } from "../../../../store/stock";
+import { thunkGetOneMonthStockData } from "../../../../store/stock";
 import { Chart as ChartJS } from "chart.js/auto"
 
+export default function OneMonthChart({ ticker }) {
 
-export default function OneWeekChart({ ticker }) {
+    const dispatch = useDispatch();
 
-    const dispatch = useDispatch()
-
-    const weeklyData = useSelector(state => state.stocks.oneWeekChartData)
+    const monthlyData = useSelector(state => state.stocks.oneMonthChartData)
+    console.log("monthlyData: ", monthlyData)
 
     useEffect(() => {
-        dispatch(thunkGetOneWeekStockData(ticker))
-
+        dispatch(thunkGetOneMonthStockData(ticker))
     }, [dispatch, ticker])
 
-    if (!weeklyData) return null
-    if (!weeklyData["Meta Data"]) return null
-    if (!weeklyData["Time Series (15min)"]) return null
+    if (!monthlyData) return null
+    if (!monthlyData["Meta Data"]) return null
+    if (!monthlyData["Time Series (60min)"]) return null
 
     const rawData = {}
-    const entries = Object.entries(weeklyData["Time Series (15min)"])
-
+    const entries = Object.entries(monthlyData["Time Series (60min)"])
 
     entries.forEach(([date, price]) => (
         rawData[date] = Number(price["4. close"]).toFixed(2)
     ))
-    // console.log("rawData: ", rawData)
+    console.log("month entries: ", entries)
 
-    const result = []
+    const result = [];
     for (const [key, value] of Object.entries(rawData)) {
-        const obj = { date: key, price: parseFloat(value) };
+        const obj = { date: key, price: parseFloat(value) }
         result.push(obj)
     }
-
-
-    const slicedResult = result.slice(0, 377);
-    // console.log("sliced Result: ", slicedResult)
+    const slicedResult = result.slice(0, 319)
 
     let chartData = ({
         labels: result.map((data) => data.date),
@@ -75,10 +70,9 @@ export default function OneWeekChart({ ticker }) {
           },
     });
 
-
     return (
         <div>
-            <h3>OneWeekChart Component</h3>
+            <h2>One Month Chart Component</h2>
             <Line data={chartData} options={chartData.options} ></Line>
         </div>
     )

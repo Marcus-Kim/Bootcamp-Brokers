@@ -5,8 +5,6 @@ import { thunkGetStockIntraDay } from "../../../../store/stock";
 import { Chart as ChartJS } from "chart.js/auto"
 
 
-
-
 export default function OneDayChart({ ticker }) {
 
     const dispatch = useDispatch()
@@ -24,15 +22,15 @@ export default function OneDayChart({ ticker }) {
 
 
 
-    const data = {}
+    const rawData = {}
     const entries = Object.entries(intraDayData["Time Series (5min)"])
     // console.log("data entries: ", entries)
     entries.forEach(([time, price]) => (
-        data[time] = Number(price["4. close"]).toFixed(2)
+        rawData[time] = Number(price["4. close"]).toFixed(2)
     ))
 
     const result = []
-    for (const [key, value] of Object.entries(data)) {
+    for (const [key, value] of Object.entries(rawData)) {
         const obj = { time: key, price: parseFloat(value) };
         result.push(obj);
     }
@@ -41,18 +39,44 @@ export default function OneDayChart({ ticker }) {
 
     let chartData = ({
         labels: result.map((data) => data.time),
-        datasets: [
-          {
+        datasets: [{
             label: "Stock Price",
             data: result.map((data) => data.price),
+            // backgroundColor: "black",
+            borderColor: "#5AC53B",
+            borderWidth: 2,
+            pointBorderColor: 'rgb(0, 200, 0, 0)',
+            pointBackgroundColor: 'rgba(0, 0, 0, 0)',
+            pointHoverBackgroundColor: '#5AC53B',
+            pointHoverBorderColor: '#000000',
+            pointHoverBorderWidth: 4,
+            pointHoverRadius: 6,
+        }],
+        options:{
+            scales:{
+                x: {
+                    display: false
+                },
+                y: {
+                    display: false
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false,
+                }
+            }
+        },
+        interaction: {
+            mode: 'index',
+            intersect: false,
           },
-        ],
-      });
+    });
 
     return (
         <div>
-            {/* <h3>OneDayData Component Loaded!</h3> */}
-            <Line data={chartData}></Line>
+            <h3>OneDayData Component Loaded!</h3>
+            <Line data={chartData} options={chartData.options} ></Line>
             {/* <p>{ ticker }</p> */}
         </div>
     )
