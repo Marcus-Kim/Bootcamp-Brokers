@@ -143,6 +143,26 @@ export const thunkGetOneWeekStockData = (ticker) => async (dispatch) => {
     }
 }
 
+export const thunkGetSPY = () => async (dispatch) => {
+    const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=SPY&outputsize=compact&apikey=${apiKey}`)
+
+    if (response.ok) {
+        const Daily = await response.json()
+        dispatch(actionGetStockDaily(Daily))
+        return Daily
+    }
+}
+
+export const thunkGetNasdaq = () => async (dispatch) => {
+    const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=QQQ&outputsize=compact&apikey=${apiKey}`)
+
+    if (response.ok) {
+        const Daily = await response.json()
+        dispatch(actionGetStockDaily(Daily))
+        return Daily
+    }
+}
+
 // 1 Month Chart
 export const thunkGetOneMonthStockData = (ticker) => async (dispatch) => {
     const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${ticker}&interval=60min&outputsize=full&apikey=${apiKey}`)
@@ -153,6 +173,7 @@ export const thunkGetOneMonthStockData = (ticker) => async (dispatch) => {
         return result
     }
 }
+
 const initialState = {
     stockNews: {},
     stockIntraDay: {},
