@@ -122,7 +122,7 @@ export default function IndividualStockPage() {
                     <div style={{ borderBottom: "solid 1px rgb(172, 171, 171)" }}>
                         <div className="purchase-buy-div">Buy {tickerCap}</div>
                     </div>
-                    <div style= {{ display: "flex" }}>
+                    <div style= {{ display: "flex", justifyContent: "space-between", }}>
                         <div className="left-order-type-div">
                             Order Type
                         </div>
@@ -134,13 +134,17 @@ export default function IndividualStockPage() {
                         <div className="left-buy-in--div">Buy In</div>
                         <div></div>
                     </div>
-                    <div style= {{ display: "flex", borderBottom: "solid 1px rgb(172, 171, 171)" }}>
+                    <div style= {{ display: "flex", justifyContent: "space-between", borderBottom: "solid 1px rgb(172, 171, 171)" }}>
                         <div className="left-amount-div">Amount</div>
-                        <div></div>
+                        <div className="right-amount-div">
+                            <input
+                                className="amount-input">
+                            </input>
+                        </div>
                     </div>
-                    <div style= {{ display: "flex" }}>
+                    <div style= {{ display: "flex", justifyContent: "space-between" }}>
                         <div className="left-est-div">
-                            Est.Quantity
+                            Est. Quantity
                         </div>
                         <div className="right-est-div">
                             0.000000

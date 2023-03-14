@@ -40,6 +40,7 @@
     /* background-color: rgba(232, 232, 232, 0.5); */
     box-shadow: 0px 0px 0px 10px  rgba(232, 232, 232, 0.2);
 
+
 }
 
 .purchase-buy-div {
@@ -54,6 +55,7 @@
 .right-order-type-div {
     padding: 10px;
     text-align: end;
+    margin-right: 5px;
 }
 
 .left-buy-in--div {
@@ -64,6 +66,21 @@
     padding: 10px;
 }
 
+.right-amount-div {
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px;
+    margin-right: 5px;
+}
+
+.amount-input {
+    text-align: right;
+    border: none;
+    background-color: rgb(240, 240, 240);
+    border-radius: 5px;
+
+}
+
 .left-est-div {
     padding: 10px;
 }
@@ -71,6 +88,7 @@
 .right-est-div {
     padding: 10px;
     text-align: right;
+    margin-right: 5px;
 }
 
 .transaction-button-div {
