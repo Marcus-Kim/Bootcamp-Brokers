@@ -17,4 +17,4 @@ watchlist_stocks = db.Table(
 )
 
 if environment == "production":
-    watchlist_stocks = SCHEMA
+    watchlist_stocks.schema = SCHEMA
