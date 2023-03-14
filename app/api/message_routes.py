@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 import openai
-from app.models import Transaction
+from app.models import Transaction, Message
 from ..models.db import db
 from datetime import datetime
 import os
