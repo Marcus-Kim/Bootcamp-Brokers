@@ -186,67 +186,63 @@ export default function UserHomePage() {
   if (!BTC || !SPY) return null;
 
   return (
-    <div className="leftside-container">
-      <div className="chart-container">
-        <div className="real-chart-container">
-        <div className="portfolio-data-container">
-        <div className="price">${price.toFixed(2)}</div>
-          <div>
-            <span>
-              <img className="green-triangle" src={Triangle} alt="" />
-            </span>
-            </div> 
-        </div>
-        <div style={{width: 1000, height: 200}}>
-        <Line
-          data={chartData}
-          options={chartOptions}
-          />
-        </div>
-        </div>
-        <div className="watchlist-container">Watchlist Container</div>
-      </div>
-      <div style={{marginTop: '5%', width: 1000}} className="change-timeline-button">
-        <span >
-          <button className="profile-timeline">1D</button>
-          <button className="profile-timeline">1W</button>
-          <button className="profile-timeline">1M</button>
-          <button className="profile-timeline">3M</button>
-          <button className="profile-timeline">YTD</button>
-          <button className="profile-timeline">1Y</button>
-          <button className="profile-timeline">ALL</button>
-        </span>
-        <hr style={{border: 'none', borderTop: "1px solid #d3d3d3"}} />
-      </div>
-
-      <div className='buying-power'>
-      <span>Buying Power</span>
-      <span>${ portfolio.cash_balance }</span>
-      </div>
-
-      <hr style={{border: 'none', borderTop: "1px solid #d3d3d3"}} />
-
-      <div className="indexes-container">
-        <span className="indexes">S&P 500 ${SPY?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
-        <span className="indexes">Nasdaq ${Nasdaq?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
-        <span className="indexes">Bitcoin ${parseFloat(BTC?.["Realtime Currency Exchange Rate"]?.["5. Exchange Rate"])}</span>
-
-      </div>
-      <div className="news-container">
-        {randomNews?.["feed"]?.slice(0,10).map(news => (
-          <div className = "news-card">
-            <hr />
-            <div className="news-cardleft">
-              <div>{news.source}</div>
-              <div>{news.title}</div>
-              <div>{news.ticker_sentiment[0]?.ticker}</div>
+    <div className="homepage-container">
+      <div className="portfolio-container">
+        <div className="chart-container">
+          <div className="portfolio-data-container">
+            <div className="price">${price.toFixed(2)}</div>
+            <div>
+              <span>
+                <img className="green-triangle" src={Triangle} alt="" />
+              </span>
             </div>
-            <NavLink to={news.url}>
-              <img className="news-image" src={news.banner_image} alt="" />
-            </NavLink>
           </div>
-        ))}
+          <div className="line-chart-container">
+            <Line
+              data={chartData}
+              options={chartOptions}
+            />
+          </div>
+        </div>
+        <div className="change-timeline-button">
+          <span>
+            <button className="profile-timeline">1D</button>
+            <button className="profile-timeline">1W</button>
+            <button className="profile-timeline">1M</button>
+            <button className="profile-timeline">3M</button>
+            <button className="profile-timeline">YTD</button>
+            <button className="profile-timeline">1Y</button>
+            <button className="profile-timeline">ALL</button>
+          </span>
+          <hr style={{border: 'none', borderTop: "1px solid #d3d3d3"}} />
+        </div>
+        <div className="buying-power">
+          <span>Buying Power</span>
+          <span>${portfolio.cash_balance}</span>
+        </div>
+        <hr style={{border: 'none', borderTop: "1px solid #d3d3d3"}} />
+        <div className="indexes-container">
+          <span className="indexes">S&P 500 ${SPY?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
+          <span className="indexes">Nasdaq ${Nasdaq?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
+          <span className="indexes">Bitcoin ${parseFloat(BTC?.["Realtime Currency Exchange Rate"]?.["5. Exchange Rate"])}</span>
+        </div>
+        <div className="news-container">
+          {randomNews?.["feed"]?.slice(0,10).map(news => (
+            <div className="news-card">
+              <hr />
+              <div className="news-cardleft">
+                <div>{news.source}</div>
+                <div>{news.title}</div>
+                <div>{news.ticker_sentiment[0]?.ticker}</div>
+              </div>
+              <NavLink to={news.url}>
+                <img className="news-image" src={news.banner_image} alt="" />
+              </NavLink>
+            </div>
+          ))}
+        </div>
       </div>
+      <div className="watchlist-container">Watchlist Container</div>
     </div>
-  )
+  )  
 }
