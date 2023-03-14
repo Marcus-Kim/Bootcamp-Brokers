@@ -33,15 +33,15 @@ def seed_watchlists():
     )
 
     all_watchlists = [watchlist1, watchlist2, watchlist3, watchlist4, watchlist5, watchlist6, watchlist7]
-    
-    for watchlist in all_watchlists: 
+
+    for watchlist in all_watchlists:
         db.session.add(watchlist)
-    
+
     db.session.commit()
 
 def undo_watchlists():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.watchlists RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM watchlists"))
 

@@ -1,7 +1,7 @@
 """empty message
 
 Revision ID: 47d9ff0c47f1
-Revises: 
+Revises:
 Create Date: 2023-03-13 13:22:22.772545
 
 """
@@ -31,6 +31,10 @@ def upgrade():
     sa.UniqueConstraint('company_name'),
     sa.UniqueConstraint('ticker')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE stocks SET SCHEMA {SCHEMA};")
+
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=40), nullable=False),
@@ -40,6 +44,10 @@ def upgrade():
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+
     op.create_table('messages',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -48,6 +56,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE messages SET SCHEMA {SCHEMA};")
+
     op.create_table('portfolios',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -56,6 +68,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE portfolios SET SCHEMA {SCHEMA};")
+
     op.create_table('transactions',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -66,6 +82,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE transactions SET SCHEMA {SCHEMA};")
+
     op.create_table('watchlists',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('list_name', sa.String(length=100), nullable=False),
@@ -74,12 +94,20 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('list_name')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE watchlists SET SCHEMA {SCHEMA};")
+
     op.create_table('chat_gpt',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('last_message_id', sa.String(length=255), nullable=True),
     sa.ForeignKeyConstraint(['last_message_id'], ['messages.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE chat_gpt SET SCHEMA {SCHEMA};")
+
     op.create_table('portfolio_shares',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('portfolio_id', sa.Integer(), nullable=False),
@@ -89,6 +117,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['ticker_id'], ['stocks.ticker'], ),
     sa.PrimaryKeyConstraint('id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE portfolio_shares SET SCHEMA {SCHEMA};")
+
     op.create_table('portfolio_values',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('portfolio_id', sa.Integer(), nullable=False),
@@ -97,6 +129,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['portfolio_id'], ['portfolios.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE portfolio_values SET SCHEMA {SCHEMA};")
+
     op.create_table('watchlist_stocks',
     sa.Column('ticker_id', sa.String(length=10), nullable=False),
     sa.Column('watchlist_id', sa.Integer(), nullable=False),
@@ -104,8 +140,9 @@ def upgrade():
     sa.ForeignKeyConstraint(['watchlist_id'], ['watchlists.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('ticker_id', 'watchlist_id')
     )
+
     if environment == "production":
-        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE watchlist_stocks SET SCHEMA {SCHEMA};")
 
     # ### end Alembic commands ###
 
