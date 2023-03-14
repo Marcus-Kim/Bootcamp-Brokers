@@ -167,11 +167,11 @@ export default function portfolioReducer(state = initialState, action) {
         }
         case SELL_STOCK: {
             newState.holdings = { ...state.holdings }
-            if (action.holding.shares === 0) {
-                delete newState[action.holding.id]
+            if (action.holding.shares == 0) {
+                delete newState.holdings[action.holding.id]
                 return newState;
             }
-            newState[action.holding.id] = action.holding
+            newState.holdings[action.holding.id] = { ...action.holding }
             return newState
         }
         case CREATE_PORTFOLIO_SNAPSHOT: {
