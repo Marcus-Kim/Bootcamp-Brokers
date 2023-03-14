@@ -275,7 +275,7 @@ export default function SplashPage() {
               </div>
           </div>
         </div>
-        <ChatBubble/>        
+  
     </div>
   )
 }

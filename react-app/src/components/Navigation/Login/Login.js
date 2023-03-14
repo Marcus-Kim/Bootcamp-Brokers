@@ -21,7 +21,9 @@ export default function Login() {
     const data = await dispatch(login(email, password));
     if (data) {
         setErrors(data)
-    } 
+    }
+    
+    
     navigate("/home")
   }
 
@@ -99,7 +101,7 @@ export default function Login() {
                 Keep me logged in for up to 30 days
                 </label>
 
-                <button type="submit" className="login-button">Log In</button>
+                <button  disabled={errors.length > 0} type="submit" className="login-button">Log In</button>
                 
                 <button style={{marginLeft: '30px'}} onClick={handleDemoSubmit} className="login-button">Demo User</button>
 
