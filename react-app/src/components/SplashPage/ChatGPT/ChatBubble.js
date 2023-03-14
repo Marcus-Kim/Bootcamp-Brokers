@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import './ChatBubble.css'
 import Bubble from './chat.png'
+import { useSelector, useDispatch } from 'react-redux';
+
 
 const { Configuration, OpenAIApi } = require("openai");
 const openaiApiKey = process.env.OPENAI_API_KEY
@@ -17,7 +19,6 @@ export default function ChatBubble() {
     const currentDate = new Date().toLocaleDateString
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-
     const handleChatClick = () => {
       setIsModalOpen(true);
     };
@@ -26,7 +27,7 @@ export default function ChatBubble() {
       setIsModalOpen(false);
     };
 
-    const sendMessage = async(chatHistory) => {
+    const sendMessage = async() => {
 
         // add the user's message to the chat log array
         setChatHistory((prevMessages) => [
@@ -39,49 +40,16 @@ export default function ChatBubble() {
 
         const headers = {
             "Content-Type": "application/json",
-            "User-Agent": "OpenAI-API-Client",
-            Authorization: `Bearer ${openaiApiKey}`,
         };
 
     const body = JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [
-            {
-                role: "system",
-                content: `Sydney is a chatbot that is helpful, creative, clever, and very friendly and loves to assist people on the financial stock trading website Bootcamp Brokers:`
-            },
-            {
-              role: 'user',
-              content: inputValue
-            }
-            // {
-            //     role: "user",
-            //     content: "Hello who are you?"
-            // },
-            // {
-            //     role: "assistant",
-            //     content: "I am Sydney an intelligent chatbot that would love to help you with any needs you have."
-            // },
-            // {
-            //     role: "user",
-            //     content: "What can you do on this website?"
-            // },
-            // {
-            //     role: "assistant",
-            //     content: "You can buy and sell stocks and crypto. You can open a credit card with us. We make the financial world easy for you. "
-            // },
-
-        ],
-        temperature: 1,
-        n: 2,
-        max_tokens: 150,
-        frequency_penalty: 0.0,
-        presence_penalty: 0.6,
+        user_id: 1,
+        message: inputValue
     })
 
     try {
         const response = await fetch(
-            "https://api.openai.com/v1/chat/completions",
+            "/api/messages",
             {
                 method: "POST",
                 headers,
@@ -92,18 +60,12 @@ export default function ChatBubble() {
             throw new Error("Network response was not ok");
         }
 
-        const data = await response.json()
-        console.log(data, 'data')
-
-        setChatHistory((prevMessages) => [
-            ...prevMessages,
-            { text: data.choices[0].message.content, isUser: false },
-          ]);
+        // If the message was stored successfully, clear the input field
+        setInputValue("")
         } catch (error) {
           console.error("Error:", error);
-        }
+        }        
     };
-
 
     const handleSubmit = e => {
         e.preventDefault();

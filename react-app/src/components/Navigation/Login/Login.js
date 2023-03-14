@@ -25,6 +25,14 @@ export default function Login() {
     navigate("/home")
   }
 
+  const handleDemoSubmit = async (e) => {
+    e.preventDefault()
+    const demoEmail = "demo@aa.io"
+    const demoPassword = "password"
+    const data = await dispatch(login(demoEmail, password))
+    navigate("/home")
+  }
+
   useEffect(() => {
     const errors = [
         "Email must have at least 4 characters and be no more than 30 characters",
@@ -93,7 +101,7 @@ export default function Login() {
 
                 <button type="submit" className="login-button">Log In</button>
                 
-                <button style={{marginLeft: '30px'}} onClick={() => navigate("/home")} className="login-button">Demo User</button>
+                <button style={{marginLeft: '30px'}} onClick={handleDemoSubmit} className="login-button">Demo User</button>
 
             
                 <div>Not on Bootcamp Brokers? <NavLink to="/signup">Create an account</NavLink> </div>
