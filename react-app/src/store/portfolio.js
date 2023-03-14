@@ -33,9 +33,9 @@ const actionSellStock = (holding) => ({
     holding
 })
 
-const actionCreatePortfolioSnapshot = (portfolio) => ({
+const actionCreatePortfolioSnapshot = (holdings) => ({
     type: CREATE_PORTFOLIO_SNAPSHOT,
-    portfolio
+    holdings
 })
 
 
@@ -166,11 +166,17 @@ export default function portfolioReducer(state = initialState, action) {
             return newState
         }
         case SELL_STOCK: {
+            newState.holdings = { ...state.holdings }
+            if (action.holding.shares === 0) {
+                delete newState[action.holding.id]
+                return newState;
+            }
             newState[action.holding.id] = action.holding
             return newState
         }
         case CREATE_PORTFOLIO_SNAPSHOT: {
-            newState[action.portfolio.id] = action.portfolio
+            newState.holdings = { ...state.holdings }
+            newState.holdings = { ...action.holdings }
             return newState
         }
         default: 
