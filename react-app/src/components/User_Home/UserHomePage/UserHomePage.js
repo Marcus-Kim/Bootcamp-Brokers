@@ -7,9 +7,9 @@ import Triangle from './triangle-16.png';
 import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import { CategoryScale } from 'chart.js';
-import { thunkGetNasdaq } from '../../../store/stock';
-import { thunkGetSPY } from '../../../store/stock';
-import { thunkGetRandomStockNews } from '../../../store/stock';
+// import { thunkGetNasdaq } from '../../../store/stock';
+// import { thunkGetSPY } from '../../../store/stock';
+// import { thunkGetRandomStockNews } from '../../../store/stock';
 
 
 export default function UserHomePage() {
@@ -56,9 +56,9 @@ export default function UserHomePage() {
   useEffect(() => {
     mockData()
     dispatch(thunkGetBTCPrice())
-    dispatch(thunkGetNasdaq())
-    dispatch(thunkGetSPY())
-    dispatch(thunkGetRandomStockNews())
+    // dispatch(thunkGetNasdaq())
+    // dispatch(thunkGetSPY())
+    // dispatch(thunkGetRandomStockNews())
     
   }, [dispatch])
 
@@ -192,8 +192,6 @@ export default function UserHomePage() {
   return (
     <div className="leftside-container">
       <div className="chart-container">
-        
-
         <div className="real-chart-container">
         <div className="portfolio-data-container">
         <div className="price">${price.toFixed(2)}</div>
@@ -207,15 +205,11 @@ export default function UserHomePage() {
         <Line
           data={chartData}
           options={chartOptions}
-
           />
         </div>
-         
         </div>
         <div className="watchlist-container">Watchlist Container</div>
-
       </div>
-
       <div style={{marginTop: '5%', width: 1000}} className="change-timeline-button">
         <span >
           <button className="profile-timeline">1D</button>
