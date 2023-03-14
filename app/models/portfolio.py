@@ -81,7 +81,7 @@ class Portfolio(db.Model):
             db.session.commit()
 
             # Query for the new row to get its id and return it as a dict
-            new_row = PortfolioShare.query.filter_by(PortfolioShare.portfolio_id == self.id, PortfolioShare.ticker_id == ticker).first()
+            new_row = PortfolioShare.query.filter_by(portfolio_id=self.id, ticker_id=ticker).first()
             return new_row.to_dict()
         
     def sell_stock(self, ticker, num_shares):
@@ -101,7 +101,9 @@ class Portfolio(db.Model):
             if table_row.shares == num_shares:
                 db.session.delete(table_row)
                 db.session.commit()
-                return { 'message': f"Successfully removed {ticker} from portfolio"}
+
+                table_row.shares = 0
+                return table_row.to_dict()
             # Decrement number of shares by num_shares in portfolio_shares table
             table_row.shares -= num_shares
 
