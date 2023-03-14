@@ -9,7 +9,9 @@ const GET_STOCK_WEEKLY = 'stocks/GET_STOCK_WEEKLY'
 const GET_STOCK_NEWS = 'stocks/GET_STOCKNEWS'
 const GET_STOCK_FUNDAMENTALS = 'stocks/GET_STOCK_FUNDAMENTALS'
 const GET_BTC_PRICE = 'stocks/GET_BTC_PRICE'
-
+const GET_RANDOM_STOCK_NEWS = 'stocks/GET_RANDOM_STOCK_NEWS'
+const GET_SPY = 'stocks/GET_SPY'
+const GET_NASDAQ = 'stocks/GET_NASDAQ'
 
 //actions
 const actionGetStockIntraday = (stocks) => ({
@@ -43,8 +45,20 @@ const actionGetBTCPrice = (BTC) => ({
     BTC
 })
 
+const actionGetRandomStockNews = (news) => ({
+    type: GET_RANDOM_STOCK_NEWS,
+    news
+})
 
+const actionGetSpy = (stocks) => ({
+    type: GET_SPY,
+    stocks
+}) 
 
+const actionGetNasdaq = (stocks) => ({
+    type: GET_NASDAQ,
+    stocks
+}) 
 
 // thunks
 export const thunkGetStockNews = ticker => async (dispatch) => {
@@ -107,6 +121,39 @@ export const thunkGetBTCPrice = () => async (dispatch) => {
     }
 }
 
+export const thunkGetRandomStockNews = () => async (dispatch) => {
+    const response = await fetch(`https://www.alphavantage.co/query?function=NEWS_SENTIMENT&apikey=${apiKey}`)
+
+    if (response.ok) {
+        const randomNews = await response.json()
+        dispatch(actionGetRandomStockNews(randomNews))
+        return randomNews
+    }
+} 
+
+export const thunkGetSPY = () => async (dispatch) => {
+    const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=SPY&outputsize=compact&apikey=${apiKey}`)
+
+    if (response.ok) {
+        const Daily = await response.json()
+        dispatch(actionGetSpy(Daily))
+        return Daily
+    }
+}
+
+export const thunkGetNasdaq = () => async (dispatch) => {
+    const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=QQQ&outputsize=compact&apikey=${apiKey}`)
+
+    if (response.ok) {
+        const Daily = await response.json()
+        dispatch(actionGetNasdaq(Daily))
+        return Daily
+    }
+}
+
+
+
+
 const initialState = {
     stockNews: {},
     stockIntraDay: {},
@@ -115,6 +162,9 @@ const initialState = {
     stockMonthly: {},
     stockFundamentals: {},
     BTCPrice: {},
+    randomStockNews: {},
+    SPY: {},
+    Nasdaq: {}
 }
 
 // reducers
@@ -145,6 +195,22 @@ export default function stocksReducer(state = initialState, action) {
             newState.BTCPrice = {...state.BTCPrice, ...action.BTC}
             return newState
         }
+        case GET_RANDOM_STOCK_NEWS: {
+            const newState = {...state}
+            newState.randomStockNews = {...state.randomStockNews, ...action.news}
+            return newState
+        }
+        case GET_NASDAQ: {
+            const newState = {...state}
+            newState.Nasdaq = {...state.Nasdaq, ...action.stocks}
+            return newState
+        }
+        case GET_SPY: {
+            const newState = {...state}
+            newState.SPY = {...state.SPY, ...action.stocks}
+            return newState
+        }
+
 
     default:
         return state
