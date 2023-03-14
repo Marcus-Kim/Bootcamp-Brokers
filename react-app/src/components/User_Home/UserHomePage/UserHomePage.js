@@ -18,8 +18,8 @@ export default function UserHomePage() {
   const [hoverIndex, setHoverIndex] = useState(null);
   const [graph, setGraph] = useState([])
   const BTC = useSelector(state => state.stocks.BTCPrice)
-  const SPY = useSelector(state => state.stocks.SPY)
-  const Nasdaq = useSelector(state => state.stocks.Nasdaq)
+  const SPY = useSelector(state => state.stocks.SPY) // This is not working
+  const Nasdaq = useSelector(state => state.stocks.Nasdaq) // This is not working
   const randomNews = useSelector(state => state.stocks.randomStockNews)
   const today = new Date();
   const yesterday = new Date(today);
@@ -221,7 +221,7 @@ export default function UserHomePage() {
 
       <div className='buying-power'>
       <span>Buying Power</span>
-      <span>{ portfolio.cash_balance }</span>
+      <span>${ portfolio.cash_balance }</span>
       </div>
 
       <hr style={{border: 'none', borderTop: "1px solid #d3d3d3"}} />
