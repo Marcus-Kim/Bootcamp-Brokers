@@ -73,14 +73,14 @@ def chat():
     response = requests.post(url, json=bot_response, headers=headers)
     response_data = response.json()
 
-    # message = Message(
-    #     user_id = data['user_id'],
-    #     message = user_message,
-    #     created_at = datetime.now(),
-    # )
-    # db.session.add(message)
-    # db.session.commit()
-    print(response_data)
+    message = Message(
+        user_id = data['user_id'],
+        message = user_message,
+        created_at = datetime.now(),
+    )
+    db.session.add(message)
+    db.session.commit()
+
     chatGPTReply = response_data['choices'][0]['message']['content']
 
     return jsonify({
