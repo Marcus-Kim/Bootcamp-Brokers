@@ -31,7 +31,7 @@ export default function Login() {
     e.preventDefault()
     const demoEmail = "demo@aa.io"
     const demoPassword = "password"
-    const data = await dispatch(login(demoEmail, password))
+    const data = await dispatch(login(demoEmail, demoPassword))
     navigate("/home")
   }
 
