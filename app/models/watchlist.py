@@ -19,8 +19,11 @@ class Watchlist(db.Model):
     )
 
     def to_dict(self):
+        stocks = self.stocks
+        dict_stocks = [stock.to_dict() for stock in stocks]
         return {
             'id': self.id,
             'list_name': self.list_name,
-            'user_id': self.user_id
+            'user_id': self.user_id,
+            'stocks': dict_stocks
         }

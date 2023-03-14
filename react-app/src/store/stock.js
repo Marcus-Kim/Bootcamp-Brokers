@@ -9,9 +9,12 @@ const GET_STOCK_WEEKLY = 'stocks/GET_STOCK_WEEKLY'
 const GET_STOCK_NEWS = 'stocks/GET_STOCKNEWS'
 const GET_STOCK_FUNDAMENTALS = 'stocks/GET_STOCK_FUNDAMENTALS'
 const GET_BTC_PRICE = 'stocks/GET_BTC_PRICE'
+const GET_ONE_WEEK_CHART_DATA = '/stocks/GET_ONE_WEEK_CHART_DATA'
+const GET_ONE_MONTH_CHART_DATA = '/stocks/GET_ONE_MONTH_CHART_DATA'
 const GET_RANDOM_STOCK_NEWS = 'stocks/GET_RANDOM_STOCK_NEWS'
 const GET_SPY = 'stocks/GET_SPY'
 const GET_NASDAQ = 'stocks/GET_NASDAQ'
+
 
 //actions
 const actionGetStockIntraday = (stocks) => ({
@@ -44,6 +47,16 @@ const actionGetBTCPrice = (BTC) => ({
     type: GET_BTC_PRICE,
     BTC
 })
+const actionGetOneWeekStockData = (stocks) => ({
+    type: GET_ONE_WEEK_CHART_DATA,
+    stocks
+})
+
+const actionGetOneMonthStockData = (stocks) => ({
+    type: GET_ONE_MONTH_CHART_DATA,
+    stocks
+})
+
 
 const actionGetRandomStockNews = (news) => ({
     type: GET_RANDOM_STOCK_NEWS,
@@ -120,40 +133,26 @@ export const thunkGetBTCPrice = () => async (dispatch) => {
         return BTCPrice
     }
 }
-
-export const thunkGetRandomStockNews = () => async (dispatch) => {
-    const response = await fetch(`https://www.alphavantage.co/query?function=NEWS_SENTIMENT&apikey=${apiKey}`)
-
-    if (response.ok) {
-        const randomNews = await response.json()
-        dispatch(actionGetRandomStockNews(randomNews))
-        return randomNews
-    }
-} 
-
-export const thunkGetSPY = () => async (dispatch) => {
-    const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=SPY&outputsize=compact&apikey=${apiKey}`)
+export const thunkGetOneWeekStockData = (ticker) => async (dispatch) => {
+    const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${ticker}&interval=15min&outputsize=full&apikey=${apiKey}`)
 
     if (response.ok) {
-        const Daily = await response.json()
-        dispatch(actionGetSpy(Daily))
-        return Daily
+        const result = await response.json()
+        dispatch(actionGetOneWeekStockData(result))
+        return result
     }
 }
 
-export const thunkGetNasdaq = () => async (dispatch) => {
-    const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=QQQ&outputsize=compact&apikey=${apiKey}`)
+// 1 Month Chart
+export const thunkGetOneMonthStockData = (ticker) => async (dispatch) => {
+    const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${ticker}&interval=60min&outputsize=full&apikey=${apiKey}`)
 
     if (response.ok) {
-        const Daily = await response.json()
-        dispatch(actionGetNasdaq(Daily))
-        return Daily
+        const result = await response.json()
+        dispatch(actionGetOneMonthStockData(result))
+        return result
     }
 }
-
-
-
-
 const initialState = {
     stockNews: {},
     stockIntraDay: {},
@@ -164,7 +163,9 @@ const initialState = {
     BTCPrice: {},
     randomStockNews: {},
     SPY: {},
-    Nasdaq: {}
+    Nasdaq: {},
+    oneWeekChartData: {},
+    oneMonthChartData: {}
 }
 
 // reducers
@@ -195,6 +196,21 @@ export default function stocksReducer(state = initialState, action) {
             newState.BTCPrice = {...state.BTCPrice, ...action.BTC}
             return newState
         }
+        case GET_STOCK_WEEKLY: {
+            const newState = {...state}
+            newState.stockWeekly = {...state.stockWeekly, ...action.stocks}
+            return newState
+        }
+        case GET_ONE_WEEK_CHART_DATA: {
+            const newState = {...state}
+            newState.oneWeekChartData = {...state.oneWeekChartData, ...action.stocks}
+            return newState
+        }
+        case GET_ONE_MONTH_CHART_DATA: {
+            const newState = {...state}
+            newState.oneMonthChartData = {...state.oneMonthChartData, ...action.stocks}
+            return newState
+        }
         case GET_RANDOM_STOCK_NEWS: {
             const newState = {...state}
             newState.randomStockNews = {...state.randomStockNews, ...action.news}
@@ -210,8 +226,6 @@ export default function stocksReducer(state = initialState, action) {
             newState.SPY = {...state.SPY, ...action.stocks}
             return newState
         }
-
-
     default:
         return state
     }

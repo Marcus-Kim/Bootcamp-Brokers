@@ -12,9 +12,78 @@
 }
 
 .watchlist-details-content {
-  width: 70%
+  width: 70%;
+  margin-right: 40px;
+  display: flex;
+  flex-direction: column;
 }
+
+
 
 .watchlist-details-lists {
   width: 30%
+}
+
+.watchlist-details-name {
+  font-size: larger;
+}
+
+.watchlist-details-name-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 40px;
+}
+
+.watchlist-details-item-count {
+  font-size: small;
+  color: gray;
+  margin-top: 10px;
+  margin-bottom: 20px
+}
+
+.watchlist-details-list-header-name {
+  text-align: left;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.watchlist-details-list-header,
+.watchlist-details-list-header-symbol {
+  text-align: left;
+}
+
+.watchlist-details-list-header-market-cap {
+  text-align: left;
+  /* display: flex; */
+}
+
+.watchlist-details-table {
+  border-collapse: collapse;
+}
+
+.watchlist-details-table-header {
+  border-bottom: 1px solid gray;
+}
+
+.watchlist-details-list-body tr {
+  border-bottom: 1px solid gray;
+
+}
+
+#hello {
+  display: flex;
+  padding-top: 18px;
+  justify-content: space-between;
+}
+
+#watchlist-details-list-header-name {
+  max-width: 220px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.watchlist-details-list-row:hover {
+  background-color: rgb(209, 209, 209);
+  cursor: pointer;
 }

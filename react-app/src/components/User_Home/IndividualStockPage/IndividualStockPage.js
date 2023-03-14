@@ -5,6 +5,8 @@ import { useFinanceAPI } from "../../../context/FinanceApiContext";
 import "./IndividualStockPage.css"
 import { thunkGetStockNews, thunkGetStockFundamentals, thunkGetStockIntraDay, thunkGetStockDaily } from "../../../store/stock";
 import OneDayChart from "./charts/OneDayChart";
+import OneWeekChart from "./charts/OneWeekChart";
+import OneMonthChart from "./charts/OneMonthChart";
 
 
 export default function IndividualStockPage() {
@@ -39,7 +41,9 @@ export default function IndividualStockPage() {
         <div className="stock-page-main-container">
             <h1>{stockFundamentals["Symbol"]}</h1>
             <div>
-                <OneDayChart ticker={tickerCap} />
+                {/* <OneDayChart ticker={tickerCap} /> */}
+                {/* <OneWeekChart ticker={ tickerCap } /> */}
+                <OneMonthChart ticker={tickerCap} />
                 <button>1D</button>
                 <button>1W</button>
                 <button>1M</button>
