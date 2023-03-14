@@ -215,28 +215,19 @@ export default function UserHomePage() {
             <button className="profile-timeline">1Y</button>
             <button className="profile-timeline">ALL</button>
           </span>
-          <hr style={{border: 'none', borderTop: "1px solid #d3d3d3"}} />
+          <hr className="break"/>
         </div>
         <div className="buying-power">
           <span>Buying Power</span>
           <span>${portfolio.cash_balance}</span>
         </div>
-        <hr style={{border: 'none', borderTop: "1px solid #d3d3d3"}} />
-        <div className="indexes-container">
-          <span className="indexes">
-            <span>S&P 500</span>
-            <span className="index-price">${SPY?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
-          </span>
-          <span className="indexes">
-            <span>Nasdaq</span>
-            <span className="index-price">${Nasdaq?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
-          </span>
-          <span className="indexes">
-            <span>Bitcoin</span>
-            <span className="index-price">${parseFloat(BTC?.["Realtime Currency Exchange Rate"]?.["5. Exchange Rate"])}</span>
-          </span>
+        <hr className="break"/>
+        <div className="cash-container">
+          <h2 className="section-header">Cash</h2>
         </div>
+        <hr className="break"/>
         <div className="news-container">
+          <h2 className="section-header">News</h2>
           {randomNews?.["feed"]?.slice(0,10).map(news => (
             <div className="news-card">
               <hr />
@@ -250,6 +241,20 @@ export default function UserHomePage() {
               </NavLink>
             </div>
           ))}
+        </div>
+        <div className="indexes-container">
+          <span className="indexes">
+            <span>S&P 500</span>
+            <span className="index-price">${SPY?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
+          </span>
+          <span className="indexes">
+            <span>Nasdaq</span>
+            <span className="index-price">${Nasdaq?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
+          </span>
+          <span className="indexes">
+            <span>Bitcoin</span>
+            <span className="index-price">${parseFloat(BTC?.["Realtime Currency Exchange Rate"]?.["5. Exchange Rate"])}</span>
+          </span>
         </div>
       </div>
       <div className="watchlist-container">
