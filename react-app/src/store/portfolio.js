@@ -1,10 +1,10 @@
 // ACTIONS
-const GET_PORTFOLIO_HISTORICAL_VALUES = 'portfolio/history' // Getting historical portfolio values by user id
-const GET_PORTFOLIO_HOLDINGS = 'portfolio/holdings' // Getting portfolio holdings
-const GET_USER_PORTFOLIO = 'portfolio/user' // Getting user portfolio by id
-const BUY_STOCK = 'portfolio/buy' // Buying a stock
-const SELL_STOCK = 'portfolio/sell' // Selling a stock
-const CREATE_PORTFOLIO_SNAPSHOT = 'portfolio/create-snapshot' // Creating a new snapshot of portfolio current value
+const GET_PORTFOLIO_HISTORICAL_VALUES = 'portfolio/GET_HISTORY' // Getting historical portfolio values by user id
+const GET_PORTFOLIO_HOLDINGS = 'portfolio/GET_PORTFOLIO_HOLDINGS' // Getting portfolio holdings
+const GET_USER_PORTFOLIO = 'portfolio/GET_USER_PORTFOLIO' // Getting user portfolio by id
+const BUY_STOCK = 'portfolio/BUY_STOCK' // Buying a stock
+const SELL_STOCK = 'portfolio/SELL_STOCK' // Selling a stock
+const CREATE_PORTFOLIO_SNAPSHOT = 'portfolio/CREATE_PORTFOLIO_SNAPSHOT' // Creating a new snapshot of portfolio current value
 
 
 // ACTION CREATORS
