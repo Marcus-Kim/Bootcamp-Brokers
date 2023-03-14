@@ -18,7 +18,7 @@ class PortfolioShare(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'portfolio_id': self.id,
+            'portfolio_id': self.portfolio_id,
             'ticker_id': self.ticker_id,
             'shares': self.shares
         }

@@ -41,7 +41,7 @@ def add_stock_to_portfolio():
     data = request.json
     ticker = data['ticker']
     shares = data['shares']
-    return Portfolio.add_stock(portfolio, ticker, shares)
+    return Portfolio.buy_stock(portfolio, ticker, shares)
 
 # Log current value of portfolio to portfolio_values table
 from datetime import datetime
