@@ -36,7 +36,8 @@ def get_user_portfolio():
 @portfolio_routes.route('/buy', methods=['POST'])
 @login_required
 def add_stock_to_portfolio():
-    """Route for adding a stock to a user's portfolio"""
+    """Route for adding a stock to a user's portfolio
+    Parses, values 'ticker' and 'shares' from request body"""
     portfolio = Portfolio.query.filter_by(user_id=current_user.id).first()
     data = request.json
     ticker = data['ticker']
@@ -68,8 +69,8 @@ def create_portfolio_snapshot():
             date=datetime.now()
         ))
         db.session.commit()
-        return {
-            'message': 'Portfolio snapshot captured and added to database'
-        }
+        portfolio_values = PortfolioValue.query.filter_by(portfolio_id=portfolio.id).all()
+
+        return [p.to_dict() for p in portfolio_values]
     except:
         raise Exception('Error adding portfolio value to portfolio_values table')

@@ -222,7 +222,7 @@ export default function UserHomePage() {
         </span>
         <hr style={{border: 'none', borderTop: "1px solid #d3d3d3"}} />
       </div>
-      
+
       <div className='buying-power'>
       <span>Buying Power</span>
       <span>$0.00</span>
