@@ -32,8 +32,8 @@ def get_user_portfolio():
     portfolio = Portfolio.query.get(current_user.id)
     return portfolio.to_dict()
 
-# Add a stock to portfolio
-@portfolio_routes.route('/holdings', methods=['POST'])
+# Buy a stock
+@portfolio_routes.route('/buy', methods=['POST'])
 @login_required
 def add_stock_to_portfolio():
     """Route for adding a stock to a user's portfolio"""
@@ -42,6 +42,17 @@ def add_stock_to_portfolio():
     ticker = data['ticker']
     shares = data['shares']
     return Portfolio.buy_stock(portfolio, ticker, shares)
+
+# Sell a stock
+@portfolio_routes.route('/sell', methods=['POST'])
+@login_required
+def remove_stock_from_portfolio():
+    """Route for removing shares of a stock from a user's portfolio"""
+    portfolio = Portfolio.query.filter_by(user_id=current_user.id).first()
+    data = request.json
+    ticker = data['ticker']
+    shares = data['shares']
+    return Portfolio.sell_stock(portfolio, ticker, shares)
 
 # Log current value of portfolio to portfolio_values table
 from datetime import datetime

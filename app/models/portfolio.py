@@ -66,7 +66,7 @@ class Portfolio(db.Model):
             return table_row.to_dict()
         else:
             # Create new row in portfolio shares table
-            new_table_row = db.session.add(PortfolioShare(
+            db.session.add(PortfolioShare(
                 portfolio_id=self.id,
                 ticker_id=ticker,
                 shares=num_shares
@@ -83,3 +83,35 @@ class Portfolio(db.Model):
             # Query for the new row to get its id and return it as a dict
             new_row = PortfolioShare.query.filter_by(PortfolioShare.portfolio_id == self.id, PortfolioShare.ticker_id == ticker).first()
             return new_row.to_dict()
+        
+    def sell_stock(self, ticker, num_shares):
+        """Method for selling shares of a stock from a user's portfolio"""
+        # If num_shares is not greater than zero, return error
+        if type(num_shares) is not int or num_shares < 1:
+            return {'error': 'Number of shares of stock to sell must be an integer greater than 0'}
+        
+        # Check if value exists in portfolio_shares table
+        table_row = PortfolioShare.query.filter(PortfolioShare.portfolio_id == self.id, PortfolioShare.ticker_id == ticker).first()
+        if table_row:
+            # Check if number of shares to be decremented would result in a total greater than 0
+            if table_row.shares - num_shares < 0:
+                return { 'error': 'Number of shares to sell must be less than or equal number of owned shares'}
+            
+            # Check if user has sold all remaining shares of stock, remove from portfolio in this case
+            if table_row.shares == num_shares:
+                db.session.delete(table_row)
+                db.session.commit()
+                return { 'message': f"Successfully removed {ticker} from portfolio"}
+            # Decrement number of shares by num_shares in portfolio_shares table
+            table_row.shares -= num_shares
+
+            # Create transaction to reflect change in shares
+            db.session.add(Transaction(
+                user_id=self.user_id,
+                ticker_id=ticker,
+                shares=(num_shares * -1),
+            ))
+            db.session.commit()
+            return table_row.to_dict()
+        else:
+            return {'error': 'Stock with this ticker symbol not found in user portfolio'}
