@@ -11,6 +11,9 @@ const GET_STOCK_FUNDAMENTALS = 'stocks/GET_STOCK_FUNDAMENTALS'
 const GET_BTC_PRICE = 'stocks/GET_BTC_PRICE'
 const GET_ONE_WEEK_CHART_DATA = '/stocks/GET_ONE_WEEK_CHART_DATA'
 const GET_ONE_MONTH_CHART_DATA = '/stocks/GET_ONE_MONTH_CHART_DATA'
+const GET_RANDOM_STOCK_NEWS = 'stocks/GET_RANDOM_STOCK_NEWS'
+const GET_SPY = 'stocks/GET_SPY'
+const GET_NASDAQ = 'stocks/GET_NASDAQ'
 
 
 //actions
@@ -44,8 +47,6 @@ const actionGetBTCPrice = (BTC) => ({
     type: GET_BTC_PRICE,
     BTC
 })
-
-// Actions for Chart Data
 const actionGetOneWeekStockData = (stocks) => ({
     type: GET_ONE_WEEK_CHART_DATA,
     stocks
@@ -57,7 +58,20 @@ const actionGetOneMonthStockData = (stocks) => ({
 })
 
 
+const actionGetRandomStockNews = (news) => ({
+    type: GET_RANDOM_STOCK_NEWS,
+    news
+})
 
+const actionGetSpy = (stocks) => ({
+    type: GET_SPY,
+    stocks
+}) 
+
+const actionGetNasdaq = (stocks) => ({
+    type: GET_NASDAQ,
+    stocks
+}) 
 
 // thunks
 export const thunkGetStockNews = ticker => async (dispatch) => {
@@ -119,10 +133,6 @@ export const thunkGetBTCPrice = () => async (dispatch) => {
         return BTCPrice
     }
 }
-
-// thunks for charts
-
-// 1 Week Chart
 export const thunkGetOneWeekStockData = (ticker) => async (dispatch) => {
     const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${ticker}&interval=15min&outputsize=full&apikey=${apiKey}`)
 
@@ -143,7 +153,6 @@ export const thunkGetOneMonthStockData = (ticker) => async (dispatch) => {
         return result
     }
 }
-
 const initialState = {
     stockNews: {},
     stockIntraDay: {},
@@ -152,6 +161,9 @@ const initialState = {
     stockMonthly: {},
     stockFundamentals: {},
     BTCPrice: {},
+    randomStockNews: {},
+    SPY: {},
+    Nasdaq: {},
     oneWeekChartData: {},
     oneMonthChartData: {}
 }
@@ -199,7 +211,21 @@ export default function stocksReducer(state = initialState, action) {
             newState.oneMonthChartData = {...state.oneMonthChartData, ...action.stocks}
             return newState
         }
-
+        case GET_RANDOM_STOCK_NEWS: {
+            const newState = {...state}
+            newState.randomStockNews = {...state.randomStockNews, ...action.news}
+            return newState
+        }
+        case GET_NASDAQ: {
+            const newState = {...state}
+            newState.Nasdaq = {...state.Nasdaq, ...action.stocks}
+            return newState
+        }
+        case GET_SPY: {
+            const newState = {...state}
+            newState.SPY = {...state.SPY, ...action.stocks}
+            return newState
+        }
     default:
         return state
     }

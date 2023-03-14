@@ -10,10 +10,9 @@ export default function UserHomePageNav() {
 
     return (
     <>
-    <div className="home-container">
-    
-        <div style={{paddingTop: '67px'}} className="homepage-navigationcontainer">
-            <div style={{marginLeft: '3%'}}>
+        <div className="home-container">
+        <div style={{paddingTop: '67px', marginBottom: '30px'}} className="homepage-navigationcontainer">
+            <div>
             <img className='logo' src={logo} alt="logo" />
             </div>
             
@@ -26,9 +25,9 @@ export default function UserHomePageNav() {
                 <NavLink className="home-nav">Account</NavLink>
             </span>
         </div>
-
-    <UserHomePage/>
-    </div>
+        <UserHomePage/>
+        </div>
+    
     </>
     )
 }
