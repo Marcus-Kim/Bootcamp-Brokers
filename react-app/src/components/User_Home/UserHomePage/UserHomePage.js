@@ -10,6 +10,7 @@ import { CategoryScale } from 'chart.js';
 import { thunkGetNasdaq } from '../../../store/stock';
 import { thunkGetSPY } from '../../../store/stock';
 import { thunkGetStockNews } from '../../../store/stock'
+import Watchlists from '../../Watchlists/Watchlists';
 
 
 export default function UserHomePage() {
@@ -17,6 +18,7 @@ export default function UserHomePage() {
   const [price, setPrice] = useState(5)
   const [hoverIndex, setHoverIndex] = useState(null);
   const [graph, setGraph] = useState([])
+  const watchlists = useSelector(state => state.watchlist)
   const BTC = useSelector(state => state.stocks.BTCPrice)
   const SPY = useSelector(state => state.stocks.SPY) // This is not working
   const Nasdaq = useSelector(state => state.stocks.Nasdaq) // This is not working
@@ -186,23 +188,23 @@ export default function UserHomePage() {
   if (!BTC || !SPY) return null;
 
   return (
-    <div className="leftside-container">
-      <div className="chart-container">
-        <div className="real-chart-container">
-        <div className="portfolio-data-container">
-        <div className="price">${price.toFixed(2)}</div>
-          <div>
-            <span>
-              <img className="green-triangle" src={Triangle} alt="" />
-            </span>
-            </div> 
-        </div>
-        <div style={{width: 1000, height: 200}}>
-        <Line
-          data={chartData}
-          options={chartOptions}
-          />
-        </div>
+    <div className="homepage-container">
+      <div className="portfolio-container">
+        <div className="chart-container">
+          <div className="portfolio-data-container">
+            <div className="price">${price.toFixed(2)}</div>
+            <div>
+              <span>
+                <img className="green-triangle" src={Triangle} alt="" />
+              </span>
+            </div>
+          </div>
+          <div className="line-chart-container">
+            <Line
+              data={chartData}
+              options={chartOptions}
+            />
+          </div>
         </div>
         <div className="watchlist-container">Watchlist Container</div>
       </div>
@@ -221,7 +223,7 @@ export default function UserHomePage() {
 
       <div className='buying-power'>
       <span>Buying Power</span>
-      <span>${ portfolio.cash_balance }</span>
+      <span>{ portfolio.cash_balance }</span>
       </div>
 
       <hr style={{border: 'none', borderTop: "1px solid #d3d3d3"}} />
