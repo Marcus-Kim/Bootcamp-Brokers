@@ -17,7 +17,7 @@ import NotFound from './components/Navigation/NotFound/NotFound'
 import WatchlistDetails from './components/Watchlists/WatchlistDetails'
 import { thunkGetPortfolioHistoricalValues, thunkGetPortfolioHoldings, thunkGetUserPortfolio } from "./store/portfolio";
 import { thunkGetAllWatchlistsUserId } from "./store/watchlist";
-import Profile from "./components/User_Home/UserHomePage/UserDropDown/Profile";
+import Profile from "./components/User_Home/UserHomePage/UserDropDown/Profile/Profile";
 import History from "./components/User_Home/UserHomePage/UserDropDown/History/History";
 import Investing from "./components/User_Home/UserHomePage/UserDropDown/Investing";
 
@@ -57,7 +57,7 @@ function App() {
           <Route path="/stocks/:ticker" element={<IndividualStockPage />} />
           <Route path="/watchlists/:watchlistId" element={<WatchlistDetails />} />
           <Route path="/profile" element={<Profile/>}></Route>
-          <Route path="/History" element={<History/>}></Route>
+          <Route path="/history" element={<History/>}></Route>
           <Route path="/Investing" element={<Investing/>}></Route>
           <Route path='*' exact={true} element={<NotFound />} />
         </Routes>
