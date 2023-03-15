@@ -5,7 +5,7 @@ import { thunkGetTransactionsByUserId } from "../../../store/transactions";
 export default function TransactionComponent({ ticker, user }) {
 
     const dispatch = useDispatch()
-    const transactions = useSelector(state =>)
+    // const transactions = useSelector(state =>)
 
 
     useEffect(() => {
