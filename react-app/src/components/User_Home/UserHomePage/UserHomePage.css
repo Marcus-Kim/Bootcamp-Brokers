@@ -260,6 +260,9 @@
 
 
 
+
+
+
 .dropdown-nav {
     text-decoration: solid;
     font-size: 13px;
@@ -274,7 +277,11 @@
 }
 
 .dropdown-nav:hover{
-    background-color: #F5F8FA;
+    background-color: antiquewhite
+}
+
+.dropdown-nav:hover button {
+    background-color: antiquewhite
 }
 
 .dropper {
@@ -289,6 +296,7 @@
 .dropdown-container-wrapper:hover {
     cursor: pointer;
     
+  }
   }
 
 .dropdown-icon {
