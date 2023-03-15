@@ -3,12 +3,18 @@
     margin-right: 35%;
     display: flex;
     gap: 25px;
-    
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 100%;
 }
 
 .profile-name-container {
     font-size: 24px;
+}
 
+.profile-page-container {
+    max-width: 678px;
+    width: 100%;
 }
 
 .cashy-container {
@@ -16,17 +22,19 @@
     margin-right: 35%;
     margin-top: 4%;
     margin-bottom: 4%;
+    max-width: 100%;
+    width: 100%;
 }
 
 .usercash {
     font-size: 32px;
-
 }
 
 .investing-container {
     margin-left: 15%;
     margin-right: 35%;
-    
+    max-width: 100%;
+    width: 100%;
 }
 
 .holdings-container {
@@ -55,4 +63,5 @@
     font-size: 13px;
     color: rgb(106, 114, 120);
     margin-top: 3%;
+    width: 100%;
 }
