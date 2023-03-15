@@ -13,11 +13,8 @@ import { faClockRotateLeft } from '@fortawesome/free-solid-svg-icons'
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { logout } from '../../../store/session'
 
-import { logout } from '../../../store/session'
-
 
 export default function UserHomePageNav() {
-    const dispatch = useDispatch()
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const user = useSelector(state => state.session)
@@ -41,11 +38,6 @@ export default function UserHomePageNav() {
           navigate('/home')
         }
       }, [])
-
-    const handleLogout = async () => {
-        dispatch(logout()).then(navigate("/"))
-        
-    }
 
     const handleLogout = async () => {
         dispatch(logout()).then(navigate("/"))
@@ -86,13 +78,10 @@ export default function UserHomePageNav() {
                                     <NavLink to="/profile" className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faSmile}/> Profile</NavLink>
                                     <NavLink to="/investing" className="dropdown-nav"><FontAwesomeIcon className="dropdown-hand" icon={faHandHoldingDollar} />Investing</NavLink>
                                     <NavLink to="/history" className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faClockRotateLeft} />History</NavLink>
-                                    <NavLink to="/profile" className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faSmile}/> Profile</NavLink>
-                                    <NavLink to="/investing" className="dropdown-nav"><FontAwesomeIcon className="dropdown-hand" icon={faHandHoldingDollar} />Investing</NavLink>
-                                    <NavLink to="/history" className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faClockRotateLeft} />History</NavLink>
                                     <NavLink className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faPhone}/> Support</NavLink>
-                                    <button 
+                                    <button style={{backgroundColor: "#F5F8FA", borderStyle: 'none' }} 
                                     onClick={handleLogout}
-                                    className="dropdown-logout"><FontAwesomeIcon className="dropdown-icon" icon={faArrowRightFromBracket}/>
+                                    className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faArrowRightFromBracket}/>
                                     Logout
                                     </button>
                                 </div>
