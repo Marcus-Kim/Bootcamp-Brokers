@@ -2,7 +2,7 @@ import './watchlistDetails.css'
 import Watchlists from './Watchlists'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { thunkGetAllWatchlistsUserId } from '../../store/watchlist'
+import { thunkGetAllWatchlistsUserId, thunkDeleteWatchlistStock } from '../../store/watchlist'
 import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import UserNav from '../User_Home/UserHomePage/UserNav/UserNav'
@@ -15,21 +15,25 @@ export default function WatchlistDetails() {
   const user = useSelector(state => state.session.user.id)
   const watchlists = useSelector(state => state.watchlist)
   const { watchlistId } = useParams()
-
-  const selectedWatchlist = watchlists[+watchlistId]
+  const selectedWatchlist = useSelector(state => state.watchlist[+watchlistId])
+  const selectedWatchlistStocks = useSelector(state => state.watchlist[+watchlistId]?.stocks)
   console.log('SELECTED WATCHLIST', selectedWatchlist)
 
   useEffect(() => {
     dispatch(thunkGetAllWatchlistsUserId(user))
   }, [dispatch])
 
+
   if (!watchlists) return null;
   if (!selectedWatchlist) return null;
   if (!user) return null;
+  // console.log(selectedWatchlistStocks)
+  if (!selectedWatchlistStocks) return null;
 
-  const handleDeleteClick = (e) => {
+  const handleDeleteClick = async (e, watchlistId, ticker) => {
     e.stopPropagation();
     //TODO Add functionality for deleting
+    await dispatch(thunkDeleteWatchlistStock(watchlistId, ticker))
   }
 
   return (
@@ -60,7 +64,7 @@ export default function WatchlistDetails() {
               </tr>
             </thead>
             <tbody className='watchlist-details-list-body'>
-              {selectedWatchlist.stocks.map(stock => {
+              {selectedWatchlistStocks?.map(stock => {
               return (
                 <tr className='watchlist-details-list-row' onClick={e => navigate(`/stocks/${stock.ticker}`)} key={stock.ticker}>
                   <td className='watchlist-details-list-header-name' id='watchlist-details-list-header-name'>{stock.company_name}</td>
@@ -68,7 +72,7 @@ export default function WatchlistDetails() {
                   <td className='watchlist-details-list-header'>${stock.current_price}</td>
                   <td className='watchlist-details-list-header'>{stock.daily_change * 100}%</td>
                   <td className='watchlist-details-list-header-market-cap'>Market Cap</td>
-                  <button className='watchlist-details-stock-delete-button' onClick={e => handleDeleteClick(e)}>X</button>
+                  <button className='watchlist-details-stock-delete-button' onClick={e => handleDeleteClick(e, selectedWatchlist.id, stock.ticker)}>X</button>
                 </tr>
               )
             })}

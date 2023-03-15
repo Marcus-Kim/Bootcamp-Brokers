@@ -3,6 +3,9 @@ from app.models import User, Watchlist
 from flask_login import login_required
 from app.models.db import db
 from flask_login import current_user
+from app.models.watchlist_stock import watchlist_stocks
+from sqlalchemy.sql import select
+from flask_cors import cross_origin
 
 watchlist_routes = Blueprint('watchlists', __name__)
 
@@ -54,3 +57,18 @@ def update_watchlist(id):
     watchlist.list_name = res['list_name']
     db.session.commit()
     return watchlist.to_dict()
+
+# Delete a specific stock from a watchlist
+@watchlist_routes.route('/<int:watchlistId>/stock/<string:stockTicker>', methods=['DELETE'])
+@login_required
+@cross_origin()
+def delete_watchlist_stock(watchlistId, stockTicker): #Have to be same name as url
+    delete_statement = watchlist_stocks.delete().where(
+        (watchlist_stocks.c.watchlist_id == watchlistId) &
+        (watchlist_stocks.c.ticker_id == stockTicker)
+    )
+
+    result = db.session.execute(delete_statement)
+
+    db.session.commit()
+    return Watchlist.query.get(watchlistId).to_dict()
