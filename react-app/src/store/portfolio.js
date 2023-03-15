@@ -47,12 +47,15 @@ export const thunkGetPortfolioHistoricalValues = () => async (dispatch) => {
 
     if (response.ok) {
         const historicalValues = await response.json()
-        const normalizedHistoricalValues = {};
+        const shapedHistoricalValues = [];
         historicalValues.forEach(value => {
-            normalizedHistoricalValues[value.id] = value;
+            shapedHistoricalValues.push({
+                x: value.date,
+                y: value.current_balance
+            })
         })
-        await dispatch(actionGetPortfolioHistoricalValues(normalizedHistoricalValues))
-        return normalizedHistoricalValues
+        await dispatch(actionGetPortfolioHistoricalValues(shapedHistoricalValues))
+        return shapedHistoricalValues
     }
 }
 
@@ -137,7 +140,7 @@ export const thunkCreatePortfolioSnapshot = () => async (dispatch) => {
 }
 
 const initialState = {
-    historicalValues: {},
+    historicalValues: [],
     holdings: {},
     portfolio: {}
 }
@@ -148,7 +151,7 @@ export default function portfolioReducer(state = initialState, action) {
     const newState = { ...state }
     switch(action.type) {
         case GET_PORTFOLIO_HISTORICAL_VALUES: {
-            newState.historicalValues = { ...state.historicalValues, ...action.historicalValues }
+            newState.historicalValues = [ ...action.historicalValues ]
             return newState
         }
         case GET_PORTFOLIO_HOLDINGS: {
