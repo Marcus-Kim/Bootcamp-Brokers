@@ -1,27 +1,23 @@
 import React from 'react'
 import "./History.css"
 import { useSelector, useDispatch } from 'react-redux'
-import UserHomePageNav from '../../UserHomePageNav'
-import { useNavigate } from 'react-router-dom'
 import UserNav from '../../UserNav/UserNav'
 
 export default function History() {
-  const dispatch = useDispatch()
-  const user = useSelector(state => state.session)
-  const userArray = Object.values(user)
+  const user = useSelector(state => state.session.user)
 
   return (
     <>
     <UserNav/>
     <div className="history-container">
       <div className="name-container">
-        {userArray[0].username}
+        {user.username}
       </div>
-      <hr />
+      <hr className="break"/>
       <div className="main-container">
         <div className="recent-container"> 
             Recent
-            <hr />
+            <hr className="break"/>
         </div>
         <div className="transaction-card">
           
