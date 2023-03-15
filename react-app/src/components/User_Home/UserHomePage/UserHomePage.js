@@ -250,18 +250,20 @@ export default function UserHomePage() {
           <h2 className="section-header">News</h2>
           <hr className="break"/>
           <div className="indexes-container">
-            <span className="indexes">
-              <span>S&P 500</span>
-              <span className="index-price">${SPY?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
-            </span>
-            <span className="indexes">
-              <span>Nasdaq</span>
-              <span className="index-price">${Nasdaq?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
-            </span>
-            <span className="indexes">
-              <span>Bitcoin</span>
-              <span className="index-price">${parseFloat(BTC?.["Realtime Currency Exchange Rate"]?.["5. Exchange Rate"])}</span>
-            </span>
+            <div className="index-and-price">
+              <span className="indexes">
+                <span>S&P 500</span>
+                <span className="index-price">${SPY?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
+              </span>
+              <span className="indexes">
+                <span>Nasdaq</span>
+                <span className="index-price">${Nasdaq?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
+              </span>
+              <span className="indexes">
+                <span>Bitcoin</span>
+                <span className="index-price">${parseFloat(BTC?.["Realtime Currency Exchange Rate"]?.["5. Exchange Rate"])}</span>
+              </span>
+            </div>
           </div>
           {randomNews?.["feed"]?.slice(0,30).map(news => (
             <div key={news.url}>
