@@ -1,8 +1,5 @@
 // Actions
 const GET_ALL_TRANSACTIONS_BY_USER_ID = 'transactions/GET_ALL_TRANSACTIONS_BY_USER_ID'
-const CREATE_TRANSACTION_BUY = 'transactions/CREATE_TRANSACTION_BUY'
-const CREATE_TRANSACTION_SELL = 'transactions/CREATE_TRANSACTION_SELL'
-
 const GET_ALL_TRANSACTIONS_BY_TICKER = 'transactions/GET_ALL_TRANSACTIONS_BY_TICKER'
 
 // Action Creators
@@ -11,71 +8,55 @@ const actionGetTransactionsByUserId = (transactions) => ({
     transactions
 })
 
-const actionCreateTransactionBuy = (transaction) => ({
-    type: CREATE_TRANSACTION_BUY,
-    transaction
-})
-
-const actionGetAllTransactionsByTicker = (transaction) => ({
+const actionGetAllTransactionsByTicker = (transactions) => ({
     type: GET_ALL_TRANSACTIONS_BY_TICKER,
-    transaction
+    transactions
 })
-
 
 // Thunks
-
-const thunkGetTransactionsByUserId = (userId) => async (dispatch) => {
-    const response = await fetch(`/api/transactions/${userId}`)
+export const thunkGetTransactionsByUserId = () => async (dispatch) => {
+    const response = await fetch(`/api/transactions`)
     if (response.ok) {
         const userTransactions = await response.json();
-        dispatch(actionGetTransactionsByUserId(userTransactions))
-        return userTransactions
+        const normalizedTransactions = {}
+        userTransactions.forEach(transaction => {
+            normalizedTransactions[transaction.ticker_id] = transaction
+        })
+        await dispatch(actionGetTransactionsByUserId(normalizedTransactions))
+        return normalizedTransactions
     }
 }
 
-const thunkCreateTransactionBuy = (ticker, shares) => async (dispatch) => {
-    const response = await fetch(`/api/portfolio/buy`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            ticker: ticker,
-            shares: shares
-        })
-    })
+export const thunkGetAllTransactionsByTickerId = (ticker) => async (dispatch) => {
+    const response = await fetch (`/api/transactions/${ticker}`)
     if (response.ok) {
-        const newTransaction = await response.json()
-        dispatch(actionCreateTransactionBuy(newTransaction))
-        return newTransaction
+        const transactionsByTicker = await response.json()
+        const normalizedTransactions = {}
+        transactionsByTicker.forEach(transaction => (
+            normalizedTransactions[transaction.ticker_id] = transaction
+        ))
+        await dispatch(actionGetAllTransactionsByTicker(normalizedTransactions))
+        return normalizedTransactions
     }
-}
-
-const thunkCreateTransactionSell = (ticker, shares) => async (dispatch) => {
-    const response = await fetch(`/api/portfolio/sell`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            ticker: ticker,
-            shares: shares
-        })
-    })
 }
 
 const initialState = {
-    userTransactions: {}
+    allTransactions: {},
+    transactionsByTicker: {}
 }
 
 
-export const transactionsReducer = (state = initialState, action) {
+export default function transactionsReducer (state = initialState, action) {
     switch (action.type) {
         case GET_ALL_TRANSACTIONS_BY_USER_ID: {
             const newState = {...state}
-            newState.userTransactions = { ...state.userTransactions, ...action.transactions }
+            newState.allTransactions = { ...action.transactions }
             return newState;
         }
-        case CREATE_TRANSACTION_BUY: {
+        case GET_ALL_TRANSACTIONS_BY_TICKER: {
             const newState = {...state}
-            newState.userTransactions = { ...state.userTransactions, ...action.transactions }
-            return newState;
+            newState.transactionsByTicker = { ...action.transactions }
+            return newState
         }
 
         default:

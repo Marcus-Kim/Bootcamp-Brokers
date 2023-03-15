@@ -4,12 +4,14 @@ import portfolioReducer from './portfolio';
 import reducer from './session';
 import stocksReducer from './stock'
 import watchlistReducer from './watchlist';
+import transactionsReducer from './transactions';
 
 const rootReducer = combineReducers({
   session: reducer,
   stocks: stocksReducer,
   watchlist: watchlistReducer,
-  portfolio: portfolioReducer
+  portfolio: portfolioReducer,
+  transaction: transactionsReducer
 });
 
 

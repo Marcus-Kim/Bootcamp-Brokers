@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "./IndividualStockPage.css"
 
-export default function Purchase({ ticker, user }) {
+export default function PurchaseComponent({ ticker, user }) {
 
     const dispatch = useDispatch();
     const [shares, setShares] = useState(0)
@@ -23,7 +23,6 @@ export default function Purchase({ ticker, user }) {
     // dispatch thunk!
 
     }
-
 
     return (
         <div className="purchase-container">
@@ -45,6 +44,7 @@ export default function Purchase({ ticker, user }) {
                                 className="shares-input"
                                 type="number"
                                 min="1"
+                                placeholder="0"
                                 value={shares}
                                 onChange={e => setShares(e.target.value)}
                                 >

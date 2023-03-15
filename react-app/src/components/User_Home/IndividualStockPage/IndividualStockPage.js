@@ -10,7 +10,8 @@ import OneMonthChart from "./charts/OneMonthChart";
 import ThreeMonthChart from "./charts/ThreeMonthChart";
 import OneYearChart from "./charts/OneYearChart";
 import FiveYearChart from "./charts/FiveYearChart";
-import Purchase from "./Purchase";
+import PurchaseComponent from "./PurchaseComponent";
+import TransactionComponent from "./Transactions";
 
 
 
@@ -103,7 +104,7 @@ export default function IndividualStockPage() {
                     <div className="stat-box">
                         <div>Dividend yield </div>
                         <div>{+stockFundamentals["DividendYield"] !== 0
-                                ? `${+stockFundamentals["DividendYield"] * 100} %`
+                                ? `${Number(+stockFundamentals["DividendYield"] * 100).toFixed(2)} %`
                                 : "--"
                         }</div>
                     </div>
@@ -124,7 +125,8 @@ export default function IndividualStockPage() {
                         <div>${stockDaily["Time Series (Daily)"][yesterdayFormatted]["4. close"]}</div>
                     </div>
                 </div>
-                    <Purchase ticker={tickerCap} user={user} />
+                    <PurchaseComponent ticker={tickerCap} user={user} />
+                    <TransactionComponent ticker={tickerCap} user={user} />
             </div>
             <div>
                 <div className="news-stat-title-div">News</div>
@@ -135,7 +137,7 @@ export default function IndividualStockPage() {
                         className="news-navlink"
                         >
                             <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                <div style={{ padding: "5px", width: "610px"}}>
+                                <div style={{ padding: "5px", width: "600px"}}>
                                     <div style={{ fontSize: "12px", color: "gray"}}>{news.source}</div>
                                     <div style={{ fontSize: "15px"}}>{news.title}</div>
                                     <div style={{ fontSize: "10px", color: "gray"}}>{news.summary}</div>
