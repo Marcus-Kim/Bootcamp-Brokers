@@ -11,6 +11,7 @@ export default function Profile() {
   const user = useSelector(state => state.session)
   const userArray = Object.values(user)
   const userPortfolio = useSelector(state => state.portfolio)
+  
 
   return (
     <>
@@ -25,7 +26,7 @@ export default function Profile() {
         </div>
       </div>
 
-      <div className="cash-container">
+      <div className="cashy-container">
         <div className="usercash">${userPortfolio.cash_balance}</div>
         <div style={{fontSize: '13px', marginTop: 10}}>Total in Bootcamp Brokers</div>
       </div>

@@ -24,7 +24,7 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (password === confirmPassword) {
-      const data = await dispatch(signUp(name, email, password));
+      const data = await dispatch(signUp(name, email, password)).then(navigate("/home"));
       if (data) {
         setErrors(data)
         if (!errors) {
