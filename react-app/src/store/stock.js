@@ -273,7 +273,8 @@ export default function stocksReducer(state = initialState, action) {
             const newState = {...state}
             newState.SPY = {...state.SPY, ...action.stocks}
             return newState
-        }        case GET_ONE_YEAR_CHART_DATA: {
+        }        
+        case GET_ONE_YEAR_CHART_DATA: {
             const newState = {...state}
             newState.oneYearChartData = {...state.oneYearChartData, ...action.stocks}
             return newState
