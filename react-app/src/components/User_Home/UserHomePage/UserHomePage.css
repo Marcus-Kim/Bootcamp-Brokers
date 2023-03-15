@@ -178,6 +178,16 @@
     font-weight: 500;
 }
 
+.source {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.time-units {
+    font-size: 13px;
+    font-weight: 400;
+}
+
 .watchlist-container {
     display: flex;
     border: 1px solid #E3E9ED;
