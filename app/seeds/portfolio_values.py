@@ -1,21 +1,42 @@
 from app.models import db, PortfolioValue, environment, SCHEMA
 from sqlalchemy.sql import text
+from collections import defaultdict
 
 
 # Adds demo portfolios with dynamic seed data
 import random
 from datetime import datetime, timedelta
 
-def generate_portfolio_values(portfolio_id, start_date, end_date, min_balance, max_balance):
+def generate_portfolio_values(portfolio_id, start_date, end_date, min_balance, max_balance, volatility=0.03):
     date_range = (end_date - start_date).days + 1
-    portfolio_values = []
+    portfolio_values = defaultdict(list)
 
-    for i in range(date_range):
-        current_date = start_date + timedelta(days=i)
-        current_balance = random.uniform(min_balance, max_balance)
-        portfolio_values.append({'portfolio_id': portfolio_id, 'current_balance': current_balance, 'date': current_date})
+    time_frames = {
+        '1D': 1,
+        '1W': 7,
+        '1M': 30,
+        '3M': 90,
+        '6M': 180,
+        '1Y': 365
+    }
 
-    return portfolio_values
+    
+    for time_frame in time_frames:
+        initial_price = random.uniform(min_balance, max_balance)
+        prices = [initial_price]
+
+        for _ in range(date_range - 1):
+            change_pct = random.gauss(0, volatility)
+            new_price = prices[-1] * (1 + change_pct)
+            prices.append(new_price)
+
+        for i in range(date_range):
+            current_date = start_date + timedelta(days=i)
+            current_balance = prices[i]
+            portfolio_values[time_frame].append({'x': current_date, 'y': current_balance})
+
+    return dict(portfolio_values)
+
 
 def seed_portfolio_values():
     start_date = datetime(2022, 12, 5)

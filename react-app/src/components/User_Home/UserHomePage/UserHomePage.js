@@ -19,7 +19,7 @@ import { thunkGetAllWatchlistsUserId } from '../../../store/watchlist';
 
 export default function UserHomePage() {
   const dispatch = useDispatch()
-  const [price, setPrice] = useState(5)
+  const [price, setPrice] = useState(null)
   const [hoverIndex, setHoverIndex] = useState(null);
   const [graph, setGraph] = useState([])
   const watchlists = useSelector(state => state.watchlist)
@@ -33,7 +33,9 @@ export default function UserHomePage() {
   yesterday.setDate(yesterday.getDate() - 1);
   const yesterdayString = yesterday.toISOString().substring(0, 10);
   const portfolio = useSelector(state => state.portfolio)
-  
+
+
+  const historicalValues = Object.values(portfolio.historicalValues)
   
   const verticalLinePlugin = {
     id: "verticalLine",
@@ -60,6 +62,7 @@ export default function UserHomePage() {
   };
 
   Chart.register(verticalLinePlugin);
+  
 
   const handleHover = (event, active, chart) => {
     if (active.length > 0) {
@@ -70,18 +73,24 @@ export default function UserHomePage() {
     }
   };
 
+
   const mockData = () => {
     let data = []
 
-    let value = 200
-    for (let i = 0; i < 60 * 12; i += 15) {
-      let date = new Date();
-      date.setHours(4);
-      date.setMinutes(0);
-      value+= Math.floor(Math.random() * (10000 - 2000 + 1)) + 5000
+    historicalValues.forEach(ele => {
+      data.push({x: ele.x.split("00")[0], y: ele.y})
+    }) 
+    console.log(data, 'data')
 
-      data.push({x: date, y: value})
-    }
+    // let value = 200
+    // for (let i = 0; i < 60 * 12; i += 15) {
+    //   let date = new Date();
+    //   date.setHours(4);
+    //   date.setMinutes(0);
+    //   value+= Math.floor(Math.random() * (10000 - 2000 + 1)) + 5000
+
+    //   data.push({x: date, y: value})
+    // }
     setGraph(data)
   }
   
@@ -157,68 +166,28 @@ export default function UserHomePage() {
       handleHover(event, activeElements, chart);
     },
     plugins: {
-      tooltips: {
+      tooltip: {
         enabled: true,
         mode: 'index',
+        axis: 'x',
         intersect: false,
+        position: 'nearest',
         callbacks: {
           title: function () {
             // Return an empty string to remove the title from the tooltip
             return '';
           },
-          label: function (tooltipItem, data) {
-            // Get the corresponding x value (time) from the tooltipItem
-            const timeValue = data.labels[tooltipItem.index];
+          label: function (context) {
+            // Get the corresponding x value (time) from the context
+            const timeValue = context.chart.data.labels[context.dataIndex];
   
-            // Format the timeValue to "3:45 PM" format
-            const formattedTime = timeValue.toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            });
-  
-            // Return the formatted time as the tooltip label
-            return formattedTime
+            // Return the timeValue directly
+            return `${timeValue}`;
           },
         },
       },
-        
-      
-      
-      // afterDraw: (chartInstance) => {
-      //   // Get the canvas element and context
-      //   const canvas = chartInstance.canvas;
-      //   const context = canvas.getContext("2d");
-  
-      //   // Clear any existing vertical line
-      //   context.clearRect(0, 0, canvas.width, canvas.height);
-  
-      //   if (!chartInstance.tooltip._active) {
-      //     return;
-      //   }
-  
-      //   const active = chartInstance.tooltip._active;
-      //   const dataIndex = active[0].index;
-      //   const datasetIndex = active[0].datasetIndex;
-        
-        
-  
-      //   // Get the x position of the active point
-      //   const x = active[0].element.x;
-  
-      //   // Get the y-axis top and bottom
-      //   const yAxis = chartInstance.scales.y;
-  
-      //   // Draw the vertical line
-      //   context.beginPath();
-      //   context.moveTo(x, yAxis.top);
-      //   context.lineTo(x, yAxis.bottom);
-      //   context.lineWidth = 1;
-      //   context.strokeStyle = "black";
-      //   context.stroke();
-      // },
     },
   };
-
   if (!BTC || !SPY) return null;
 
   // Convert timestamp from Stock News API into 'hours' ago format
@@ -243,7 +212,7 @@ export default function UserHomePage() {
       <div className="portfolio-container">
         <div className="chart-container">
           <div className="portfolio-data-container">
-            <div className="price">${price.toFixed(2)}</div>
+            <div className="price">${price}</div>
             <div>
               <span>
                 <img className="green-triangle" src={Triangle} alt="" />
