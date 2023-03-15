@@ -77,6 +77,24 @@ def deposit_funds():
     
     return portfolio.to_dict()  # Return the serialized Portfolio object
 
+# Withdraw funds
+@portfolio_routes.route('/withdraw', methods=['POST'])
+@login_required
+def withdraw_funds():
+    """Route for withdrawing funds from a user's portfolio
+    Parses value 'amount' from request body"""
+    portfolio = Portfolio.query.filter_by(user_id=current_user.id).first()
+    data = request.json
+    amount = data['amount']
+
+    # If amount is less than or equal to 0 return error
+    if (type(amount) is not int and type(amount) is not float) or amount <= 0:
+        return {'error': 'Withdrawal amount must be a number greater than zero'}
+    
+    # If amount is greater than user cash balance return error
+    if amount > portfolio.cash_balance:
+        return {'error': 'Withdrawal amount must be a number less than or equal to cash balance'}
+
 # Log current value of portfolio to portfolio_values table
 from datetime import datetime
 @portfolio_routes.route('/create-snapshot', methods=['POST'])
