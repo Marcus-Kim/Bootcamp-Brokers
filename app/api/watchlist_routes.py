@@ -41,6 +41,7 @@ def delete_watchlist_by_id(id):
 def create_watchlist():
     """Route for creating a watchlist"""
     res = request.get_json()
+    print('RES', res)
     #TODO Implement getting currently logged in user id to populate user_id in new watchlist
     new_watchlist = Watchlist(list_name=res['list_name'], user_id=res['user_id'])
     db.session.add(new_watchlist)

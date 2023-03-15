@@ -51,7 +51,7 @@ export const thunkDeleteWatchlistById = (id) => async (dispatch) => {
 }
 
 export const thunkCreateWatchlist = (watchlist) => async (dispatch) => {
-    const response = await fetch('/api/watchlist', {
+    const response = await fetch('/api/watchlist/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
