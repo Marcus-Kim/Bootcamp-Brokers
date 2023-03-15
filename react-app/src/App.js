@@ -20,6 +20,7 @@ import { thunkGetAllWatchlistsUserId } from "./store/watchlist";
 import Profile from "./components/User_Home/UserHomePage/UserDropDown/Profile/Profile";
 import History from "./components/User_Home/UserHomePage/UserDropDown/History/History";
 import Investing from "./components/User_Home/UserHomePage/UserDropDown/Investing";
+import SucessfullyLoggedOut from "./components/Navigation/SuccessLogOut/SucessfullyLoggedOut";
 
 function App() {
   const dispatch = useDispatch();
@@ -59,6 +60,7 @@ function App() {
           <Route path="/profile" element={<Profile/>}></Route>
           <Route path="/history" element={<History/>}></Route>
           <Route path="/Investing" element={<Investing/>}></Route>
+          <Route path="/loggedout" element={<SucessfullyLoggedOut/>}></Route>
           <Route path='*' exact={true} element={<NotFound />} />
         </Routes>
       )}

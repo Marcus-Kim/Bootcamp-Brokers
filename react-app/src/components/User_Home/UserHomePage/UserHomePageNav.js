@@ -32,7 +32,7 @@ export default function UserHomePageNav() {
       }, [])
 
     const handleLogout = async () => {
-        dispatch(logout()).then(navigate("/"))
+        dispatch(logout()).then(navigate("/loggedout"))
         
     }
 
