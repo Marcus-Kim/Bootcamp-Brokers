@@ -19,19 +19,7 @@ export default function UserHomePageNav() {
     const navigate = useNavigate()
     const user = useSelector(state => state.session)
     const userArray = Object.values(user)
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     
-=======
-    console.log(userArray)
->>>>>>> ccd3814 (Logout and dropdown working)
-=======
-    
->>>>>>> 9d67fcd (Navbar implemented)
-=======
-    console.log(userArray)
->>>>>>> ccd3814 (Logout and dropdown working)
 
     const [dropdownVisible, setDropdownVisible] = useState(false)
 
