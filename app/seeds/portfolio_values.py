@@ -2,20 +2,29 @@ from app.models import db, PortfolioValue, environment, SCHEMA
 from sqlalchemy.sql import text
 
 
-# Adds demo portfolios, you can add other portfolios here if you want
-from datetime import datetime
+# Adds demo portfolios with dynamic seed data
+import random
+from datetime import datetime, timedelta
+
+def generate_portfolio_values(portfolio_id, start_date, end_date, min_balance, max_balance):
+    date_range = (end_date - start_date).days + 1
+    portfolio_values = []
+
+    for i in range(date_range):
+        current_date = start_date + timedelta(days=i)
+        current_balance = random.uniform(min_balance, max_balance)
+        portfolio_values.append({'portfolio_id': portfolio_id, 'current_balance': current_balance, 'date': current_date})
+
+    return portfolio_values
+
 def seed_portfolio_values():
-    portfolios_values = [
-        {'portfolio_id': 1, 'current_balance': 1000, 'date': datetime(2023, 3, 10)},
-        {'portfolio_id': 1, 'current_balance': 1100, 'date': datetime(2023, 3, 11)},
-        {'portfolio_id': 1, 'current_balance': 900, 'date': datetime(2023, 3, 12)},
-        {'portfolio_id': 2, 'current_balance': 2000, 'date': datetime(2023, 3, 10)},
-        {'portfolio_id': 2, 'current_balance': 2200, 'date': datetime(2023, 3, 11)},
-        {'portfolio_id': 2, 'current_balance': 1900, 'date': datetime(2023, 3, 12)},
-        {'portfolio_id': 3, 'current_balance': 3000, 'date': datetime(2023, 3, 10)},
-        {'portfolio_id': 3, 'current_balance': 3300, 'date': datetime(2023, 3, 11)},
-        {'portfolio_id': 3, 'current_balance': 2800, 'date': datetime(2023, 3, 12)},
-    ]
+    start_date = datetime(2022, 12, 5)
+    end_date = datetime(2023, 3, 14)
+
+    portfolios_values = []
+    portfolios_values += generate_portfolio_values(1, start_date, end_date, 500, 1500)
+    portfolios_values += generate_portfolio_values(2, start_date, end_date, 1500, 2500)
+    portfolios_values += generate_portfolio_values(3, start_date, end_date, 2500, 3500)
 
     for portfolio_value in portfolios_values:
         db.session.add(PortfolioValue(
@@ -25,6 +34,7 @@ def seed_portfolio_values():
         ))
 
     db.session.commit()
+
 
 
 # Uses a raw SQL query to TRUNCATE or DELETE the portfolios_values table. SQLAlchemy
