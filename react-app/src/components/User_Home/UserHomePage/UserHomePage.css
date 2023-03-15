@@ -6,6 +6,7 @@
     border: none;
     border-top: 1px solid #E3E9ED;
     height: 0px;
+    margin: 0;
 }
 
 .buying-power {
@@ -86,9 +87,18 @@
     border: 1px solid #E3E9ED;
     border-radius: 3px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     font-weight: bold;
-    height: 70px;
+    margin: 5px 0px;
+    max-width: 100%;
+    width: 100%;
+}
+
+.index-and-price {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
 }
 
