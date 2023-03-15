@@ -10,7 +10,6 @@ import OneMonthChart from "./charts/OneMonthChart";
 import ThreeMonthChart from "./charts/ThreeMonthChart";
 import OneYearChart from "./charts/OneYearChart";
 import FiveYearChart from "./charts/FiveYearChart";
-import Login from "../../Navigation/Login/Login";
 
 
 export default function IndividualStockPage() {
