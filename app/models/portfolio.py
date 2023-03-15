@@ -1,6 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from .transaction import Transaction
 from .portfolio_shares import PortfolioShare
+from .stock import Stock
 
 
 class Portfolio(db.Model):
@@ -118,5 +119,9 @@ class Portfolio(db.Model):
         else:
             return {'error': 'Stock with this ticker symbol not found in user portfolio'}
         
-    def check_possible_transaction(self, ticker, num_shares):
-        pass
+    def check_funds(self, ticker, num_shares):
+        """Method for checking if user has the buying power to complete a purchase
+        Calculated by multiplying shares by stock price for a total cost, and subtracting from user cash_balance"""
+        stock = Stock.query.get(ticker)
+        cost_of_purchase = stock.current_price * num_shares
+        return (self.cash_balance - cost_of_purchase) >= 0
