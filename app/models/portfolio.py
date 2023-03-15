@@ -43,7 +43,9 @@ class Portfolio(db.Model):
             'user_id': self.user_id,
             'profit_loss': self.profit_loss,
             'cash_balance': self.cash_balance,
-            'initial_principle': self.initial_principle
+            'initial_principle': self.initial_principle,
+            'total_stock_value': self.total_stock_value,
+            'overall_value': self.total_stock_value
         }
 
     def buy_stock(self, ticker, num_shares):
