@@ -27,7 +27,7 @@ export default function Profile() {
       </div>
 
       <div className="cashy-container">
-        <div className="usercash">${userPortfolio.cash_balance}</div>
+        <div className="usercash">${userPortfolio.overall_value}</div>
         <div style={{fontSize: '13px', marginTop: 10}}>Total in Bootcamp Brokers</div>
       </div>
 
@@ -37,11 +37,11 @@ export default function Profile() {
           <div className="holdings-container">
             <div className="profile-investments">
               <div>Total Investing Value </div>
-              <span style={{fontWeight: 'bold'}}>$0.00</span>
+              <span style={{fontWeight: 'bold'}}>${userPortfolio.overall_value}</span>
             </div>
             <div className="profile-holdings">
               <div style={{color: "rgb(106, 114, 120)"}}>Brokerage Holdings </div>
-              <span style={{color: "rgb(106, 114, 120)"}}>$0.00</span>
+              <span style={{color: "rgb(106, 114, 120)"}}>${userPortfolio.total_stock_value}</span>
             </div>
             <div className="profile-holdings">
               <div style={{color: "rgb(106, 114, 120)"}}>Brokerage Cash </div>
