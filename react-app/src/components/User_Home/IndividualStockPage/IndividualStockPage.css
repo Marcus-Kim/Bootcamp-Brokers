@@ -75,9 +75,19 @@
 .amount-input {
     text-align: right;
     border: none;
-    background-color: rgb(240, 240, 240);
+    height: 27px;
+    background-color: rgb(237, 237, 237);
     border-radius: 5px;
+}
+.amount-input::-webkit-inner-spin-button,
+.amount-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 
+.amount-input:focus {
+    border: 1px solid rgb(0,200,6);
+    outline: none;
 }
 
 .left-est-div {
@@ -98,10 +108,10 @@
 
 }
 
-.purchase-button {
+.button {
     width: 200px;
     height: 40px;
-    background-color: #00B403;
+    background-color: rgb(0,200,6);
     color: white;
     border-radius: 50px;
     border: none;
@@ -109,7 +119,7 @@
     font-weight: bold;
 }
 
-.purchase-button:hover {
+.button:hover {
     background-color: #01a504;
 }
 
