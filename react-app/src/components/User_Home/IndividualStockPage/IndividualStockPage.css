@@ -4,10 +4,20 @@
     width: 800px;
 }
 
+.stock-timeline {
+    border: none;
+    background-color: white;
+    font-size: 14px;
+}
+
+.stock-timeline:hover {
+    color: rgb(0,200,6);
+}
+
 .key-stats-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    margin: 3px;
 }
 
 .key-stat-title-div {

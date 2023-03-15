@@ -1,13 +1,28 @@
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 
 
 import "./IndividualStockPage.css"
 
-export default function Purchase({ ticker }) {
+export default function Purchase({ ticker, user }) {
 
+    const dispatch = useDispatch();
     const [amount, setAmount] = useState(0)
 
+
+    const handlePurchase = async (e) => {
+        e.preventDefault();
+
+        const newPurchase = {
+            user_id: user,
+            ticker_id: ticker,
+            shares: amount
+        }
+
+    // dispatch thunk!
+
+    }
 
 
     return (
@@ -49,7 +64,9 @@ export default function Purchase({ ticker }) {
                         </div>
                     </div>
                     <div className="transaction-button-div">
-                        <button className="button">Purchase Stock</button>
+                        <button className="button"
+                            onClick={handlePurchase}
+                            >Purchase Stock</button>
                     </div>
                     <div style={{ display: "flex", justifyContent: "center", padding: "10px", borderTop: "1px solid rgb(172, 171, 171)", borderBottom: "1px solid rgb(172, 171, 171)" }}>
                         <div className="buying-power-div"> buying power available</div>
