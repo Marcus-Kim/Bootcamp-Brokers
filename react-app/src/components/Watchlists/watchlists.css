@@ -40,5 +40,27 @@
 }
 
 .watchlist-item-name {
-  text-align: center;
+  text-align: left;
+  width: 150px;
+}
+
+.watchlists-list {
+  border-bottom: 1px solid rgba(99, 99, 99, 0.2);
+}
+
+.watchlist-item {
+  display: flex;
+  justify-content: space-around;
+  height: 59px;
+  align-items: center;
+}
+
+.watchlist-item:hover {
+  cursor: pointer;
+  background-color: rgb(194, 194, 194);
+  border-radius: 2px;
+}
+
+.watchlist-edit-button {
+
 }
