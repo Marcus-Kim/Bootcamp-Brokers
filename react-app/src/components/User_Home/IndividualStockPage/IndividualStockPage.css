@@ -1,7 +1,7 @@
 .stock-page-main-container {
     margin-top: 100px;
     margin-left: 300px;
-    width: 650px;
+    width: 800px;
 }
 
 .key-stats-container {
@@ -14,7 +14,6 @@
     padding: 20px 0 20px  0;
     border-bottom: solid black 1px;
     font-size: 20pt;
-
 }
 
 .stat-value-container {
@@ -116,4 +115,29 @@
 
 .buying-power-div {
     padding: 10px;
+}
+
+.news-stat-title-div {
+    padding: 20px 0 20px  0;
+    border-bottom: solid black 1px;
+    font-size: 20pt;
+}
+
+.news-navlink {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 15px;
+    border-radius: 5px;
+}
+
+.news-navlink:hover {
+    background-color: rgb(234, 234, 234);
+}
+
+.individual-news-div {
+    display: flex;
+    justify-content: flex-start;
+    font: 10px;
 }
