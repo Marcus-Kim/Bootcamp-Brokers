@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { thunkGetAllWatchlistsUserId } from '../../store/watchlist'
 import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
-
+import UserNav from '../User_Home/UserHomePage/UserNav/UserNav'
 
 
 
@@ -33,6 +33,9 @@ export default function WatchlistDetails() {
   }
 
   return (
+    <>
+    <UserNav/>
+
     <div className="watchlist-details-container">
       <div className='watchlist-details-content-container'>
         <div className='watchlist-details-content'>
@@ -77,5 +80,6 @@ export default function WatchlistDetails() {
         </div>
       </div>
     </div>
+    </>
   )
 }
