@@ -232,3 +232,53 @@
         justify-content: flex-start;
     }
 }
+
+.dropdown-menu {
+    
+    position: absolute;
+    top: 50px;
+    right: 40px;
+    background-color: #F5F8FA;
+    border: 1px solid #E3E9ED;
+    width: 296px;
+    height: 400px;
+    z-index: 1000;
+    border-radius: 12px;
+    text-align: left;
+    
+}
+
+.dropdown-nav {
+    text-decoration: solid;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 50px;
+}
+
+.dropper {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: start;
+    
+    padding-left: 20px;
+    padding-top: 15px;
+}
+
+.dropdown-icon {
+    height: 20px;
+    width: 20px;
+    padding-right: 25px;
+    line-height: 15px;
+}
+
+.dropdown-hand {
+    height: 22px;
+    padding-right: 21px;
+    line-height: 15px;
+}
