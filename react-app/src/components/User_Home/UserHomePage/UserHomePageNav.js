@@ -13,24 +13,13 @@ import { faClockRotateLeft } from '@fortawesome/free-solid-svg-icons'
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { logout } from '../../../store/session'
 
-import { logout } from '../../../store/session'
-
 
 export default function UserHomePageNav() {
-    const dispatch = useDispatch()
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const user = useSelector(state => state.session)
     const userArray = Object.values(user)
-<<<<<<< HEAD
-<<<<<<< HEAD
     
-=======
-    console.log(userArray)
->>>>>>> ccd3814 (Logout and dropdown working)
-=======
-    
->>>>>>> 9d67fcd (Navbar implemented)
 
     const [dropdownVisible, setDropdownVisible] = useState(false)
 
@@ -41,11 +30,6 @@ export default function UserHomePageNav() {
           navigate('/home')
         }
       }, [])
-
-    const handleLogout = async () => {
-        dispatch(logout()).then(navigate("/"))
-        
-    }
 
     const handleLogout = async () => {
         dispatch(logout()).then(navigate("/"))
@@ -83,9 +67,6 @@ export default function UserHomePageNav() {
                                     <div style={{width: '93%'}}>
                                     <hr style={{borderColor: 'light gray'}} />
                                     </div>
-                                    <NavLink to="/profile" className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faSmile}/> Profile</NavLink>
-                                    <NavLink to="/investing" className="dropdown-nav"><FontAwesomeIcon className="dropdown-hand" icon={faHandHoldingDollar} />Investing</NavLink>
-                                    <NavLink to="/history" className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faClockRotateLeft} />History</NavLink>
                                     <NavLink to="/profile" className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faSmile}/> Profile</NavLink>
                                     <NavLink to="/investing" className="dropdown-nav"><FontAwesomeIcon className="dropdown-hand" icon={faHandHoldingDollar} />Investing</NavLink>
                                     <NavLink to="/history" className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faClockRotateLeft} />History</NavLink>

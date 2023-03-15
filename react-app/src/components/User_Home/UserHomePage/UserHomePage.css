@@ -260,9 +260,6 @@
 
 
 
-
-
-
 .dropdown-nav {
     text-decoration: solid;
     font-size: 13px;
@@ -291,8 +288,14 @@
 
 .dropdown-container-wrapper:hover {
     cursor: pointer;
+    align-items: start;    
+    margin-left: 15px;
+}
+
+
+.dropdown-container-wrapper:hover {
+    cursor: pointer;
     
-  }
   }
 
 .dropdown-icon {
@@ -326,7 +329,11 @@
 .dropdown-logout:hover {
     background-color:  #F5F8FA;
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> ccd3814 (Logout and dropdown working)
 =======
 }
 >>>>>>> ccd3814 (Logout and dropdown working)
