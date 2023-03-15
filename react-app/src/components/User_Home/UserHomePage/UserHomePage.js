@@ -33,15 +33,14 @@ export default function UserHomePage() {
   console.log(portfolio, 'portfolio')
   
 
-  const handleHover = (event, active) => {
+  const handleHover = (event, active, chart) => {
     if (active.length > 0) {
       const dataIndex = active[0].index;
       const datasetIndex = active[0].datasetIndex;
-      const value = chartData.datasets[datasetIndex].data[dataIndex];
+      const value = chart.data.datasets[datasetIndex].data[dataIndex];
       setPrice(value);
     }
   };
-
 
   const mockData = () => {
     let data = []
@@ -67,26 +66,6 @@ export default function UserHomePage() {
     dispatch(thunkGetAllWatchlistsUserId(userId))
   }, [dispatch])
 
-  const verticalLinePlugin = {
-    // After draw method is called before render and before draw. Using before will make the line appear on top of the chart
-    afterDatasetsDraw: function (chart, easing, options) {
-      // If there is an active point, draw the vertical line
-      const activePoint = chart.tooltip._active && chart.tooltip._active[0];
-      if (activePoint) {
-        const x = activePoint.element.x;
-        const yAxis = chart.scales.y;
-  
-        // Draw the vertical line
-        const context = chart.ctx;
-        context.beginPath();
-        context.moveTo(x, yAxis.top);
-        context.lineTo(x, yAxis.bottom);
-        context.lineWidth = 1;
-        context.strokeStyle = "black";
-        context.stroke();
-      }
-    },
-  };
 
   const chartData = {
     labels: graph.map((data) => data.x),
@@ -169,6 +148,9 @@ export default function UserHomePage() {
           }
         },
       },
+    },
+    onHover: (event, activeElements, chart) => {
+      handleHover(event, activeElements, chart);
     },
     plugins: {
       tooltips: {
