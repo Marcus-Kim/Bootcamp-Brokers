@@ -67,7 +67,7 @@ def deposit_funds():
     amount = data['amount']
 
     # If amount is less than or equal to 0 return error
-    if (type(amount) is not int or type(amount) is not float) or amount <= 0:
+    if (type(amount) is not int and type(amount) is not float) or amount <= 0:
         return {'error': 'Deposit amount must be a number greater than zero'}
     
     # Add deposit amount to portfolio cash balance

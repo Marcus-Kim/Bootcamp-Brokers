@@ -25,18 +25,28 @@ class Portfolio(db.Model):
             share.stocks.current_price * share.shares for share in self.portfolio_shares
         )
         return total_stock_value
-    
+
     @property
     def overall_value(self):
-        overall_value = self.total_stock_value + self.cash_balance
-        return overall_value
+        from decimal import Decimal
+        total_stock_value = sum(
+            share.stocks.current_price * share.shares for share in self.portfolio_shares
+        )
+        print(f"total_stock_value: {total_stock_value}")
+        print(f"cash_balance: {self.cash_balance}")
+        return Decimal(total_stock_value) + self.cash_balance
 
     @property
     def profit_loss(self):
-        # Calculate the profit/loss based on current portfolio state
-        return self.initial_principle - (self.overall_value)
+        total_stock_value = sum(
+            share.stocks.current_price * share.shares for share in self.portfolio_shares
+        )
+        print(f"overall_value: {self.overall_value}")
+        print(f"initial_principle: {self.initial_principle}")
+        return self.overall_value - self.initial_principle
 
-    
+
+
     def to_dict(self):
         return {
             'id': self.id,
@@ -45,8 +55,9 @@ class Portfolio(db.Model):
             'cash_balance': self.cash_balance,
             'initial_principle': self.initial_principle,
             'total_stock_value': self.total_stock_value,
-            'overall_value': self.total_stock_value
+            'overall_value': self.overall_value
         }
+    
 
     def buy_stock(self, ticker, num_shares):
         """Method for adding a stock to a user's portfolio"""
