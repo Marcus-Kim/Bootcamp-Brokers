@@ -28,3 +28,7 @@ class Stock(db.Model):
             'current_price': self.current_price,
             'daily_change': self.daily_change
         }
+    
+    def calculate_value(self, num_shares):
+        """Helper method for determining how much X amount of shares of a stock is worth"""
+        return self.current_price * num_shares

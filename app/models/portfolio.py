@@ -1,6 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from .transaction import Transaction
 from .portfolio_shares import PortfolioShare
+from .stock import Stock
 
 
 class Portfolio(db.Model):
@@ -50,6 +51,16 @@ class Portfolio(db.Model):
         # If num_shares is not greater than zero, return error
         if type(num_shares) is not int or num_shares < 1:
             return {'error': 'Number of shares of stock to purchase must be an integer greater than 0'}
+        
+        # If user has insufficient funds for purchase, return error
+        if self.check_funds(ticker, num_shares) == False:
+            return {'error': 'User has insufficient funds to complete purchase'}
+        
+        # Subtract cost of sale from user cash_balance
+        stock = Stock.query.get(ticker)
+        self.cash_balance -= stock.calculate_value(num_shares)
+        db.session.commit()
+
         # Check if value exists in portfolio_shares table
         table_row = PortfolioShare.query.filter(PortfolioShare.portfolio_id == self.id, PortfolioShare.ticker_id == ticker).first()
         if table_row:
@@ -97,6 +108,11 @@ class Portfolio(db.Model):
             if table_row.shares - num_shares < 0:
                 return { 'error': 'Number of shares to sell must be less than or equal number of owned shares'}
             
+            # Add value of sale to user cash_balance
+            stock = Stock.query.get(ticker)
+            self.cash_balance += stock.calculate_value(num_shares)
+            db.session.commit()
+
             # Check if user has sold all remaining shares of stock, remove from portfolio in this case
             if table_row.shares == num_shares:
                 db.session.delete(table_row)
@@ -117,3 +133,10 @@ class Portfolio(db.Model):
             return table_row.to_dict()
         else:
             return {'error': 'Stock with this ticker symbol not found in user portfolio'}
+        
+    def check_funds(self, ticker, num_shares):
+        """Method for checking if user has the buying power to complete a purchase
+        Calculated by multiplying shares by stock price for a total cost, and subtracting from user cash_balance"""
+        stock = Stock.query.get(ticker)
+        cost_of_purchase = stock.current_price * num_shares
+        return (self.cash_balance - cost_of_purchase) >= 0
