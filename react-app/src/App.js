@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {Route, Routes} from 'react-router-dom'
 import ChatBubble from "./components/SplashPage/ChatGPT/ChatBubble";
 import { authenticate } from "./store/session";
@@ -17,12 +17,14 @@ import IndividualStockPage from './components/User_Home/IndividualStockPage/Indi
 import NotFound from './components/Navigation/NotFound/NotFound'
 import WatchlistDetails from './components/Watchlists/WatchlistDetails'
 import { thunkGetPortfolioHistoricalValues, thunkGetPortfolioHoldings, thunkGetUserPortfolio } from "./store/portfolio";
+import { thunkGetAllWatchlistsUserId } from "./store/watchlist";
 
 
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const [isLoaded, setIsLoaded] = useState(false);
+  const userId = useSelector(state => state.session.user?.id)
   
   
   
@@ -33,6 +35,7 @@ function App() {
       .then(() => dispatch(thunkGetPortfolioHistoricalValues()))
       .then(() => dispatch(thunkGetPortfolioHoldings()))
       .then(() => dispatch(thunkGetUserPortfolio()))
+      .then(() => dispatch(thunkGetAllWatchlistsUserId(userId)))
       .then(() => setIsLoaded(true));
   }, [dispatch]);
   
