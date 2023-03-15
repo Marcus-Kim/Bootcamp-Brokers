@@ -11,6 +11,7 @@ import { thunkGetNasdaq } from '../../../store/stock';
 import { thunkGetSPY } from '../../../store/stock';
 import { thunkGetRandomStockNews } from '../../../store/stock'
 import Watchlists from '../../Watchlists/Watchlists';
+import { thunkGetAllWatchlistsUserId } from '../../../store/watchlist';
 
 
 export default function UserHomePage() {
@@ -19,6 +20,7 @@ export default function UserHomePage() {
   const [hoverIndex, setHoverIndex] = useState(null);
   const [graph, setGraph] = useState([])
   const watchlists = useSelector(state => state.watchlist)
+  const userId = useSelector(state => state.session.user?.id)
   const BTC = useSelector(state => state.stocks.BTCPrice)
   const SPY = useSelector(state => state.stocks.SPY) // This is not working
   const Nasdaq = useSelector(state => state.stocks.Nasdaq) // This is not working
@@ -62,6 +64,7 @@ export default function UserHomePage() {
     dispatch(thunkGetNasdaq())
     dispatch(thunkGetSPY())
     dispatch(thunkGetRandomStockNews())
+    dispatch(thunkGetAllWatchlistsUserId(userId))
   }, [dispatch])
 
   const verticalLinePlugin = {
@@ -246,6 +249,22 @@ export default function UserHomePage() {
         <div className="news-container">
           <h2 className="section-header">News</h2>
           <hr className="break"/>
+          <div className="indexes-container">
+            <div className="index-and-price">
+              <span className="indexes">
+                <span>S&P 500</span>
+                <span className="index-price">${SPY?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
+              </span>
+              <span className="indexes">
+                <span>Nasdaq</span>
+                <span className="index-price">${Nasdaq?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
+              </span>
+              <span className="indexes">
+                <span>Bitcoin</span>
+                <span className="index-price">${parseFloat(BTC?.["Realtime Currency Exchange Rate"]?.["5. Exchange Rate"])}</span>
+              </span>
+            </div>
+          </div>
           {randomNews?.["feed"]?.slice(0,30).map(news => (
             <div key={news.url}>
               <hr className="break"/>
@@ -261,20 +280,6 @@ export default function UserHomePage() {
               </div>
             </div>
             ))}
-        </div>
-        <div className="indexes-container">
-          <span className="indexes">
-            <span>S&P 500</span>
-            <span className="index-price">${SPY?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
-          </span>
-          <span className="indexes">
-            <span>Nasdaq</span>
-            <span className="index-price">${Nasdaq?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
-          </span>
-          <span className="indexes">
-            <span>Bitcoin</span>
-            <span className="index-price">${parseFloat(BTC?.["Realtime Currency Exchange Rate"]?.["5. Exchange Rate"])}</span>
-          </span>
         </div>
       </div>
       <div className="watchlist-container">

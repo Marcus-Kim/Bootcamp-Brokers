@@ -6,6 +6,9 @@ import { thunkGetAllWatchlistsUserId } from '../../store/watchlist'
 import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
+
+
+
 export default function WatchlistDetails() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -20,10 +23,14 @@ export default function WatchlistDetails() {
     dispatch(thunkGetAllWatchlistsUserId(user))
   }, [dispatch])
 
-  if (!watchlists) return null
+  if (!watchlists) return null;
   if (!selectedWatchlist) return null;
   if (!user) return null;
 
+  const handleDeleteClick = (e) => {
+    e.stopPropagation();
+    //TODO Add functionality for deleting
+  }
 
   return (
     <div className="watchlist-details-container">
@@ -58,7 +65,7 @@ export default function WatchlistDetails() {
                   <td className='watchlist-details-list-header'>${stock.current_price}</td>
                   <td className='watchlist-details-list-header'>{stock.daily_change * 100}%</td>
                   <td className='watchlist-details-list-header-market-cap'>Market Cap</td>
-                  <button className='watchlist-details-stock-delete-button'>X</button>
+                  <button className='watchlist-details-stock-delete-button' onClick={e => handleDeleteClick(e)}>X</button>
                 </tr>
               )
             })}
