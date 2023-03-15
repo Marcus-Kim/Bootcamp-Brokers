@@ -135,7 +135,7 @@ export default function IndividualStockPage() {
                         className="news-navlink"
                         >
                             <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                <div style={{ padding: "5px", width: "610px"}}>
+                                <div style={{ padding: "5px", width: "600px"}}>
                                     <div style={{ fontSize: "12px", color: "gray"}}>{news.source}</div>
                                     <div style={{ fontSize: "15px"}}>{news.title}</div>
                                     <div style={{ fontSize: "10px", color: "gray"}}>{news.summary}</div>

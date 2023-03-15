@@ -24,7 +24,6 @@ export default function Purchase({ ticker, user }) {
 
     }
 
-
     return (
         <div className="purchase-container">
                     <div style={{ borderBottom: "solid 1px rgb(172, 171, 171)" }}>
@@ -45,6 +44,7 @@ export default function Purchase({ ticker, user }) {
                                 className="shares-input"
                                 type="number"
                                 min="1"
+                                placeholder="0"
                                 value={shares}
                                 onChange={e => setShares(e.target.value)}
                                 >
