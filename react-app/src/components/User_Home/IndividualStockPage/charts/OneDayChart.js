@@ -35,7 +35,7 @@ export default function OneDayChart({ ticker }) {
         result.push(obj);
     }
 
-    console.log("result: ", result)
+    // console.log("result: ", result)
 
 
     let chartData = ({
