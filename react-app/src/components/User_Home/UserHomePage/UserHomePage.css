@@ -5,6 +5,7 @@
 .break {
     border: none;
     border-top: 1px solid #E3E9ED;
+    height: 0px;
 }
 
 .buying-power {
@@ -101,8 +102,6 @@
     margin-left: 10px;
 }
 
-
-
 .leftside-container {
     height: 100%;
     width: 1000px;
@@ -114,16 +113,16 @@
 }
 
 .news-card {
+    align-items: center;
     display: flex;
     justify-content: space-between;
-    height: 130px;
     max-width: 100%;
     padding: 25px;
 }
 
 .news-image {
-    height: 90px;
-    width: 180px;
+    height: 85px;
+    width: 140px;
     position: relative;
     border-radius: 7px;
 }
@@ -200,6 +199,7 @@
 .title {
     font-size: 15px;
     font-weight: 400;
+    max-width: 95%;
 }
 
 .watchlist-container {
