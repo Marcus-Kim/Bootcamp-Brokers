@@ -101,34 +101,6 @@
     margin-left: 10px;
 }
 
-.portfolio-container {
-    max-width: 1014px;
-    min-width: 721px;
-    width: 70%;
-}
-
-.price {
-    font-size: 32px;
-    font-family: Sans-Serif;
-    color: black;
-    font-weight: 400;
-}
-
-.profile-timeline {
-    border-style: none;
-    background-color: white;
-    padding: 10px;
-    color: black;
-    cursor: pointer;
-    line-height: 20px;
-    text-align: center;
-    font-size: 13px;
-    font-weight: bold;
-}
-
-.profile-timeline:hover {
-    color: rgb(0,200,6)
-}
 
 
 .leftside-container {
@@ -142,7 +114,10 @@
 }
 
 .news-card {
-    height: 160px;
+    display: flex;
+    flex-direction: column;
+    height: 150px;
+    padding: 25px;
 }
 
 .news-image {
@@ -173,9 +148,59 @@
     font-weight: bold;
 }
 
+.portfolio-container {
+    max-width: 1014px;
+    min-width: 721px;
+    width: 70%;
+}
+
+.price {
+    font-size: 32px;
+    font-family: Sans-Serif;
+    color: black;
+    font-weight: 400;
+}
+
+.profile-timeline {
+    border-style: none;
+    background-color: white;
+    padding: 10px;
+    color: black;
+    cursor: pointer;
+    line-height: 20px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.profile-timeline:hover {
+    color: rgb(0,200,6)
+}
+
 .section-header {
     font-size: 24px;
     font-weight: 500;
+}
+
+.source {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.story-ticker {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.time-units {
+    font-size: 13px;
+    font-weight: 400;
+    margin-left: 2px;
+}
+
+.title {
+    font-size: 15px;
+    font-weight: 400;
 }
 
 .watchlist-container {

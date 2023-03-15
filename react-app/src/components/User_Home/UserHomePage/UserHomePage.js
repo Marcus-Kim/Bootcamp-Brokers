@@ -186,6 +186,23 @@ export default function UserHomePage() {
 
   if (!BTC || !SPY) return null;
 
+  // Convert timestamp from Stock News API into 'hours' ago format
+  const hoursAgo = (timestamp) => {
+    const year = parseInt(timestamp.slice(0, 4), 10);
+    const month = parseInt(timestamp.slice(4, 6), 10) - 1; // Months are 0-indexed in JavaScript
+    const day = parseInt(timestamp.slice(6, 8), 10);
+    const hours = parseInt(timestamp.slice(9, 11), 10);
+    const minutes = parseInt(timestamp.slice(11, 13), 10);
+  
+    const articleDate = new Date(year, month, day, hours, minutes);
+    const currentDate = new Date();
+  
+    const msDifference = currentDate - articleDate;
+    const hoursDifference = msDifference / (1000 * 60 * 60);
+  
+    return Math.ceil(hoursDifference) * -1;
+  }
+
   return (
     <div className="homepage-container">
       <div className="portfolio-container">
@@ -228,19 +245,22 @@ export default function UserHomePage() {
         <hr className="break"/>
         <div className="news-container">
           <h2 className="section-header">News</h2>
+          <hr className="break"/>
           {randomNews?.["feed"]?.slice(0,10).map(news => (
-            <div className="news-card">
-              <hr />
-              <div className="news-cardleft">
-                <div>{news.source}</div>
-                <div>{news.title}</div>
-                <div>{news.ticker_sentiment[0]?.ticker}</div>
+            <div key={news.url}>
+              <div className="news-card">
+                <div className="news-cardleft">
+                  <div><span className="source">{news.source}</span> <span className="time-units">{hoursAgo(news.time_published)}hr</span></div>
+                  <div className="title">{news.title}</div>
+                  <div className="story-ticker">{news.ticker_sentiment[0]?.ticker}</div>
+                </div>
+                <NavLink to={news.url}>
+                  <img className="news-image" src={news.banner_image} alt="" />
+                </NavLink>
               </div>
-              <NavLink to={news.url}>
-                <img className="news-image" src={news.banner_image} alt="" />
-              </NavLink>
+              <hr className="break"/>
             </div>
-          ))}
+            ))}
         </div>
         <div className="indexes-container">
           <span className="indexes">

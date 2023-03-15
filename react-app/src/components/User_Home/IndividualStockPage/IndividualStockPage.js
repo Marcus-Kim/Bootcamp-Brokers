@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux"
 import { useFinanceAPI } from "../../../context/FinanceApiContext";
 import "./IndividualStockPage.css"
@@ -12,43 +12,43 @@ import OneYearChart from "./charts/OneYearChart";
 import FiveYearChart from "./charts/FiveYearChart";
 
 
+
 export default function IndividualStockPage() {
 
+    const navigate = useNavigate()
     const dispatch = useDispatch();
     const [chart, setChart] = useState("1D")
     let { ticker } = useParams();
     let tickerCap = ticker.toUpperCase()
-    // console.log("tickerCap: ", tickerCap)
-
 
     const stockFundamentals = useSelector(state => state.stocks.stockFundamentals)
-    // const stockIntraDay = useSelector(state => state.stocks.stockIntraDay)
     const stockDaily = useSelector(state => state.stocks.stockDaily)
-
-    // console.log("stockFundamentals :", stockFundamentals)
-    // console.log("stockDaily: ", stockDaily)
+    const stockNews = useSelector(state => state.stocks.stockNews)
+    const user = useSelector(state => state.session.user)
 
     useEffect(() => {
         dispatch(thunkGetStockFundamentals(tickerCap))
         dispatch(thunkGetStockDaily(tickerCap))
+        dispatch(thunkGetStockNews(tickerCap))
     }, [dispatch, ticker])
 
-    if (!stockFundamentals) return null
-    if (!stockDaily) return null
-    if (!stockDaily["Time Series (Daily)"]) return null
+    if (!stockFundamentals) return null;
+    if (!stockDaily) return null;
+    if (!stockDaily["Time Series (Daily)"]) return null;
+    if (!stockNews["feed"]) return null;
+
 
     const today = new Date();
     const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
     // console.log("yesterday: ", yesterday)
-
     const year = yesterday.getFullYear();
     const month = (yesterday.getMonth() + 1).toString().padStart(2, '0');
     const day = yesterday.getDate().toString().padStart(2, '0');
-
     const yesterdayFormatted = `${year}-${month}-${day}`;
     // console.log("yesterdayFormatted: ", yesterdayFormatted)
 
-    console.log(stockDaily["Time Series (Daily)"])
+    const slicedNews = stockNews["feed"].slice(0, 10)
+
 
     const chartObj = {
         "1D": <OneDayChart ticker={tickerCap} />,
@@ -57,6 +57,11 @@ export default function IndividualStockPage() {
         "3M": <ThreeMonthChart ticker={tickerCap} />,
         "1Y": <OneYearChart ticker={tickerCap} />,
         "5Y": <FiveYearChart ticker={tickerCap} />,
+    }
+
+    if (!user) {
+        navigate("/login")
+        return null
     }
 
 
@@ -122,7 +127,7 @@ export default function IndividualStockPage() {
                     <div style={{ borderBottom: "solid 1px rgb(172, 171, 171)" }}>
                         <div className="purchase-buy-div">Buy {tickerCap}</div>
                     </div>
-                    <div style= {{ display: "flex" }}>
+                    <div style= {{ display: "flex", justifyContent: "space-between", }}>
                         <div className="left-order-type-div">
                             Order Type
                         </div>
@@ -134,13 +139,17 @@ export default function IndividualStockPage() {
                         <div className="left-buy-in--div">Buy In</div>
                         <div></div>
                     </div>
-                    <div style= {{ display: "flex", borderBottom: "solid 1px rgb(172, 171, 171)" }}>
+                    <div style= {{ display: "flex", justifyContent: "space-between", borderBottom: "solid 1px rgb(172, 171, 171)" }}>
                         <div className="left-amount-div">Amount</div>
-                        <div></div>
+                        <div className="right-amount-div">
+                            <input
+                                className="amount-input">
+                            </input>
+                        </div>
                     </div>
-                    <div style= {{ display: "flex" }}>
+                    <div style= {{ display: "flex", justifyContent: "space-between" }}>
                         <div className="left-est-div">
-                            Est.Quantity
+                            Est. Quantity
                         </div>
                         <div className="right-est-div">
                             0.000000
@@ -156,6 +165,29 @@ export default function IndividualStockPage() {
                         <div className="transaction-bottom-div">Brokerage</div>
                     </div>
                 </div>
+            </div>
+            <div>
+                <div className="news-stat-title-div">News</div>
+                { slicedNews.map(news => (
+                    <NavLink
+                        to={news.url}
+                        key={news.title}
+                        className="news-navlink"
+                        >
+                            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                <div style={{ padding: "5px", width: "610px"}}>
+                                    <div style={{ fontSize: "12px", color: "gray"}}>{news.source}</div>
+                                    <div style={{ fontSize: "15px"}}>{news.title}</div>
+                                    <div style={{ fontSize: "10px", color: "gray"}}>{news.summary}</div>
+                                </div>
+                                <div>
+                                    <img
+                                        style={{width: "140px", height: "100px"}}
+                                        src={news.banner_image} />
+                                </div>
+                            </div>
+                    </NavLink>
+                )) }
             </div>
         </div>
 
