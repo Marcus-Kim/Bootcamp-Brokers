@@ -14,7 +14,7 @@ const actionGetAllTransactionsByTicker = (transactions) => ({
 })
 
 // Thunks
-const thunkGetTransactionsByUserId = () => async (dispatch) => {
+export const thunkGetTransactionsByUserId = () => async (dispatch) => {
     const response = await fetch(`/api/transactions`)
     if (response.ok) {
         const userTransactions = await response.json();
@@ -27,7 +27,7 @@ const thunkGetTransactionsByUserId = () => async (dispatch) => {
     }
 }
 
-const thunkGetAllTransactionsByTickerId = (ticker) => async (dispatch) => {
+export const thunkGetAllTransactionsByTickerId = (ticker) => async (dispatch) => {
     const response = await fetch (`/api/transactions/${ticker}`)
     if (response.ok) {
         const transactionsByTicker = await response.json()

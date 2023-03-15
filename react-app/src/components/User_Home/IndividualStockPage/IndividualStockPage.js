@@ -104,7 +104,7 @@ export default function IndividualStockPage() {
                     <div className="stat-box">
                         <div>Dividend yield </div>
                         <div>{+stockFundamentals["DividendYield"] !== 0
-                                ? `${+stockFundamentals["DividendYield"] * 100} %`
+                                ? `${Number(+stockFundamentals["DividendYield"] * 100).toFixed(2)} %`
                                 : "--"
                         }</div>
                     </div>
