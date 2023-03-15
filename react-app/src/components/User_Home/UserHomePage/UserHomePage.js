@@ -30,7 +30,7 @@ export default function UserHomePage() {
   yesterday.setDate(yesterday.getDate() - 1);
   const yesterdayString = yesterday.toISOString().substring(0, 10);
   const portfolio = useSelector(state => state.portfolio)
-  
+  console.log(portfolio, 'portfolio')
   
 
   const handleHover = (event, active) => {
@@ -239,7 +239,7 @@ export default function UserHomePage() {
         </div>
         <div className="buying-power">
           <span>Buying Power</span>
-          <span>${portfolio.cash_balance}</span>
+          <span>${portfolio?.cash_balance}</span>
         </div>
         <hr className="break"/>
         <div className="cash-container">
