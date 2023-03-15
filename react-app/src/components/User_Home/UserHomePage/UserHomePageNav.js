@@ -22,7 +22,11 @@ export default function UserHomePageNav() {
     const navigate = useNavigate()
     const user = useSelector(state => state.session)
     const userArray = Object.values(user)
+<<<<<<< HEAD
     
+=======
+    console.log(userArray)
+>>>>>>> ccd3814 (Logout and dropdown working)
 
     const [dropdownVisible, setDropdownVisible] = useState(false)
 
@@ -82,9 +86,9 @@ export default function UserHomePageNav() {
                                     <NavLink to="/investing" className="dropdown-nav"><FontAwesomeIcon className="dropdown-hand" icon={faHandHoldingDollar} />Investing</NavLink>
                                     <NavLink to="/history" className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faClockRotateLeft} />History</NavLink>
                                     <NavLink className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faPhone}/> Support</NavLink>
-                                    <button style={{backgroundColor: "#F5F8FA", borderStyle: 'none' }} 
+                                    <button 
                                     onClick={handleLogout}
-                                    className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faArrowRightFromBracket}/>
+                                    className="dropdown-logout"><FontAwesomeIcon className="dropdown-icon" icon={faArrowRightFromBracket}/>
                                     Logout
                                     </button>
                                 </div>

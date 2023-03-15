@@ -277,11 +277,7 @@
 }
 
 .dropdown-nav:hover{
-    background-color: antiquewhite
-}
-
-.dropdown-nav:hover button {
-    background-color: antiquewhite
+    background-color: #F5F8FA;
 }
 
 .dropper {
@@ -329,4 +325,8 @@
 
 .dropdown-logout:hover {
     background-color:  #F5F8FA;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> ccd3814 (Logout and dropdown working)
