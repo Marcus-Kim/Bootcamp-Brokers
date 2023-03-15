@@ -266,7 +266,7 @@ export default function UserHomePage() {
             </div>
           </div>
           {randomNews?.["feed"]?.slice(0,30).map(news => (
-            <div key={news.url}>
+            <div className="news-carders" key={news.url}>
               <hr className="break"/>
               <div className="news-card">
                 <div className="news-cardleft">
