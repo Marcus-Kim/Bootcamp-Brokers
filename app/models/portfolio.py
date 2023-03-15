@@ -117,3 +117,6 @@ class Portfolio(db.Model):
             return table_row.to_dict()
         else:
             return {'error': 'Stock with this ticker symbol not found in user portfolio'}
+        
+    def check_possible_transaction(self, ticker, num_shares):
+        pass

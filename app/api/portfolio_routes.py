@@ -42,7 +42,7 @@ def add_stock_to_portfolio():
     data = request.json
     ticker = data['ticker']
     shares = data['shares']
-    return Portfolio.buy_stock(portfolio, ticker, shares)
+    return portfolio.buy_stock(ticker, shares)
 
 # Sell a stock
 @portfolio_routes.route('/sell', methods=['POST'])
@@ -53,7 +53,7 @@ def remove_stock_from_portfolio():
     data = request.json
     ticker = data['ticker']
     shares = data['shares']
-    return Portfolio.sell_stock(portfolio, ticker, shares)
+    return portfolio.sell_stock(ticker, shares)
 
 # Log current value of portfolio to portfolio_values table
 from datetime import datetime
