@@ -52,15 +52,13 @@ export default function WatchlistDetails() {
             <tbody className='watchlist-details-list-body'>
               {selectedWatchlist.stocks.map(stock => {
               return (
-                <tr className='watchlist-details-list-row' onClick={e => navigate(`/stocks/${stock.ticker}`)}>
+                <tr className='watchlist-details-list-row' onClick={e => navigate(`/stocks/${stock.ticker}`)} key={stock.ticker}>
                   <td className='watchlist-details-list-header-name' id='watchlist-details-list-header-name'>{stock.company_name}</td>
                   <td className='watchlist-details-list-header-symbol'>{stock.ticker}</td>
-                  <td className='watchlist-details-list-header'>{stock.current_price}$</td>
+                  <td className='watchlist-details-list-header'>${stock.current_price}</td>
                   <td className='watchlist-details-list-header'>{stock.daily_change * 100}%</td>
-                  <div id='hello'>
-                    <td className='watchlist-details-list-header-market-cap'>Market Cap</td>
-                    <div className='watchlist-detail-stock-delete-button'>x</div>
-                  </div>
+                  <td className='watchlist-details-list-header-market-cap'>Market Cap</td>
+                  <button className='watchlist-details-stock-delete-button'>X</button>
                 </tr>
               )
             })}

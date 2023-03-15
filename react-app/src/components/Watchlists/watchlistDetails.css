@@ -83,7 +83,17 @@
   white-space: nowrap;
 }
 
+.watchlist-details-list-row {
+
+}
+
 .watchlist-details-list-row:hover {
   background-color: rgb(209, 209, 209);
   cursor: pointer;
+}
+
+.watchlist-details-stock-delete-button {
+  position: relative;
+  top: 17px;
+  cursor:alias;
 }
