@@ -148,7 +148,7 @@ export default function portfolioReducer(state = initialState, action) {
     const newState = { ...state }
     switch(action.type) {
         case GET_PORTFOLIO_HISTORICAL_VALUES: {
-            newState.historicalValues = { ...state.historicalValues, ...action.historicalValues }
+            newState.historicalValues = { ...action.historicalValues }
             return newState
         }
         case GET_PORTFOLIO_HOLDINGS: {
