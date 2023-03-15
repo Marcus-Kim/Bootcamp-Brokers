@@ -10,8 +10,15 @@ const actionGetAllTransactions = (transaction) => ({
 })
 
 const actionGetAllTransactionsByTicker = (transaction) => ({
-    type: GET_ALL_TRANSACTIONS_BY_TICKER
+    type: GET_ALL_TRANSACTIONS_BY_TICKER,
+    transaction
 })
+
+const actionCreateTransaction = (transaction) => ({
+    type: CREATE_TRANSACTION,
+    transaction
+})
+
 
 // export const transactionsReducer = (state = initialState, action) {
 
