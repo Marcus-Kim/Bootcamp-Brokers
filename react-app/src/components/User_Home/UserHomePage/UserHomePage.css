@@ -247,14 +247,14 @@
     position: absolute;
     top: 50px;
     right: 40px;
-    background-color: #F5F8FA;
-    border: 1px solid #E3E9ED;
+    background-color: white;
+    border: 2px solid #E3E9ED;
     width: 296px;
     height: 400px;
     z-index: 1000;
     border-radius: 12px;
     text-align: left;
-    
+    box-shadow: rgba(0, 0, 0, 0.02) 0px -12px 24px 0px, rgba(0, 0, 0, 0.06) 0px 12px 24px 0px
 }
 
 
@@ -274,11 +274,7 @@
 }
 
 .dropdown-nav:hover{
-    background-color: antiquewhite
-}
-
-.dropdown-nav:hover button {
-    background-color: antiquewhite
+    background-color: #F5F8FA;
 }
 
 .dropper {
@@ -306,4 +302,23 @@
     height: 22px;
     padding-right: 21px;
     line-height: 15px;
+}
+
+.dropdown-logout {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    background-color: white;
+    border-style: none;
+}
+
+.dropdown-logout:hover {
+    background-color:  #F5F8FA;
 }
