@@ -162,3 +162,11 @@
     justify-content: flex-start;
     font: 10px;
 }
+
+.transaction-title-div {
+    padding: 20px 0 20px  0;
+    border-bottom: solid black 1px;
+    font-size: 20pt;
+    margin-bottom: 15px;
+    padding-top: 30px;
+}
