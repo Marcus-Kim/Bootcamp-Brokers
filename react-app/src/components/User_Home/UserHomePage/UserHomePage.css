@@ -2,6 +2,10 @@
     font-family: Capsule Sans Text,-apple-system,BlinkMacSystemFont,sans-serif;
 }
 
+.account {
+    margin-bottom: 2px;
+}
+
 .break {
     border: none;
     border-top: 1px solid #E3E9ED;
@@ -54,6 +58,7 @@
 }
 
 .homepage-rightcontainer {
+    align-items: center;
     display: flex;
     justify-content: flex-end;
     gap: 30px;

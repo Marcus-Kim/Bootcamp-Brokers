@@ -59,7 +59,7 @@ export default function UserNav() {
                     <NavLink className="home-nav">Retirement</NavLink>
                     <NavLink className="home-nav">Notifications</NavLink>
                     <div className="dropdown-container">
-                        <button style={{borderStyle: 'none', backgroundColor: 'white'}} onClick={toggleDropdown} className="home-nav">Account</button>
+                        <NavLink style={{borderStyle: 'none', backgroundColor: 'white', padding: 'none'}} onClick={toggleDropdown} className="home-nav">Account</NavLink>
                         {dropdownVisible && (
                             <div className="dropdown-menu" onClick={hideDropdown}>
                                 <div className="dropper">
