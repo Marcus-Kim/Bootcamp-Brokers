@@ -51,13 +51,13 @@ export default function SplashPage() {
   ];
   
 
-  // useEffect(() => {
-  //   if (userArray[0] === null) {
-  //     navigate('/')
-  //   } else {
-  //     navigate('/home')
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (userArray[0] === null) {
+      navigate('/')
+    } else {
+      navigate('/home')
+    }
+  }, [])
 
 
 

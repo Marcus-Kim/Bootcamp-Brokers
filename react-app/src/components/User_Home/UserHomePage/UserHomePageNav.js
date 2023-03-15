@@ -19,7 +19,7 @@ export default function UserHomePageNav() {
     const navigate = useNavigate()
     const user = useSelector(state => state.session)
     const userArray = Object.values(user)
-    console.log(userArray)
+    
 
     const [dropdownVisible, setDropdownVisible] = useState(false)
 
@@ -48,9 +48,9 @@ export default function UserHomePageNav() {
     return (
         <div className="home-container">
             <div style={{marginBottom: '30px'}} className="homepage-navigationcontainer">
-                <div>
+                <NavLink to="/home">
                 <img className='logo' src={logo} alt="logo" />
-                </div>
+                </NavLink>
                 
                 <span className="homepage-rightcontainer">
                     <NavLink className="home-nav">Rewards</NavLink>
