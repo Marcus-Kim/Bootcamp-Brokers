@@ -162,6 +162,8 @@ export default function portfolioReducer(state = initialState, action) {
             newState.initial_principle = action.portfolio.initial_principle
             newState.profit_loss = action.portfolio.profit_loss
             newState.user_id = action.portfolio.user_id
+            newState.total_stock_value = action.portfolio.total_stock_value
+            newState.overall_value = action.portfolio.overall_value
             return newState
         }
         case BUY_STOCK: {
