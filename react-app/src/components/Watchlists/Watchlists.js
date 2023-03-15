@@ -6,6 +6,11 @@ function Watchlists({ watchlists }) {
 
   const watchlistArray = Object.values(watchlists)
 
+  const handleEditClick = (e) => {
+    e.stopPropagation();
+    //TODO Add functionality for renaming/deleting [BONUS]: Rearranging lists.
+  }
+
   return (
     <div className='watchlists-container'>
       <div className='watchlists-header'>
@@ -17,7 +22,7 @@ function Watchlists({ watchlists }) {
           return(
             <div className='watchlist-item' onClick={e => navigate(`/watchlists/${watchlist.id}`)} key={watchlist.id}>
               <div className='watchlist-item-name' >{watchlist.list_name}</div>
-              <button className='watchlist-edit-button'>Edit</button>
+              <button className='watchlist-edit-button' onClick={e => handleEditClick(e)}>Edit</button>
             </div>
           )
         })}

@@ -95,5 +95,5 @@
 .watchlist-details-stock-delete-button {
   position: relative;
   top: 17px;
-  cursor:alias;
+  cursor:inherit;
 }
