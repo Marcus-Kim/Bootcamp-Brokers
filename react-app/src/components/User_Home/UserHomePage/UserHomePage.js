@@ -14,6 +14,9 @@ import Watchlists from '../../Watchlists/Watchlists';
 import { thunkGetAllWatchlistsUserId } from '../../../store/watchlist';
 
 
+
+
+
 export default function UserHomePage() {
   const dispatch = useDispatch()
   const [price, setPrice] = useState(5)
@@ -30,8 +33,33 @@ export default function UserHomePage() {
   yesterday.setDate(yesterday.getDate() - 1);
   const yesterdayString = yesterday.toISOString().substring(0, 10);
   const portfolio = useSelector(state => state.portfolio)
-  console.log(portfolio, 'portfolio')
   
+  
+  const verticalLinePlugin = {
+    id: "verticalLine",
+    afterDraw: (chart, args, options) => {
+      if (!chart.tooltip._active || !chart.tooltip._active.length) {
+        return;
+      }
+  
+      const active = chart.tooltip._active[0];
+      const ctx = chart.ctx;
+      const x = active.element.x;
+      const topY = chart.scales.y.top;
+      const bottomY = chart.scales.y.bottom;
+  
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(x, topY);
+      ctx.lineTo(x, bottomY);
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = "black";
+      ctx.stroke();
+      ctx.restore();
+    },
+  };
+
+  Chart.register(verticalLinePlugin);
 
   const handleHover = (event, active, chart) => {
     if (active.length > 0) {
@@ -92,6 +120,7 @@ export default function UserHomePage() {
     hover: {
       intersect: false,
     },
+
     elements: {
       line: {
         tension: 0
@@ -123,49 +152,70 @@ export default function UserHomePage() {
     },
     interaction: {
       intersect: false,
-      mode: "nearest",
-      callbacks: {
-        beforeHover: function (chart, event, active) {
-          // Get the canvas element and context
-          const canvas = chart.canvas;
-          const context = canvas.getContext("2d");
-  
-          // Clear any existing vertical line
-          context.clearRect(0, 0, canvas.width, canvas.height);
-  
-          // If there is an active point, draw the vertical line
-          if (active.length > 0) {
-            const x = active[0].element.x;
-            const yAxis = chart.scales.y;
-  
-            // Draw the vertical line
-            context.beginPath();
-            context.moveTo(x, yAxis.top);
-            context.lineTo(x, yAxis.bottom);
-            context.lineWidth = 1;
-            context.strokeStyle = "black";
-            context.stroke();
-          }
-        },
-      },
     },
     onHover: (event, activeElements, chart) => {
       handleHover(event, activeElements, chart);
     },
     plugins: {
       tooltips: {
-        mode: "index",
+        enabled: true,
+        mode: 'index',
         intersect: false,
         callbacks: {
+          title: function () {
+            // Return an empty string to remove the title from the tooltip
+            return '';
+          },
+          label: function (tooltipItem, data) {
+            // Get the corresponding x value (time) from the tooltipItem
+            const timeValue = data.labels[tooltipItem.index];
+  
+            // Format the timeValue to "3:45 PM" format
+            const formattedTime = timeValue.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+  
+            // Return the formatted time as the tooltip label
+            return formattedTime
+          },
         },
       },
-      legend: {
-        display: false,
-      },
-      datalabels: {
-        display: true,
-      },
-
+        
+      
+      
+      // afterDraw: (chartInstance) => {
+      //   // Get the canvas element and context
+      //   const canvas = chartInstance.canvas;
+      //   const context = canvas.getContext("2d");
+  
+      //   // Clear any existing vertical line
+      //   context.clearRect(0, 0, canvas.width, canvas.height);
+  
+      //   if (!chartInstance.tooltip._active) {
+      //     return;
+      //   }
+  
+      //   const active = chartInstance.tooltip._active;
+      //   const dataIndex = active[0].index;
+      //   const datasetIndex = active[0].datasetIndex;
+        
+        
+  
+      //   // Get the x position of the active point
+      //   const x = active[0].element.x;
+  
+      //   // Get the y-axis top and bottom
+      //   const yAxis = chartInstance.scales.y;
+  
+      //   // Draw the vertical line
+      //   context.beginPath();
+      //   context.moveTo(x, yAxis.top);
+      //   context.lineTo(x, yAxis.bottom);
+      //   context.lineWidth = 1;
+      //   context.strokeStyle = "black";
+      //   context.stroke();
+      // },
     },
   };
 
