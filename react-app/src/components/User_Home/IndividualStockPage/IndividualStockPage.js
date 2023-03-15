@@ -69,14 +69,14 @@ export default function IndividualStockPage() {
     return (
         <div className="stock-page-main-container">
             <h1>{stockFundamentals["Symbol"]}</h1>
-            <div>
+            <div style={{ gap: "7px" }}>
                 { chartObj[chart] }
-                <button onClick={() => setChart("1D")}>1D</button>
-                <button onClick={() => setChart("1W")}>1W</button>
-                <button onClick={() => setChart("1M")}>1M</button>
-                <button onClick={() => setChart("3M")}>3M</button>
-                <button onClick={() => setChart("1Y")}>1Y</button>
-                <button onClick={() => setChart("5Y")}>5Y</button>
+                <button className="stock-timeline" onClick={() => setChart("1D")}>1D</button>
+                <button className="stock-timeline" onClick={() => setChart("1W")}>1W</button>
+                <button className="stock-timeline" onClick={() => setChart("1M")}>1M</button>
+                <button className="stock-timeline" onClick={() => setChart("3M")}>3M</button>
+                <button className="stock-timeline" onClick={() => setChart("1Y")}>1Y</button>
+                <button className="stock-timeline" onClick={() => setChart("5Y")}>5Y</button>
             </div>
 
             <h3>About</h3>
@@ -124,7 +124,7 @@ export default function IndividualStockPage() {
                         <div>${stockDaily["Time Series (Daily)"][yesterdayFormatted]["4. close"]}</div>
                     </div>
                 </div>
-                    <Purchase ticker={tickerCap} />
+                    <Purchase ticker={tickerCap} user={user} />
             </div>
             <div>
                 <div className="news-stat-title-div">News</div>

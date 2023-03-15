@@ -1,13 +1,28 @@
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 
 
 import "./IndividualStockPage.css"
 
-export default function Purchase({ ticker }) {
+export default function Purchase({ ticker, user }) {
 
-    const [amount, setAmount] = useState(0)
+    const dispatch = useDispatch();
+    const [shares, setShares] = useState(0)
 
+
+    const handlePurchase = async (e) => {
+        e.preventDefault();
+
+        const newPurchase = {
+
+            ticker_id: ticker,
+            shares: shares
+        }
+
+    // dispatch thunk!
+
+    }
 
 
     return (
@@ -23,19 +38,15 @@ export default function Purchase({ ticker }) {
                             Buy Order Market
                         </div>
                     </div>
-                    <div style= {{ display: "flex" }}>
-                        <div className="left-buy-in--div">Buy In</div>
-                        <div></div>
-                    </div>
                     <div style= {{ display: "flex", justifyContent: "space-between", borderBottom: "solid 1px rgb(172, 171, 171)" }}>
-                        <div className="left-amount-div">Amount</div>
-                        <div className="right-amount-div">
+                        <div className="left-shares-div">Shares</div>
+                        <div className="right-shares-div">
                             <input
-                                className="amount-input"
+                                className="shares-input"
                                 type="number"
                                 min="1"
-                                value={amount}
-                                onChange={e => setAmount(e.target.value)}
+                                value={shares}
+                                onChange={e => setShares(e.target.value)}
                                 >
                             </input>
                         </div>
@@ -49,7 +60,9 @@ export default function Purchase({ ticker }) {
                         </div>
                     </div>
                     <div className="transaction-button-div">
-                        <button className="button">Purchase Stock</button>
+                        <button className="button"
+                            onClick={handlePurchase}
+                            >Purchase Stock</button>
                     </div>
                     <div style={{ display: "flex", justifyContent: "center", padding: "10px", borderTop: "1px solid rgb(172, 171, 171)", borderBottom: "1px solid rgb(172, 171, 171)" }}>
                         <div className="buying-power-div"> buying power available</div>
