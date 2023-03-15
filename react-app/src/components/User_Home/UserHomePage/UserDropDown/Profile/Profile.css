@@ -1,0 +1,58 @@
+.profile-container {
+    margin-left: 15%;
+    margin-right: 35%;
+    display: flex;
+    gap: 25px;
+    
+}
+
+.profile-name-container {
+    font-size: 24px;
+
+}
+
+.cash-container {
+    margin-left: 15%;
+    margin-right: 35%;
+    margin-top: 4%;
+    margin-bottom: 4%;
+}
+
+.usercash {
+    font-size: 32px;
+
+}
+
+.investing-container {
+    margin-left: 15%;
+    margin-right: 35%;
+    
+}
+
+.holdings-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+}
+
+.profile-holdings {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: rgb(106, 114, 120)
+}
+
+.profile-investments {
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+}
+
+.disclaimer-container {
+    margin-left: 15%;
+    margin-right: 35%;
+    font-size: 13px;
+    color: rgb(106, 114, 120);
+    margin-top: 3%;
+}
