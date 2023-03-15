@@ -115,8 +115,9 @@
 
 .news-card {
     display: flex;
-    flex-direction: column;
-    height: 150px;
+    justify-content: space-between;
+    height: 130px;
+    max-width: 100%;
     padding: 25px;
 }
 
@@ -124,9 +125,7 @@
     height: 90px;
     width: 180px;
     position: relative;
-    left: 800px;
-    bottom: 80px;
-    border-radius: 18px;
+    border-radius: 7px;
 }
 
 .news-container {

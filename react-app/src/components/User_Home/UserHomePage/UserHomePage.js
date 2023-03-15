@@ -246,8 +246,9 @@ export default function UserHomePage() {
         <div className="news-container">
           <h2 className="section-header">News</h2>
           <hr className="break"/>
-          {randomNews?.["feed"]?.slice(0,10).map(news => (
+          {randomNews?.["feed"]?.slice(0,30).map(news => (
             <div key={news.url}>
+              <hr className="break"/>
               <div className="news-card">
                 <div className="news-cardleft">
                   <div><span className="source">{news.source}</span> <span className="time-units">{hoursAgo(news.time_published)}hr</span></div>
@@ -258,7 +259,6 @@ export default function UserHomePage() {
                   <img className="news-image" src={news.banner_image} alt="" />
                 </NavLink>
               </div>
-              <hr className="break"/>
             </div>
             ))}
         </div>
