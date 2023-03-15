@@ -257,6 +257,9 @@
     
 }
 
+
+
+
 .dropdown-nav {
     text-decoration: solid;
     font-size: 13px;
@@ -267,17 +270,30 @@
     display: flex;
     align-items: center;
     height: 50px;
+    width: 100%;
+}
+
+.dropdown-nav:hover{
+    background-color: antiquewhite
+}
+
+.dropdown-nav:hover button {
+    background-color: antiquewhite
 }
 
 .dropper {
     display: flex;
     flex-direction: column;
     align-content: center;
-    align-items: start;
-    
-    padding-left: 20px;
-    padding-top: 15px;
+    align-items: start;    
+    margin-left: 15px;
 }
+
+
+.dropdown-container-wrapper:hover {
+    cursor: pointer;
+    
+  }
 
 .dropdown-icon {
     height: 20px;
