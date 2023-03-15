@@ -1,7 +1,5 @@
 .watchlists-container {
-  /* border: 1px solid black; */
-  /* max-height: 1000px; */
-  height: 80vh;
+  height: 85vh;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   border-radius: 10px;
   position: sticky;
@@ -63,4 +61,72 @@
 
 .watchlist-edit-button {
 
+}
+
+.create-watchlist-form {
+  padding: 10px 27px;
+  border-bottom: 1px solid rgba(99, 99, 99, 0.2);
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.create-watchlist-input-name {
+  height: 35px;
+  padding-left: 10px;
+  background-color: rgb(245,248,250);
+  border: 1px solid white;
+}
+
+.create-watchlist-input-name::placeholder {
+  color: rgb(190,198,202);
+}
+
+.create-watchlist-input-name:hover {
+  background-color: white;
+  border: 1px rgb(219, 219, 219) solid;
+  border-radius: 5px;
+}
+
+.create-watchlist-input-name:focus {
+  border: 1px solid rgb(0,200,5);
+  background-color: white;
+  outline: none;
+  border-radius: 5px;
+}
+
+.create-watchlist-form-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.create-watchlist-form-name {
+  display: flex;
+  justify-content: center;
+}
+
+.create-watchlist-cancel-button {
+  background-color: white;
+  border: 1px solid rgb(0,200,5);
+  color: rgb(0,200,5);
+}
+
+.create-watchlist-cancel-button:hover {
+  background-color: rgb(229,249,230);
+}
+
+.create-watchlist-create-button {
+  background-color: rgb(0,200,5);
+  border: none;
+  color: white;
+}
+
+.create-watchlist-create-button:hover {
+  background-color: rgb(0,180,5);
+}
+.create-watchlist-create-button,
+.create-watchlist-cancel-button {
+  padding: 10px 25px;
+  border-radius: 25px;
+  font-weight: bolder;
 }
