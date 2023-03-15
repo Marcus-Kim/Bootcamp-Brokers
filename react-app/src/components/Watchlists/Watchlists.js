@@ -15,7 +15,7 @@ function Watchlists({ watchlists }) {
       <div className='watchlists-list'>
         {watchlistArray.map(watchlist => {
           return(
-            <div className='watchlist-item' onClick={e => navigate(`/watchlists/${watchlist.id}`)}>
+            <div className='watchlist-item' onClick={e => navigate(`/watchlists/${watchlist.id}`)} key={watchlist.id}>
               <div className='watchlist-item-name' >{watchlist.list_name}</div>
               <button className='watchlist-edit-button'>Edit</button>
             </div>
