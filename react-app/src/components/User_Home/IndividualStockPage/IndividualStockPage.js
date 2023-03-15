@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux"
 import { useFinanceAPI } from "../../../context/FinanceApiContext";
 import "./IndividualStockPage.css"
@@ -14,6 +14,7 @@ import FiveYearChart from "./charts/FiveYearChart";
 
 export default function IndividualStockPage() {
 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [chart, setChart] = useState("1D")
     let { ticker } = useParams();
@@ -24,9 +25,8 @@ export default function IndividualStockPage() {
     const stockFundamentals = useSelector(state => state.stocks.stockFundamentals)
     // const stockIntraDay = useSelector(state => state.stocks.stockIntraDay)
     const stockDaily = useSelector(state => state.stocks.stockDaily)
+    const user = useSelector(state => state.session.user)
 
-    // console.log("stockFundamentals :", stockFundamentals)
-    // console.log("stockDaily: ", stockDaily)
 
     useEffect(() => {
         dispatch(thunkGetStockFundamentals(tickerCap))
@@ -59,6 +59,10 @@ export default function IndividualStockPage() {
         "5Y": <FiveYearChart ticker={tickerCap} />,
     }
 
+    if (!user) {
+        navigate('/login')
+        return null
+    }
 
     return (
         <div className="stock-page-main-container">
@@ -78,10 +82,10 @@ export default function IndividualStockPage() {
                 {stockFundamentals["Description"]}
             </p>
             <div className="key-stats-container">
-                 <div className="key-stat-title-div">
+                    <div className="key-stat-title-div">
                     Key Statistics
-                 </div>
-                 <div className="stat-value-container">
+                    </div>
+                    <div className="stat-value-container">
                     <div className="stat-box">
                         <div>Market Cap </div>
                         <div>{Number(stockFundamentals["MarketCapitalization"]).toLocaleString()}</div>
@@ -122,7 +126,7 @@ export default function IndividualStockPage() {
                     <div style={{ borderBottom: "solid 1px rgb(172, 171, 171)" }}>
                         <div className="purchase-buy-div">Buy {tickerCap}</div>
                     </div>
-                    <div style= {{ display: "flex" }}>
+                    <div style= {{ display: "flex", justifyContent: "space-between", }}>
                         <div className="left-order-type-div">
                             Order Type
                         </div>
@@ -134,13 +138,17 @@ export default function IndividualStockPage() {
                         <div className="left-buy-in--div">Buy In</div>
                         <div></div>
                     </div>
-                    <div style= {{ display: "flex", borderBottom: "solid 1px rgb(172, 171, 171)" }}>
+                    <div style= {{ display: "flex", justifyContent: "space-between", borderBottom: "solid 1px rgb(172, 171, 171)" }}>
                         <div className="left-amount-div">Amount</div>
-                        <div></div>
+                        <div className="right-amount-div">
+                            <input
+                                className="amount-input">
+                            </input>
+                        </div>
                     </div>
-                    <div style= {{ display: "flex" }}>
+                    <div style= {{ display: "flex", justifyContent: "space-between" }}>
                         <div className="left-est-div">
-                            Est.Quantity
+                            Est. Quantity
                         </div>
                         <div className="right-est-div">
                             0.000000
