@@ -37,7 +37,7 @@ def get_user_portfolio():
 @login_required
 def add_stock_to_portfolio():
     """Route for adding a stock to a user's portfolio
-    Parses, values 'ticker' and 'shares' from request body"""
+    Parses values 'ticker' and 'shares' from request body"""
     portfolio = Portfolio.query.filter_by(user_id=current_user.id).first()
     data = request.json
     ticker = data['ticker']
@@ -48,12 +48,33 @@ def add_stock_to_portfolio():
 @portfolio_routes.route('/sell', methods=['POST'])
 @login_required
 def remove_stock_from_portfolio():
-    """Route for removing shares of a stock from a user's portfolio"""
+    """Route for removing shares of a stock from a user's portfolio
+    Parses, values 'ticker' and 'shares' from request body"""
     portfolio = Portfolio.query.filter_by(user_id=current_user.id).first()
     data = request.json
     ticker = data['ticker']
     shares = data['shares']
     return portfolio.sell_stock(ticker, shares)
+
+# Deposit funds
+@portfolio_routes.route('/deposit', methods=['POST'])
+@login_required
+def deposit_funds():
+    """Route for depositing additional funds into a user's portfolio
+    Parses value 'amount' from request body"""
+    portfolio = Portfolio.query.filter_by(user_id=current_user.id).first()
+    data = request.json
+    amount = data['amount']
+
+    # If amount is less than or equal to 0 return error
+    if (type(amount) is not int or type(amount) is not float) or amount <= 0:
+        return {'error': 'Deposit amount must be a number greater than zero'}
+    
+    # Add deposit amount to portfolio cash balance
+    portfolio.cash_balance += amount
+    db.session.commit()
+    
+    return portfolio.to_dict()  # Return the serialized Portfolio object
 
 # Log current value of portfolio to portfolio_values table
 from datetime import datetime
