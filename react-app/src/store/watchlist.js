@@ -3,6 +3,7 @@ const GET_WATCHLISTS_USER_ID = 'watchlists/user/all' // Getting all watchlists o
 const DELETE_WATCHLIST_BY_ID = 'watchlists/delete'
 const CREATE_WATCHLIST = 'watchlists/create' // Creating a new watchlist
 const UPDATE_WATCHLIST = 'watchlists/update' // Updating a watchlist
+const DELETE_WATCHLIST_STOCK = 'watchlists/stock/delete'
 
 // ACTION CREATORS
 const actionGetAllWatchlistsUserId = (watchlists) => ({
@@ -24,6 +25,7 @@ const actionUpdateWatchlist = (watchlist) => ({
     type: UPDATE_WATCHLIST,
     watchlist
 })
+
 
 
 // THUNKS
@@ -80,7 +82,17 @@ export const thunkUpdateWatchlist = (watchlist) => async (dispatch) => {
     }
 }
 
+export const thunkDeleteWatchlistStock = (watchlistId, ticker) => async (dispatch) => {
+    const response = await fetch(`/api/watchlist/${watchlistId}/stock/${ticker}`, {
+        method: 'DELETE'
+    });
 
+    if (response.ok) {
+        const updatedWatchlist = await response.json()
+        dispatch(actionUpdateWatchlist(updatedWatchlist))
+        return updatedWatchlist
+    }
+}
 
 // INITIAL STATE
 const initialState = {}
@@ -110,6 +122,10 @@ export default function watchlistReducer(state = initialState, action) {
             const newState = {...state}
             newState[action.watchlist.id] = action.watchlist
             return newState
+        }
+        case DELETE_WATCHLIST_STOCK: {
+            const newState = {...state}
+            return newState;
         }
     default:
         return state
