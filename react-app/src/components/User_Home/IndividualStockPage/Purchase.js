@@ -15,7 +15,7 @@ export default function Purchase({ ticker, user }) {
         e.preventDefault();
 
         const newPurchase = {
-            user_id: user,
+
             ticker_id: ticker,
             shares: shares
         }
