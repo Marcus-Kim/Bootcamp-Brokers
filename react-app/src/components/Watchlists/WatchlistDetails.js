@@ -70,7 +70,7 @@ export default function WatchlistDetails() {
                   <td className='watchlist-details-list-header-name' id='watchlist-details-list-header-name'>{stock.company_name}</td>
                   <td className='watchlist-details-list-header-symbol'>{stock.ticker}</td>
                   <td className='watchlist-details-list-header'>${stock.current_price}</td>
-                  <td className='watchlist-details-list-header'>{stock.daily_change * 100}%</td>
+                  <td className='watchlist-details-list-header'>{(stock.daily_change * 100)}%</td>
                   <td className='watchlist-details-list-header-market-cap'>Market Cap</td>
                   <button className='watchlist-details-stock-delete-button' onClick={e => handleDeleteClick(e, selectedWatchlist.id, stock.ticker)}>X</button>
                 </tr>
