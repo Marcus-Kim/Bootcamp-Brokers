@@ -10,7 +10,8 @@ import OneMonthChart from "./charts/OneMonthChart";
 import ThreeMonthChart from "./charts/ThreeMonthChart";
 import OneYearChart from "./charts/OneYearChart";
 import FiveYearChart from "./charts/FiveYearChart";
-import Purchase from "./Purchase";
+import PurchaseComponent from "./PurchaseComponent";
+import TransactionComponent from "./Transactions";
 
 
 
@@ -124,7 +125,8 @@ export default function IndividualStockPage() {
                         <div>${stockDaily["Time Series (Daily)"][yesterdayFormatted]["4. close"]}</div>
                     </div>
                 </div>
-                    <Purchase ticker={tickerCap} user={user} />
+                    <PurchaseComponent ticker={tickerCap} user={user} />
+                    <TransactionComponent ticker={tickerCap} user={user} />
             </div>
             <div>
                 <div className="news-stat-title-div">News</div>

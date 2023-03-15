@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "./IndividualStockPage.css"
 
-export default function Purchase({ ticker, user }) {
+export default function PurchaseComponent({ ticker, user }) {
 
     const dispatch = useDispatch();
     const [shares, setShares] = useState(0)
