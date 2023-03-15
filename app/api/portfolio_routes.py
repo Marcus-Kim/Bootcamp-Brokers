@@ -72,6 +72,7 @@ def deposit_funds():
     
     # Add deposit amount to portfolio cash balance
     portfolio.cash_balance += amount
+    portfolio.initial_principle += amount
     db.session.commit()
     
     return portfolio.to_dict()  # Return the serialized Portfolio object
