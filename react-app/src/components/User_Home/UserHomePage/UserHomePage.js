@@ -245,19 +245,22 @@ export default function UserHomePage() {
         <hr className="break"/>
         <div className="news-container">
           <h2 className="section-header">News</h2>
+          <hr className="break"/>
           {randomNews?.["feed"]?.slice(0,10).map(news => (
-            <div className="news-card">
-              <hr />
-              <div className="news-cardleft">
-                <div><span className="source">{news.source}</span> <span className="time-units">{hoursAgo(news.time_published)}hr</span></div>
-                <div>{news.title}</div>
-                <div>{news.ticker_sentiment[0]?.ticker}</div>
+            <div key={news.url}>
+              <div className="news-card">
+                <div className="news-cardleft">
+                  <div><span className="source">{news.source}</span> <span className="time-units">{hoursAgo(news.time_published)}hr</span></div>
+                  <div className="title">{news.title}</div>
+                  <div className="story-ticker">{news.ticker_sentiment[0]?.ticker}</div>
+                </div>
+                <NavLink to={news.url}>
+                  <img className="news-image" src={news.banner_image} alt="" />
+                </NavLink>
               </div>
-              <NavLink to={news.url}>
-                <img className="news-image" src={news.banner_image} alt="" />
-              </NavLink>
+              <hr className="break"/>
             </div>
-          ))}
+            ))}
         </div>
         <div className="indexes-container">
           <span className="indexes">
