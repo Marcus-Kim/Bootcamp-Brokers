@@ -29,23 +29,11 @@ class Portfolio(db.Model):
     @property
     def overall_value(self):
         from decimal import Decimal
-        total_stock_value = sum(
-            share.stocks.current_price * share.shares for share in self.portfolio_shares
-        )
-        print(f"total_stock_value: {total_stock_value}")
-        print(f"cash_balance: {self.cash_balance}")
-        return Decimal(total_stock_value) + self.cash_balance
+        return Decimal(self.total_stock_value) + self.cash_balance
 
     @property
     def profit_loss(self):
-        total_stock_value = sum(
-            share.stocks.current_price * share.shares for share in self.portfolio_shares
-        )
-        print(f"overall_value: {self.overall_value}")
-        print(f"initial_principle: {self.initial_principle}")
         return self.overall_value - self.initial_principle
-
-
 
     def to_dict(self):
         return {
