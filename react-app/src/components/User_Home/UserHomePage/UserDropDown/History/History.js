@@ -16,6 +16,12 @@ export default function History() {
       .then(() => setIsLoaded(true))
   }, [dispatch])
 
+  const formatDate = (date) => {
+    // Converts "Wed, 15 Mar 2023 00:00:00 GMT" => "15 Mar 2023"
+    const d = date.split(':')[0].slice(5, -2).split(' ')
+    return [d[1], d[0] + ',', d[2]].join(' ')
+  }
+
   return (
     <>
     { isLoaded && (
@@ -36,7 +42,7 @@ export default function History() {
               >
                 <div className="left-column">
                   <div>{transaction.ticker_id}</div>
-                  <div>{transaction.date}</div>
+                  <div>{formatDate(transaction.date)}</div>
                 </div>
                 <div className="right-column">
                   <div>{transaction.shares}</div>

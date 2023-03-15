@@ -1,5 +1,6 @@
 .history-container {
-    
+    display: flex;
+    flex-direction: column;
 }
 
 .name-container {
@@ -12,4 +13,8 @@
     font-size: 24px;
     font-family: sans-serif;
     margin-top: 30px;
+}
+
+.transaction-card {
+    display: flex;
 }
