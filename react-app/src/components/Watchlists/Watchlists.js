@@ -1,5 +1,6 @@
-import './watchlists.css'
-import { useNavigate } from 'react-router-dom'
+import './watchlists.css';
+import './watchlistsHome.css';
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import { thunkCreateWatchlist } from '../../store/watchlist';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +14,7 @@ function Watchlists({ watchlists, activeWatchlistId }) {
   const navigate = useNavigate();
   const dispatch = useDispatch()
   const componentRef = useRef();
-
+  const location = useLocation()
   // *USE SELECTORS
   const user = useSelector(state => state.session.user.id)
 
@@ -21,6 +22,7 @@ function Watchlists({ watchlists, activeWatchlistId }) {
   const [showForm, setShowForm] = useState(false);
   const [listName, setListName] = useState('');
   const [openDropdown, setOpenDropdown] = useState(null)
+  const [showList, setShowList] = useState(false);
 
   // *USE_EFFECTS
   useEffect(() => {
@@ -88,7 +90,45 @@ function Watchlists({ watchlists, activeWatchlistId }) {
     e.stopPropagation()
   }
 
-  return (
+  if (location.pathname === '/home') {
+    return (
+      <div className='watchlists-container-home' ref={componentRef}>
+      <div className='watchlists-header-home'>
+        <div className='watchlists-title-home'>Lists</div>
+        <button className='add-watchlist-button-home' onClick={e => handleCreateListToggle(e)}>+</button>
+      </div>
+      {showForm && <form className='create-watchlist-form-home' onSubmit={e => handleCreateList(e)}>
+        <div className='create-watchlist-form-name-home'>
+          <input className='create-watchlist-input-name-home' value={listName} placeholder='List Name' required onChange={e => setListName(e.target.value)} maxLength={30}/>
+        </div>
+        <div className='create-watchlist-form-buttons-home'>
+          <button className='create-watchlist-cancel-button-home' onClick={e => setShowForm(false)}>Cancel</button>
+          <button type='submit' className='create-watchlist-create-button-home'>Create List</button>
+        </div>
+      </form>}
+      <div className='watchlists-list-home'>
+        {watchlistArray.map(watchlist => {
+          return(
+            <div className='watchlist-item-home' onClick={e => navigate(`/watchlists/${watchlist.id}`)} key={watchlist.id}>
+              <div className='watchlist-item-name-home' >{watchlist.list_name}</div>
+              <button className='watchlist-edit-button-home'>
+                Edit
+              </button>
+              <div className='watchlist-list-edit-dropdown-home' onClick={e => stopPropagation(e)}>
+                {showList && watchlist.tickers.map(ticker => {
+                  return (
+                    <div>Hello</div>
+                  )
+                })}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+    )
+  } else {
+    return (
     <div className='watchlists-container' ref={componentRef}>
       <div className='watchlists-header'>
         <div className='watchlists-title'>Lists</div>
@@ -120,7 +160,8 @@ function Watchlists({ watchlists, activeWatchlistId }) {
         })}
       </div>
     </div>
-  )
+    )
+  }
 }
 
 export default Watchlists

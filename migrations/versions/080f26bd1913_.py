@@ -6,7 +6,7 @@ Revises:
 Create Date: 2023-03-14 16:01:38.621152
 ========
 Revision ID: 080f26bd1913
-Revises: 
+Revises:
 Create Date: 2023-03-14 16:01:38.771900
 >>>>>>>> bab0ce1 (News Working):migrations/versions/080f26bd1913_.py
 
@@ -19,11 +19,8 @@ environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
 # revision identifiers, used by Alembic.
-<<<<<<<< HEAD:migrations/versions/86ba1c454aa6_.py
-revision = '86ba1c454aa6'
-========
+
 revision = '080f26bd1913'
->>>>>>>> bab0ce1 (News Working):migrations/versions/080f26bd1913_.py
 down_revision = None
 branch_labels = None
 depends_on = None
