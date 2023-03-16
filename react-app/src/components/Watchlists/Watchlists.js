@@ -80,6 +80,10 @@ function Watchlists({ watchlists }) {
     setOpenDropdown(e.target)
   };
 
+  const stopPropagation = (e) => {
+    e.stopPropagation()
+  }
+
 
   return (
     <div className='watchlists-container' ref={componentRef}>
@@ -102,9 +106,9 @@ function Watchlists({ watchlists }) {
             <div className='watchlist-item' onClick={e => navigate(`/watchlists/${watchlist.id}`)} key={watchlist.id}>
               <div className='watchlist-item-name' >{watchlist.list_name}</div>
               <button className='watchlist-edit-button' onClick={e => handleDropdown(e)}>Edit</button>
-              <div className='watchlist-list-edit-dropdown'>
-                <WatchlistModalButton modalComponent={<RenameWatchlistModal watchlist={watchlist}/>} buttonText={'Edit List'} />
-                {/* <WatchlistModalButton modalComponent={RenameWatchlistModal} watchlist={watchlist} className='watchlist-list-edit-menu-items' buttonText={'Delete List'} onClick={e => editListDropdownHandler(e)}/> */}
+              <div className='watchlist-list-edit-dropdown' onClick={e => stopPropagation(e)}>
+                <WatchlistModalButton modalComponent={<RenameWatchlistModal watchlist={watchlist}/>} buttonText={'Edit List'}/>
+                <WatchlistModalButton modalComponent={<RenameWatchlistModal watchlist={watchlist}/>}  buttonText={'Delete List'}/>
               </div>
             </div>
           )
