@@ -50,15 +50,17 @@ export default function IndividualStockPage() {
     // console.log("yesterdayFormatted: ", yesterdayFormatted)
 
     const slicedNews = stockNews["feed"].slice(0, 10)
+    // To pass into chart components
+    const close = Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["4. close"]).toFixed(2)
 
 
     const chartObj = {
-        "1D": <OneDayChart ticker={tickerCap} />,
-        "1W": <OneWeekChart ticker={ tickerCap } />,
-        "1M": <OneMonthChart ticker={tickerCap} />,
-        "3M": <ThreeMonthChart ticker={tickerCap} />,
-        "1Y": <OneYearChart ticker={tickerCap} />,
-        "5Y": <FiveYearChart ticker={tickerCap} />,
+        "1D": <OneDayChart ticker={tickerCap} close={close} />,
+        "1W": <OneWeekChart ticker={tickerCap} close={close} />,
+        "1M": <OneMonthChart ticker={tickerCap} close={close} />,
+        "3M": <ThreeMonthChart ticker={tickerCap} close={close} />,
+        "1Y": <OneYearChart ticker={tickerCap} close={close} />,
+        "5Y": <FiveYearChart ticker={tickerCap} close={close} />,
     }
 
     if (!user) {
@@ -125,7 +127,7 @@ export default function IndividualStockPage() {
                         <div>${Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["4. close"]).toFixed(2)}</div>
                     </div>
                 </div>
-                    <PurchaseComponent ticker={tickerCap} user={user} />
+                    <PurchaseComponent ticker={tickerCap} user={user} close={close} />
                     <TransactionComponent ticker={tickerCap} user={user} />
             </div>
             <div>

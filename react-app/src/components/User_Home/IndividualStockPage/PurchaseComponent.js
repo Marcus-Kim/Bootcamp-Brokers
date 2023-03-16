@@ -6,7 +6,7 @@ import { thunkGetTransactionsByUserId } from "../../../store/transactions";
 
 import "./IndividualStockPage.css"
 
-export default function PurchaseComponent({ ticker, user }) {
+export default function PurchaseComponent({ ticker, user, close }) {
 
     const dispatch = useDispatch();
     const [shares, setShares] = useState(0)
@@ -61,7 +61,7 @@ export default function PurchaseComponent({ ticker, user }) {
                             Estimated Cost
                         </div>
                         <div className="right-est-div">
-                            $0.00
+                            {`$ ${Number(close * shares).toFixed(2)}`}
                         </div>
                     </div>
                     <div className="transaction-button-div">
