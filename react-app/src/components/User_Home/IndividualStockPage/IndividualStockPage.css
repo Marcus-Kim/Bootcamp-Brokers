@@ -3,6 +3,25 @@
     border-bottom: solid 2px #01a504;
 }
 
+.button {
+    width: 200px;
+    height: 40px;
+    background-color: rgb(0,200,6);
+    color: white;
+    border-radius: 50px;
+    border: none;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+.button:hover {
+    background-color: #01a504;
+}
+
+.buying-power-div {
+    padding: 10px;
+    font-size: 10pt;
+}
 
 .key-stats-container {
     display: flex;
@@ -73,6 +92,11 @@
 
 .sell-div {
     padding: 20px;
+}
+
+.shares-available-div {
+    padding: 10px;
+    font-size: 10pt;
 }
 
 .shares-input {
@@ -152,25 +176,6 @@
     background-color: rgb(173, 252, 176);
 }
 
-.button {
-    width: 200px;
-    height: 40px;
-    background-color: rgb(0,200,6);
-    color: white;
-    border-radius: 50px;
-    border: none;
-    font-size: 10pt;
-    font-weight: bold;
-}
-
-.button:hover {
-    background-color: #01a504;
-}
-
-.buying-power-div {
-    padding: 10px;
-    font-size: 10pt;
-}
 
 .news-stat-title-div {
     padding: 20px 0 20px  0;
