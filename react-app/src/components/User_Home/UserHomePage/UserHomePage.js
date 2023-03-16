@@ -31,7 +31,7 @@ export default function UserHomePage() {
   yesterday.setDate(yesterday.getDate() - 1);
   const yesterdayString = yesterday.toISOString().substring(0, 10);
   const historicalValues = Object.values(portfolio.historicalValues)
-
+  const {markusKim} =useFinanceAPI()
   
 
   const verticalLinePlugin = {
