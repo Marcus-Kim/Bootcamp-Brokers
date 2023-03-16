@@ -15,6 +15,7 @@ import { logout } from '../../../store/session'
 
 
 export default function UserHomePageNav() {
+    const [searchValue, setSearchValue] = useState("")
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const user = useSelector(state => state.session)
@@ -45,12 +46,28 @@ export default function UserHomePageNav() {
         setDropdownVisible(false)
     }
 
+    const handleSearch = (e) => {
+        e.preventDefault()
+        navigate(`/stocks/${searchValue}`)
+
+    }
+
     return (
         <div className="home-container">
             <div style={{marginBottom: '30px'}} className="homepage-navigationcontainer">
                 <NavLink to="/home">
                 <img className='logo' src={logo} alt="logo" />
                 </NavLink>
+                <form className="search-bar" onSubmit={handleSearch}>
+                    <input 
+                    className="searching"
+                    type="text" 
+                    value={searchValue}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    placeholder="Search..."
+                    />
+                </form>
+                
                 
                 <span className="homepage-rightcontainer">
                     <NavLink className="home-nav">Rewards</NavLink>
