@@ -29,21 +29,22 @@ export default function UserHomePage() {
   const yesterday = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
   const yesterdayString = yesterday.toISOString().substring(0, 10);
-  const historicalValues = useSelector(state => state.portfolio.historicalValues)
-  
+
+  const historicalValues = Object.values(portfolio.historicalValues)
+
   const verticalLinePlugin = {
     id: "verticalLine",
     afterDraw: (chart, args, options) => {
       if (!chart.tooltip._active || !chart.tooltip._active.length) {
         return;
       }
-  
+
       const active = chart.tooltip._active[0];
       const ctx = chart.ctx;
       const x = active.element.x;
       const topY = chart.scales.y.top;
       const bottomY = chart.scales.y.bottom;
-  
+
       ctx.save();
       ctx.beginPath();
       ctx.moveTo(x, topY);
@@ -56,7 +57,7 @@ export default function UserHomePage() {
   };
 
   Chart.register(verticalLinePlugin);
-  
+
 
   const handleHover = (event, active, chart) => {
     if (active.length > 0) {
@@ -66,7 +67,28 @@ export default function UserHomePage() {
       setPrice(value);
     }
   };
-  
+
+
+  const mockData = () => {
+    let data = []
+
+    historicalValues.forEach(ele => {
+      data.push({x: ele.x, y: ele.y})
+    })
+    console.log(data, 'data')
+
+    // let value = 200
+    // for (let i = 0; i < 60 * 12; i += 15) {
+    //   let date = new Date();
+    //   date.setHours(4);
+    //   date.setMinutes(0);
+    //   value+= Math.floor(Math.random() * (10000 - 2000 + 1)) + 5000
+
+    //   data.push({x: date, y: value})
+    // }
+    setGraph(data.slice(-100, data.length))
+  }
+
   useEffect(() => {
     displayDailyView()
     dispatch(thunkGetBTCPrice())
@@ -139,6 +161,9 @@ export default function UserHomePage() {
       handleHover(event, activeElements, chart);
     },
     plugins: {
+      legend: {
+        display: false
+      },
       tooltip: {
         enabled: true,
         mode: 'index',
@@ -153,7 +178,7 @@ export default function UserHomePage() {
           label: function (context) {
             // Get the corresponding x value (time) from the context
             const timeValue = context.chart.data.labels[context.dataIndex];
-  
+
             // Return the timeValue directly
             return `${timeValue}`;
           },
@@ -170,13 +195,13 @@ export default function UserHomePage() {
     const day = parseInt(timestamp.slice(6, 8), 10);
     const hours = parseInt(timestamp.slice(9, 11), 10);
     const minutes = parseInt(timestamp.slice(11, 13), 10);
-  
+
     const articleDate = new Date(year, month, day, hours, minutes);
     const currentDate = new Date();
-  
+
     const msDifference = currentDate - articleDate;
     const hoursDifference = msDifference / (1000 * 60 * 60);
-  
+
     return Math.ceil(hoursDifference) * -1;
   }
 
@@ -230,42 +255,42 @@ export default function UserHomePage() {
         </div>
         <div className="change-timeline-button">
           <span>
-            <button 
+            <button
               className="profile-timeline"
               onClick={displayDailyView}
             >
               1D
             </button>
-            <button 
+            <button
               className="profile-timeline"
               onClick={displayWeeklyView}
             >
               1W
             </button>
-            <button 
+            <button
               className="profile-timeline"
               onClick={displayMonthlyView}
             >
               1M
             </button>
-            <button 
+            <button
               className="profile-timeline"
               onClick={displayThreeMonthView}
             >
               3M
             </button>
-            <button 
+            <button
               className="profile-timeline"
               onClick={displayYTDView}>
               YTD
             </button>
-            <button 
+            <button
               className="profile-timeline"
               onClick={displayYearlyView}
             >
               1Y
             </button>
-            <button 
+            <button
               className="profile-timeline"
               onClick={displayAllView}
             >
@@ -324,5 +349,5 @@ export default function UserHomePage() {
       </div>
     </div>
   )
-  
+
 }

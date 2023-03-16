@@ -103,12 +103,16 @@
 
 .left-est-div {
     padding: 10px;
+    font-size: 8pt;
+    font-weight: bold;
 }
 
 .right-est-div {
     padding: 10px;
     text-align: right;
     margin-right: 5px;
+    font-size: 8pt;
+    font-weight: bold;
 }
 
 .transaction-button-div {
@@ -151,6 +155,7 @@
 
 .buying-power-div {
     padding: 10px;
+    font-size: 10pt;
 }
 
 .news-stat-title-div {
