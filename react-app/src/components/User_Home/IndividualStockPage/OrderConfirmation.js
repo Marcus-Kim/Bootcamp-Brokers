@@ -6,7 +6,7 @@ export default function OrderConfirmation({ ticker, buySelected, shares, setHasS
 
   const doneReviewing = (e) => {
     e.preventDefault()
-
+    
     setHasSubmitted(false)
   }
   return (
