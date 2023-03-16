@@ -255,8 +255,20 @@ export const thunkGetRandomStockNews = () => async (dispatch) => {
     }
 }
 
-export const thunkUpdateStockPrices = () => async (dispatch) => {
-    const response = await fetch()
+export const thunkUpdateStockPrices = (stocksObj) => async (dispatch) => {
+    const response = await fetch(`/api/stocks/update`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(stocksObj)
+    })
+
+    if (response.ok) {
+        const result = await response.json()
+        dispatch(actionUpdateStockPrices(result))
+        return result
+    }
 }
 
 const initialState = {
