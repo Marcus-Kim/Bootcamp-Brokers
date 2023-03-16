@@ -34,35 +34,34 @@ function App() {
   const yesterday = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
   const yesterdayString = yesterday.toISOString().substring(0, 10);
-  const [MarkusKim, setMarkusKim] = useState({})
+//   const [MarkusKim, setMarkusKim] = useState({})
   
 
 
-  const tickers = ['TSLA', 'AAPL', 'AMZN', 'GOOG', 'CRM', 'AMD', 'NVDA', 'KO', 'BBY', 'IBM', 'CRSP', 'COIN',
-                  'HOOD', 'MSFT', 'AI', 'LULU', 'NKE', 'GME', 'AMC', 'BBBY', 'BB', 'T', 'SPY', 'QQQ', 'BEAM', 'APLS', 'CRBU', 'VRTX']
+//   const tickers = ['TSLA', 'AAPL', 'AMZN', 'GOOG', 'CRM', 'AMD', 'NVDA', 'KO', 'BBY', 'IBM', 'CRSP', 'COIN',
+//                   'HOOD', 'MSFT', 'AI', 'LULU', 'NKE', 'GME', 'AMC', 'BBBY', 'BB', 'T', 'SPY', 'QQQ', 'BEAM', 'APLS', 'CRBU', 'VRTX']
   
 
-  const fetchMarketCaps = async (tickers) => {
-    const tempMarketCaps = {};
-    const promises = tickers.map((ticker) =>
-      dispatch(thunkGetStockFundamentals(ticker)).then((data) => (tempMarketCaps[ticker] = data))
-    );
-    await Promise.all(promises);
-    setMarketCap(tempMarketCaps);
-  };
+//   const fetchMarketCaps = async (tickers) => {
+//     const tempMarketCaps = {};
+//     const promises = tickers.map((ticker) =>
+//       dispatch(thunkGetStockFundamentals(ticker)).then((data) => (tempMarketCaps[ticker] = data))
+//     );
+//     await Promise.all(promises);
+//     setMarketCap(tempMarketCaps);
+//   };
 
-  const fetchDailyStockPrices = async (tickers) => {
-  const tempDailyPrices = {};
-  const promises = tickers.map((ticker) =>
-    dispatch(thunkGetStockDaily(ticker)).then((data) => (tempDailyPrices[ticker] = data))
-  );
-  await Promise.all(promises);
-  setDailyPrices(tempDailyPrices);
-};
+//   const fetchDailyStockPrices = async (tickers) => {
+//   const tempDailyPrices = {};
+//   const promises = tickers.map((ticker) =>
+//     dispatch(thunkGetStockDaily(ticker)).then((data) => (tempDailyPrices[ticker] = data))
+//   );
+//   await Promise.all(promises);
+//   setDailyPrices(tempDailyPrices);
+// };
 
-// Make sure dailyPrice is populated before executing this
-  console.log(dailyPrice, "dailyPrice")
-  console.log(marketCap, 'marketCap')
+  // Make sure dailyPrice is populated before executing this
+
 
   // Populate redux store with user details on mount
   useEffect(() => {
@@ -74,14 +73,14 @@ function App() {
       await dispatch(thunkGetAllWatchlistsUserId(userId));
       await dispatch(thunkCreatePortfolioSnapshot()); 
       // Fetch market caps only if marketCap state is empty
-      if (Object.keys(marketCap).length === 0) {
-        fetchMarketCaps(tickers);
-      }
+      // if (Object.keys(marketCap).length === 0) {
+      //   fetchMarketCaps(tickers);
+      // }
 
-      // Fetch daily stock prices only if dailyPrice state is empty
-      if (Object.keys(dailyPrice).length === 0) {
-        fetchDailyStockPrices(tickers);
-      }
+      // // Fetch daily stock prices only if dailyPrice state is empty
+      // if (Object.keys(dailyPrice).length === 0) {
+      //   fetchDailyStockPrices(tickers);
+      // }
       setIsLoaded(true)
     }
     fetchData()
@@ -89,45 +88,45 @@ function App() {
   }, [dispatch]);
   
      
-  const generateMarkusKimObject = (marketCaps, dailyPrices) => {
-    const result = {};
+  // const generateMarkusKimObject = (marketCaps, dailyPrices) => {
+  //   const result = {};
   
-    Object.keys(marketCaps).forEach((symbol) => {
-      const marketCapData = marketCaps[symbol];
-      const dailyPriceData = dailyPrices[symbol]['Time Series (Daily)'];
+  //   Object.keys(marketCaps).forEach((symbol) => {
+  //     const marketCapData = marketCaps[symbol];
+  //     const dailyPriceData = dailyPrices[symbol]['Time Series (Daily)'];
   
-      // Extract the most recent date from the dailyPriceData
-      const mostRecentDate = Object.keys(dailyPriceData)[0];
+  //     // Extract the most recent date from the dailyPriceData
+  //     const mostRecentDate = Object.keys(dailyPriceData)[0];
   
-      // Extract the open and close prices for the most recent date
-      const openPrice = parseFloat(dailyPriceData[mostRecentDate]['1. open']);
-      const closePrice = parseFloat(dailyPriceData[mostRecentDate]['4. close']);
+  //     // Extract the open and close prices for the most recent date
+  //     const openPrice = parseFloat(dailyPriceData[mostRecentDate]['1. open']);
+  //     const closePrice = parseFloat(dailyPriceData[mostRecentDate]['4. close']);
   
-      // Calculate the percentage change between open and close
-      const percentageChange = ((closePrice - openPrice) / openPrice) * 100;
+  //     // Calculate the percentage change between open and close
+  //     const percentageChange = ((closePrice - openPrice) / openPrice) * 100;
   
-      result[symbol] = {
-        marketCap: marketCapData.MarketCapitalization,
-        dailyPrice: {
-          close: closePrice,
-          percentageChange: percentageChange,
-        },
-      };
-    });
+  //     result[symbol] = {
+  //       marketCap: marketCapData.MarketCapitalization,
+  //       dailyPrice: {
+  //         close: closePrice,
+  //         percentageChange: percentageChange,
+  //       },
+  //     };
+  //   });
   
-    return result;
-  };
+  //   return result;
+  // };
 
-  useEffect(() => {
-    // Check if both marketCap and dailyPrice are populated before generating the object
-    if (Object.keys(marketCap).length > 0 && Object.keys(dailyPrice).length > 0) {
-      const updatedMarkusKim = generateMarkusKimObject(marketCap, dailyPrice);
-      setMarkusKim(updatedMarkusKim);
-    }
-  }, [marketCap, dailyPrice]);
+  // useEffect(() => {
+  //   // Check if both marketCap and dailyPrice are populated before generating the object
+  //   if (Object.keys(marketCap).length > 0 && Object.keys(dailyPrice).length > 0) {
+  //     const updatedMarkusKim = generateMarkusKimObject(marketCap, dailyPrice);
+  //     setMarkusKim(updatedMarkusKim);
+  //   }
+  // }, [marketCap, dailyPrice]);
 
 
-  console.log(MarkusKim)
+  // console.log(MarkusKim)
 
   // dispatch(authenticate())
   // .then(() => dispatch(thunkGetPortfolioHistoricalValues()))
