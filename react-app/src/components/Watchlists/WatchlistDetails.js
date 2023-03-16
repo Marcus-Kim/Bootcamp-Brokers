@@ -6,8 +6,9 @@ import { thunkGetAllWatchlistsUserId, thunkDeleteWatchlistStock } from '../../st
 import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import UserNav from '../User_Home/UserHomePage/UserNav/UserNav'
-
-
+import { useFinanceAPI } from '../../context/FinanceApiContext'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleDown, faArrowDown } from '@fortawesome/free-solid-svg-icons'
 
 export default function WatchlistDetails() {
   const dispatch = useDispatch()
@@ -17,6 +18,9 @@ export default function WatchlistDetails() {
   const { watchlistId } = useParams()
   const selectedWatchlist = useSelector(state => state.watchlist[+watchlistId])
   const selectedWatchlistStocks = useSelector(state => state.watchlist[+watchlistId]?.stocks)
+  const { markusKim } = useFinanceAPI();
+
+  console.log('MARKUS KIM: ', markusKim)
 
   useEffect(() => {
     dispatch(thunkGetAllWatchlistsUserId(user))
@@ -26,7 +30,7 @@ export default function WatchlistDetails() {
   if (!watchlists) return null;
   if (!selectedWatchlist) return null;
   if (!user) return null;
-  // console.log(selectedWatchlistStocks)
+  if (!markusKim) return null;
   if (!selectedWatchlistStocks) return null;
 
   const handleDeleteClick = async (e, watchlistId, ticker) => {
@@ -34,6 +38,29 @@ export default function WatchlistDetails() {
     //TODO Add functionality for deleting
     await dispatch(thunkDeleteWatchlistStock(watchlistId, ticker))
   }
+
+  const convertMarketCap = (marketCap) => { // Converts market cap to a readable number
+    const billion = 1000000000;
+    const trillion = 1000000000000;
+
+    let value;
+    let suffix;
+
+    if (marketCap >= trillion) {
+      value = marketCap / trillion;
+      suffix = 'T';
+    } else if (marketCap >= billion) {
+      value = marketCap / billion;
+      suffix = 'B';
+    } else {
+      // Return the original value if it's less than a billion
+      return marketCap.toFixed(2);
+    }
+
+    // Limit the number to 3 digits on the left and 2 on the right of the decimal
+    return `${value.toFixed(2)}${suffix}`;
+  };
+
 
   return (
     <>
@@ -64,13 +91,17 @@ export default function WatchlistDetails() {
             </thead>
             <tbody className='watchlist-details-list-body'>
               {selectedWatchlistStocks?.map(stock => {
+                const stockData = markusKim[stock.ticker];
+                if (!stockData) {
+                  return null;
+                }
               return (
                 <tr className='watchlist-details-list-row' onClick={e => navigate(`/stocks/${stock.ticker}`)} key={stock.ticker}>
                   <td className='watchlist-details-list-header-name' id='watchlist-details-list-header-name'>{stock.company_name}</td>
                   <td className='watchlist-details-list-header-symbol'>{stock.ticker}</td>
-                  <td className='watchlist-details-list-header'>${stock.current_price}</td>
-                  <td className='watchlist-details-list-header'>{(stock.daily_change * 100)}%</td>
-                  <td className='watchlist-details-list-header-market-cap'>Market Cap</td>
+                  <td className='watchlist-details-list-header'>${markusKim[stock.ticker]['dailyPrice'].close}</td>
+                  <td className='watchlist-details-list-header'>{markusKim[stock.ticker]['dailyPrice'].percentageChange.toFixed(2)}%</td>
+                  <td className='watchlist-details-list-header-market-cap'>{convertMarketCap(stockData.marketCap)}</td>
                   <button className='watchlist-details-stock-delete-button' onClick={e => handleDeleteClick(e, selectedWatchlist.id, stock.ticker)}>X</button>
                 </tr>
               )

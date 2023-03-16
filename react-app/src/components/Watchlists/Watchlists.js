@@ -71,20 +71,22 @@ function Watchlists({ watchlists, activeWatchlistId }) {
 
   const handleDropdown = (e) => { // Edit menu dropdown toggle handler
     e.stopPropagation();
-
+    console.log(e.target.nextElementSibling)
     // close any other dropdowns
     if (openDropdown && openDropdown !== e.target) {
       openDropdown.nextElementSibling.classList.remove('showModal')
     }
 
+    // toggle current dropdown
     e.target.nextElementSibling.classList.toggle('showModal')
-    setOpenDropdown(e.target)
+
+    // update openDropdown state
+    setOpenDropdown(openDropdown === e.target ? null : e.target)
   };
 
   const stopPropagation = (e) => {
     e.stopPropagation()
   }
-
 
   return (
     <div className='watchlists-container' ref={componentRef}>
@@ -94,7 +96,7 @@ function Watchlists({ watchlists, activeWatchlistId }) {
       </div>
       {showForm && <form className='create-watchlist-form' onSubmit={e => handleCreateList(e)}>
         <div className='create-watchlist-form-name'>
-          <input className='create-watchlist-input-name' value={listName} placeholder='List Name' required onChange={e => setListName(e.target.value)}/>
+          <input className='create-watchlist-input-name' value={listName} placeholder='List Name' required onChange={e => setListName(e.target.value)} maxLength={30}/>
         </div>
         <div className='create-watchlist-form-buttons'>
           <button className='create-watchlist-cancel-button' onClick={e => setShowForm(false)}>Cancel</button>
@@ -106,7 +108,9 @@ function Watchlists({ watchlists, activeWatchlistId }) {
           return(
             <div className='watchlist-item' onClick={e => navigate(`/watchlists/${watchlist.id}`)} key={watchlist.id}>
               <div className='watchlist-item-name' >{watchlist.list_name}</div>
-              <button className='watchlist-edit-button' onClick={e => handleDropdown(e)}>Edit</button>
+              <button className='watchlist-edit-button' onClick={e => handleDropdown(e)}>
+                Edit
+              </button>
               <div className='watchlist-list-edit-dropdown' onClick={e => stopPropagation(e)}>
                 <WatchlistModalButton modalComponent={<RenameWatchlistModal watchlist={watchlist}/>} buttonText={'Edit List'}/>
                 <WatchlistModalButton modalComponent={<DeleteWatchlistModal watchlist={watchlist} activeWatchlistId={activeWatchlistId}/>}  buttonText={'Delete List'}/>

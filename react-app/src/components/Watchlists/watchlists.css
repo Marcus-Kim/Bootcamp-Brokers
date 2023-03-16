@@ -40,7 +40,9 @@
 
 .watchlist-item-name {
   text-align: left;
-  width: 150px;
+  width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .watchlists-list {
@@ -138,15 +140,15 @@
   top: 75%;
   left: 77%;
   z-index: 1;
-  display: none;
-}
-
-.watchlist-list-edit-dropdown.showModal {
-  display: flex;
+  display: none; /* Add this line */
   flex-direction: column;
   background-color: white;
   width: 200px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.showModal {
+  display: flex;
 }
 
 .watchlist-list-edit-menu-items {
