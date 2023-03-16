@@ -14,9 +14,6 @@ import Watchlists from '../../Watchlists/Watchlists';
 import { thunkGetAllWatchlistsUserId } from '../../../store/watchlist';
 
 
-
-
-
 export default function UserHomePage() {
   const dispatch = useDispatch()
   const [price, setPrice] = useState(null)
@@ -32,10 +29,8 @@ export default function UserHomePage() {
   yesterday.setDate(yesterday.getDate() - 1);
   const yesterdayString = yesterday.toISOString().substring(0, 10);
   const portfolio = useSelector(state => state.portfolio)
-  
 
   const historicalValues = Object.values(portfolio.historicalValues)
-  
   
   const verticalLinePlugin = {
     id: "verticalLine",
@@ -91,7 +86,7 @@ export default function UserHomePage() {
 
     //   data.push({x: date, y: value})
     // }
-    setGraph(data.slice(0, 100))
+    setGraph(data.slice(-100, data.length))
   }
   
   useEffect(() => {
@@ -207,6 +202,35 @@ export default function UserHomePage() {
     return Math.ceil(hoursDifference) * -1;
   }
 
+  // Change data displayed on chart
+  const displayDailyView = () => {
+    setGraph(portfolio.historicalValues.slice(-100, portfolio.historicalValues.length))
+  }
+
+  const displayWeeklyView = () => {
+    setGraph(portfolio.historicalValues.slice(-200, portfolio.historicalValues.length))
+  }
+
+  const displayMonthlyView = () => {
+    setGraph(portfolio.historicalValues.slice(-300, portfolio.historicalValues.length))
+  }
+
+  const displayThreeMonthView = () => {
+    setGraph(portfolio.historicalValues.slice(-900, portfolio.historicalValues.length))
+  }
+
+  const displayYTDView = () => {
+    setGraph(portfolio.historicalValues.slice(-1200, portfolio.historicalValues.length))
+  }
+
+  const displayYearlyView = () => {
+    setGraph(portfolio.historicalValues.slice(-1500, portfolio.historicalValues.length))
+  }
+
+  const displayAllView = () => {
+    setGraph(portfolio.historicalValues.slice(-2000, portfolio.historicalValues.length))
+  }
+
   return (
     <div className="homepage-container">
       <div className="portfolio-container">
@@ -228,13 +252,47 @@ export default function UserHomePage() {
         </div>
         <div className="change-timeline-button">
           <span>
-            <button className="profile-timeline">1D</button>
-            <button className="profile-timeline">1W</button>
-            <button className="profile-timeline">1M</button>
-            <button className="profile-timeline">3M</button>
-            <button className="profile-timeline">YTD</button>
-            <button className="profile-timeline">1Y</button>
-            <button className="profile-timeline">ALL</button>
+            <button 
+              className="profile-timeline"
+              onClick={displayDailyView}
+            >
+              1D
+            </button>
+            <button 
+              className="profile-timeline"
+              onClick={displayWeeklyView}
+            >
+              1W
+            </button>
+            <button 
+              className="profile-timeline"
+              onClick={displayMonthlyView}
+            >
+              1M
+            </button>
+            <button 
+              className="profile-timeline"
+              onClick={displayThreeMonthView}
+            >
+              3M
+            </button>
+            <button 
+              className="profile-timeline"
+              onClick={displayYTDView}>
+              YTD
+            </button>
+            <button 
+              className="profile-timeline"
+              onClick={displayYearlyView}
+            >
+              1Y
+            </button>
+            <button 
+              className="profile-timeline"
+              onClick={displayAllView}
+            >
+              ALL
+            </button>
           </span>
           <hr className="break"/>
         </div>
