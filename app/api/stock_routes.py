@@ -15,9 +15,9 @@ def update_stock_prices():
 
     for stock in stocks:
         # Find new price from response object
-        stock.current_price = data[f'{stock.ticker}']
-    db.session.commit()
-
+        print(stock.current_price)
+    # db.session.commit()
+    print('stocks', [[s.to_dict() for s in stocks]])
     return [s.to_dict() for s in stocks]
 
 
