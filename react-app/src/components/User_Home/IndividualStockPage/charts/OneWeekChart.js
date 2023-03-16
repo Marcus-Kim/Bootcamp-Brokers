@@ -106,14 +106,14 @@ export default function OneWeekChart({ ticker, close }) {
                 legend: {
                     display: false,
                 }
-            }
-        },
-        interaction: {
-            intersect: false
-        },
-        onHover: (event, activeElements, chart) => {
-            handleHover(event, activeElements, chart);
-        },
+            },
+            interaction: {
+                intersect: false
+            },
+            onHover: (event, activeElements, chart) => {
+                handleHover(event, activeElements, chart);
+            },
+        }
     });
 
 

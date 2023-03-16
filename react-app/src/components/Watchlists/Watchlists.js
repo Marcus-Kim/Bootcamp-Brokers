@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRef } from 'react';
 import WatchlistModalButton from './WatchlistModals/WatchlistModal';
 import RenameWatchlistModal from './WatchlistModals/RenameWatchlistModal';
+import DeleteWatchlistModal from './WatchlistModals/DeleteWatchlistModal';
 
 function Watchlists({ watchlists }) {
   // *ENABLERS
@@ -108,7 +109,7 @@ function Watchlists({ watchlists }) {
               <button className='watchlist-edit-button' onClick={e => handleDropdown(e)}>Edit</button>
               <div className='watchlist-list-edit-dropdown' onClick={e => stopPropagation(e)}>
                 <WatchlistModalButton modalComponent={<RenameWatchlistModal watchlist={watchlist}/>} buttonText={'Edit List'}/>
-                <WatchlistModalButton modalComponent={<RenameWatchlistModal watchlist={watchlist}/>}  buttonText={'Delete List'}/>
+                <WatchlistModalButton modalComponent={<DeleteWatchlistModal watchlist={watchlist}/>}  buttonText={'Delete List'}/>
               </div>
             </div>
           )
