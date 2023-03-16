@@ -8,7 +8,7 @@ import WatchlistModalButton from './WatchlistModals/WatchlistModal';
 import RenameWatchlistModal from './WatchlistModals/RenameWatchlistModal';
 import DeleteWatchlistModal from './WatchlistModals/DeleteWatchlistModal';
 
-function Watchlists({ watchlists }) {
+function Watchlists({ watchlists, activeWatchlistId }) {
   // *ENABLERS
   const navigate = useNavigate();
   const dispatch = useDispatch()
@@ -109,7 +109,7 @@ function Watchlists({ watchlists }) {
               <button className='watchlist-edit-button' onClick={e => handleDropdown(e)}>Edit</button>
               <div className='watchlist-list-edit-dropdown' onClick={e => stopPropagation(e)}>
                 <WatchlistModalButton modalComponent={<RenameWatchlistModal watchlist={watchlist}/>} buttonText={'Edit List'}/>
-                <WatchlistModalButton modalComponent={<DeleteWatchlistModal watchlist={watchlist}/>}  buttonText={'Delete List'}/>
+                <WatchlistModalButton modalComponent={<DeleteWatchlistModal watchlist={watchlist} activeWatchlistId={activeWatchlistId}/>}  buttonText={'Delete List'}/>
               </div>
             </div>
           )
