@@ -1,5 +1,5 @@
 .stock-page-main-container {
-    margin-left: 150px;
+    margin-left: 120px;
     width: 780px;
 }
 
@@ -46,10 +46,9 @@
     /* padding: 20px; */
     top: 100px;
     right: 150px;
-    /* background-color: rgba(232, 232, 232, 0.5); */
-    box-shadow: 0px 0px 0px 10px  rgba(232, 232, 232, 0.2);
-
-
+    background-color: white;
+    box-shadow: 0px 0px 5px 7px  rgba(232, 232, 232);
+    z-index: 1000;
 }
 
 .purchase-buy-div {
