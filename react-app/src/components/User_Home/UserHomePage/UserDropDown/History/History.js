@@ -14,7 +14,7 @@ export default function History() {
   useEffect(() => {
     dispatch(thunkGetTransactionsByUserId())
       .then(() => setIsLoaded(true))
-  }, [dispatch])
+  }, [dispatch, transactionsArray.length])
 
   const formatDate = (date) => {
     // Converts "Wed, 15 Mar 2023 00:00:00 GMT" => "Mar 15, 2023"
@@ -23,7 +23,7 @@ export default function History() {
   }
 
   const outputType = (shares) => {
-    return shares > 0 ? 'BUY' : 'SELL'
+    return shares > 0 ? 'Buy' : 'Sell'
   }
 
   return (
@@ -39,7 +39,7 @@ export default function History() {
           <div className="recent-container">
             <div className="header">Recent</div>
             { transactionsArray.map(transaction => (
-              <>
+              <div key={transaction.id}>
                 <hr className="break"/>
                 <div
                   className="transaction-card"
@@ -48,7 +48,7 @@ export default function History() {
                   <div className="left-column">
                     <div className="ticker-id">
                       <span>{transaction.ticker_id} </span> 
-                      <span>{outputType(transaction.shares)}</span>
+                      <span>Market {outputType(transaction.shares)}</span>
                     </div>
                     <div className="transaction-date">{formatDate(transaction.date)}</div>
                   </div>
@@ -56,7 +56,7 @@ export default function History() {
                     <div className={transaction.shares > 0 ? 'buy' : 'sell'}>{transaction.shares}</div>
                   </div>
                 </div>
-              </>
+              </div>
             ))}
           </div>
         </div>
