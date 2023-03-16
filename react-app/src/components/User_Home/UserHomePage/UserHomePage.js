@@ -29,7 +29,6 @@ export default function UserHomePage() {
   const yesterday = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
   const yesterdayString = yesterday.toISOString().substring(0, 10);
-  const portfolio = useSelector(state => state.portfolio)
 
   const historicalValues = Object.values(portfolio.historicalValues)
 
