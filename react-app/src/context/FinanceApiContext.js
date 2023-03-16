@@ -7,9 +7,11 @@ export const useFinanceAPI = () => useContext(AlphaVantageAPIContext)
 export default function FinanceAPIProvider({children}) {
   const [ticker, setTicker] = useState("AAPL")
   const [queryType, setQueryType] = useState("TIME_SERIES_DAILY_ADJUSTED")
-  const [keywords, setKeywords] = useState("")
   const [interval, setInterval] = useState("5min")
-  const apiKey = process.env.ALPHA_VANTAGE_API_KEY
+  const [marketCap, setMarketCap] = useState({})
+  const [dailyPrice, setDailyPrices] = useState({})
+  const [markusKim, setMarkusKim] = useState({})
+  const apiKey = "0MPIU2TLAS20RTTM"
 
   //Query Types:
   // TIME_SERIES_INTRADAY -- API Returns the intraday stock price data
@@ -24,13 +26,57 @@ export default function FinanceAPIProvider({children}) {
   // NEWS_SENTIMENT -- API returns FInancial news data on the ticker
   // EARNINGS -- API Returns Companies financial earnings
 
+  const allTickers = [
+    'TSLA', 'AAPL', 'AMZN', 
+    'GOOG', 'CRM', 'AMD', 
+    'NVDA', 'KO', 'BBY', 
+    'IBM', 'CRSP', 'COIN',
+    'HOOD', 'MSFT', 'AI', 
+    'LULU', 'NKE', 'GME', 
+    'AMC', 'BBBY', 'BB', 
+    'T', 'SPY', 'QQQ', 
+    'BEAM', 'APLS', 'CRBU', 
+    'VRTX'
+  ]
 
-  const fetchStockData = async() => {
+  const fetchMarketCaps = async (tickers) => {
+    const marketCaps = {};
+  
+    const promises = tickers.map(async (ticker) => {
+      const marketCapData = await fetchStockData("OVERVIEW", ticker);
+      marketCaps[ticker] = marketCapData;
+    });
+  
+    await Promise.all(promises);
+    setMarketCap(marketCaps);
+  };
+  
+  
+  const fetchDailyStockPrices = async (tickers) => {
+    const tempDailyPrices = {};
+  
+    const promises = tickers.map(async (ticker) => {
+      const data = await fetchStockData("TIME_SERIES_DAILY_ADJUSTED", ticker);
+      tempDailyPrices[ticker] = data;
+    });
+  
+    await Promise.all(promises);
+    setDailyPrices(tempDailyPrices);
+  };
+
+  useEffect(() => {
+    // Call fetchMarketCaps and fetchDailyStockPrices when the component mounts
+    fetchMarketCaps(allTickers);
+    fetchDailyStockPrices(allTickers);
+  }, []);
+
+
+  const fetchStockData = async (queryType, ticker) => {
     const apiUrl = `https://www.alphavantage.co/query?function=${queryType}&symbol=${ticker}&apikey=${apiKey}`;
-    const response = await fetch(apiUrl)
-    const json = await response.json()
-    return json
-  }
+    const response = await fetch(apiUrl);
+    const json = await response.json();
+    return json;
+  };
 
   // Grabs most recent stock news data
   const fetchStockNewsData = async () => {
@@ -49,6 +95,47 @@ export default function FinanceAPIProvider({children}) {
     return json
   }
 
+  const generateMarkusKimObject = (marketCaps, dailyPrices) => {
+    const result = {};
+  
+    Object.keys(marketCaps).forEach((symbol) => {
+      const marketCapData = marketCaps[symbol];
+      const dailyPriceData = dailyPrices[symbol] && dailyPrices[symbol]["Time Series (Daily)"];
+  
+      if (dailyPriceData) {
+        // Extract the most recent date from the dailyPriceData
+        const mostRecentDate = Object.keys(dailyPriceData)[0];
+  
+        // Extract the open and close prices for the most recent date
+        const openPrice = parseFloat(dailyPriceData[mostRecentDate]["1. open"]);
+        const closePrice = parseFloat(dailyPriceData[mostRecentDate]["4. close"]);
+  
+        // Calculate the percentage change between open and close
+        const percentageChange = ((closePrice - openPrice) / openPrice) * 100;
+  
+        result[symbol] = {
+          marketCap: marketCapData.MarketCapitalization,
+          dailyPrice: {
+            close: closePrice,
+            percentageChange: percentageChange,
+          },
+        };
+      }
+    });
+  
+    return result;
+  };
+
+  useEffect(() => {
+    // Check if both marketCap and dailyPrice are populated before generating the object
+    if (Object.keys(marketCap).length > 0 && Object.keys(dailyPrice).length > 0) {
+      const updatedMarkusKim = generateMarkusKimObject(marketCap, dailyPrice);
+      setMarkusKim(updatedMarkusKim);
+    }
+  }, [marketCap, dailyPrice]);
+
+  
+
   return (
     <AlphaVantageAPIContext.Provider
     value={{
@@ -60,7 +147,8 @@ export default function FinanceAPIProvider({children}) {
       setQueryType,
       fetchStockData,
       fetchStockNewsData,
-      fetchIntraDayStockData
+      fetchIntraDayStockData,
+      markusKim,
     }}
     >
       {children}
@@ -69,17 +157,3 @@ export default function FinanceAPIProvider({children}) {
 }
 
 
-// const options = {
-// 	method: 'GET',
-// 	headers: {
-// 		'X-RapidAPI-Key': 'dc3a2cd2bemsh55264fb7594888ep15d156jsn2c54fd4fc8fa',
-// 		'X-RapidAPI-Host': 'yahoo-finance127.p.rapidapi.com'
-// 	}
-// };
-
-// fetch('https://yahoo-finance127.p.rapidapi.com/price/tsla', options)
-// 	.then(response => response.json())
-// 	.then(response => console.log(response))
-// 	.catch(err => console.error(err));
-
-// CRN1I5X51XQTTFBH

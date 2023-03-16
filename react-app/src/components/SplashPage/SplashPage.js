@@ -291,7 +291,7 @@ export default function SplashPage() {
               </div>
           </div>
         </div>
-  
+                
     </div>
   )
 }

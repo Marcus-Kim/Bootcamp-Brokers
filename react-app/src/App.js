@@ -34,36 +34,7 @@ function App() {
   const yesterday = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
   const yesterdayString = yesterday.toISOString().substring(0, 10);
-//   const [MarkusKim, setMarkusKim] = useState({})
-  
 
-
-//   const tickers = ['TSLA', 'AAPL', 'AMZN', 'GOOG', 'CRM', 'AMD', 'NVDA', 'KO', 'BBY', 'IBM', 'CRSP', 'COIN',
-//                   'HOOD', 'MSFT', 'AI', 'LULU', 'NKE', 'GME', 'AMC', 'BBBY', 'BB', 'T', 'SPY', 'QQQ', 'BEAM', 'APLS', 'CRBU', 'VRTX']
-  
-
-//   const fetchMarketCaps = async (tickers) => {
-//     const tempMarketCaps = {};
-//     const promises = tickers.map((ticker) =>
-//       dispatch(thunkGetStockFundamentals(ticker)).then((data) => (tempMarketCaps[ticker] = data))
-//     );
-//     await Promise.all(promises);
-//     setMarketCap(tempMarketCaps);
-//   };
-
-//   const fetchDailyStockPrices = async (tickers) => {
-//   const tempDailyPrices = {};
-//   const promises = tickers.map((ticker) =>
-//     dispatch(thunkGetStockDaily(ticker)).then((data) => (tempDailyPrices[ticker] = data))
-//   );
-//   await Promise.all(promises);
-//   setDailyPrices(tempDailyPrices);
-// };
-
-  // Make sure dailyPrice is populated before executing this
-
-
-  // Populate redux store with user details on mount
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(authenticate());
@@ -87,53 +58,6 @@ function App() {
 
   }, [dispatch]);
   
-     
-  // const generateMarkusKimObject = (marketCaps, dailyPrices) => {
-  //   const result = {};
-  
-  //   Object.keys(marketCaps).forEach((symbol) => {
-  //     const marketCapData = marketCaps[symbol];
-  //     const dailyPriceData = dailyPrices[symbol]['Time Series (Daily)'];
-  
-  //     // Extract the most recent date from the dailyPriceData
-  //     const mostRecentDate = Object.keys(dailyPriceData)[0];
-  
-  //     // Extract the open and close prices for the most recent date
-  //     const openPrice = parseFloat(dailyPriceData[mostRecentDate]['1. open']);
-  //     const closePrice = parseFloat(dailyPriceData[mostRecentDate]['4. close']);
-  
-  //     // Calculate the percentage change between open and close
-  //     const percentageChange = ((closePrice - openPrice) / openPrice) * 100;
-  
-  //     result[symbol] = {
-  //       marketCap: marketCapData.MarketCapitalization,
-  //       dailyPrice: {
-  //         close: closePrice,
-  //         percentageChange: percentageChange,
-  //       },
-  //     };
-  //   });
-  
-  //   return result;
-  // };
-
-  // useEffect(() => {
-  //   // Check if both marketCap and dailyPrice are populated before generating the object
-  //   if (Object.keys(marketCap).length > 0 && Object.keys(dailyPrice).length > 0) {
-  //     const updatedMarkusKim = generateMarkusKimObject(marketCap, dailyPrice);
-  //     setMarkusKim(updatedMarkusKim);
-  //   }
-  // }, [marketCap, dailyPrice]);
-
-
-  // console.log(MarkusKim)
-
-  // dispatch(authenticate())
-  // .then(() => dispatch(thunkGetPortfolioHistoricalValues()))
-  // .then(() => dispatch(thunkGetPortfolioHoldings()))
-  // .then(() => dispatch(thunkGetUserPortfolio()))
-  // .then(() => dispatch(thunkGetAllWatchlistsUserId(userId)))
-  // .then(() => dispatch(thunkCreatePortfolioSnapshot())) // Capture snapshot of portfolio value
   
 
   return (

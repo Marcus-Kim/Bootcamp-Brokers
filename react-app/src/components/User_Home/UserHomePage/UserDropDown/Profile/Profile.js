@@ -55,7 +55,7 @@ export default function Profile() {
 
         The past performance of any investment or trading strategy is not necessarily indicative of future results. You should be aware of the risks involved in trading or investing and carefully consider whether such trading or investing is suitable for you in light of your financial condition and investment objectives.
 
-        Bootcamp Brokers is not responsible for the content of external websites linked to from this website.
+        Bootcamp Brokers is not responsible for the content of external websites linked to from this website. But we are responsible for all of your profits.
         </p>
       </div>
     </>
