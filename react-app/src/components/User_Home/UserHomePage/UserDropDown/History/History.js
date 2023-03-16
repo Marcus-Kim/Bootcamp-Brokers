@@ -23,7 +23,7 @@ export default function History() {
   }
 
   const outputType = (shares) => {
-    return shares > 0 ? 'BUY' : 'SELL'
+    return shares > 0 ? 'Buy' : 'Sell'
   }
 
   return (
@@ -48,7 +48,7 @@ export default function History() {
                   <div className="left-column">
                     <div className="ticker-id">
                       <span>{transaction.ticker_id} </span> 
-                      <span>{outputType(transaction.shares)}</span>
+                      <span>Market {outputType(transaction.shares)}</span>
                     </div>
                     <div className="transaction-date">{formatDate(transaction.date)}</div>
                   </div>

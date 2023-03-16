@@ -1,9 +1,11 @@
 .buy {
     color: #00C805;
+    font-weight: 700;
 }
 
 .sell {
     color: #FF5000;
+    font-weight: 700;
 }
 
 .header {
@@ -32,6 +34,7 @@
 
 .ticker-id {
     font-weight: 700;
+    margin-bottom: 5px;
 }
 
 .transaction-card {
@@ -41,4 +44,12 @@
     font-size: 15px;
     margin: 20px 0px;
     width: 100%;
+}
+
+/* MEDIA QUERIES */
+
+@media screen and (min-width: 770px) {
+    .history-container {
+        margin-left: 6%;
+    }
 }
