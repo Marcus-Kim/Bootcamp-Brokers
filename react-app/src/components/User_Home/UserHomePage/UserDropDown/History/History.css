@@ -48,8 +48,8 @@
 
 /* MEDIA QUERIES */
 
-@media screen and (min-width: 770px) {
+@media screen and (min-width: 760px) {
     .history-container {
-        margin-left: 6%;
+        margin-left: 15%;
     }
 }
