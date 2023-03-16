@@ -79,7 +79,7 @@ export default function WatchlistDetails() {
           </table>
         </div>
         <div className='watchlist-details-lists'> {/* LIST COMPONENT */}
-          <Watchlists watchlists={watchlists}/>
+          <Watchlists watchlists={watchlists} activeWatchlistId={selectedWatchlist.id}/>
         </div>
       </div>
     </div>
