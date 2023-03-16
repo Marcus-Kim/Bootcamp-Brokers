@@ -1,26 +1,50 @@
 import './watchlists.css'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { thunkCreateWatchlist } from '../../store/watchlist';
 import { useDispatch, useSelector } from 'react-redux';
+import { useRef } from 'react';
 
 function Watchlists({ watchlists }) {
+  // *ENABLERS
   const navigate = useNavigate();
   const dispatch = useDispatch()
+  const componentRef = useRef();
 
-  const watchlistArray = Object.values(watchlists)
-  const [showForm, setShowForm] = useState(false);
-  const [listName, setListName] = useState('');
+  // *USE SELECTORS
   const user = useSelector(state => state.session.user.id)
 
-  if (!user) return null
+  // *STATE
+  const [showForm, setShowForm] = useState(false);
+  const [listName, setListName] = useState('');
+  const [openDropdown, setOpenDropdown] = useState(null)
 
-  const handleEditClick = (e) => { // Edit a list
-    e.stopPropagation();
-    //TODO Add functionality for renaming/deleting [BONUS]: Rearranging lists.
-  }
+  // *USE_EFFECTS
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (componentRef.current && !componentRef.current.contains(e.target)) {
+        if (openDropdown) {
+          openDropdown.nextElementSibling.classList.remove('showModal');
+          setOpenDropdown(null);
+        }
+      }
+    };
 
-  const handleCreateList = (e) => { // Create list handler
+    window.addEventListener('click', handleClickOutside);
+
+    return () => {
+      window.removeEventListener('click', handleClickOutside);
+    };
+  }, [componentRef, openDropdown]);
+
+  // *FIRST RENDER
+  if (!user) return null // If no user
+
+  // *VARIABLES
+  const watchlistArray = Object.values(watchlists)
+
+  // *HANDLERS
+  const handleCreateList = async (e) => { // Create list handler
     e.preventDefault()
 
     const newWatchlist = {
@@ -28,14 +52,46 @@ function Watchlists({ watchlists }) {
       list_name: listName
     }
 
-    dispatch(thunkCreateWatchlist(newWatchlist))
+    const created = await dispatch(thunkCreateWatchlist(newWatchlist))
+    if (created) {
+      setShowForm(!showForm);
+      setListName('');
+    }
   }
 
+  const handleCreateListToggle = (e) => { // Form toggle handler
+    e.preventDefault();
+    setShowForm(!showForm);
+    setListName('');
+    return
+  }
+
+  const handleDropdown = (e) => { // Edit menu dropdown toggle handler
+    e.stopPropagation();
+
+    // close any other dropdowns
+    if (openDropdown && openDropdown !== e.target) {
+      openDropdown.nextElementSibling.classList.remove('showModal')
+    }
+
+    e.target.nextElementSibling.classList.toggle('showModal')
+    setOpenDropdown(e.target)
+  };
+
+  const editListDropdownHandler = (e) => { // Edit List modal trigger
+    e.stopPropagation();
+  }
+
+  const deleteListDropdownHandler = (e) => { // Delete list modal trigger
+    e.stopPropagation();
+  }
+
+
   return (
-    <div className='watchlists-container'>
+    <div className='watchlists-container' ref={componentRef}>
       <div className='watchlists-header'>
         <div className='watchlists-title'>Lists</div>
-        <button className='add-watchlist-button' onClick={e => setShowForm(!showForm)}>+</button>
+        <button className='add-watchlist-button' onClick={e => handleCreateListToggle(e)}>+</button>
       </div>
       {showForm && <form className='create-watchlist-form' onSubmit={e => handleCreateList(e)}>
         <div className='create-watchlist-form-name'>
@@ -51,7 +107,11 @@ function Watchlists({ watchlists }) {
           return(
             <div className='watchlist-item' onClick={e => navigate(`/watchlists/${watchlist.id}`)} key={watchlist.id}>
               <div className='watchlist-item-name' >{watchlist.list_name}</div>
-              <button className='watchlist-edit-button' onClick={e => handleEditClick(e)}>Edit</button>
+              <button className='watchlist-edit-button' onClick={e => handleDropdown(e)}>Edit</button>
+              <div className='watchlist-list-edit-dropdown'>
+                <div className='watchlist-list-edit-menu-items' onClick={e => editListDropdownHandler(e)}>Edit List</div>
+                <div className='watchlist-list-edit-menu-items' onClick={e => deleteListDropdownHandler(e)}>Delete List</div>
+              </div>
             </div>
           )
         })}
