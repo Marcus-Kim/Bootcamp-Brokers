@@ -79,6 +79,12 @@
     font-weight: bold;
 }
 
+.left-est-div {
+    padding: 10px;
+    font-size: 8pt;
+    font-weight: bold;
+}
+
 .left-shares-div {
     padding: 10px;
 }
@@ -117,6 +123,32 @@
     outline: none;
 }
 
+.stat-value-container {
+    display: grid;
+    grid-gap: 15px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.stock-page-main-container {
+    margin-left: 120px;
+    width: 750px;
+}
+
+.stock-timeline {
+    border: none;
+    background-color: white;
+    font-size: 14px;
+}
+
+.stock-timeline:hover {
+    color: rgb(0,200,6);
 .stat-value-container {
     display: grid;
     grid-gap: 15px;

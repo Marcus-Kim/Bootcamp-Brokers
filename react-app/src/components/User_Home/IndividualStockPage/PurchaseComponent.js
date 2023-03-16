@@ -13,9 +13,11 @@ export default function PurchaseComponent({ ticker, user, close }) {
     const [errors, setErrors] = useState([])
     const [hasSubmitted, setHasSubmitted] = useState(false)
     const [tickerInHoldings, setTickerInHoldings] = useState(false)
+    const [buySelected, setBuySelected] = useState(true)
 
     const portfolio = useSelector(state => state.portfolio)
     const holdingsArray = Object.values(portfolio.holdings);
+    const [sharesAvailable, setSharesAvailable] = useState(0)
     
     
     useEffect(() => {
@@ -31,7 +33,28 @@ export default function PurchaseComponent({ ticker, user, close }) {
     }, [dispatch])
 
     if (!portfolio) return null
+    
+    const isStockInHoldings = (ticker) => {
+        for (let i = 0; i < holdingsArray.length; i += 1) {
+            const holding = holdingsArray[i];
+            if (holding.ticker_id === ticker) {
+                setSharesAvailable(holding.shares)
+                setTickerInHoldings(true)
+                return true;
+            }
+        }
+        setTickerInHoldings(false)
+        return false;
+    }
 
+    const selectBuy = () => {
+        setBuySelected(true)
+    }
+
+    const selectSell = () => {
+        setBuySelected(false)
+    }
+    
     const handlePurchase = async (e) => {
         e.preventDefault();
         
@@ -51,12 +74,21 @@ export default function PurchaseComponent({ ticker, user, close }) {
         <div className="purchase-container">
                     <div className="order-selector">
                         <div 
-                            className="purchase-buy-div"
+                            className={
+                                "purchase-buy-div" +
+                                (buySelected ? ' active-type' : '')
+                            }
+                            onClick={selectBuy}
                         >
                             Buy {ticker}
                         </div>
                         <div 
-                            className={"sell-div" + (tickerInHoldings ? '' : ' hidden')}
+                            className={
+                                "sell-div" + 
+                                (tickerInHoldings ? '' : ' hidden') +
+                                (buySelected ? '' : ' active-type')
+                            }
+                            onClick={selectSell}
                         >
                             Sell {ticker}
                         </div>
@@ -66,7 +98,7 @@ export default function PurchaseComponent({ ticker, user, close }) {
                             Order Type
                         </div>
                         <div className="right-order-type-div">
-                            Buy Order Market
+                            { buySelected ? 'Buy Market Order' : 'Sell Market Order'}
                         </div>
                     </div>
                     <div style= {{ display: "flex", justifyContent: "space-between", borderBottom: "solid 1px rgb(172, 171, 171)" }}>
@@ -101,10 +133,15 @@ export default function PurchaseComponent({ ticker, user, close }) {
                     <div className="transaction-button-div">
                         <button className="button"
                             onClick={handlePurchase}
-                            >Purchase Stock</button>
+                        >
+                            {buySelected ? 'Purchase Stock' : 'Sell Stock'}
+                        </button>
                     </div>
                     <div style={{ display: "flex", justifyContent: "center", padding: "10px", borderTop: "1px solid rgb(172, 171, 171)", borderBottom: "1px solid rgb(172, 171, 171)" }}>
-                        <div className="buying-power-div"> ${Number(portfolio.cash_balance).toFixed(2)} buying power available</div>
+                        { buySelected ? 
+                            <div className="buying-power-div"> ${Number(portfolio.cash_balance).toFixed(2)} buying power available</div>
+                            : (<div className="shares-available-div">{sharesAvailable}.0 Shares Available</div>) 
+                        }
                     </div>
                     {/* <div style={{ display: "flex", padding: "10px", justifyContent: "center", alignItems: "center" }}>
                         <div className="transaction-bottom-div">Brokerage</div>
