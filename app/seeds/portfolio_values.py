@@ -1,60 +1,66 @@
 from app.models import db, PortfolioValue, environment, SCHEMA
 from sqlalchemy.sql import text
-from collections import defaultdict
+
 
 
 # Adds demo portfolios with dynamic seed data
 import random
 from datetime import datetime, timedelta
 
+def is_market_open(current_time):
+    market_open_hour = 9
+    market_close_hour = 17
+    return market_open_hour <= current_time.hour < market_close_hour
+
+
 def generate_portfolio_values(portfolio_id, start_date, end_date, min_balance, max_balance, volatility=0.03):
     date_range = (end_date - start_date).days + 1
-    portfolio_values = defaultdict(list)
+    portfolio_values = []
 
-    time_frames = {
-        '1D': 1,
-        '1W': 7,
-        '1M': 30,
-        '3M': 90,
-        '6M': 180,
-        '1Y': 365
-    }
-
-    
-    for time_frame in time_frames:
+    for day in range(date_range):
         initial_price = random.uniform(min_balance, max_balance)
         prices = [initial_price]
+        current_time = start_date + timedelta(days=day, hours=9)
 
-        for _ in range(date_range - 1):
-            change_pct = random.gauss(0, volatility)
-            new_price = prices[-1] * (1 + change_pct)
-            prices.append(new_price)
+        while current_time <= start_date + timedelta(days=day, hours=17):
+            if is_market_open(current_time):
+                change_pct = random.gauss(0, volatility)
+                new_price = prices[-1] * (1 + change_pct)
+                prices.append(new_price)
 
-        for i in range(date_range):
-            current_date = start_date + timedelta(days=i)
-            current_balance = prices[i]
-            portfolio_values[time_frame].append({'x': current_date, 'y': current_balance})
+                portfolio_values.append({
+                    'x': current_time,
+                    'y': new_price
+                })
 
-    return dict(portfolio_values)
+            current_time += timedelta(minutes=5)
+
+    return portfolio_values
 
 
 def seed_portfolio_values():
     start_date = datetime(2022, 12, 5)
     end_date = datetime(2023, 3, 14)
 
-    portfolios_values = []
-    portfolios_values += generate_portfolio_values(1, start_date, end_date, 500, 1500)
-    portfolios_values += generate_portfolio_values(2, start_date, end_date, 1500, 2500)
-    portfolios_values += generate_portfolio_values(3, start_date, end_date, 2500, 3500)
+    portfolios_values = [
+        generate_portfolio_values(1, start_date, end_date, 500, 1500),
+        generate_portfolio_values(2, start_date, end_date, 1500, 2500),
+        generate_portfolio_values(3, start_date, end_date, 2500, 3500)
+    ]
 
-    for portfolio_value in portfolios_values:
-        db.session.add(PortfolioValue(
-            portfolio_id=portfolio_value['portfolio_id'],
-            current_balance=portfolio_value['current_balance'],
-            date=portfolio_value['date']
-        ))
+    for portfolio_id, portfolio_values in enumerate(portfolios_values, start=1):
+        # Sort the portfolio values in descending order by date
+        sorted_portfolio_values = sorted(portfolio_values, key=lambda x: x['x'], reverse=True)
+
+        for value in sorted_portfolio_values:
+            db.session.add(PortfolioValue(
+                portfolio_id=portfolio_id,
+                current_balance=value['y'],
+                date=value['x']
+            ))
 
     db.session.commit()
+
 
 
 
