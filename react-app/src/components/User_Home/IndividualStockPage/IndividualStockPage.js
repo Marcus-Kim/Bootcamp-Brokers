@@ -18,6 +18,7 @@ import UserNav from "../UserHomePage/UserNav/UserNav";
 
 export default function IndividualStockPage() {
 
+    const { markusKim } = useFinanceAPI()
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const [chart, setChart] = useState("1D")
@@ -28,6 +29,9 @@ export default function IndividualStockPage() {
     const stockDaily = useSelector(state => state.stocks.stockDaily)
     const stockNews = useSelector(state => state.stocks.stockNews)
     const user = useSelector(state => state.session.user)
+    const tickers = Object.keys(markusKim)
+    console.log("tickers: ", tickers)
+
 
     useEffect(() => {
         dispatch(thunkGetStockFundamentals(tickerCap))
@@ -130,7 +134,9 @@ export default function IndividualStockPage() {
                         <div>${Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["4. close"]).toFixed(2)}</div>
                     </div>
                 </div>
-                    <PurchaseComponent ticker={tickerCap} user={user} close={close} />
+                { !(tickers.includes(ticker)) ? <h1>Work in Progress</h1>
+                    : <PurchaseComponent ticker={tickerCap} user={user} close={close} />
+                }
                     <TransactionComponent ticker={tickerCap} user={user} />
             </div>
             <div>
