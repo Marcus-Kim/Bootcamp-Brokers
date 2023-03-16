@@ -32,10 +32,8 @@ export default function UserNav() {
     //   }, [])
 
     const handleLogout = async () => {
-        dispatch(logout()).then(navigate("/"))
-        
+        dispatch(logout()).then(navigate("/loggedout"))
     }
-
 
     const toggleDropdown = () => {
         setDropdownVisible(!dropdownVisible)
@@ -77,13 +75,11 @@ export default function UserNav() {
                                     Logout
                                     </button>
                                 </div>
-                                
                             </div>
                         )}
                     </div>
                 </span>
             </div>
-
         </div>
     )
 }
