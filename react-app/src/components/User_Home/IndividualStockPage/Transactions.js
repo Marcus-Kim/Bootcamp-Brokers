@@ -20,7 +20,7 @@ export default function TransactionComponent({ ticker, user }) {
     const filteredTransaction =  transactionArr.filter(transaction => (
         transaction.ticker_id === ticker
     ))
-    console.log("filteredTransaction: ", filteredTransaction)
+    // console.log("filteredTransaction: ", filteredTransaction)
 
 
     const reformatDate = (stockDate) => {
@@ -38,7 +38,6 @@ export default function TransactionComponent({ ticker, user }) {
         // }).format(date);
         // return formattedDate;
         const date = stockDate.split(" ")
-        console.log("reformat: ", date)
         return `${date[2]} ${date[1]}, ${date[3]}`
     }
 
