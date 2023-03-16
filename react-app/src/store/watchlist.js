@@ -37,7 +37,6 @@ export const thunkGetAllWatchlistsUserId = (id) => async (dispatch) => {
     if (response.ok) {
         const watchlistById = await response.json()
         dispatch(actionGetAllWatchlistsUserId(watchlistById))
-        console.log('HELP MEEEEEE', watchlistById)
         return watchlistById
     }
 }
