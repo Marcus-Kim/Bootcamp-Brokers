@@ -1,3 +1,5 @@
+import { json } from "react-router-dom"
+
 // ACTIONS
 const GET_WATCHLISTS_USER_ID = 'watchlists/user/all' // Getting all watchlists of user
 const DELETE_WATCHLIST_BY_ID = 'watchlists/delete'
@@ -86,6 +88,20 @@ export const thunkDeleteWatchlistStock = (watchlistId, ticker) => async (dispatc
     const response = await fetch(`/api/watchlist/${watchlistId}/stock/${ticker}`, {
         method: 'DELETE'
     });
+
+    if (response.ok) {
+        const updatedWatchlist = await response.json()
+        dispatch(actionUpdateWatchlist(updatedWatchlist))
+        return updatedWatchlist
+    }
+}
+
+export const thunkAddWatchlistStock = (watchlistId, ticker) => async (dispatch) => {
+    const response = await fetch(`/api/watchlist/${watchlistId}/stock/${ticker}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify({ watchlist_id: watchlistId, ticker_id: ticker})
+    })
 
     if (response.ok) {
         const updatedWatchlist = await response.json()

@@ -1,22 +1,33 @@
 import './stockPageModal.css'
 import { useState } from 'react'
-
-
+import { thunkAddWatchlistStock } from '../../../../store/watchlist'
+import { useDispatch } from 'react-redux'
+import { useModal } from '../../../../context/Modal'
 
 function AddToWatchlistModal({ ticker, watchlists }) {
   const watchlistArray = Object.values(watchlists)
-  const [listValues, setListValues] = useState([])
+  const [listValues, setListValues] = useState([]) // Array of watchlist IDs
+  const dispatch = useDispatch()
+  const { closeModal } = useModal()
+  console.log(listValues)
 
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
-    console.log('Hello',listValues)
+    listValues.forEach(async (list) => {
+      console.log(list)
+      await dispatch(thunkAddWatchlistStock(Number(list), ticker))
+    })
+    // await Promise.all(promises)
   }
 
   const handleCheckboxChange = (e, watchlist) => {
-
-  }
+    if (e.target.checked) { // If the id is in the array
+      setListValues([...listValues, watchlist.id]);
+    } else {
+      setListValues(listValues.filter((id) => id !== watchlist.id));
+    }
+  };
 
   return (
     <div className="add-watchlist-modal-container">
@@ -29,7 +40,7 @@ function AddToWatchlistModal({ ticker, watchlists }) {
           {watchlistArray.map(watchlist => {
             return (
               <label>
-                <input type='checkbox' value={listValues} onChange={e => handleCheckboxChange((e, watchlist))}/>
+                <input type='checkbox' checked={listValues.includes(watchlist.id)} onChange={e => handleCheckboxChange(e, watchlist)}/>
                 {watchlist.list_name}
               </label>
             )

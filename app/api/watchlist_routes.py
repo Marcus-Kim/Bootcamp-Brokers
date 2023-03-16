@@ -73,3 +73,22 @@ def delete_watchlist_stock(watchlistId, stockTicker): #Have to be same name as u
 
     db.session.commit()
     return Watchlist.query.get(watchlistId).to_dict()
+
+# Add a specific stock to a watchlist
+@watchlist_routes.route('/<int:watchlist_id>/stock/<string:ticker_id>', methods=['POST'])
+@login_required
+def add_watchlist_stock():
+    request_body = request.get_json()
+
+    watchlist_id = request_body['watchlist_id']
+    ticker = request_body['ticker_id']
+
+    add_statement = watchlist_stocks.insert().values(
+        watchlist_id=watchlist_Id,
+        ticker_id=ticker_id
+    )
+
+    result = db.session.execute(add_statement)
+    db.session.commit()
+
+    return Watchlist.query.get(watchlist_Id).to_dict()
