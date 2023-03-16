@@ -1,6 +1,9 @@
 .history-container {
     display: flex;
     flex-direction: column;
+    margin-left: 20px;
+    max-width: 678px;
+    width: 100%;
 }
 
 .name-container {
@@ -15,6 +18,11 @@
     margin-top: 30px;
 }
 
+.ticker-id {
+    font-weight: 700;
+}
+
 .transaction-card {
     display: flex;
+    font-size: 15px;
 }

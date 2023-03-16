@@ -17,9 +17,13 @@ export default function History() {
   }, [dispatch])
 
   const formatDate = (date) => {
-    // Converts "Wed, 15 Mar 2023 00:00:00 GMT" => "15 Mar 2023"
+    // Converts "Wed, 15 Mar 2023 00:00:00 GMT" => "Mar 15, 2023"
     const d = date.split(':')[0].slice(5, -2).split(' ')
     return [d[1], d[0] + ',', d[2]].join(' ')
+  }
+
+  const outputType = (shares) => {
+    return shares > 0 ? 'BUY' : 'SELL'
   }
 
   return (
@@ -34,20 +38,22 @@ export default function History() {
           <hr className="break"/>
           <div className="recent-container">
             <div>Recent</div>
-            <hr className="break"/>
             { transactionsArray.map(transaction => (
-              <div 
-                className="transaction-card"
-                key={transaction.id}
-              >
-                <div className="left-column">
-                  <div>{transaction.ticker_id}</div>
-                  <div>{formatDate(transaction.date)}</div>
+              <>
+                <hr className="break"/>
+                <div
+                  className="transaction-card"
+                  key={transaction.id}
+                >
+                  <div className="left-column">
+                    <div className="ticker-id">{transaction.ticker_id} {outputType(transaction.shares)}</div>
+                    <div className="transaction-date">{formatDate(transaction.date)}</div>
+                  </div>
+                  <div className="right-column">
+                    <div>{transaction.shares}</div>
+                  </div>
                 </div>
-                <div className="right-column">
-                  <div>{transaction.shares}</div>
-                </div>
-              </div>
+              </>
             ))}
           </div>
         </div>
