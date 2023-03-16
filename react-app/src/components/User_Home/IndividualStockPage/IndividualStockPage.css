@@ -149,6 +149,8 @@
 
 .stock-timeline:hover {
     color: rgb(0,200,6);
+}
+
 .stat-value-container {
     display: grid;
     grid-gap: 15px;
