@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux"
 import { thunkGetStockIntraDay } from "../../../../store/stock";
-import { Chart as ChartJS } from "chart.js/auto"
+import { Chart } from "chart.js/auto"
 
 
 export default function OneDayChart({ ticker, close }) {
@@ -12,6 +12,41 @@ export default function OneDayChart({ ticker, close }) {
     const intraDayData = useSelector(state => state.stocks.stockIntraDay)
     const [price, setPrice] = useState(close)
 
+
+    const verticalLinePlugin = {
+        id: "verticalLine",
+        afterDraw: (chart, args, options) => {
+        if (!chart.tooltip._active || !chart.tooltip._active.length) {
+            return;
+        }
+            const active = chart.tooltip._active[0];
+            const ctx = chart.ctx;
+            const x = active.element.x;
+            const topY = chart.scales.y.top;
+            const bottomY = chart.scales.y.bottom;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(x, topY);
+            ctx.lineTo(x, bottomY);
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "black";
+            ctx.stroke();
+            ctx.restore();
+        },
+    };
+
+    Chart.register(verticalLinePlugin);
+
+    const handleHover = (event, active, chart) => {
+        if (active.length > 0) {
+            const dataIndex = active[0].index;
+            const datasetIndex = active[0].datasetIndex;
+            const value = chart.data.datasets[datasetIndex].data[dataIndex];
+            setPrice(value);
+        }
+    };
+
     useEffect(() => {
         dispatch(thunkGetStockIntraDay(ticker, interval))
     }, [dispatch, ticker])
@@ -19,7 +54,6 @@ export default function OneDayChart({ ticker, close }) {
     if (!intraDayData) return null
     if (!intraDayData["Meta Data"]) return null
     if (!intraDayData["Time Series (5min)"]) return null
-
 
 
     const rawData = {}
@@ -35,41 +69,6 @@ export default function OneDayChart({ ticker, close }) {
         result.push(obj);
     }
 
-    // console.log("result: ", result)
-    // const verticalLinePlugin = {
-    //     id: "verticalLine",
-    //     afterDraw: (chart, args, options) => {
-    //     if (!chart.tooltip._active || !chart.tooltip._active.length) {
-    //         return;
-    //     }
-    //         const active = chart.tooltip._active[0];
-    //         const ctx = chart.ctx;
-    //         const x = active.element.x;
-    //         const topY = chart.scales.y.top;
-    //         const bottomY = chart.scales.y.bottom;
-
-    //         ctx.save();
-    //         ctx.beginPath();
-    //         ctx.moveTo(x, topY);
-    //         ctx.lineTo(x, bottomY);
-    //         ctx.lineWidth = 1;
-    //         ctx.strokeStyle = "black";
-    //         ctx.stroke();
-    //         ctx.restore();
-    //     },
-    // };
-
-    // ChartJS.register(verticalLinePlugin);
-
-
-    // const handleHover = (event, active, chart) => {
-    //     if (active.length > 0) {
-    //         const dataIndex = active[0].index;
-    //         const datasetIndex = active[0].datasetIndex;
-    //         const value = chart.data.datasets[datasetIndex].data[dataIndex];
-    //         setPrice(value);
-    //     }
-    // };
 
     let chartData = ({
         labels: result.map((data) => data.time),
@@ -87,11 +86,10 @@ export default function OneDayChart({ ticker, close }) {
             pointHoverRadius: 6,
         }],
         options:{
-            // maintainAspectRatio: false,
-            // responsive: true,
-            // hover: {
-            //     intersect: false,
-            // },
+            responsive: true,
+            hover: {
+                intersect: false
+            },
             scales:{
                 x: {
                     display: false,
@@ -106,16 +104,19 @@ export default function OneDayChart({ ticker, close }) {
                     display: false,
                 }
             },
-            // onHover: (event, activeElements, chart) => {
-            //     handleHover(event, activeElements, chart);
-            // },
+            interaction: {
+                intersect: false
+            },
+            onHover: (event, activeElements, chart) => {
+                handleHover(event, activeElements, chart);
+            },
         }
     });
 
     return (
         <div>
             <h3>OneDayData Component Loaded!</h3>
-            <div>{`$ ${close}`}</div>
+            <div>{`$ ${Number(price).toFixed(2)}`}</div>
             <Line data={chartData} options={chartData.options} ></Line>
             {/* <p>{ ticker }</p> */}
         </div>
