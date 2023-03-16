@@ -11,6 +11,9 @@ export default function PurchaseComponent({ ticker, user }) {
     const dispatch = useDispatch();
     const [shares, setShares] = useState(0)
 
+    const portfolio = useSelector(state => state.portfolio)
+
+    if (!portfolio) return null
 
     const handlePurchase = async (e) => {
         e.preventDefault();
@@ -55,10 +58,10 @@ export default function PurchaseComponent({ ticker, user }) {
                     </div>
                     <div style= {{ display: "flex", justifyContent: "space-between" }}>
                         <div className="left-est-div">
-                            Est. Quantity
+                            Estimated Cost
                         </div>
                         <div className="right-est-div">
-                            0.000000
+                            $0.00
                         </div>
                     </div>
                     <div className="transaction-button-div">
@@ -67,7 +70,7 @@ export default function PurchaseComponent({ ticker, user }) {
                             >Purchase Stock</button>
                     </div>
                     <div style={{ display: "flex", justifyContent: "center", padding: "10px", borderTop: "1px solid rgb(172, 171, 171)", borderBottom: "1px solid rgb(172, 171, 171)" }}>
-                        <div className="buying-power-div"> buying power available</div>
+                        <div className="buying-power-div"> ${Number(portfolio.cash_balance).toFixed(2)} buying power available</div>
                     </div>
                     {/* <div style={{ display: "flex", padding: "10px", justifyContent: "center", alignItems: "center" }}>
                         <div className="transaction-bottom-div">Brokerage</div>

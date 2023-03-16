@@ -110,19 +110,19 @@ export default function IndividualStockPage() {
                     </div>
                     <div className="stat-box">
                         <div>Today High </div>
-                        <div>${stockDaily["Time Series (Daily)"][yesterdayFormatted]["2. high"]}</div>
+                        <div>${Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["2. high"]).toFixed(2)}</div>
                     </div>
                     <div className="stat-box">
                         <div>Today Low </div>
-                        <div>${stockDaily["Time Series (Daily)"][yesterdayFormatted]["3. low"]}</div>
+                        <div>${Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["3. low"]).toFixed(2)}</div>
                     </div>
                     <div className="stat-box">
                         <div>Today Open </div>
-                        <div>${stockDaily["Time Series (Daily)"][yesterdayFormatted]["1. open"]}</div>
+                        <div>${Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["1. open"]).toFixed(2)}</div>
                     </div>
                     <div className="stat-box">
                         <div>Today Close </div>
-                        <div>${stockDaily["Time Series (Daily)"][yesterdayFormatted]["4. close"]}</div>
+                        <div>${Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["4. close"]).toFixed(2)}</div>
                     </div>
                 </div>
                     <PurchaseComponent ticker={tickerCap} user={user} />
