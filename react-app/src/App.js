@@ -15,7 +15,7 @@ import UserHomePageNav from "./components/User_Home/UserHomePage/UserHomePageNav
 import IndividualStockPage from './components/User_Home/IndividualStockPage/IndividualStockPage'
 import NotFound from './components/Navigation/NotFound/NotFound'
 import WatchlistDetails from './components/Watchlists/WatchlistDetails'
-import { thunkGetPortfolioHistoricalValues, thunkGetPortfolioHoldings, thunkGetUserPortfolio } from "./store/portfolio";
+import { thunkCreatePortfolioSnapshot, thunkGetPortfolioHistoricalValues, thunkGetPortfolioHoldings, thunkGetUserPortfolio } from "./store/portfolio";
 import { thunkGetAllWatchlistsUserId } from "./store/watchlist";
 import Profile from "./components/User_Home/UserHomePage/UserDropDown/Profile/Profile";
 import History from "./components/User_Home/UserHomePage/UserDropDown/History/History";
@@ -35,6 +35,7 @@ function App() {
       .then(() => dispatch(thunkGetPortfolioHoldings()))
       .then(() => dispatch(thunkGetUserPortfolio()))
       .then(() => dispatch(thunkGetAllWatchlistsUserId(userId)))
+      .then(() => dispatch(thunkCreatePortfolioSnapshot())) // Capture snapshot of portfolio value
       .then(() => setIsLoaded(true));
   }, [dispatch]);
   

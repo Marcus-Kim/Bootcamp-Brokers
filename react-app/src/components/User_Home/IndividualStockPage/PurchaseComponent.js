@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkBuyStock } from "../../../store/portfolio";
+import { thunkBuyStock, thunkGetUserPortfolio } from "../../../store/portfolio";
 import { thunkGetTransactionsByUserId } from "../../../store/transactions";
 
 
@@ -23,6 +23,7 @@ export default function PurchaseComponent({ ticker, user }) {
         // }
         await dispatch(thunkBuyStock(ticker, +shares))
             .then(() => dispatch(thunkGetTransactionsByUserId()))
+            .then(() => dispatch(thunkGetUserPortfolio()))
     }
 
     return (
