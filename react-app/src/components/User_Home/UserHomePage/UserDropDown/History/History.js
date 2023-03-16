@@ -46,7 +46,7 @@ export default function History() {
                   key={transaction.id}
                 >
                   <div className="left-column">
-                    <div className="ticker-id">{transaction.ticker_id} {outputType(transaction.shares)}</div>
+                    <div className="ticker-id"><span>{transaction.ticker_id}</span> <span>{outputType(transaction.shares)}</span></div>
                     <div className="transaction-date">{formatDate(transaction.date)}</div>
                   </div>
                   <div className="right-column">
