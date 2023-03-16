@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkBuyStock, thunkGetUserPortfolio } from "../../../store/portfolio";
+import { thunkBuyStock, thunkGetUserPortfolio, thunkSellStock } from "../../../store/portfolio";
 import { thunkGetTransactionsByUserId } from "../../../store/transactions";
 import AddToWatchlistModalButton from "./individualStockPageModal/AddToWatchlistModalButton";
 import AddToWatchlistModal from "./individualStockPageModal/AddToWatchlistModal";
@@ -61,13 +61,29 @@ export default function PurchaseComponent({ ticker, user, close }) {
         setHasSubmitted(true)
         
         await dispatch(thunkBuyStock(ticker, +shares))
-        .then(() => dispatch(thunkGetTransactionsByUserId()))
-        .then(() => dispatch(thunkGetUserPortfolio()))
-        .catch(async (response) => {
-            const data = await response.json();
-            console.log("data------>: ", data)
-            if (data && data.error) setErrors(data.error);
-        })
+            .then(() => dispatch(thunkGetTransactionsByUserId()))
+            .then(() => dispatch(thunkGetUserPortfolio()))
+            .catch(async (response) => {
+                const data = await response.json();
+                console.log("data------>: ", data)
+                if (data && data.error) setErrors(data.error);
+            })
+    }
+
+    const handleSale = async (e) => {
+        e.preventDefault();
+
+        setHasSubmitted(true);
+
+        await dispatch(thunkSellStock(ticker, +shares))
+            .then(() => dispatch(thunkGetTransactionsByUserId()))
+            .then(() => dispatch(thunkGetUserPortfolio()))
+            .catch(async (response) => {
+                const data = await response.json();
+                console.log("data------>: ", data)
+                if (data && data.error) setErrors(data.error);
+            })
+        
     }
 
     return (
@@ -131,11 +147,23 @@ export default function PurchaseComponent({ ticker, user, close }) {
                         ))}
                     </div>
                     <div className="transaction-button-div">
-                        <button className="button"
-                            onClick={handlePurchase}
-                        >
-                            {buySelected ? 'Purchase Stock' : 'Sell Stock'}
-                        </button>
+                        { buySelected ? 
+                            (
+                            <button 
+                                className="button"
+                                onClick={handlePurchase}
+                            >
+                                Purchase Stock
+                            </button>)
+                            : (
+                            <button
+                                className="button"
+                                onClick={handleSale}
+                            >
+                                Sell Stock
+                            </button>
+                            )
+                        }
                     </div>
                     <div style={{ display: "flex", justifyContent: "center", padding: "10px", borderTop: "1px solid rgb(172, 171, 171)", borderBottom: "1px solid rgb(172, 171, 171)" }}>
                         { buySelected ? 
