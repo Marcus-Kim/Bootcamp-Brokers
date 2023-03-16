@@ -21,8 +21,8 @@ export default function PurchaseComponent({ ticker, user, close }) {
         e.preventDefault();
 
         setHasSubmitted(true)
-        if (+shares <= 0) return
-        if (errors.length > 0) return
+        // if (+shares <= 0) return
+        // if (errors.length > 0) return
 
 
         await dispatch(thunkBuyStock(ticker, +shares))
@@ -30,6 +30,7 @@ export default function PurchaseComponent({ ticker, user, close }) {
             .then(() => dispatch(thunkGetUserPortfolio()))
             .catch(async (response) => {
                 const data = await response.json();
+                console.log("data------>: ", data)
                 if (data && data.error) setErrors(data.error);
             })
     }
