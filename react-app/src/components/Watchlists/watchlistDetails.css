@@ -30,7 +30,6 @@
 .watchlist-details-name-buttons {
   display: flex;
   justify-content: space-between;
-  padding-right: 40px;
 }
 
 .watchlist-details-item-count {
@@ -87,7 +86,7 @@
 }
 
 .watchlist-details-list-row:hover {
-  background-color: rgb(209, 209, 209);
+  background-color: rgb(245,248,250);
   cursor: pointer;
 }
 
