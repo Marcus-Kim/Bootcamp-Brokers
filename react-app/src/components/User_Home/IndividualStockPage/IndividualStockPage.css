@@ -119,6 +119,21 @@
 
 }
 
+.watchlist-button {
+    width: 200px;
+    height: 40px;
+    background-color: white;
+    color: rgb(0,200,6);
+    border-radius: 50px;
+    border: 1px solid rgb(0,200,6);
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+.watchlist-button:hover {
+    background-color: rgb(173, 252, 176);
+}
+
 .button {
     width: 200px;
     height: 40px;

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { thunkBuyStock } from "../../../store/portfolio";
+import { thunkGetTransactionsByUserId } from "../../../store/transactions";
 
 
 import "./IndividualStockPage.css"
@@ -14,14 +15,14 @@ export default function PurchaseComponent({ ticker, user }) {
     const handlePurchase = async (e) => {
         e.preventDefault();
 
-        const newPurchase = {
+        if (+shares <= 0) return
+        // const newPurchase = {
 
-            ticker_id: ticker,
-            shares: shares
-        }
-
-    // dispatch thunk!
-
+        //     ticker_id: ticker,
+        //     shares: shares
+        // }
+        await dispatch(thunkBuyStock(ticker, +shares))
+            .then(() => dispatch(thunkGetTransactionsByUserId()))
     }
 
     return (
@@ -67,12 +68,12 @@ export default function PurchaseComponent({ ticker, user }) {
                     <div style={{ display: "flex", justifyContent: "center", padding: "10px", borderTop: "1px solid rgb(172, 171, 171)", borderBottom: "1px solid rgb(172, 171, 171)" }}>
                         <div className="buying-power-div"> buying power available</div>
                     </div>
-                    <div style={{ display: "flex", padding: "10px", justifyContent: "center", alignItems: "center" }}>
+                    {/* <div style={{ display: "flex", padding: "10px", justifyContent: "center", alignItems: "center" }}>
                         <div className="transaction-bottom-div">Brokerage</div>
-                    </div>
-                    {/* <div className="transaction-button-div">
-                        <button className="button">Add to WatchList</button>
                     </div> */}
+                    <div className="transaction-button-div">
+                        <button className="watchlist-button">Add to WatchList</button>
+                    </div>
                 </div>
     )
 }
