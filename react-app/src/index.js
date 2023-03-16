@@ -28,12 +28,12 @@ function Root() {
 		<ModalProvider>
 			<Provider store={store}>
 				<FinanceAPIProvider>
-				<MenuProvider>
-				<BrowserRouter>
-					<App />
-					<Modal />
-				</BrowserRouter>
-				</MenuProvider>
+					<MenuProvider>
+					<BrowserRouter>
+						<App />
+						<Modal />
+					</BrowserRouter>
+					</MenuProvider>
 				</FinanceAPIProvider>
 			</Provider>
 		</ModalProvider>

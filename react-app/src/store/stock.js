@@ -15,6 +15,7 @@ const GET_RANDOM_STOCK_NEWS = 'stocks/GET_RANDOM_STOCK_NEWS'
 const GET_SPY = 'stocks/GET_SPY'
 const GET_NASDAQ = 'stocks/GET_NASDAQ'
 const GET_ONE_YEAR_CHART_DATA = "/stocks/GET_ONE_YEAR_CHART_DATA"
+const UPDATE_STOCK_PRICES = 'stocks/UPDATE_PRICES_IN_DATABASE'
 const GET_ALL_28_STOCKS = "/stocks/GET_ALL_28_STOCKS"
 
 //actions
@@ -98,6 +99,11 @@ const allTickers = [
     'VRTX'
   ]
 
+
+const actionUpdateStockPrices = (stocks) => ({
+    type: UPDATE_STOCK_PRICES,
+    stocks
+})
 
 // thunks
 export const thunkGetStockNews = ticker => async (dispatch) => {
@@ -238,6 +244,7 @@ export const thunkGetOneYearStockData = (ticker) => async (dispatch) => {
         return result
     }
 }
+
 export const thunkGetRandomStockNews = () => async (dispatch) => {
     const response = await fetch(`https://www.alphavantage.co/query?function=NEWS_SENTIMENT&apikey=${apiKey}`)
 
@@ -246,6 +253,10 @@ export const thunkGetRandomStockNews = () => async (dispatch) => {
         dispatch(actionGetRandomStockNews(stockNews))
         return stockNews
     }
+}
+
+export const thunkUpdateStockPrices = () => async (dispatch) => {
+    const response = await fetch()
 }
 
 const initialState = {
