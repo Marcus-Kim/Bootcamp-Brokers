@@ -9,7 +9,9 @@ import "./IndividualStockPage.css"
 export default function PurchaseComponent({ ticker, user, close }) {
 
     const dispatch = useDispatch();
-    const [shares, setShares] = useState(0)
+    const [shares, setShares] = useState("")
+    const [errors, setErrors] = useState([])
+    const [hasSubmitted, setHasSubmitted] = useState(false)
 
     const portfolio = useSelector(state => state.portfolio)
 
@@ -18,15 +20,18 @@ export default function PurchaseComponent({ ticker, user, close }) {
     const handlePurchase = async (e) => {
         e.preventDefault();
 
+        setHasSubmitted(true)
         if (+shares <= 0) return
-        // const newPurchase = {
+        if (errors.length > 0) return
 
-        //     ticker_id: ticker,
-        //     shares: shares
-        // }
+
         await dispatch(thunkBuyStock(ticker, +shares))
             .then(() => dispatch(thunkGetTransactionsByUserId()))
             .then(() => dispatch(thunkGetUserPortfolio()))
+            .catch(async (response) => {
+                const data = await response.json();
+                if (data && data.error) setErrors(data.error);
+            })
     }
 
     return (
@@ -63,6 +68,13 @@ export default function PurchaseComponent({ ticker, user, close }) {
                         <div className="right-est-div">
                             {`$ ${Number(close * shares).toFixed(2)}`}
                         </div>
+                    </div>
+                    <div>
+                        {hasSubmitted && errors.length > 0 && errors.map(error => (
+                            <li key={error}>
+                                {error}
+                            </li>
+                        ))}
                     </div>
                     <div className="transaction-button-div">
                         <button className="button"

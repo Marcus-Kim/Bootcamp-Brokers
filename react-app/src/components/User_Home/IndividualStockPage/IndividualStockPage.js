@@ -12,6 +12,7 @@ import OneYearChart from "./charts/OneYearChart";
 import FiveYearChart from "./charts/FiveYearChart";
 import PurchaseComponent from "./PurchaseComponent";
 import TransactionComponent from "./Transactions";
+import UserNav from "../UserHomePage/UserNav/UserNav";
 
 
 
@@ -70,6 +71,8 @@ export default function IndividualStockPage() {
 
 
     return (
+        <>
+        <UserNav />
         <div className="stock-page-main-container">
             <h1>{stockFundamentals["Symbol"]}</h1>
             <div style={{ gap: "7px" }}>
@@ -154,7 +157,7 @@ export default function IndividualStockPage() {
                 )) }
             </div>
         </div>
-
+    </>
     )
 }
 
