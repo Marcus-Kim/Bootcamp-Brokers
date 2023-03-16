@@ -8,44 +8,58 @@ import "./IndividualStockPage.css"
 import { thunkGetAllWatchlistsUserId } from '../../../store/watchlist'
 
 export default function PurchaseComponent({ ticker, user, close }) {
-
     const dispatch = useDispatch();
     const [shares, setShares] = useState("")
     const [errors, setErrors] = useState([])
     const [hasSubmitted, setHasSubmitted] = useState(false)
+    const [tickerInHoldings, setTickerInHoldings] = useState(false)
 
     const portfolio = useSelector(state => state.portfolio)
-    const watchlists = useSelector(state => state.watchlist)
+    const holdingsArray = Object.values(portfolio.holdings);
+    
+    
+    useEffect(() => {
+        const output = isStockInHoldings(ticker)
+        console.log('output', output)
+        console.log('ticker', ticker)
+        console.log(tickerInHoldings)
+    }, [ticker, portfolio.holdings])
+        const watchlists = useSelector(state => state.watchlist)
 
     useEffect(() => {
         dispatch(thunkGetAllWatchlistsUserId(user.id))
     }, [dispatch])
 
     if (!portfolio) return null
-    if (!watchlists) return null
 
     const handlePurchase = async (e) => {
         e.preventDefault();
-
+        
         setHasSubmitted(true)
-        // if (+shares <= 0) return
-        // if (errors.length > 0) return
-
-
+        
         await dispatch(thunkBuyStock(ticker, +shares))
-            .then(() => dispatch(thunkGetTransactionsByUserId()))
-            .then(() => dispatch(thunkGetUserPortfolio()))
-            .catch(async (response) => {
-                const data = await response.json();
-                console.log("data------>: ", data)
-                if (data && data.error) setErrors(data.error);
-            })
+        .then(() => dispatch(thunkGetTransactionsByUserId()))
+        .then(() => dispatch(thunkGetUserPortfolio()))
+        .catch(async (response) => {
+            const data = await response.json();
+            console.log("data------>: ", data)
+            if (data && data.error) setErrors(data.error);
+        })
     }
 
     return (
         <div className="purchase-container">
-                    <div style={{ borderBottom: "solid 1px rgb(172, 171, 171)" }}>
-                        <div className="purchase-buy-div">Buy {ticker}</div>
+                    <div className="order-selector">
+                        <div 
+                            className="purchase-buy-div"
+                        >
+                            Buy {ticker}
+                        </div>
+                        <div 
+                            className={"sell-div" + (tickerInHoldings ? '' : ' hidden')}
+                        >
+                            Sell {ticker}
+                        </div>
                     </div>
                     <div style= {{ display: "flex", justifyContent: "space-between", }}>
                         <div className="left-order-type-div">

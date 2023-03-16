@@ -1,16 +1,26 @@
-.stock-page-main-container {
-    margin-left: 120px;
-    width: 750px;
+.active-type {
+    color: #01a504;
+    border-bottom: solid 2px #01a504;
 }
 
-.stock-timeline {
+.button {
+    width: 200px;
+    height: 40px;
+    background-color: rgb(0,200,6);
+    color: white;
+    border-radius: 50px;
     border: none;
-    background-color: white;
-    font-size: 14px;
+    font-size: 10pt;
+    font-weight: bold;
 }
 
-.stock-timeline:hover {
-    color: rgb(0,200,6);
+.button:hover {
+    background-color: #01a504;
+}
+
+.buying-power-div {
+    padding: 10px;
+    font-size: 10pt;
 }
 
 .key-stats-container {
@@ -26,17 +36,11 @@
     margin-bottom: 15px;
 }
 
-.stat-value-container {
-    display: grid;
-    grid-gap: 15px;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-}
-
-.stat-box {
+.order-selector {
+    align-items: center;
     display: flex;
-    flex-direction: column;
-    gap: 5px;
+    justify-content: flex-start;
+    border-bottom: solid 1px #E3E9ED;
 }
 
 .purchase-container {
@@ -52,8 +56,7 @@
 }
 
 .purchase-buy-div {
-    padding: 20px 10px;
-    border-bottom: solid 1px rgb(150, 147, 147);
+    padding: 20px;
 }
 
 .left-order-type-div {
@@ -70,6 +73,12 @@
     padding: 10px;
 }
 
+.left-est-div {
+    padding: 10px;
+    font-size: 8pt;
+    font-weight: bold;
+}
+
 .left-shares-div {
     padding: 10px;
 }
@@ -79,6 +88,15 @@
     justify-content: flex-end;
     padding: 5px;
     margin-right: 5px;
+}
+
+.sell-div {
+    padding: 20px;
+}
+
+.shares-available-div {
+    padding: 10px;
+    font-size: 10pt;
 }
 
 .shares-input {
@@ -99,10 +117,32 @@
     outline: none;
 }
 
-.left-est-div {
-    padding: 10px;
-    font-size: 8pt;
-    font-weight: bold;
+.stat-value-container {
+    display: grid;
+    grid-gap: 15px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.stock-page-main-container {
+    margin-left: 120px;
+    width: 750px;
+}
+
+.stock-timeline {
+    border: none;
+    background-color: white;
+    font-size: 14px;
+}
+
+.stock-timeline:hover {
+    color: rgb(0,200,6);
 }
 
 .right-est-div {
@@ -136,25 +176,6 @@
     background-color: rgb(173, 252, 176);
 }
 
-.button {
-    width: 200px;
-    height: 40px;
-    background-color: rgb(0,200,6);
-    color: white;
-    border-radius: 50px;
-    border: none;
-    font-size: 10pt;
-    font-weight: bold;
-}
-
-.button:hover {
-    background-color: #01a504;
-}
-
-.buying-power-div {
-    padding: 10px;
-    font-size: 10pt;
-}
 
 .news-stat-title-div {
     padding: 20px 0 20px  0;
@@ -187,4 +208,10 @@
     font-size: 20pt;
     margin-bottom: 15px;
     padding-top: 30px;
+}
+
+/* HIDDEN CONDITIONAL CLASS */
+
+.hidden {
+    display: none;
 }
