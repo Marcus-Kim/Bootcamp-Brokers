@@ -1,15 +1,50 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux"
 import { thunkGetOneWeekStockData } from "../../../../store/stock";
-import { Chart as ChartJS } from "chart.js/auto"
+import { Chart } from "chart.js/auto"
 
 
-export default function OneWeekChart({ ticker }) {
+export default function OneWeekChart({ ticker, close }) {
 
     const dispatch = useDispatch()
 
     const weeklyData = useSelector(state => state.stocks.oneWeekChartData)
+    const [price, setPrice] = useState(close)
+
+    const verticalLinePlugin = {
+        id: "verticalLine",
+        afterDraw: (chart, args, options) => {
+        if (!chart.tooltip._active || !chart.tooltip._active.length) {
+            return;
+        }
+            const active = chart.tooltip._active[0];
+            const ctx = chart.ctx;
+            const x = active.element.x;
+            const topY = chart.scales.y.top;
+            const bottomY = chart.scales.y.bottom;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(x, topY);
+            ctx.lineTo(x, bottomY);
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "black";
+            ctx.stroke();
+            ctx.restore();
+        },
+    };
+
+    Chart.register(verticalLinePlugin);
+
+    const handleHover = (event, active, chart) => {
+        if (active.length > 0) {
+            const dataIndex = active[0].index;
+            const datasetIndex = active[0].datasetIndex;
+            const value = chart.data.datasets[datasetIndex].data[dataIndex];
+            setPrice(value);
+        }
+    };
 
     useEffect(() => {
         dispatch(thunkGetOneWeekStockData(ticker))
@@ -22,7 +57,6 @@ export default function OneWeekChart({ ticker }) {
 
     const rawData = {}
     const entries = Object.entries(weeklyData["Time Series (15min)"])
-
 
     entries.forEach(([date, price]) => (
         rawData[date] = Number(price["4. close"]).toFixed(2)
@@ -40,10 +74,10 @@ export default function OneWeekChart({ ticker }) {
     // console.log("sliced Result: ", slicedResult)
 
     let chartData = ({
-        labels: result.map((data) => data.date),
+        labels: slicedResult.map((data) => data.date),
         datasets: [{
             label: "Stock Price",
-            data: result.map((data) => data.price),
+            data: slicedResult.map((data) => data.price),
             // backgroundColor: "black",
             borderColor: "#5AC53B",
             borderWidth: 2,
@@ -55,6 +89,10 @@ export default function OneWeekChart({ ticker }) {
             pointHoverRadius: 6,
         }],
         options:{
+            responsive: true,
+            hover: {
+                intersect: false
+            },
             scales:{
                 x: {
                     display: false,
@@ -71,15 +109,18 @@ export default function OneWeekChart({ ticker }) {
             }
         },
         interaction: {
-            mode: 'index',
-            intersect: false,
-          },
+            intersect: false
+        },
+        onHover: (event, activeElements, chart) => {
+            handleHover(event, activeElements, chart);
+        },
     });
 
 
     return (
         <div>
             <h3>OneWeekChart Component</h3>
+            <div>{`$ ${Number(price).toFixed(2)}`}</div>
             <Line data={chartData} options={chartData.options} ></Line>
         </div>
     )

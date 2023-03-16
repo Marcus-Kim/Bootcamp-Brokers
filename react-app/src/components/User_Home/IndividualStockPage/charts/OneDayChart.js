@@ -12,7 +12,6 @@ export default function OneDayChart({ ticker, close }) {
     const intraDayData = useSelector(state => state.stocks.stockIntraDay)
     const [price, setPrice] = useState(close)
 
-
     const verticalLinePlugin = {
         id: "verticalLine",
         afterDraw: (chart, args, options) => {

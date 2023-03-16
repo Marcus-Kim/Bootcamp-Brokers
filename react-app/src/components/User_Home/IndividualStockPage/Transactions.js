@@ -44,10 +44,10 @@ export default function TransactionComponent({ ticker, user }) {
     return (
         <div>
             <div className="transaction-title-div">
-                <div>Transactions Component</div>
+                <div>History</div>
             </div>
             <div>
-                { filteredTransaction.map(transaction => (
+                { filteredTransaction.length > 0 ? filteredTransaction.map(transaction => (
                     <div key={transaction.id} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", padding: "7px" }}>
                         <div style={{ display: "flex", flexDirection: "column", padding: "5px"}}>
                             <div>{+transaction.shares > 0 ? `${transaction.ticker_id} Buy` : `${transaction.ticker_id} Sell`}</div>
@@ -55,7 +55,7 @@ export default function TransactionComponent({ ticker, user }) {
                         </div>
                         <div style={{ color: transaction.shares > 0 ? "rgb(0,200,6)" : "red", padding: "15px" }}>{transaction.shares}</div>
                     </div>
-                ))}
+                )) : "You do not have transaction(s) on this current stock"}
             </div>
         </div>
     )

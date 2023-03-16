@@ -76,7 +76,7 @@ export default function IndividualStockPage() {
         <div className="stock-page-main-container">
             <h1>{stockFundamentals["Symbol"]}</h1>
             <div style={{ gap: "7px" }}>
-                { chartObj[chart] }
+                <div style={{ width: "700px" }}>{ chartObj[chart] }</div>
                 <button className="stock-timeline" onClick={() => setChart("1D")}>1D</button>
                 <button className="stock-timeline" onClick={() => setChart("1W")}>1W</button>
                 <button className="stock-timeline" onClick={() => setChart("1M")}>1M</button>
@@ -85,7 +85,7 @@ export default function IndividualStockPage() {
                 <button className="stock-timeline" onClick={() => setChart("5Y")}>5Y</button>
             </div>
 
-            <h3>About</h3>
+            <div className="key-stat-title-div">About</div>
             <p>
                 {stockFundamentals["Description"]}
             </p>
@@ -142,7 +142,7 @@ export default function IndividualStockPage() {
                         className="news-navlink"
                         >
                             <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                <div style={{ padding: "5px", width: "600px"}}>
+                                <div style={{ padding: "5px", width: "550px"}}>
                                     <div style={{ fontSize: "12px", color: "gray"}}>{news.source}</div>
                                     <div style={{ fontSize: "15px"}}>{news.title}</div>
                                     <div style={{ fontSize: "10px", color: "gray"}}>{news.summary}</div>
