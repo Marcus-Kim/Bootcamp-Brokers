@@ -27,10 +27,10 @@ function RenameWatchlistModal({ watchlist }) {
     <div className='rename-list-modal-container'>
       <div className='rename-list-modal-title-exit'>
         <div className='rename-list-modal-title'>Edit List</div>
-        <button className='rename-list-modal-exit-button'>x</button>
+        <button className='rename-list-modal-exit-button' onClick={closeModal}>x</button>
       </div>
       <form className='rename-list-modal-form' onSubmit={handleSubmit}>
-        <input type='text' className='rename-list-modal-input' value={newName} onChange={e => setNewName(e.target.value)} required/>
+        <input type='text' className='rename-list-modal-input' value={newName} onChange={e => setNewName(e.target.value)} required maxLength={25}/>
         <button type='submit' className='rename-list-modal-submit-button'>Save</button>
       </form>
     </div>
