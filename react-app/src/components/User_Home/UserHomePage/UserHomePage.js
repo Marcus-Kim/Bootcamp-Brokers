@@ -15,8 +15,9 @@ import { thunkGetAllWatchlistsUserId } from '../../../store/watchlist';
 
 
 export default function UserHomePage() {
+  const portfolio = useSelector(state => state.portfolio)
   const dispatch = useDispatch()
-  const [price, setPrice] = useState(null)
+  const [price, setPrice] = useState(portfolio.overall_value)
   const [graph, setGraph] = useState([])
   const watchlists = useSelector(state => state.watchlist)
   const userId = useSelector(state => state.session.user?.id)
@@ -28,9 +29,7 @@ export default function UserHomePage() {
   const yesterday = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
   const yesterdayString = yesterday.toISOString().substring(0, 10);
-  const portfolio = useSelector(state => state.portfolio)
-
-  const historicalValues = Object.values(portfolio.historicalValues)
+  const historicalValues = useSelector(state => state.portfolio.historicalValues)
   
   const verticalLinePlugin = {
     id: "verticalLine",
@@ -67,30 +66,9 @@ export default function UserHomePage() {
       setPrice(value);
     }
   };
-
-
-  const mockData = () => {
-    let data = []
-
-    historicalValues.forEach(ele => {
-      data.push({x: ele.x, y: ele.y})
-    }) 
-    console.log(data, 'data')
-
-    // let value = 200
-    // for (let i = 0; i < 60 * 12; i += 15) {
-    //   let date = new Date();
-    //   date.setHours(4);
-    //   date.setMinutes(0);
-    //   value+= Math.floor(Math.random() * (10000 - 2000 + 1)) + 5000
-
-    //   data.push({x: date, y: value})
-    // }
-    setGraph(data.slice(-100, data.length))
-  }
   
   useEffect(() => {
-    mockData()
+    displayDailyView()
     dispatch(thunkGetBTCPrice())
     dispatch(thunkGetNasdaq())
     dispatch(thunkGetSPY())
@@ -204,31 +182,31 @@ export default function UserHomePage() {
 
   // Change data displayed on chart
   const displayDailyView = () => {
-    setGraph(portfolio.historicalValues.slice(-100, portfolio.historicalValues.length))
+    setGraph(historicalValues.slice(-100, historicalValues.length))
   }
 
   const displayWeeklyView = () => {
-    setGraph(portfolio.historicalValues.slice(-200, portfolio.historicalValues.length))
+    setGraph(historicalValues.slice(-200, historicalValues.length))
   }
 
   const displayMonthlyView = () => {
-    setGraph(portfolio.historicalValues.slice(-300, portfolio.historicalValues.length))
+    setGraph(historicalValues.slice(-300, historicalValues.length))
   }
 
   const displayThreeMonthView = () => {
-    setGraph(portfolio.historicalValues.slice(-900, portfolio.historicalValues.length))
+    setGraph(historicalValues.slice(-900, historicalValues.length))
   }
 
   const displayYTDView = () => {
-    setGraph(portfolio.historicalValues.slice(-1200, portfolio.historicalValues.length))
+    setGraph(historicalValues.slice(-1200, historicalValues.length))
   }
 
   const displayYearlyView = () => {
-    setGraph(portfolio.historicalValues.slice(-1500, portfolio.historicalValues.length))
+    setGraph(historicalValues.slice(-1500, historicalValues.length))
   }
 
   const displayAllView = () => {
-    setGraph(portfolio.historicalValues.slice(-2000, portfolio.historicalValues.length))
+    setGraph(historicalValues.slice(-2000, historicalValues.length))
   }
 
   return (
