@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { thunkCreateWatchlist } from '../../store/watchlist';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRef } from 'react';
+import WatchlistModalButton from './WatchlistModals/WatchlistModal';
+import RenameWatchlistModal from './WatchlistModals/RenameWatchlistModal';
 
 function Watchlists({ watchlists }) {
   // *ENABLERS
@@ -78,14 +80,6 @@ function Watchlists({ watchlists }) {
     setOpenDropdown(e.target)
   };
 
-  const editListDropdownHandler = (e) => { // Edit List modal trigger
-    e.stopPropagation();
-  }
-
-  const deleteListDropdownHandler = (e) => { // Delete list modal trigger
-    e.stopPropagation();
-  }
-
 
   return (
     <div className='watchlists-container' ref={componentRef}>
@@ -109,8 +103,8 @@ function Watchlists({ watchlists }) {
               <div className='watchlist-item-name' >{watchlist.list_name}</div>
               <button className='watchlist-edit-button' onClick={e => handleDropdown(e)}>Edit</button>
               <div className='watchlist-list-edit-dropdown'>
-                <div className='watchlist-list-edit-menu-items' onClick={e => editListDropdownHandler(e)}>Edit List</div>
-                <div className='watchlist-list-edit-menu-items' onClick={e => deleteListDropdownHandler(e)}>Delete List</div>
+                <WatchlistModalButton modalComponent={<RenameWatchlistModal watchlist={watchlist}/>} buttonText={'Edit List'} />
+                {/* <WatchlistModalButton modalComponent={RenameWatchlistModal} watchlist={watchlist} className='watchlist-list-edit-menu-items' buttonText={'Delete List'} onClick={e => editListDropdownHandler(e)}/> */}
               </div>
             </div>
           )

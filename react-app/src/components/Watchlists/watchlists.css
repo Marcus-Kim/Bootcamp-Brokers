@@ -154,6 +154,7 @@
   height: 30px;
   align-items: center;
   padding-left: 10px;
+  background-color: white;
 }
 
 .watchlist-list-edit-menu-items:hover {

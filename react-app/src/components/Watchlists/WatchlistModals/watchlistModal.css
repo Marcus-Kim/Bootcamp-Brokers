@@ -1,0 +1,36 @@
+.watchlist-modal-button {
+  background-color: white;
+  border: none;
+
+}
+
+.watchlist-modal-button:hover {
+  background-color: rgb(245,248,250);
+}
+
+.rename-list-modal-container {
+  width: 475px;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  border: 1px solid red;
+}
+
+.rename-list-modal-title-exit {
+  display: flex;
+  justify-content: space-between;
+}
+
+.rename-list-modal-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 300px;
+  margin: auto;
+}
+
+.rename-list-modal-input {
+  display: flex;
+  align-items: center;
+}
