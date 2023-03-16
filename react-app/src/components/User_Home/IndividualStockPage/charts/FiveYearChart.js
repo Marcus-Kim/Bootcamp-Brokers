@@ -68,7 +68,7 @@ export default function FiveYearChart({ ticker, close }) {
         const obj = { date: key, price: parseFloat(value)}
         result.push(obj)
     }
-    console.log("result: ", result)
+    // console.log("result: ", result)
     const slicedResult =  result.slice(0, 262)
 
     let chartData = ({

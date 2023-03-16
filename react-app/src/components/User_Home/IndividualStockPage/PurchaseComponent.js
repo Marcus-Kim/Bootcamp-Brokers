@@ -10,7 +10,7 @@ import OrderConfirmation from "./OrderConfirmation";
 
 export default function PurchaseComponent({ ticker, user, close }) {
     const dispatch = useDispatch();
-    const [shares, setShares] = useState("")
+    const [shares, setShares] = useState(0)
     const [errors, setErrors] = useState([])
     const [hasSubmitted, setHasSubmitted] = useState(false)
     const [tickerInHoldings, setTickerInHoldings] = useState(false)
@@ -19,8 +19,25 @@ export default function PurchaseComponent({ ticker, user, close }) {
     const portfolio = useSelector(state => state.portfolio)
     const holdingsArray = Object.values(portfolio.holdings);
     const [sharesAvailable, setSharesAvailable] = useState(0)
-    
-    
+
+    const estimatedCost = Number(+close * +shares).toFixed(2)
+    const cashBalance = Number(portfolio.cash_balance).toFixed(2)
+
+
+    // frontend error handing
+    useEffect(() => {
+        const newErrors = []
+        console.log("cashBalance: ", cashBalance)
+        console.log("estimatedCost: ", estimatedCost)
+        if (estimatedCost >= cashBalance) {
+            newErrors.push("User has insufficient funds to complete purchase")
+            setErrors(newErrors)
+        } else {
+            setErrors([])
+        }
+        console.log("errors: ", errors)
+    }, [shares, estimatedCost, cashBalance, ticker])
+
     useEffect(() => {
         isStockInHoldings(ticker)
     }, [ticker, portfolio.holdings])
@@ -30,8 +47,10 @@ export default function PurchaseComponent({ ticker, user, close }) {
         dispatch(thunkGetAllWatchlistsUserId(user.id))
     }, [dispatch])
 
+
+
     if (!portfolio) return null
-    
+
     const isStockInHoldings = (ticker) => {
         for (let i = 0; i < holdingsArray.length; i += 1) {
             const holding = holdingsArray[i];
@@ -52,12 +71,14 @@ export default function PurchaseComponent({ ticker, user, close }) {
     const selectSell = () => {
         setBuySelected(() => false)
     }
-    
+
     const handlePurchase = async (e) => {
         e.preventDefault();
-        
+
         setHasSubmitted(true)
-        
+        if (errors.length > 0) return
+
+
         await dispatch(thunkBuyStock(ticker, +shares))
             .then(() => dispatch(thunkGetTransactionsByUserId()))
             .then(() => dispatch(thunkGetUserPortfolio()))
@@ -65,6 +86,10 @@ export default function PurchaseComponent({ ticker, user, close }) {
                 const data = await response.json();
                 if (data && data.error) setErrors(data.error);
             })
+
+        setShares(0)
+        // setErrors([])
+        setHasSubmitted(false)
     }
 
     const handleSale = async (e) => {
@@ -80,12 +105,16 @@ export default function PurchaseComponent({ ticker, user, close }) {
                 const data = await response.json();
                 if (data && data.error) setErrors(data.error);
             })
-        
+
     }
 
-    if (hasSubmitted) {
-        return <OrderConfirmation 
-            ticker={ticker} 
+    const disabled = () => {
+        return Number(close * shares).toFixed(2) > Number(portfolio.cash_balance).toFixed(2)
+    }
+
+    if (hasSubmitted && errors.length === 0) {
+        return <OrderConfirmation
+            ticker={ticker}
             buySelected={buySelected}
             shares={shares}
             setHasSubmitted={setHasSubmitted}
@@ -94,7 +123,7 @@ export default function PurchaseComponent({ ticker, user, close }) {
         return (
             <div className="purchase-container">
                         <div className="order-selector">
-                            <div 
+                            <div
                                 className={
                                     "purchase-buy-div" +
                                     (buySelected ? ' active-type' : '')
@@ -103,9 +132,9 @@ export default function PurchaseComponent({ ticker, user, close }) {
                             >
                                 Buy {ticker}
                             </div>
-                            <div 
+                            <div
                                 className={
-                                    "sell-div" + 
+                                    "sell-div" +
                                     (tickerInHoldings ? '' : ' hidden') +
                                     (buySelected ? '' : ' active-type')
                                 }
@@ -141,20 +170,24 @@ export default function PurchaseComponent({ ticker, user, close }) {
                                 Estimated Cost
                             </div>
                             <div className="right-est-div">
-                                {`$ ${Number(close * shares).toFixed(2)}`}
+                                {`$ ${estimatedCost}`}
                             </div>
                         </div>
-                        <div className="purchase-error">
-                            {hasSubmitted && errors.length > 0 && errors.map(error => (
-                                <li key={error}>
-                                    {error}
-                                </li>
-                            ))}
+                        <div>
+                            {hasSubmitted && errors.length > 0 && (
+                                    <div className="purchase-error">
+                                        {errors.map((error) => (
+                                            <li key={error}
+                                                style={{ color: "red", listStyle: "none", fontSize: "10px", textAlign: "center"}}
+                                                >{error}</li>
+                                        ))}
+                                    </div>
+                            )}
                         </div>
                         <div className="transaction-button-div">
-                            { buySelected ? 
+                            { buySelected ?
                                 (
-                                <button 
+                                <button
                                     className="button"
                                     onClick={handlePurchase}
                                 >
@@ -171,9 +204,9 @@ export default function PurchaseComponent({ ticker, user, close }) {
                             }
                         </div>
                         <div style={{ display: "flex", justifyContent: "center", padding: "10px", borderTop: "1px solid rgb(172, 171, 171)", borderBottom: "1px solid rgb(172, 171, 171)" }}>
-                            { buySelected ? 
-                                <div className="buying-power-div"> ${Number(portfolio.cash_balance).toFixed(2)} buying power available</div>
-                                : (<div className="shares-available-div">{sharesAvailable}.0 Shares Available</div>) 
+                            { buySelected ?
+                                <div className="buying-power-div"> ${cashBalance} buying power available</div>
+                                : (<div className="shares-available-div">{sharesAvailable}.0 Shares Available</div>)
                             }
                         </div>
                         {/* <div style={{ display: "flex", padding: "10px", justifyContent: "center", alignItems: "center" }}>
