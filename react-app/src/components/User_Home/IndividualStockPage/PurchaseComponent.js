@@ -88,6 +88,7 @@ export default function PurchaseComponent({ ticker, user, close }) {
             ticker={ticker} 
             buySelected={buySelected}
             shares={shares}
+            setHasSubmitted={setHasSubmitted}
         />
     } else {
         return (

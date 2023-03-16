@@ -1,19 +1,38 @@
+.completion-message {
+  color: #6a7278;
+  font-size: 13px;
+  padding: 20px 0px;
+}
+
+.confirmation-title {
+  padding: 20px;
+}
+
 .dollar-amount {
   align-items: center;
   display: flex;
   justify-content: space-between;
+  padding: 20px 0px;
+}
+
+.done-button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .shares {
   align-items: center;
   display: flex;
   justify-content: space-between;
+  padding: 20px 0px;
 }
 
 .share-price {
   align-items: center;
   display: flex;
   justify-content: space-between;
+  padding: 20px 0px;
 }
 
 .transaction-details {
