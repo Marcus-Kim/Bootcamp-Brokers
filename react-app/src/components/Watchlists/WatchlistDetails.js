@@ -17,7 +17,6 @@ export default function WatchlistDetails() {
   const { watchlistId } = useParams()
   const selectedWatchlist = useSelector(state => state.watchlist[+watchlistId])
   const selectedWatchlistStocks = useSelector(state => state.watchlist[+watchlistId]?.stocks)
-  console.log('SELECTED WATCHLIST', selectedWatchlist)
 
   useEffect(() => {
     dispatch(thunkGetAllWatchlistsUserId(user))

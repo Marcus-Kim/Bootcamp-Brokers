@@ -14,11 +14,11 @@ function AddToWatchlistModal({ ticker, watchlists }) {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    listValues.forEach(async (list) => {
+    const promises = listValues.map(async (list) => {
       console.log(list)
       await dispatch(thunkAddWatchlistStock(Number(list), ticker))
     })
-    // await Promise.all(promises)
+    await Promise.all(promises).then(closeModal())
   }
 
   const handleCheckboxChange = (e, watchlist) => {
