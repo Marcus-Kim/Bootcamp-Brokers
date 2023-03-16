@@ -50,8 +50,7 @@ export default function PurchaseComponent({ ticker, user, close }) {
     }
 
     const selectSell = () => {
-        setHasSubmitted(() => true)
-        console.log('Submitted')
+        setBuySelected(() => false)
     }
     
     const handlePurchase = async (e) => {
