@@ -1,17 +1,8 @@
-.stock-page-main-container {
-    margin-left: 120px;
-    width: 750px;
+.active-type {
+    color: #01a504;
+    border-bottom: solid 2px #01a504;
 }
 
-.stock-timeline {
-    border: none;
-    background-color: white;
-    font-size: 14px;
-}
-
-.stock-timeline:hover {
-    color: rgb(0,200,6);
-}
 
 .key-stats-container {
     display: flex;
@@ -24,19 +15,6 @@
     border-bottom: solid black 1px;
     font-size: 20pt;
     margin-bottom: 15px;
-}
-
-.stat-value-container {
-    display: grid;
-    grid-gap: 15px;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-}
-
-.stat-box {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
 }
 
 .order-selector {
@@ -59,7 +37,7 @@
 }
 
 .purchase-buy-div {
-    padding: 20px 10px;
+    padding: 20px;
 }
 
 .left-order-type-div {
@@ -76,6 +54,12 @@
     padding: 10px;
 }
 
+.left-est-div {
+    padding: 10px;
+    font-size: 8pt;
+    font-weight: bold;
+}
+
 .left-shares-div {
     padding: 10px;
 }
@@ -85,6 +69,10 @@
     justify-content: flex-end;
     padding: 5px;
     margin-right: 5px;
+}
+
+.sell-div {
+    padding: 20px;
 }
 
 .shares-input {
@@ -105,10 +93,32 @@
     outline: none;
 }
 
-.left-est-div {
-    padding: 10px;
-    font-size: 8pt;
-    font-weight: bold;
+.stat-value-container {
+    display: grid;
+    grid-gap: 15px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.stock-page-main-container {
+    margin-left: 120px;
+    width: 750px;
+}
+
+.stock-timeline {
+    border: none;
+    background-color: white;
+    font-size: 14px;
+}
+
+.stock-timeline:hover {
+    color: rgb(0,200,6);
 }
 
 .right-est-div {
