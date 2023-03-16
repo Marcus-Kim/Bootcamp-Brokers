@@ -30,8 +30,6 @@ export default function IndividualStockPage() {
     const stockNews = useSelector(state => state.stocks.stockNews)
     const user = useSelector(state => state.session.user)
     const tickers = Object.keys(markusKim)
-    console.log("tickers: ", tickers)
-
 
     useEffect(() => {
         dispatch(thunkGetStockFundamentals(tickerCap))
@@ -133,10 +131,11 @@ export default function IndividualStockPage() {
                         <div>Today Close </div>
                         <div>${Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["4. close"]).toFixed(2)}</div>
                     </div>
-                </div>
-                { !(tickers.includes(ticker)) ? <h1>Work in Progress</h1>
-                    : <PurchaseComponent ticker={tickerCap} user={user} close={close} />
+                { (tickers.includes(tickerCap))
+                    ? <PurchaseComponent ticker={tickerCap} user={user} close={close} />
+                    : <div style={{ position: "fixed", top: "150px",right: "150px"}}>This isn't in the Broke Database</div>
                 }
+                </div>
                     <TransactionComponent ticker={tickerCap} user={user} />
             </div>
             <div>
