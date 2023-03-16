@@ -21,37 +21,32 @@ import Profile from "./components/User_Home/UserHomePage/UserDropDown/Profile/Pr
 import History from "./components/User_Home/UserHomePage/UserDropDown/History/History";
 import Investing from "./components/User_Home/UserHomePage/UserDropDown/Investing";
 import SucessfullyLoggedOut from "./components/Navigation/SuccessLogOut/SucessfullyLoggedOut";
-import { thunkGetStockFundamentals, thunkGetStockDaily } from "./store/stock";
+import { thunkGetAll28Stocks } from "./store/stock";
+
 
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const [isLoaded, setIsLoaded] = useState(false);
   const userId = useSelector(state => state.session.user?.id)
-  const [marketCap, setMarketCap] = useState({})
-  const [dailyPrice, setDailyPrices] = useState({})
   const today = new Date();
   const yesterday = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
   const yesterdayString = yesterday.toISOString().substring(0, 10);
 
+  
+
   useEffect(() => {
+    
     const fetchData = async () => {
+
       await dispatch(authenticate());
       await dispatch(thunkGetPortfolioHistoricalValues());
       await dispatch(thunkGetPortfolioHoldings());
       await dispatch(thunkGetUserPortfolio());
       await dispatch(thunkGetAllWatchlistsUserId(userId));
       await dispatch(thunkCreatePortfolioSnapshot()); 
-      // Fetch market caps only if marketCap state is empty
-      // if (Object.keys(marketCap).length === 0) {
-      //   fetchMarketCaps(tickers);
-      // }
-
-      // // Fetch daily stock prices only if dailyPrice state is empty
-      // if (Object.keys(dailyPrice).length === 0) {
-      //   fetchDailyStockPrices(tickers);
-      // }
+      await dispatch(thunkGetAll28Stocks())
       setIsLoaded(true)
     }
     fetchData()

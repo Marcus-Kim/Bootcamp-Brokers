@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useFinanceAPI } from '../../../context/FinanceApiContext';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkGetBTCPrice } from '../../../store/stock';
@@ -20,6 +19,7 @@ export default function UserHomePage() {
   const dispatch = useDispatch()
   const [price, setPrice] = useState(portfolio.overall_value)
   const [graph, setGraph] = useState([])
+  const [profitLoss, setProfitLoss] = useState("0")
   const watchlists = useSelector(state => state.watchlist)
   const userId = useSelector(state => state.session.user?.id)
   const BTC = useSelector(state => state.stocks.BTCPrice)
@@ -31,7 +31,6 @@ export default function UserHomePage() {
   yesterday.setDate(yesterday.getDate() - 1);
   const yesterdayString = yesterday.toISOString().substring(0, 10);
   const historicalValues = Object.values(portfolio.historicalValues)
-  const {markusKim} =useFinanceAPI()
   
 
   const verticalLinePlugin = {
@@ -70,26 +69,6 @@ export default function UserHomePage() {
     }
   };
 
-
-  const mockData = () => {
-    let data = []
-
-    historicalValues.forEach(ele => {
-      data.push({x: ele.x, y: ele.y})
-    })
-    console.log(data, 'data')
-
-    // let value = 200
-    // for (let i = 0; i < 60 * 12; i += 15) {
-    //   let date = new Date();
-    //   date.setHours(4);
-    //   date.setMinutes(0);
-    //   value+= Math.floor(Math.random() * (10000 - 2000 + 1)) + 5000
-
-    //   data.push({x: date, y: value})
-    // }
-    setGraph(data.slice(-100, data.length))
-  }
 
   useEffect(() => {
     displayDailyView()
@@ -152,7 +131,18 @@ export default function UserHomePage() {
         },
         ticks: {
           color: 'white', // set the color of tick labels
-          display: false
+          display: false,
+          callback: function(value, index, values) {
+            if (index === 0) {
+              const profitLossValue = value - 10; // Replace 10 with the desired value to subtract
+              setProfitLoss(profitLossValue);
+            }
+            return value - 10; // Replace 10 with the desired value to subtract
+          }
+        },
+        beforeCalculateTickRotation: (scale) => {
+          const labels = scale.ticks.map((tick) => tick.value - 10); // Replace 10 with the desired value to subtract
+          scale.ticks.splice(0, scale.ticks.length, ...labels);
         }
       }
     },
@@ -245,6 +235,7 @@ export default function UserHomePage() {
             <div>
               <span>
                 <img className="green-triangle" src={Triangle} alt="" />
+                <div>{profitLoss}</div>
               </span>
             </div>
           </div>
