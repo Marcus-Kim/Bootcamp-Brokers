@@ -1,5 +1,13 @@
 .buy {
-    color: greenyellow;
+    color: #00C805;
+}
+
+.sell {
+    color: #FF5000;
+}
+
+.header {
+    margin-bottom: 20px;
 }
 
 .history-container {
@@ -28,5 +36,9 @@
 
 .transaction-card {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-size: 15px;
+    margin: 20px 0px;
+    width: 100%;
 }
