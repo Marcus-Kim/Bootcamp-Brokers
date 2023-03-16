@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkBuyStock, thunkGetUserPortfolio } from "../../../store/portfolio";
 import { thunkGetTransactionsByUserId } from "../../../store/transactions";
-
-
+import AddToWatchlistModalButton from "./individualStockPageModal/AddToWatchlistModalButton";
+import AddToWatchlistModal from "./individualStockPageModal/AddToWatchlistModal";
 import "./IndividualStockPage.css"
+import { thunkGetAllWatchlistsUserId } from '../../../store/watchlist'
 
 export default function PurchaseComponent({ ticker, user, close }) {
 
@@ -14,8 +15,14 @@ export default function PurchaseComponent({ ticker, user, close }) {
     const [hasSubmitted, setHasSubmitted] = useState(false)
 
     const portfolio = useSelector(state => state.portfolio)
+    const watchlists = useSelector(state => state.watchlist)
+
+    useEffect(() => {
+        dispatch(thunkGetAllWatchlistsUserId(user.id))
+    }, [dispatch])
 
     if (!portfolio) return null
+    if (!watchlists) return null
 
     const handlePurchase = async (e) => {
         e.preventDefault();
@@ -89,7 +96,7 @@ export default function PurchaseComponent({ ticker, user, close }) {
                         <div className="transaction-bottom-div">Brokerage</div>
                     </div> */}
                     <div className="transaction-button-div">
-                        <button className="watchlist-button">Add to WatchList</button>
+                        <AddToWatchlistModalButton modalComponent={<AddToWatchlistModal ticker={ticker} watchlists={watchlists}/>} buttonText={'Add to Watchlist'}/>
                     </div>
                 </div>
     )

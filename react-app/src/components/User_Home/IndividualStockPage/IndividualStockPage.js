@@ -33,7 +33,7 @@ export default function IndividualStockPage() {
         dispatch(thunkGetStockFundamentals(tickerCap))
         dispatch(thunkGetStockDaily(tickerCap))
         dispatch(thunkGetStockNews(tickerCap))
-    }, [dispatch, ticker])
+    }, [dispatch, tickerCap])
 
     if (!stockFundamentals) return null;
     if (!stockDaily) return null;

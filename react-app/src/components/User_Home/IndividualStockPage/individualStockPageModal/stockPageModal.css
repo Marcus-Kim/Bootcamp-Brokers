@@ -1,0 +1,29 @@
+.watchlist-button {
+  width: 200px;
+  height: 40px;
+  background-color: white;
+  color: rgb(0,200,6);
+  border-radius: 50px;
+  border: 1px solid rgb(0,200,6);
+  font-size: 10pt;
+  font-weight: bold;
+}
+
+.add-watchlist-modal-container {
+  border: 1px solid red;
+  height: 500px;
+  width: 400px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-watchlist-modal-title-exit {
+  display: flex;
+  justify-content: space-between;
+}
+
+.add-watchlist-modal-lists {
+  display: flex;
+  flex-direction: column;
+}
