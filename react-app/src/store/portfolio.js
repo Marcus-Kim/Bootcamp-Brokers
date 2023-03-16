@@ -133,9 +133,16 @@ export const thunkCreatePortfolioSnapshot = () => async (dispatch) => {
     })
 
     if (response.ok) {
-        const portfolio = await response.json()
-        await dispatch(actionCreatePortfolioSnapshot(portfolio))
-        return portfolio
+        const historicalValues = await response.json()
+        const shapedHistoricalValues = [];
+        historicalValues.forEach(value => {
+            shapedHistoricalValues.push({
+                x: value.date,
+                y: value.current_balance
+            })
+        })
+        await dispatch(actionGetPortfolioHistoricalValues(shapedHistoricalValues))
+        return shapedHistoricalValues
     }
 }
 
