@@ -327,21 +327,26 @@ export default function UserHomePage() {
               </span>
             </div>
           </div>
-          {randomNews?.["feed"]?.slice(0,30).map(news => (
+          {randomNews?.["feed"]?.slice(0, 30).map((news) => (
             <div className="news-carders" key={news.url}>
-              <hr className="break"/>
+              <hr className="break" />
               <div className="news-card">
                 <div className="news-cardleft">
-                  <div><span className="source">{news.source}</span> <span className="time-units">{hoursAgo(news.time_published)}hr</span></div>
+                  <div>
+                    <span className="source">{news.source}</span>{" "}
+                    <span className="time-units">{hoursAgo(news.time_published)}hr</span>
+                  </div>
                   <div className="title">{news.title}</div>
-                  <div className="story-ticker">{news.ticker_sentiment[0]?.ticker}</div>
+                  <div className="story-ticker">
+                    {news.ticker_sentiment[0]?.ticker}
+                  </div>
                 </div>
-                <NavLink to={news.url}>
+                <a href={news.url} target="_blank" rel="noopener noreferrer">
                   <img className="news-image" src={news.banner_image} alt="" />
-                </NavLink>
+                </a>
               </div>
             </div>
-            ))}
+          ))}
         </div>
       </div>
       <div className="watchlist-container">

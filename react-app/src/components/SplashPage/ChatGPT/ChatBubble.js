@@ -8,6 +8,7 @@ export default function ChatBubble() {
     const [inputValue, setInputValue] = useState("")
     const currentDate = new Date().toLocaleDateString
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleChatClick = () => {
       setIsModalOpen(true);
@@ -37,6 +38,8 @@ export default function ChatBubble() {
         message: inputValue
     })
 
+    setIsLoading(true);
+
     try {
         const response = await fetch(
             "/api/messages/",
@@ -46,9 +49,12 @@ export default function ChatBubble() {
                 body,
             }
         )
+
         if (!response.ok) {
             throw new Error("Network response was not ok");
         }
+
+        setIsLoading(false);
 
         const responseData = await response.json();
         const botResponse = responseData.message;
@@ -64,6 +70,7 @@ export default function ChatBubble() {
         setInputValue("")
         } catch (error) {
           console.error("Error:", error);
+          setIsLoading(false);
         }
     };
 
@@ -97,6 +104,7 @@ export default function ChatBubble() {
                   {message.text}
                 </div>
               ))}
+              {isLoading && <div className="message loading">Loading...</div>}
             </div>
             <div className="chat-footer">
               <form onSubmit={handleSubmit}>
