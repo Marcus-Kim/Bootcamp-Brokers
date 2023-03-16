@@ -1,9 +1,24 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import Stock
+from app.models import Stock, db
 
 stock_routes = Blueprint('stocks', __name__)
 apiKey = "CRN1I5X51XQTTFBH"
+
+@stock_routes.route('/update', methods=['POST'])
+@login_required
+def update_stock_prices():
+    """Route for updating stock prices in database
+    Expects and object with stock ticker as keys and price as values"""
+    data = request.json
+    stocks = Stock.query.all()
+
+    for stock in stocks:
+        # Find new price from request object
+        stock.current_price = data[f'{stock.ticker}']
+    db.session.commit()
+    return [s.to_dict() for s in stocks]
+
 
 # @stock_routes.route('/stock/news/<str:ticker>')
 # @login_required
