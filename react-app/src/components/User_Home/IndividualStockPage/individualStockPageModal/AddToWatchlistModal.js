@@ -5,11 +5,12 @@ import { useDispatch } from 'react-redux'
 import { useModal } from '../../../../context/Modal'
 
 function AddToWatchlistModal({ ticker, watchlists }) {
-  const watchlistArray = Object.values(watchlists)
+  const watchlistArray = Object.values(watchlists) // Array of watchlists
+  const filteredWatchlistArray = watchlistArray.filter(watchlist => !(watchlist.tickers.includes(ticker)))
   const [listValues, setListValues] = useState([]) // Array of watchlist IDs
   const dispatch = useDispatch()
   const { closeModal } = useModal()
-  console.log(listValues)
+  console.log(filteredWatchlistArray)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -37,7 +38,7 @@ function AddToWatchlistModal({ ticker, watchlists }) {
       </div>
       <form className='add-watchlist-modal-form' onSubmit={handleSubmit}>
         <div className='add-watchlist-modal-lists'>
-          {watchlistArray.map(watchlist => {
+          {filteredWatchlistArray.map(watchlist => {
             return (
               <label>
                 <input type='checkbox' checked={listValues.includes(watchlist.id)} onChange={e => handleCheckboxChange(e, watchlist)}/>
