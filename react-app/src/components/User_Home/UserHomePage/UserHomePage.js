@@ -20,7 +20,6 @@ import { thunkGetAllWatchlistsUserId } from '../../../store/watchlist';
 export default function UserHomePage() {
   const dispatch = useDispatch()
   const [price, setPrice] = useState(null)
-  const [hoverIndex, setHoverIndex] = useState(null);
   const [graph, setGraph] = useState([])
   const watchlists = useSelector(state => state.watchlist)
   const userId = useSelector(state => state.session.user?.id)
@@ -33,9 +32,10 @@ export default function UserHomePage() {
   yesterday.setDate(yesterday.getDate() - 1);
   const yesterdayString = yesterday.toISOString().substring(0, 10);
   const portfolio = useSelector(state => state.portfolio)
-
+  
 
   const historicalValues = Object.values(portfolio.historicalValues)
+  
   
   const verticalLinePlugin = {
     id: "verticalLine",
@@ -78,7 +78,7 @@ export default function UserHomePage() {
     let data = []
 
     historicalValues.forEach(ele => {
-      data.push({x: ele.x.split("00")[0], y: ele.y})
+      data.push({x: ele.x, y: ele.y})
     }) 
     console.log(data, 'data')
 
@@ -91,7 +91,7 @@ export default function UserHomePage() {
 
     //   data.push({x: date, y: value})
     // }
-    setGraph(data)
+    setGraph(data.slice(0, 100))
   }
   
   useEffect(() => {
