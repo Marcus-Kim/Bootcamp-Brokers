@@ -39,7 +39,7 @@ export default function History() {
           <div className="recent-container">
             <div className="header">Recent</div>
             { transactionsArray.map(transaction => (
-              <div key={transaction.id}>
+              <div className="hover-transaction" key={transaction.id}>
                 <hr className="break"/>
                 <div
                   className="transaction-card"

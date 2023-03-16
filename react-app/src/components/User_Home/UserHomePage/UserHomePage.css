@@ -135,6 +135,10 @@
     padding: 25px;
 }
 
+.news-card:hover {
+    background-color: #F5F8FA;
+}
+
 .news-image {
     height: 85px;
     width: 140px;
