@@ -65,7 +65,10 @@ export default function UserHomePage() {
       const dataIndex = active[0].index;
       const datasetIndex = active[0].datasetIndex;
       const value = chart.data.datasets[datasetIndex].data[dataIndex];
+      const firstValue = chart.data.datasets[datasetIndex].data[0];
+      const profitLossValue = value - firstValue;
       setPrice(value);
+      setProfitLoss(profitLossValue);
     }
   };
 
@@ -199,15 +202,15 @@ export default function UserHomePage() {
 
   // Change data displayed on chart
   const displayDailyView = () => {
-    setGraph(historicalValues.slice(-100, historicalValues.length))
+    setGraph(historicalValues.slice(-300, historicalValues.length))
   }
 
   const displayWeeklyView = () => {
-    setGraph(historicalValues.slice(-200, historicalValues.length))
+    setGraph(historicalValues.slice(-450, historicalValues.length))
   }
 
   const displayMonthlyView = () => {
-    setGraph(historicalValues.slice(-300, historicalValues.length))
+    setGraph(historicalValues.slice(-600, historicalValues.length))
   }
 
   const displayThreeMonthView = () => {
