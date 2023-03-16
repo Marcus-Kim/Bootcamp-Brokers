@@ -4,6 +4,7 @@ from app.models import Transaction
 from ..models.db import db
 
 
+
 transaction_routes = Blueprint('transactions', __name__)
 
 # Get all transactions of logged in user

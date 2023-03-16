@@ -15,12 +15,12 @@ const actionGetAllTransactionsByTicker = (transactions) => ({
 
 // Thunks
 export const thunkGetTransactionsByUserId = () => async (dispatch) => {
-    const response = await fetch(`/api/transactions`)
+    const response = await fetch(`/api/transactions/`)
     if (response.ok) {
         const userTransactions = await response.json();
         const normalizedTransactions = {}
         userTransactions.forEach(transaction => {
-            normalizedTransactions[transaction.ticker_id] = transaction
+            normalizedTransactions[transaction.id] = transaction
         })
         await dispatch(actionGetTransactionsByUserId(normalizedTransactions))
         return normalizedTransactions

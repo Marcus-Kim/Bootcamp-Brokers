@@ -1,25 +1,28 @@
 .history-container {
-    
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    max-width: 678px;
+    width: 100%;
 }
-
-
 
 .name-container {
     font-size: 32px;
     font-family: sans-serif;
     font-weight: 500;
-    margin-left: 15%;
-    margin-right: 15%;
 }
 
 .recent-container {
     font-size: 24px;
     font-family: sans-serif;
     margin-top: 30px;
-
 }
 
-.main-container {
-    margin-left: 15%;
-    margin-right: 25%;
+.ticker-id {
+    font-weight: 700;
+}
+
+.transaction-card {
+    display: flex;
+    font-size: 15px;
 }
