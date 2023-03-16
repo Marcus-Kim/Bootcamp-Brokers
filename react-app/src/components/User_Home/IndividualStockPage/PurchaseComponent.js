@@ -70,7 +70,7 @@ export default function PurchaseComponent({ ticker, user, close }) {
                             {`$ ${Number(close * shares).toFixed(2)}`}
                         </div>
                     </div>
-                    <div>
+                    <div className="purchase-error">
                         {hasSubmitted && errors.length > 0 && errors.map(error => (
                             <li key={error}>
                                 {error}

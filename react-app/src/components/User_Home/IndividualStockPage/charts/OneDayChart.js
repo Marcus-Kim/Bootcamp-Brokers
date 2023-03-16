@@ -85,9 +85,18 @@ export default function OneDayChart({ ticker, close }) {
             pointHoverRadius: 6,
         }],
         options:{
+
             responsive: true,
             hover: {
                 intersect: false
+            },
+            elements: {
+                line: {
+                    tension: 0
+                },
+                point: {
+                    radius: 0,
+                }
             },
             scales:{
                 x: {
@@ -101,7 +110,27 @@ export default function OneDayChart({ ticker, close }) {
             plugins: {
                 legend: {
                     display: false,
-                }
+                },
+                tooltip: {
+                    enabled: true,
+                    mode: 'index',
+                    axis: 'x',
+                    intersect: false,
+                    position: 'nearest',
+                    callbacks: {
+                        title: function () {
+                        // Return an empty string to remove the title from the tooltip
+                            return '';
+                        },
+                      label: function (context) {
+                        // Get the corresponding x value (time) from the context
+                        const timeValue = context.chart.data.labels[context.dataIndex];
+
+                        // Return the timeValue directly
+                        return `${timeValue}`;
+                      },
+                    },
+                },
             },
             interaction: {
                 intersect: false
