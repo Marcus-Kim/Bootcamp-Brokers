@@ -15,7 +15,7 @@ const GET_RANDOM_STOCK_NEWS = 'stocks/GET_RANDOM_STOCK_NEWS'
 const GET_SPY = 'stocks/GET_SPY'
 const GET_NASDAQ = 'stocks/GET_NASDAQ'
 const GET_ONE_YEAR_CHART_DATA = "/stocks/GET_ONE_YEAR_CHART_DATA"
-
+const GET_ALL_28_STOCKS = "/stocks/GET_ALL_28_STOCKS"
 
 //actions
 const actionGetStockIntraday = (stocks) => ({
@@ -23,10 +23,16 @@ const actionGetStockIntraday = (stocks) => ({
     stocks
 })
 
+const actionGetAll28Stocks = (stocks) => ({
+    type: GET_ALL_28_STOCKS,
+    stocks
+})
+
 const actionGetStockDaily = (stocks) => ({
     type: GET_STOCK_DAILY,
     stocks
 })
+
 
 const actionGetStockWeekly = (stocks) => ({
     type: GET_STOCK_WEEKLY,
@@ -79,6 +85,20 @@ const actionGetNasdaq = (stocks) => ({
     stocks
 })
 
+const allTickers = [
+    'TSLA', 'AAPL', 'AMZN', 
+    'GOOG', 'CRM', 'AMD', 
+    'NVDA', 'KO', 'BBY', 
+    'IBM', 'CRSP', 'COIN',
+    'HOOD', 'MSFT', 'AI', 
+    'LULU', 'NKE', 'GME', 
+    'AMC', 'BBBY', 'BB', 
+    'T', 'SPY', 'QQQ', 
+    'BEAM', 'APLS', 'CRBU', 
+    'VRTX'
+  ]
+
+
 // thunks
 export const thunkGetStockNews = ticker => async (dispatch) => {
     const response = await fetch(`https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=${ticker}&apikey=${apiKey}`)
@@ -89,6 +109,34 @@ export const thunkGetStockNews = ticker => async (dispatch) => {
         return stockNews
     }
 }
+
+export const thunkGetAll28Stocks = () => async(dispatch) => {
+    const allStockData = {};
+
+    // Use Promise.all to wait for all API requests to finish
+    await Promise.all(
+        allTickers.map(async ticker => {
+            const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${ticker}&interval=1min&apikey=${apiKey}`);
+
+            if (response.ok) {
+                const stockData = await response.json();
+
+                const timeSeriesKey = "Time Series (1min)";
+                const closingPriceKey = "4. close";
+                const latestTimestamp = Object.keys(stockData[timeSeriesKey])[0];
+                const closingPrice = parseFloat(stockData[timeSeriesKey][latestTimestamp][closingPriceKey]);
+
+                allStockData[ticker] = closingPrice;
+            }
+        })
+    );
+
+    // Dispatch the action with all stock data
+    dispatch(actionGetAll28Stocks(allStockData));
+};
+
+
+
 
 export const thunkGetStockIntraDay = (ticker, interval) => async (dispatch) => {
     const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${ticker}&interval=${interval}&apikey=${apiKey}`)
@@ -213,7 +261,8 @@ const initialState = {
     Nasdaq: {},
     oneWeekChartData: {},
     oneMonthChartData: {},
-    oneYearChartData: {}
+    oneYearChartData: {},
+    all28Stocks: {}
 }
 
 // reducers
@@ -222,6 +271,11 @@ export default function stocksReducer(state = initialState, action) {
         case GET_STOCK_INTRADAY: {
             const newState = {...state}
             newState.stockIntraDay = {...state.stockIntraDay, ...action.stocks}
+            return newState
+        }
+        case GET_ALL_28_STOCKS: {
+            const newState = {...state}
+            newState.all28Stocks = {...state.all28Stocks, ...action.stocks}
             return newState
         }
         case GET_STOCK_DAILY: {

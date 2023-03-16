@@ -49,7 +49,6 @@ export default function UserHomePageNav() {
     const handleSearch = (e) => {
         e.preventDefault()
         navigate(`/stocks/${searchValue}`)
-
     }
 
     return (
