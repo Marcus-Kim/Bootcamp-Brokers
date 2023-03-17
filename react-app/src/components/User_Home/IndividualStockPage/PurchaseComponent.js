@@ -190,10 +190,11 @@ export default function PurchaseComponent({ ticker, user, close }) {
                             { buySelected ? 'Buy Market Order' : 'Sell Market Order'}
                         </div>
                     </div>
-                    <div style= {{ display: "flex", justifyContent: "space-between", borderBottom: "solid 1px rgb(172, 171, 171)" }}>
+                    <div style= {{ display: "flex", justifyContent: "space-between", borderBottom: "solid 1px #E3E9ED", paddingBottom: 5 }}>
                         <div className="left-shares-div">Shares</div>
                         <div className="right-shares-div">
                             <input
+                                style={{paddingRight: '12px', backgroundColor: 'rgb(245, 248, 250)', width: 136}}
                                 className="shares-input"
                                 type="number"
                                 min="1"

@@ -98,9 +98,13 @@ export default function IndividualStockPage() {
         <>
         <UserNav />
         <div className="stock-page-main-container">
-            <h1>{stockFundamentals["Symbol"]}</h1>
-            <div style={{ gap: "7px" }}>
+            <div className="topleft-individualprice-container">
+            <div style={{fontFamily: 'sans-serif', fontSize: '32px'}}>{stockFundamentals["Symbol"]}</div>
                 <div style={{ width: "700px" }}>{ chartObj[chart] }</div>
+                
+            </div>
+
+            <div className='individualstockpage-timeline'>
                 <button className="stock-timeline" onClick={() => setChart("1D")}>1D</button>
                 <button className="stock-timeline" onClick={() => setChart("1W")}>1W</button>
                 <button className="stock-timeline" onClick={() => setChart("1M")}>1M</button>
@@ -110,7 +114,7 @@ export default function IndividualStockPage() {
             </div>
 
             <div className="key-stat-title-div">About</div>
-            <p>
+            <p style={{fontSize: '15px', fontWeight: 400, textDecorationThickness: 'auto', fontFamily: 'Helvetica'}}>
                 {stockFundamentals["Description"]}
             </p>
             <div className="key-stats-container">
@@ -119,39 +123,39 @@ export default function IndividualStockPage() {
                  </div>
                  <div className="stat-value-container">
                     <div className="stat-box">
-                        <div>Market Cap </div>
-                        <div>{convertMarketCap(stockFundamentals["MarketCapitalization"])}</div>
+                        <div className="actual-stat">Market Cap </div>
+                        <div className="true-stat">{convertMarketCap(stockFundamentals["MarketCapitalization"])}</div>
                     </div>
                     <div className="stat-box">
-                        <div>Price-Earning ratio </div>
-                        <div>{stockFundamentals["PERatio"]}</div>
+                        <div className="actual-stat">Price-Earning ratio </div>
+                        <div className="true-stat">{stockFundamentals["PERatio"]}</div>
                     </div>
                     <div className="stat-box">
-                        <div>Volume </div>
-                        <div>{Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["6. volume"]).toLocaleString()}</div>
+                        <div className="actual-stat">Volume </div>
+                        <div className="true-stat">{Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["6. volume"]).toLocaleString()}</div>
                     </div>
                     <div className="stat-box">
-                        <div>Dividend yield </div>
-                        <div>{+stockFundamentals["DividendYield"] !== 0
+                        <div className="actual-stat">Dividend yield </div>
+                        <div className="true-stat">{+stockFundamentals["DividendYield"] !== 0
                                 ? `${Number(+stockFundamentals["DividendYield"] * 100).toFixed(2)} %`
                                 : "--"
                         }</div>
                     </div>
                     <div className="stat-box">
-                        <div>Today High </div>
-                        <div>${Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["2. high"]).toFixed(2)}</div>
+                        <div className="actual-stat">Today High </div>
+                        <div className="true-stat">${Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["2. high"]).toFixed(2)}</div>
                     </div>
                     <div className="stat-box">
-                        <div>Today Low </div>
-                        <div>${Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["3. low"]).toFixed(2)}</div>
+                        <div className="actual-stat">Today Low </div>
+                        <div className="true-stat">${Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["3. low"]).toFixed(2)}</div>
                     </div>
                     <div className="stat-box">
-                        <div>Today Open </div>
-                        <div>${Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["1. open"]).toFixed(2)}</div>
+                        <div className="actual-stat">Today Open </div>
+                        <div className="true-stat">${Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["1. open"]).toFixed(2)}</div>
                     </div>
                     <div className="stat-box">
-                        <div>Today Close </div>
-                        <div>${Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["4. close"]).toFixed(2)}</div>
+                        <div className="actual-stat">Today Close </div>
+                        <div className="true-stat">${Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["4. close"]).toFixed(2)}</div>
                     </div>
                 { (tickers.includes(tickerCap))
                     ? <PurchaseComponent ticker={tickerCap} user={user} close={close} />
@@ -232,12 +236,7 @@ export default function IndividualStockPage() {
 //                     </div>
 //                     <div>
 //                         <div>Dividend yield </div>
-//                         <div>${data["Time Series (Daily)"]["2023-03-08"]["7. dividend amount"]}</div>
-//                     </div>
-//                     <div className="stat-box">
-//                         <div>Yesterday High </div>
-//                         <div>${data["Time Series (Daily)"]["2023-03-08"]["2. high"]}</div>
-//                     </div>
+//                         <div>${data["Time Series (Daily)"]["2023-03-08"]["7. dividend amount"]}
 //                     <div>
 //                         <div>Yesterday Low </div>
 //                         <div>${data["Time Series (Daily)"]["2023-03-08"]["3. low"]}</div>

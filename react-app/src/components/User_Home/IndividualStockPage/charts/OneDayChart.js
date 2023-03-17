@@ -144,7 +144,7 @@ export default function OneDayChart({ ticker, close }) {
     return (
         <div>
             {/* <h3>OneDayData Component Loaded!</h3> */}
-            <div>{`$ ${Number(price).toFixed(2)}`}</div>
+            <div className="chart-price">{`$${Number(price).toFixed(2)}`}</div>
             <Line data={chartData} options={chartData.options} ></Line>
             {/* <p>{ ticker }</p> */}
         </div>
