@@ -54,7 +54,7 @@ function Watchlists({ watchlists, activeWatchlistId }) {
 
   // *VARIABLES
   const watchlistArray = Object.values(watchlists)
-
+  if (!watchlistArray.length) return null;
   // *HANDLERS
   const handleCreateList = async (e) => { // Create list handler
     e.preventDefault()
@@ -137,7 +137,7 @@ function Watchlists({ watchlists, activeWatchlistId }) {
 
               </div>
               <div>
-              {openedLists[watchlist.id] && watchlist.tickers.length &&
+              {openedLists[watchlist.id] && watchlist.tickers.length !== 0 &&
                 watchlist.tickers.map((ticker) => {
                   const stockData = markusKim[ticker];
                   if (!stockData) {
