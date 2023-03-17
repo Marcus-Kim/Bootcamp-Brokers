@@ -3,19 +3,22 @@ import { useNavigate } from 'react-router-dom'
 import { useModal } from '../../../context/Modal'
 import { thunkDeleteWatchlistById } from '../../../store/watchlist'
 import './watchlistModal.css'
+import { useParams } from 'react-router-dom'
 
-
-function DeleteWatchlistModal({ watchlist, activeWatchlistId }) {
+function DeleteWatchlistModal({ watchlist, watchlistId }) {
   const watchlistName = watchlist.list_name
   const dispatch = useDispatch()
   const { closeModal } = useModal()
   const navigate = useNavigate()
 
+  console.log('WatchlistID Param: ', +watchlistId)
+  console.log('Watchlist.id: ', watchlist.id)
+
   const handleDeleteClick = async () => {
-    if (watchlist.id === activeWatchlistId) {
-      await dispatch(thunkDeleteWatchlistById(watchlist.id)).then(closeModal()).then(navigate('/home'));
+    if (watchlist.id === +watchlistId) {
+      await dispatch(thunkDeleteWatchlistById(watchlist.id)).then(() => closeModal()).then(() => navigate('/home'));
     } else {
-      await dispatch(thunkDeleteWatchlistById(watchlist.id)).then(closeModal());
+      await dispatch(thunkDeleteWatchlistById(watchlist.id)).then(() => closeModal());
     }
   }
 
