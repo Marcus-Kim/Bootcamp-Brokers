@@ -20,8 +20,6 @@ export default function WatchlistDetails() {
   const selectedWatchlistStocks = useSelector(state => state.watchlist[+watchlistId]?.stocks)
   const { markusKim } = useFinanceAPI();
 
-  console.log('MARKUS KIM: ', markusKim)
-
   useEffect(() => {
     dispatch(thunkGetAllWatchlistsUserId(user))
   }, [dispatch])
