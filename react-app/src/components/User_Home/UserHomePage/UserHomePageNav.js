@@ -12,14 +12,25 @@ import { faHandHoldingDollar } from '@fortawesome/free-solid-svg-icons';
 import { faClockRotateLeft } from '@fortawesome/free-solid-svg-icons'
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { logout } from '../../../store/session'
+import { thunkGetNasdaq } from '../../../store/stock';
+import { thunkGetSPY } from '../../../store/stock';
+import { thunkGetRandomStockNews } from '../../../store/stock'
+import { thunkGetAllWatchlistsUserId } from '../../../store/watchlist';
+import { thunkCreatePortfolioSnapshot, thunkGetPortfolioHistoricalValues, thunkGetPortfolioHoldings, thunkGetUserPortfolio } from '../../../store/portfolio';
+import { thunkGetAll28Stocks } from "../../../store/stock";
+import { thunkGetBTCPrice } from '../../../store/stock';
 
 
 export default function UserHomePageNav() {
     const [searchValue, setSearchValue] = useState("")
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const user = useSelector(state => state.session)
+    const user = useSelector(state => state?.session)
     const userArray = Object.values(user)
+    const userId = useSelector(state => state.session.user?.id)
+    const [isLoaded, setIsLoaded] = useState(false)
+    const stocks = useSelector(state => state.stocks.all28Stocks)
+
     
 
     const [dropdownVisible, setDropdownVisible] = useState(false)
@@ -51,55 +62,85 @@ export default function UserHomePageNav() {
         navigate(`/stocks/${searchValue}`)
     }
 
+
+    useEffect(() => {
+        const fetchAsync = async () => {
+          await dispatch(thunkGetBTCPrice());
+          await dispatch(thunkGetNasdaq());
+          await dispatch(thunkGetSPY());
+          await dispatch(thunkGetRandomStockNews());
+          await dispatch(thunkGetAllWatchlistsUserId(userId));
+          await dispatch(thunkGetPortfolioHistoricalValues());
+          await dispatch(thunkGetPortfolioHoldings());
+          await dispatch(thunkGetUserPortfolio());
+          await dispatch(thunkGetAllWatchlistsUserId(userId));
+          await dispatch(thunkCreatePortfolioSnapshot());
+          await dispatch(thunkGetAll28Stocks());
+          setIsLoaded(true);
+        };
+        fetchAsync();
+      }, [dispatch]);
+
+      if (!stocks) return null
+
     return (
-        <div className="home-container">
-            <div style={{marginBottom: '30px'}} className="homepage-navigationcontainer">
-                <NavLink to="/home">
-                <img className='logo' src={logo} alt="logo" />
-                </NavLink>
-                <form className="search-bar" onSubmit={handleSearch}>
-                    <input 
-                    className="searching"
-                    type="text" 
-                    value={searchValue}
-                    onChange={(e) => setSearchValue(e.target.value)}
-                    placeholder="Search..."
-                    />
-                </form>
-                
-                
-                <span className="homepage-rightcontainer">
-                    <NavLink className="home-nav">Rewards</NavLink>
-                    <NavLink className="home-nav">Investing</NavLink>
-                    <NavLink className="home-nav">Spending</NavLink>
-                    <NavLink className="home-nav">Retirement</NavLink>
-                    <NavLink className="home-nav">Notifications</NavLink>
-                    <div className="dropdown-container">
-                        <NavLink style={{borderStyle: 'none', backgroundColor: 'white', padding: 'none'}} onClick={toggleDropdown} className="home-nav account">Account</NavLink>
-                        {dropdownVisible && (
-                            <div className="dropdown-menu" onClick={hideDropdown}>
-                                <div className="dropper">
-                                    <div className="dropdown-nav">{userArray[0].username}</div>
-                                    <div style={{width: '93%'}}>
-                                    <hr style={{borderColor: 'light gray'}} />
-                                    </div>
-                                    <NavLink to="/profile" className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faSmile}/> Profile</NavLink>
-                                    <NavLink to="/investing" className="dropdown-nav"><FontAwesomeIcon className="dropdown-hand" icon={faHandHoldingDollar} />Investing</NavLink>
-                                    <NavLink to="/history" className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faClockRotateLeft} />History</NavLink>
-                                    <NavLink className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faPhone}/> Support</NavLink>
-                                    <button 
-                                    onClick={handleLogout}
-                                    className="dropdown-logout"><FontAwesomeIcon className="dropdown-icon" icon={faArrowRightFromBracket}/>
-                                    Logout
-                                    </button>
-                                </div>
-                                
-                            </div>
-                        )}
-                    </div>
-                </span>
-            </div>
-            <UserHomePage/>
-        </div>
+        <>
+        
+        {isLoaded && (
+             <div className="home-container">
+             <div style={{marginBottom: '30px'}} className="homepage-navigationcontainer">
+                 <NavLink to="/home">
+                 <img className='logo' src={logo} alt="logo" />
+                 </NavLink>
+                 <form className="search-bar" onSubmit={handleSearch}>
+                     <input 
+                     className="searching"
+                     type="text" 
+                     value={searchValue}
+                     onChange={(e) => setSearchValue(e.target.value)}
+                     placeholder="Search..."
+                     />
+                 </form>
+                 
+                 
+                 <span className="homepage-rightcontainer">
+                     <NavLink className="home-nav">Rewards</NavLink>
+                     <NavLink className="home-nav">Investing</NavLink>
+                     <NavLink className="home-nav">Spending</NavLink>
+                     <NavLink className="home-nav">Retirement</NavLink>
+                     <NavLink className="home-nav">Notifications</NavLink>
+                     <div className="dropdown-container">
+                         <NavLink style={{borderStyle: 'none', backgroundColor: 'white', padding: 'none'}} onClick={toggleDropdown} className="home-nav account">Account</NavLink>
+                         {dropdownVisible && (
+                             <div className="dropdown-menu" onClick={hideDropdown}>
+                                 <div className="dropper">
+                                     <div className="dropdown-nav">{userArray[0].username}</div>
+                                     <div style={{width: '93%'}}>
+                                     <hr style={{borderColor: 'light gray'}} />
+                                     </div>
+                                     <NavLink to="/profile" className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faSmile}/> Profile</NavLink>
+                                     <NavLink to="/investing" className="dropdown-nav"><FontAwesomeIcon className="dropdown-hand" icon={faHandHoldingDollar} />Investing</NavLink>
+                                     <NavLink to="/history" className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faClockRotateLeft} />History</NavLink>
+                                     <NavLink className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faPhone}/> Support</NavLink>
+                                     <button 
+                                     onClick={handleLogout}
+                                     className="dropdown-logout"><FontAwesomeIcon className="dropdown-icon" icon={faArrowRightFromBracket}/>
+                                     Logout
+                                     </button>
+                                 </div>
+                                 
+                             </div>
+                         )}
+                     </div>
+                 </span>
+             </div>
+             <UserHomePage/>
+         </div>
+        )
+           
+        }
+
+        
+        </>
     )
 }

@@ -105,27 +105,11 @@ export default function UserHomePage() {
   const displayAllView = () => {
     setGraph(historicalValues.slice(-2000, historicalValues.length))
   }
+
   useEffect(() => {
-    const fetchAsync = () => {
-      new Promise((resolve) => {
-        displayDailyView();
-        resolve();
-      })
-        .then(() => dispatch(thunkGetBTCPrice()))
-        .then(() => dispatch(thunkGetNasdaq()))
-        .then(() => dispatch(thunkGetSPY()))
-        .then(() => dispatch(thunkGetRandomStockNews()))
-        .then(() => dispatch(thunkGetAllWatchlistsUserId(userId)))
-        .then(() => dispatch(thunkGetPortfolioHistoricalValues()))
-        .then(() => dispatch(thunkGetPortfolioHoldings()))
-        .then(() => dispatch(thunkGetUserPortfolio()))
-        .then(() => dispatch(thunkGetAllWatchlistsUserId(userId)))
-        .then(() => dispatch(thunkCreatePortfolioSnapshot()))
-        .then(() => dispatch(thunkGetAll28Stocks()))
-        setIsLoaded(true);
-    };
-    fetchAsync();
-  }, [dispatch]);
+    displayDailyView()
+  },[])
+ 
 
   if (!portfolio) return null
   if (!historicalValues.length) return null
@@ -249,10 +233,7 @@ export default function UserHomePage() {
 
 
   return (
-    <>
-
-{isLoaded &&
-(
+  
 <div className="homepage-container">
 <div className="portfolio-container">
 <div className="chart-container">
@@ -372,8 +353,6 @@ export default function UserHomePage() {
 <Watchlists watchlists={watchlists} />
 </div>
 </div>
-)}
-    </>
 
   )
 
