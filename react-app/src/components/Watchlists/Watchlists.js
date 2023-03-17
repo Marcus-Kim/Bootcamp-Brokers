@@ -11,8 +11,7 @@ import DeleteWatchlistModal from './WatchlistModals/DeleteWatchlistModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { useFinanceAPI } from '../../context/FinanceApiContext';
-import OneDayChart from '../User_Home/IndividualStockPage/charts/OneDayChart';
-import Chart from './WatchlistChart';
+import WatchlistChart from './WatchlistChart';
 
 function Watchlists({ watchlists, activeWatchlistId }) {
   // *ENABLERS
@@ -149,9 +148,9 @@ function Watchlists({ watchlists, activeWatchlistId }) {
                   return (
                     <div className='watchlist-stock-container-home'>
                       <div className='watchlist-stock-name-home'>{ticker}</div>
-                      <div className='watchlist-graph-home'>
+                      <div className="watchlist-graph-home">
                         {/* CHART GOES HERE */}
-                        {/* <Chart /> */}
+                        <WatchlistChart ticker={ticker}/>
                       </div>
                       <div className='watchlist-stock-price-daily-container'>
                         <div className='watchlist-stock-price-home'>${markusKim[ticker].dailyPrice.close}</div>
