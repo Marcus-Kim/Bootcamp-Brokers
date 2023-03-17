@@ -5,7 +5,7 @@ from sqlalchemy.sql import text
 # Adds demo portfolios, you can add other portfolios here if you want
 def seed_portfolios():
     portfolios = [
-        {'user_id': 1, 'cash_balance': 1000, 'initial_principle': 1000},
+        {'user_id': 1, 'cash_balance': 10000, 'initial_principle': 10000},
         {'user_id': 2, 'cash_balance': 2000, 'initial_principle': 2000},
         {'user_id': 3, 'cash_balance': 3000, 'initial_principle': 3000},
     ]

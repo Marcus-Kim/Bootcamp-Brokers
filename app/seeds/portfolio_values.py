@@ -33,7 +33,7 @@ def generate_portfolio_values(portfolio_id, start_date, end_date, min_balance, m
                     'y': new_price
                 })
 
-            current_time += timedelta(minutes=5)
+            current_time += timedelta(minutes=15)
 
     return portfolio_values
 
