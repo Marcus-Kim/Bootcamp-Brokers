@@ -9,8 +9,10 @@ import WatchlistModalButton from './WatchlistModals/WatchlistModal';
 import RenameWatchlistModal from './WatchlistModals/RenameWatchlistModal';
 import DeleteWatchlistModal from './WatchlistModals/DeleteWatchlistModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
-import { faGear } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faEllipsis } from '@fortawesome/free-solid-svg-icons';
+import { useFinanceAPI } from '../../context/FinanceApiContext';
+import OneDayChart from '../User_Home/IndividualStockPage/charts/OneDayChart';
+import Chart from './WatchlistChart';
 
 function Watchlists({ watchlists, activeWatchlistId }) {
   // *ENABLERS
@@ -18,6 +20,8 @@ function Watchlists({ watchlists, activeWatchlistId }) {
   const dispatch = useDispatch()
   const componentRef = useRef();
   const location = useLocation()
+  const { markusKim } = useFinanceAPI()
+  console.log(markusKim)
   // *USE SELECTORS
   const user = useSelector(state => state.session.user.id)
 
@@ -26,6 +30,8 @@ function Watchlists({ watchlists, activeWatchlistId }) {
   const [listName, setListName] = useState('');
   const [openDropdown, setOpenDropdown] = useState(null)
   const [showList, setShowList] = useState(false);
+  const [openedLists, setOpenedLists] = useState({});
+
 
   // *USE_EFFECTS
   useEffect(() => {
@@ -93,6 +99,13 @@ function Watchlists({ watchlists, activeWatchlistId }) {
     e.stopPropagation()
   }
 
+  const handleListToggle = (watchlistId) => {
+    setOpenedLists((prevState) => ({
+      ...prevState,
+      [watchlistId]: !prevState[watchlistId]
+    }));
+  };
+
   if (location.pathname === '/home') {
     return (
       <div className='watchlists-container-home' ref={componentRef}>
@@ -112,19 +125,43 @@ function Watchlists({ watchlists, activeWatchlistId }) {
       <div className='watchlists-list-home'>
         {watchlistArray.map(watchlist => {
           return(
-            <div className='watchlist-item-home' onClick={e => navigate(`/watchlists/${watchlist.id}`)} key={watchlist.id}>
-              <div className='watchlist-item-name-home' >{watchlist.list_name}</div>
-              <button className='watchlist-edit-button-home'>
-                Edit
-              </button>
-              <div className='watchlist-list-edit-dropdown-home' onClick={e => stopPropagation(e)}>
-                {showList && watchlist.tickers.map(ticker => {
-                  return (
-                    <div>Hello</div>
-                  )
-                })}
+            <>
+              <div className='watchlist-item-home' onClick={e => navigate(`/watchlists/${watchlist.id}`)} key={watchlist.id}>
+                <div className='watchlist-item-name-home' >{watchlist.list_name}</div>
+                <FontAwesomeIcon
+                  className='watchlist-edit-button-home'
+                  icon={faAngleDown}
+                  onClick={(e) => {
+                    stopPropagation(e);
+                    handleListToggle(watchlist.id);
+                  }}
+                />
+                <div className='watchlist-list-edit-dropdown-home' onClick={e => stopPropagation(e)}></div>
+
               </div>
-            </div>
+              <div>
+              {openedLists[watchlist.id] &&
+                watchlist.tickers.map((ticker) => {
+                  const stockData = markusKim[ticker];
+                  if (!stockData) {
+                    return null;
+                  }
+                  return (
+                    <div className='watchlist-stock-container-home'>
+                      <div className='watchlist-stock-name-home'>{ticker}</div>
+                      <div className='watchlist-graph-home'>
+                        {/* CHART GOES HERE */}
+                        {/* <Chart /> */}
+                      </div>
+                      <div className='watchlist-stock-price-daily-container'>
+                        <div className='watchlist-stock-price-home'>${markusKim[ticker].dailyPrice.close}</div>
+                        <div className='watchlist-stock-daily-home'>{markusKim[ticker].dailyPrice.percentageChange.toFixed(2)}%</div>
+                      </div>
+                    </div>
+                  )
+              })}
+              </div>
+            </>
           )
         })}
       </div>

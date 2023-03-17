@@ -51,7 +51,8 @@
 
 .watchlist-item-home {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  padding: 0px 23px;
   height: 59px;
   align-items: center;
   position: relative;
@@ -62,9 +63,14 @@
   background-color: rgb(245,248,250);
   border-radius: 2px;
 }
-
 .watchlist-edit-button-home {
-
+  padding: 5px;
+  border-radius: 5px;
+  position: relative;
+  right: -30px
+}
+.watchlist-edit-button-home:hover {
+  background-color: rgb(214, 229, 240);
 }
 
 .create-watchlist-form-home {
@@ -158,4 +164,60 @@
 
 .watchlist-modal-button {
   z-index: 9999;
+}
+
+.watchlist-stock-container-home {
+  height: 60px;
+  padding: 0px 23px;
+  display: flex;
+}
+
+.watchlist-stock-container-home:hover {
+  background-color: rgb(245,248,250);
+  cursor: pointer;
+}
+
+.watchlist-stock-name-home {
+  display: flex;
+  align-items: center;
+  width: 35%;
+  max-width: 100px;
+  font-size: small;
+  font-weight: bold;
+}
+
+.watchlist-graph-home {
+  display: flex;
+  align-items: center;
+  width: 30%
+}
+
+.watchlist-stock-price-daily-container {
+  display: flex;
+  flex-direction: column;
+  width: 35%
+}
+
+.watchlist-stock-price-home {
+  font-size: small;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  height: 50%;
+  justify-content: end;
+}
+
+.watchlist-stock-daily-home {
+  font-size: small;
+  font-weight: 700;
+  display: flex;
+  align-items: start;
+  height: 50%;
+  justify-content: end;
+  color: rgb(0,183,5);
+}
+
+.watchlist-graph-home {
+  height: 100px;
+  width: 100px;
 }
