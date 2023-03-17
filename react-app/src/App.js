@@ -34,26 +34,20 @@ function App() {
   yesterday.setDate(yesterday.getDate() - 1);
   const yesterdayString = yesterday.toISOString().substring(0, 10);
 
-  
+
 
   useEffect(() => {
-    
+
     const fetchData = async () => {
 
       await dispatch(authenticate());
-      await dispatch(thunkGetPortfolioHistoricalValues());
-      await dispatch(thunkGetPortfolioHoldings());
-      await dispatch(thunkGetUserPortfolio());
-      await dispatch(thunkGetAllWatchlistsUserId(userId));
-      await dispatch(thunkCreatePortfolioSnapshot()); 
-      await dispatch(thunkGetAll28Stocks())
       setIsLoaded(true)
     }
     fetchData()
 
   }, [dispatch]);
-  
-  
+
+
 
   return (
     <>
@@ -62,7 +56,7 @@ function App() {
 
       {isLoaded && (
         <Routes>
-          
+
           <Route exact path ="/" element={<SplashPage/>}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/learn" element={<Learn />}></Route>
