@@ -122,7 +122,7 @@ function Watchlists({ watchlists, activeWatchlistId }) {
       <div className='watchlists-list-home'>
         {watchlistArray.map(watchlist => {
           return(
-            <>
+            <div key={watchlist.id}>
               <div className='watchlist-item-home' onClick={e => navigate(`/watchlists/${watchlist.id}`)} key={watchlist.id}>
                 <div className='watchlist-item-name-home' >{watchlist.list_name}</div>
                 <FontAwesomeIcon
@@ -144,7 +144,7 @@ function Watchlists({ watchlists, activeWatchlistId }) {
                     return null;
                   }
                   return (
-                    <div className='watchlist-stock-container-home'>
+                    <div className='watchlist-stock-container-home' key={ticker}>
                       <div className='watchlist-stock-name-home'>{ticker}</div>
                       <div className="watchlist-graph-home">
                         {/* CHART GOES HERE */}
@@ -158,7 +158,7 @@ function Watchlists({ watchlists, activeWatchlistId }) {
                   )
               })}
               </div>
-            </>
+            </div>
           )
         })}
       </div>
