@@ -90,6 +90,31 @@
 
 .watchlist-details-stock-delete-button {
   position: relative;
-  top: 17px;
+  top: 19px;
   cursor:inherit;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.watchlist-details-stock-delete-button:hover {
+  background-color: rgb(252, 179, 179);
+}
+
+.watchlist-details-buttons-conatiner {
+  display: flex;
+  column-gap: 15px;
+  font-size: large;
+  align-items: end;
+  padding-right: 10px;
+}
+
+.watchlist-details-filters-button,
+.watchlist-details-more-button {
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.watchlist-details-more-button:hover,
+.watchlist-details-filters-button:hover {
+  background-color: rgb(227,233,237);
 }
