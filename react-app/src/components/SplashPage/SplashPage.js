@@ -16,7 +16,10 @@ import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons'
-
+import brian from "./profile-images/brian-anime.png"
+import marcus from "./profile-images/marcus-anime.png"
+import jason from "./profile-images/jason-anime.png"
+import will from "./profile-images/will-anime.png"
 
 
 
@@ -141,7 +144,7 @@ export default function SplashPage() {
           <div className='developer-card-container'>
             <div className='developer-card'>
               <div className='name-div'>Brian Khoo</div>
-              <img className='developer-image' src="https://avatars.githubusercontent.com/u/102838003?v=4" />
+              <img className='developer-image' src={brian} />
               <div className='developer-linkedin-github'>
                 <div >
                   <NavLink className='linkedIn-github' to={"https://www.linkedin.com/in/brian-khoo-4121b087/"}>
@@ -160,7 +163,7 @@ export default function SplashPage() {
             </div>
             <div className='developer-card'>
               <div className='name-div'>Marcus Kim</div>
-              <img className='developer-image' src="https://avatars.githubusercontent.com/u/65346154?v=4" />
+              <img className='developer-image' src={marcus} />
               <div className='developer-linkedin-github'>
                 <div >
                   <NavLink className='linkedIn-github' to={"https://www.linkedin.com/in/marcuskim1/"}>
@@ -178,7 +181,7 @@ export default function SplashPage() {
             </div>
             <div className='developer-card'>
               <div className='name-div'>Jason Greenberg</div>
-              <img className='developer-image' src="https://avatars.githubusercontent.com/u/12382257?v=4" />
+              <img className='developer-image' src={jason} />
               <div className='developer-linkedin-github'>
                 <div >
                   <NavLink className='linkedIn-github' to={"https://www.linkedin.com/in/jason-g-greenberg/"}>
@@ -196,7 +199,7 @@ export default function SplashPage() {
             </div>
             <div className='developer-card'>
               <div className='name-div'>Ye Lwin (Will) Htay</div>
-              <img className='developer-image' src="https://avatars.githubusercontent.com/u/17041103?v=4" />
+              <img className='developer-image' src={will} />
               <div className='developer-linkedin-github'>
                 <div >
                   <NavLink className='linkedIn-github' to={"https://www.linkedin.com/in/williamhtay/"}>
