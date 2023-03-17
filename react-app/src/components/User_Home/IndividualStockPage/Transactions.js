@@ -44,7 +44,7 @@ export default function TransactionComponent({ ticker, user }) {
     return (
         <div>
             <div className="transaction-title-div">
-                <div>History</div>
+                <div className="history-title">History</div>
             </div>
             <div>
                 { filteredTransaction.length > 0 ? filteredTransaction.map(transaction => (

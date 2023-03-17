@@ -28,7 +28,19 @@
 
 .buying-power-div {
     padding: 10px;
-    font-size: 10pt;
+    font-size: 13px;
+    color: grey
+}
+
+.chart-price {
+    font-size: 32px;
+    
+}
+
+.topleft-individualprice-container {
+    display: flex;
+    flex-direction: column;
+    justify-content:start
 }
 
 .key-stats-container {
@@ -39,14 +51,22 @@
 
 .key-stat-title-div {
     padding: 20px 0 20px  0;
-    border-bottom: solid black 1px;
-    font-size: 20pt;
+    border-top: solid 1px #E3E9ED;
+    border-bottom: solid 1px #E3E9ED;
+    font-size: 24px;
     margin-bottom: 15px;
+    font-weight: 500;
+    line-height: 32.4px;
+    font-style: normal;
+    margin-top: 15px;
 }
+
+
 
 .order-selector {
     align-items: center;
     display: flex;
+    
     justify-content: flex-start;
     border-bottom: solid 1px #E3E9ED;
 }
@@ -54,13 +74,18 @@
 .purchase-container {
     position: fixed;
     width: 270px;
-    height: 400px;
+    height: 480px;
     /* padding: 20px; */
     top: 100px;
     right: 150px;
     background-color: white;
-    box-shadow: 0px 0px 5px 7px  rgba(232, 232, 232);
+    box-shadow: rgba(0, 0, 0, 0.02) 0px -12px 24px 0px, rgba(0, 0, 0, 0.06) 0px 12px 24px 0px;
     z-index: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: solid 1px rgb(227, 233, 237);
+    border-radius: 4px;
 }
 
 .purchase-buy-div {
@@ -69,12 +94,14 @@
 
 .left-order-type-div {
     padding: 10px;
+    font-size: 13px;
+    margin-left: 13px;
 }
 
 .right-order-type-div {
     padding: 10px;
-    text-align: end;
-    margin-right: 5px;
+    margin-right: 10px;
+    font-size: 13px;
 }
 
 .left-buy-in--div {
@@ -83,18 +110,26 @@
 
 .left-est-div {
     padding: 10px;
-    font-size: 8pt;
+    font-size: 13px;
     font-weight: bold;
+    margin-left: 13px
 }
 
-.left-est-div {
+.right-est-div {
     padding: 10px;
-    font-size: 8pt;
+    text-align: right;
+    margin-right: 5px;
+    font-size: 13px;
     font-weight: bold;
+
 }
+
+
 
 .left-shares-div {
     padding: 10px;
+    font-size: 14px;
+    margin-left: 13px;
 }
 
 .right-shares-div {
@@ -142,6 +177,15 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
+    font-size: 13px;
+}
+
+.actual-stat {
+    font-weight: bold;
+}
+
+.true-stat {
+    font-size: 13px;
 }
 
 .stock-page-main-container {
@@ -153,6 +197,13 @@
     border: none;
     background-color: white;
     font-size: 14px;
+    font-weight: bold;
+
+}
+
+.individualstockpage-timeline {
+    display: flex;
+    gap: 8px;
 }
 
 .stock-timeline:hover {
@@ -187,13 +238,7 @@
     color: rgb(0,200,6);
 }
 
-.right-est-div {
-    padding: 10px;
-    text-align: right;
-    margin-right: 5px;
-    font-size: 8pt;
-    font-weight: bold;
-}
+
 
 .transaction-button-div {
     display: flex;
@@ -221,7 +266,7 @@
 
 .news-stat-title-div {
     padding: 20px 0 20px  0;
-    border-bottom: solid black 1px;
+    border-bottom: solid 1px #E3E9ED;
     font-size: 20pt;
 }
 
@@ -246,7 +291,7 @@
 
 .transaction-title-div {
     padding: 20px 0 20px  0;
-    border-bottom: solid black 1px;
+    border-bottom: solid 1px #E3E9ED;
     font-size: 20pt;
     margin-bottom: 15px;
     padding-top: 30px;
