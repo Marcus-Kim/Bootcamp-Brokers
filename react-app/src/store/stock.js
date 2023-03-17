@@ -131,7 +131,7 @@ export const thunkGetAll28Stocks = () => async(dispatch) => {
                 
                 const timeSeriesKey = "Time Series (1min)";
                 const closingPriceKey = "4. close";
-                const latestTimestamp = Object.keys(stockData[timeSeriesKey])[0];
+                const latestTimestamp = Object.keys(stockData[timeSeriesKey])[0]; // Undefined
                 const closingPrice = parseFloat(stockData[timeSeriesKey][latestTimestamp][closingPriceKey]);
 
                 allStockData[ticker] = closingPrice;
