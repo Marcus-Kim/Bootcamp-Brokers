@@ -223,3 +223,13 @@
   display: flex;
   justify-content: center;
 }
+
+.empty-watchlist-container {
+  padding: 0px 24px;
+  font-size: small;
+  border-bottom: rgba(99, 99, 99, 0.2);
+}
+
+.empty-watchlist-container-message {
+  color: rgb(180, 180, 180)
+}
