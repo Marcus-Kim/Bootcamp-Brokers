@@ -1,10 +1,11 @@
 .watchlist-details-container {
   /* margin-top: 10px; */
   flex-direction: row;
+  min-width: 1008px;
 }
 
 .watchlist-details-content-container {
-  max-width: 53%;
+  width: 1008px;
   margin: auto;
   display: flex;
   flex-direction: row;
@@ -54,17 +55,37 @@
 }
 
 .watchlist-details-table {
-  border-collapse: collapse;
+  display: flex;
+  flex-direction: column;
 }
 
 .watchlist-details-table-header {
   border-bottom: 1px solid rgb(227,233,237);
+  display: flex;
+  align-items: center;
 }
 
-.watchlist-details-list-body tr {
-  border-bottom: 1px solid rgb(227,233,237);
-
+.watchlist-details-list-header-name {
+  width: 40%
 }
+
+.watchlist-details-list-header-symbol {
+  width: 12%
+}
+
+.watchlist-details-list-header-price {
+  width: 15%;
+}
+
+.watchlist-details-list-header-change {
+  width: 18%;
+}
+
+.watchlist-details-list-header-market-cap {
+  width: 15%
+}
+
+
 
 #hello {
   display: flex;
@@ -72,15 +93,42 @@
   justify-content: space-between;
 }
 
-#watchlist-details-list-header-name {
-  max-width: 220px;
+.watchlist-details-list-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 60px;
+  align-items: center;
+}
+
+.watchlist-details-list-name {
+  width: 40%;
+  max-width: 40%;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
 
-.watchlist-details-list-row {
+.watchlist-details-list-symbol {
+  width: 12%
+}
 
+.watchlist-details-list-price {
+  width: 15%;
+}
+
+.watchlist-details-list-today {
+  width: 18%;
+}
+
+.watchlist-details-list-header-market-cap-delete {
+  width: 15%;
+  display: flex;
+  align-items: center;
+}
+
+.watchlist-details-list-market-cap {
+  width: 85%;
 }
 
 .watchlist-details-list-row:hover {
@@ -89,8 +137,6 @@
 }
 
 .watchlist-details-stock-delete-button {
-  position: relative;
-  top: 19px;
   cursor:inherit;
   padding: 5px;
   border-radius: 5px;
