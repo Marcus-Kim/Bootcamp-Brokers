@@ -12,14 +12,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { useFinanceAPI } from '../../context/FinanceApiContext';
 import WatchlistChart from './WatchlistChart';
+import { useParams } from 'react-router-dom';
 
-function Watchlists({ watchlists, activeWatchlistId }) {
+function Watchlists() {
   // *ENABLERS
   const navigate = useNavigate();
   const dispatch = useDispatch()
   const componentRef = useRef();
   const location = useLocation()
   const { markusKim } = useFinanceAPI()
+  const { watchlistId } = useParams();
+  const watchlists = useSelector(state => state.watchlist)
   // *USE SELECTORS
   const user = useSelector(state => state.session.user.id)
 
@@ -80,7 +83,6 @@ function Watchlists({ watchlists, activeWatchlistId }) {
   const handleDropdown = (e) => { // Edit menu dropdown toggle handler
     e.stopPropagation();
     // close any other dropdowns
-    console.log(openDropdown.nextElementSibling.classList)
     if (openDropdown && openDropdown !== e.target) {
       openDropdown.nextElementSibling.classList.remove('showModal')
     }
@@ -206,7 +208,7 @@ function Watchlists({ watchlists, activeWatchlistId }) {
 
               <div className='watchlist-list-edit-dropdown' onClick={e => stopPropagation(e)}>
                 <WatchlistModalButton modalComponent={<RenameWatchlistModal watchlist={watchlist}/>} buttonText={'Edit List'}/>
-                <WatchlistModalButton modalComponent={<DeleteWatchlistModal watchlist={watchlist} activeWatchlistId={activeWatchlistId}/>}  buttonText={'Delete List'}/>
+                <WatchlistModalButton modalComponent={<DeleteWatchlistModal watchlist={watchlist} watchlistId={watchlistId}/>}  buttonText={'Delete List'}/>
               </div>
             </div>
           )
