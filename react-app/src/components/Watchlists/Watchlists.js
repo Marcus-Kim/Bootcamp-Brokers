@@ -54,7 +54,6 @@ function Watchlists({ watchlists, activeWatchlistId }) {
 
   // *VARIABLES
   const watchlistArray = Object.values(watchlists)
-  if (!watchlistArray.length) return null;
   // *HANDLERS
   const handleCreateList = async (e) => { // Create list handler
     e.preventDefault()
