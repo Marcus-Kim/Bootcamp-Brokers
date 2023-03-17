@@ -1,7 +1,10 @@
 .watchlist-modal-button {
   background-color: white;
   border: none;
-
+  height: 35px;
+  font-weight: 700;
+  text-align: left;
+  padding: 10px 15px;
 }
 
 .watchlist-modal-button:hover {
@@ -36,5 +39,5 @@
 }
 
 .delete-list-modal-container {
-  
+
 }

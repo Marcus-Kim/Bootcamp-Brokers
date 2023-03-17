@@ -8,6 +8,9 @@ import { useRef } from 'react';
 import WatchlistModalButton from './WatchlistModals/WatchlistModal';
 import RenameWatchlistModal from './WatchlistModals/RenameWatchlistModal';
 import DeleteWatchlistModal from './WatchlistModals/DeleteWatchlistModal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
+import { faGear } from '@fortawesome/free-solid-svg-icons';
 
 function Watchlists({ watchlists, activeWatchlistId }) {
   // *ENABLERS
@@ -148,9 +151,8 @@ function Watchlists({ watchlists, activeWatchlistId }) {
           return(
             <div className='watchlist-item' onClick={e => navigate(`/watchlists/${watchlist.id}`)} key={watchlist.id}>
               <div className='watchlist-item-name' >{watchlist.list_name}</div>
-              <button className='watchlist-edit-button' onClick={e => handleDropdown(e)}>
-                Edit
-              </button>
+              <FontAwesomeIcon icon={faEllipsis} className='watchlist-edit-button' onClick={e => handleDropdown(e)}/>
+
               <div className='watchlist-list-edit-dropdown' onClick={e => stopPropagation(e)}>
                 <WatchlistModalButton modalComponent={<RenameWatchlistModal watchlist={watchlist}/>} buttonText={'Edit List'}/>
                 <WatchlistModalButton modalComponent={<DeleteWatchlistModal watchlist={watchlist} activeWatchlistId={activeWatchlistId}/>}  buttonText={'Delete List'}/>

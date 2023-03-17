@@ -32,7 +32,7 @@ def user(id):
 ##? Havent tested on postman yet
 ##? Needs seeder files
 @user_routes.route('/<int:userId>/watchlists')
-# @login_required
+@login_required
 def all_watchlists_by_user(userId):
     """Get all watchlists by user id (aggregate data)"""
     watchlists = Watchlist.query.filter_by(user_id=userId).all()

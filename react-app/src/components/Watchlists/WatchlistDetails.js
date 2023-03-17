@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import UserNav from '../User_Home/UserHomePage/UserNav/UserNav'
 import { useFinanceAPI } from '../../context/FinanceApiContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDown, faArrowDown } from '@fortawesome/free-solid-svg-icons'
+import { faXmark, faFilter, faEllipsis } from '@fortawesome/free-solid-svg-icons'
 
 export default function WatchlistDetails() {
   const dispatch = useDispatch()
@@ -73,8 +73,8 @@ export default function WatchlistDetails() {
             <div className='watchlist-details-name-buttons'>
               <div className='watchlist-details-name'>{selectedWatchlist.list_name}</div>
               <div className='watchlist-details-buttons-conatiner'>
-                <button className='watchlist-details-filters-button'>Filters</button>
-                <button className='watchlist-details-more-button'>Three Dots</button>
+                <FontAwesomeIcon icon={faFilter} className='watchlist-details-filters-button' />
+                <FontAwesomeIcon icon={faEllipsis} className='watchlist-details-more-button' />
               </div>
             </div>
             <div className="watchlist-details-item-count">{selectedWatchlist.stocks.length} Items</div>
@@ -102,7 +102,7 @@ export default function WatchlistDetails() {
                   <td className='watchlist-details-list-header'>${markusKim[stock.ticker]['dailyPrice'].close}</td>
                   <td className='watchlist-details-list-header'>{markusKim[stock.ticker]['dailyPrice'].percentageChange.toFixed(2)}%</td>
                   <td className='watchlist-details-list-header-market-cap'>{convertMarketCap(stockData.marketCap)}</td>
-                  <button className='watchlist-details-stock-delete-button' onClick={e => handleDeleteClick(e, selectedWatchlist.id, stock.ticker)}>X</button>
+                  <FontAwesomeIcon icon={faXmark} className='watchlist-details-stock-delete-button' onClick={e => handleDeleteClick(e, selectedWatchlist.id, stock.ticker)}/>
                 </tr>
               )
             })}
