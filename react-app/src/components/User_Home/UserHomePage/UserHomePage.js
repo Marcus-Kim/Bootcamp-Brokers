@@ -5,7 +5,6 @@ import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import Watchlists from '../../Watchlists/Watchlists';
 
-
 export default function UserHomePage() {
   const portfolio = useSelector(state => state.portfolio)
   const dispatch = useDispatch()
@@ -236,12 +235,12 @@ export default function UserHomePage() {
 <div className="portfolio-container">
 <div className="chart-container">
   <div className="portfolio-data-container">
-    <div className="price">${price}</div>
-    <div>
+    <div className="price price-transition">${price}</div>
+    <div className="profit-loss profit-loss-transition">
       <span className="underprice-container">
-        {profitLoss > 0 ? <img className="green-triangle" src={Triangle} alt="" /> : <div>🔻</div>}
+        {profitLoss > 0 ? <img className="green-triangle" src={Triangle} alt="" /> : <div style={{fontSize: '11.5px'}}>🔻</div>}
         
-        <span className={profitLoss > 0 ? "profit" : "loss"}>${Number(parseFloat(profitLoss)).toFixed(2)} </span>
+        <span className={profitLoss > 0 ? "profit" : "loss"}>${Math.abs(Number(parseFloat(profitLoss)).toFixed(2))} </span>
         <span className={profitLoss > 0 ? "profit" : "loss"}>{timeFrame}</span>
       </span>
     </div>
@@ -347,6 +346,17 @@ export default function UserHomePage() {
       </div>
     </div>
   ))}
+</div>
+<div>
+<p className="disclaimer-container">
+        DISCLAIMER: The information provided on the Bootcamp Brokers website is intended for general information and educational purposes only. It is not intended as financial or investment advice and should not be construed or relied on as such. Before making any investment decisions, you should seek advice from an independent financial advisor who can take into account your individual circumstances and investment objectives.
+
+        While we make every effort to ensure that the information provided on this website is accurate and up-to-date, we cannot guarantee its accuracy, completeness, or timeliness. We do not accept any liability for any loss or damage caused by reliance on the information provided on this website.
+
+        The past performance of any investment or trading strategy is not necessarily indicative of future results. You should be aware of the risks involved in trading or investing and carefully consider whether such trading or investing is suitable for you in light of your financial condition and investment objectives.
+
+        Bootcamp Brokers is not responsible for the content of external websites linked to from this website. But we are responsible for all of your profits.
+        </p>
 </div>
 </div>
 <div className="watchlist-container">
