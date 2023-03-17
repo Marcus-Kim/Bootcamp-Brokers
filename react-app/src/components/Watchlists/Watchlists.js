@@ -80,6 +80,7 @@ function Watchlists({ watchlists, activeWatchlistId }) {
   const handleDropdown = (e) => { // Edit menu dropdown toggle handler
     e.stopPropagation();
     // close any other dropdowns
+    console.log(openDropdown.nextElementSibling.classList)
     if (openDropdown && openDropdown !== e.target) {
       openDropdown.nextElementSibling.classList.remove('showModal')
     }
@@ -133,29 +134,40 @@ function Watchlists({ watchlists, activeWatchlistId }) {
                   }}
                 />
                 <div className='watchlist-list-edit-dropdown-home' onClick={e => stopPropagation(e)}></div>
-
               </div>
               <div>
-              {openedLists[watchlist.id] &&
-                watchlist.tickers.map((ticker) => {
-                  const stockData = markusKim[ticker];
-                  if (!stockData) {
-                    return null;
-                  }
-                  return (
-                    <div className='watchlist-stock-container-home' key={ticker}>
-                      <div className='watchlist-stock-name-home'>{ticker}</div>
-                      <div className="watchlist-graph-home">
-                        {/* CHART GOES HERE */}
-                        <WatchlistChart ticker={ticker}/>
-                      </div>
-                      <div className='watchlist-stock-price-daily-container'>
-                        <div className='watchlist-stock-price-home'>${markusKim[ticker].dailyPrice.close}</div>
-                        <div className='watchlist-stock-daily-home'>{markusKim[ticker].dailyPrice.percentageChange.toFixed(2)}%</div>
-                      </div>
+              {
+                openedLists[watchlist.id] &&
+                  (watchlist.tickers && watchlist.tickers.length > 0 ? (
+                    watchlist.tickers.map((ticker) => {
+                      const stockData = markusKim[ticker];
+                      if (!stockData) {
+                        return null;
+                      }
+                      return (
+                        <div className='watchlist-stock-container-home' key={ticker}>
+                          <div className='watchlist-stock-name-home'>{ticker}</div>
+                          <div className="watchlist-graph-home">
+                            {/* CHART GOES HERE */}
+                            <WatchlistChart ticker={ticker}/>
+                          </div>
+                          <div className='watchlist-stock-price-daily-container'>
+                            <div className='watchlist-stock-price-home'>
+                              ${markusKim[ticker].dailyPrice.close}
+                            </div>
+                            <div className='watchlist-stock-daily-home'>
+                              {markusKim[ticker].dailyPrice.percentageChange.toFixed(2)}%
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <div className='empty-watchlist-container'>
+                      <p className='empty-watchlist-container-message'>No tickers in this watchlist.</p>
                     </div>
-                  )
-              })}
+                  ))
+              }
               </div>
             </div>
           )
