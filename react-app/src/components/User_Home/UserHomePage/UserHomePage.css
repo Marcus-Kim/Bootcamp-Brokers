@@ -278,13 +278,20 @@
 }
 
 .profit {
-    margin-left: 10px;
-    color: rgb(0,200,6)
+    margin-left: 5px;
+    color: rgb(0,200,6);
+    font-size: 13px;
 }
 
 .loss {
-    margin-left: 10px;
+    margin-left: 5px;
     color: red;
+    font-size: 13px;
+}
+
+.price-transition,
+.profit-loss-transition {
+  transition: all 1s ease-in-out; /* Change the transition duration and timing function as desired */
 }
 
 .dropdown-menu {
