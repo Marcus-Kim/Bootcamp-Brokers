@@ -14,6 +14,9 @@ import Fraction from './fraction.png'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGithub } from '@fortawesome/free-brands-svg-icons'
+import { faLinkedin } from '@fortawesome/free-brands-svg-icons'
+
 
 
 
@@ -142,11 +145,14 @@ export default function SplashPage() {
               <div className='developer-linkedin-github'>
                 <div >
                   <NavLink className='linkedIn-github' to={"https://www.linkedin.com/in/brian-khoo-4121b087/"}>
+                    <FontAwesomeIcon icon={faLinkedin} size="lg" />
                     LinkedIn
                     </NavLink>
                 </div>
                 <div>
                   <NavLink className='linkedIn-github' to={"https://github.com/bkhoo123"}>
+                    <FontAwesomeIcon icon={faGithub} size="lg" />
+
                     Github
                   </NavLink>
                 </div>
@@ -158,11 +164,13 @@ export default function SplashPage() {
               <div className='developer-linkedin-github'>
                 <div >
                   <NavLink className='linkedIn-github' to={"https://www.linkedin.com/in/marcuskim1/"}>
+                    <FontAwesomeIcon icon={faLinkedin} size="lg"/>
                     LinkedIn
                   </NavLink>
                 </div>
                 <div>
                   <NavLink className='linkedIn-github' to={"https://github.com/Marcus-Kim"}>
+                    <FontAwesomeIcon icon={faGithub} size="lg"/>
                     Github
                   </NavLink>
                 </div>
@@ -174,11 +182,13 @@ export default function SplashPage() {
               <div className='developer-linkedin-github'>
                 <div >
                   <NavLink className='linkedIn-github' to={"https://www.linkedin.com/in/jason-g-greenberg/"}>
+                    <FontAwesomeIcon icon={faLinkedin} size="lg"/>
                     LinkedIn
                   </NavLink>
                 </div>
                 <div>
                   <NavLink className='linkedIn-github' to={"https://github.com/jason-greenberg"}>
+                  <FontAwesomeIcon icon={faGithub} size="lg"/>
                     Github
                   </NavLink>
                 </div>
@@ -190,11 +200,13 @@ export default function SplashPage() {
               <div className='developer-linkedin-github'>
                 <div >
                   <NavLink className='linkedIn-github' to={"https://www.linkedin.com/in/williamhtay/"}>
+                    <FontAwesomeIcon icon={faLinkedin} size="lg"/>
                     LinkedIn
                   </NavLink>
                 </div>
                 <div>
                   <NavLink className='linkedIn-github' to={"https://github.com/yhtay"}>
+                    <FontAwesomeIcon icon={faGithub} size="lg"/>
                     Github
                   </NavLink>
                 </div>
