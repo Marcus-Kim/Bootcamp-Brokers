@@ -128,7 +128,7 @@ export const thunkGetAll28Stocks = () => async(dispatch) => {
 
             if (response.ok) {
                 const stockData = await response.json();
-
+                
                 const timeSeriesKey = "Time Series (1min)";
                 const closingPriceKey = "4. close";
                 const latestTimestamp = Object.keys(stockData[timeSeriesKey])[0];

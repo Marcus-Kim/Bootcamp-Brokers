@@ -11,7 +11,8 @@ import { thunkGetSPY } from '../../../store/stock';
 import { thunkGetRandomStockNews } from '../../../store/stock'
 import Watchlists from '../../Watchlists/Watchlists';
 import { thunkGetAllWatchlistsUserId } from '../../../store/watchlist';
-
+import { thunkCreatePortfolioSnapshot, thunkGetPortfolioHistoricalValues, thunkGetPortfolioHoldings, thunkGetUserPortfolio } from '../../../store/portfolio';
+import { thunkGetAll28Stocks } from "../../../store/stock";
 
 
 export default function UserHomePage() {
@@ -30,8 +31,10 @@ export default function UserHomePage() {
   const yesterday = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
   const yesterdayString = yesterday.toISOString().substring(0, 10);
-  const historicalValues = Object.values(portfolio.historicalValues)
-  
+  const historicalValues = portfolio.historicalValues
+  const [isLoaded, setIsLoaded] = useState(false);
+
+
 
   const verticalLinePlugin = {
     id: "verticalLine",
@@ -73,15 +76,43 @@ export default function UserHomePage() {
   };
 
 
+  // Change data displayed on chart
+  const displayDailyView = () => {
+    console.log('HISTORICAL VALUES', historicalValues)
+    setGraph(historicalValues.slice(-300, historicalValues.length))
+  }
+
+  const displayWeeklyView = () => {
+    setGraph(historicalValues.slice(-450, historicalValues.length))
+  }
+
+  const displayMonthlyView = () => {
+    setGraph(historicalValues.slice(-600, historicalValues.length))
+  }
+
+  const displayThreeMonthView = () => {
+    setGraph(historicalValues.slice(-900, historicalValues.length))
+  }
+
+  const displayYTDView = () => {
+    setGraph(historicalValues.slice(-1200, historicalValues.length))
+  }
+
+  const displayYearlyView = () => {
+    setGraph(historicalValues.slice(-1500, historicalValues.length))
+  }
+
+  const displayAllView = () => {
+    setGraph(historicalValues.slice(-2000, historicalValues.length))
+  }
+
   useEffect(() => {
     displayDailyView()
-    dispatch(thunkGetBTCPrice())
-    dispatch(thunkGetNasdaq())
-    dispatch(thunkGetSPY())
-    dispatch(thunkGetRandomStockNews())
-    dispatch(thunkGetAllWatchlistsUserId(userId))
-  }, [dispatch])
+  },[])
+ 
 
+  if (!portfolio) return null
+  if (!historicalValues.length) return null
 
   const chartData = {
     labels: graph.map((data) => data.x),
@@ -200,155 +231,129 @@ export default function UserHomePage() {
     return Math.ceil(hoursDifference) * -1;
   }
 
-  // Change data displayed on chart
-  const displayDailyView = () => {
-    setGraph(historicalValues.slice(-300, historicalValues.length))
-  }
-
-  const displayWeeklyView = () => {
-    setGraph(historicalValues.slice(-450, historicalValues.length))
-  }
-
-  const displayMonthlyView = () => {
-    setGraph(historicalValues.slice(-600, historicalValues.length))
-  }
-
-  const displayThreeMonthView = () => {
-    setGraph(historicalValues.slice(-900, historicalValues.length))
-  }
-
-  const displayYTDView = () => {
-    setGraph(historicalValues.slice(-1200, historicalValues.length))
-  }
-
-  const displayYearlyView = () => {
-    setGraph(historicalValues.slice(-1500, historicalValues.length))
-  }
-
-  const displayAllView = () => {
-    setGraph(historicalValues.slice(-2000, historicalValues.length))
-  }
 
   return (
-    <div className="homepage-container">
-      <div className="portfolio-container">
-        <div className="chart-container">
-          <div className="portfolio-data-container">
-            <div className="price">${price}</div>
-            <div>
-              <span>
-                <img className="green-triangle" src={Triangle} alt="" />
-                <div>{profitLoss}</div>
-              </span>
-            </div>
+  
+<div className="homepage-container">
+<div className="portfolio-container">
+<div className="chart-container">
+  <div className="portfolio-data-container">
+    <div className="price">${price}</div>
+    <div>
+      <span>
+        <img className="green-triangle" src={Triangle} alt="" />
+        <div>{profitLoss}</div>
+      </span>
+    </div>
+  </div>
+  <div className="line-chart-container">
+    <Line
+      data={chartData}
+      options={chartOptions}
+    />
+  </div>
+</div>
+<div className="change-timeline-button">
+  <span>
+    <button
+      className="profile-timeline"
+      onClick={displayDailyView}
+    >
+      1D
+    </button>
+    <button
+      className="profile-timeline"
+      onClick={displayWeeklyView}
+    >
+      1W
+    </button>
+    <button
+      className="profile-timeline"
+      onClick={displayMonthlyView}
+    >
+      1M
+    </button>
+    <button
+      className="profile-timeline"
+      onClick={displayThreeMonthView}
+    >
+      3M
+    </button>
+    <button
+      className="profile-timeline"
+      onClick={displayYTDView}>
+      YTD
+    </button>
+    <button
+      className="profile-timeline"
+      onClick={displayYearlyView}
+    >
+      1Y
+    </button>
+    <button
+      className="profile-timeline"
+      onClick={displayAllView}
+    >
+      ALL
+    </button>
+  </span>
+  <hr className="break"/>
+</div>
+<div className="buying-power">
+  <span>Buying Power</span>
+  <span>${portfolio?.cash_balance}</span>
+</div>
+<hr className="break"/>
+<div className="cash-container">
+  <h2 className="section-header">Cash</h2>
+</div>
+<hr className="break"/>
+<div className="news-container">
+  <h2 className="section-header">News</h2>
+  <hr className="break"/>
+  <div className="indexes-container">
+    <div className="index-and-price">
+      <span className="indexes">
+        <span>S&P 500</span>
+        <span className="index-price">${SPY?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
+      </span>
+      <span className="indexes">
+        <span>Nasdaq</span>
+        <span className="index-price">${Nasdaq?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
+      </span>
+      <span className="indexes">
+        <span>Bitcoin</span>
+        <span className="index-price">${parseFloat(BTC?.["Realtime Currency Exchange Rate"]?.["5. Exchange Rate"])}</span>
+      </span>
+    </div>
+  </div>
+  {randomNews?.["feed"]?.slice(0, 30).map((news) => (
+    <div className="news-carders" key={news.url}>
+      <hr className="break" />
+      <div className="news-card">
+        <div className="news-cardleft">
+          <div>
+            <span className="source">{news.source}</span>{" "}
+            <span className="time-units">{hoursAgo(news.time_published)}hr</span>
           </div>
-          <div className="line-chart-container">
-            <Line
-              data={chartData}
-              options={chartOptions}
-            />
+          <div className="title">{news.title}</div>
+          <div className="story-ticker">
+            {news.ticker_sentiment[0]?.ticker}
           </div>
         </div>
-        <div className="change-timeline-button">
-          <span>
-            <button
-              className="profile-timeline"
-              onClick={displayDailyView}
-            >
-              1D
-            </button>
-            <button
-              className="profile-timeline"
-              onClick={displayWeeklyView}
-            >
-              1W
-            </button>
-            <button
-              className="profile-timeline"
-              onClick={displayMonthlyView}
-            >
-              1M
-            </button>
-            <button
-              className="profile-timeline"
-              onClick={displayThreeMonthView}
-            >
-              3M
-            </button>
-            <button
-              className="profile-timeline"
-              onClick={displayYTDView}>
-              YTD
-            </button>
-            <button
-              className="profile-timeline"
-              onClick={displayYearlyView}
-            >
-              1Y
-            </button>
-            <button
-              className="profile-timeline"
-              onClick={displayAllView}
-            >
-              ALL
-            </button>
-          </span>
-          <hr className="break"/>
-        </div>
-        <div className="buying-power">
-          <span>Buying Power</span>
-          <span>${portfolio?.cash_balance}</span>
-        </div>
-        <hr className="break"/>
-        <div className="cash-container">
-          <h2 className="section-header">Cash</h2>
-        </div>
-        <hr className="break"/>
-        <div className="news-container">
-          <h2 className="section-header">News</h2>
-          <hr className="break"/>
-          <div className="indexes-container">
-            <div className="index-and-price">
-              <span className="indexes">
-                <span>S&P 500</span>
-                <span className="index-price">${SPY?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
-              </span>
-              <span className="indexes">
-                <span>Nasdaq</span>
-                <span className="index-price">${Nasdaq?.["Time Series (Daily)"]?.[yesterdayString]?.["4. close"]}</span>
-              </span>
-              <span className="indexes">
-                <span>Bitcoin</span>
-                <span className="index-price">${parseFloat(BTC?.["Realtime Currency Exchange Rate"]?.["5. Exchange Rate"])}</span>
-              </span>
-            </div>
-          </div>
-          {randomNews?.["feed"]?.slice(0, 30).map((news) => (
-            <div className="news-carders" key={news.url}>
-              <hr className="break" />
-              <div className="news-card">
-                <div className="news-cardleft">
-                  <div>
-                    <span className="source">{news.source}</span>{" "}
-                    <span className="time-units">{hoursAgo(news.time_published)}hr</span>
-                  </div>
-                  <div className="title">{news.title}</div>
-                  <div className="story-ticker">
-                    {news.ticker_sentiment[0]?.ticker}
-                  </div>
-                </div>
-                <a href={news.url} target="_blank" rel="noopener noreferrer">
-                  <img className="news-image" src={news.banner_image} alt="" />
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="watchlist-container">
-        <Watchlists watchlists={watchlists} />
+        <a href={news.url} target="_blank" rel="noopener noreferrer">
+          <img className="news-image" src={news.banner_image} alt="" />
+        </a>
       </div>
     </div>
+  ))}
+</div>
+</div>
+<div className="watchlist-container">
+<Watchlists watchlists={watchlists} />
+</div>
+</div>
+
   )
 
 }
