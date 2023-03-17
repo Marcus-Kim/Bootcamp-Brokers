@@ -17,6 +17,9 @@ class Watchlist(db.Model):
         secondary=watchlist_stocks,
         back_populates='watchlists'
     )
+    @property
+    def get_tickers(self):
+        return [stock.ticker for stock in self.stocks]
 
     def to_dict(self):
         stocks = self.stocks
@@ -25,5 +28,6 @@ class Watchlist(db.Model):
             'id': self.id,
             'list_name': self.list_name,
             'user_id': self.user_id,
-            'stocks': dict_stocks
+            'stocks': dict_stocks,
+            'tickers': self.get_tickers
         }
