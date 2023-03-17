@@ -10,7 +10,8 @@ function AddToWatchlistModal({ ticker, watchlists }) {
   const [listValues, setListValues] = useState([]) // Array of watchlist IDs
   const dispatch = useDispatch()
   const { closeModal } = useModal()
-  console.log(filteredWatchlistArray)
+
+  if (!watchlistArray.length) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault()
