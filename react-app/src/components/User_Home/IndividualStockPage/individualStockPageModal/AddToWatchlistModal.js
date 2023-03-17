@@ -6,7 +6,7 @@ import { useModal } from '../../../../context/Modal'
 
 function AddToWatchlistModal({ ticker, watchlists }) {
   const watchlistArray = Object.values(watchlists) // Array of watchlists
-  const filteredWatchlistArray = watchlistArray.filter(watchlist => !(watchlist.tickers.includes(ticker)))
+  const filteredWatchlistArray = watchlistArray.filter(watchlist => !(watchlist?.tickers.includes(ticker)))
   const [listValues, setListValues] = useState([]) // Array of watchlist IDs
   const dispatch = useDispatch()
   const { closeModal } = useModal()
