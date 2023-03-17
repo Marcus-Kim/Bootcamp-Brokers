@@ -11,7 +11,10 @@ export default function OrderConfirmation({
   sharesAvailable, 
   setSharesAvailable 
 }) {
-  // const stock = useSelector()
+  const stockPrices = useSelector(state => state.stocks.all28Stocks)
+  let price;
+  if (stockPrices) price = stockPrices[ticker]
+  console.log('price', price)
 
   const doneReviewing = (e) => {
     e.preventDefault()
@@ -37,7 +40,7 @@ export default function OrderConfirmation({
               <> 
                 <div className="dollar-amount">
                   <div>Amount Invested</div>
-                  <div>#TODO - GET FROM BACKEND</div>
+                  <div>{ price * shares }</div>
                 </div>
                 <div className="break"></div>
                 <div className="shares">
@@ -47,7 +50,7 @@ export default function OrderConfirmation({
                 <div className="break"></div>
                 <div className="share-price">
                   <div>Average Share Price</div>
-                  <div>#TODO - GET FROM BACKEND</div>
+                  <div>{ price }</div>
                 </div>
                 <div className="break"></div>
                 <div className="completion-message">
@@ -65,12 +68,12 @@ export default function OrderConfirmation({
                 <div className="break"></div>
                 <div className="share-price">
                   <div>Average Share Price</div>
-                  <div>#TODO - GET FROM BACKEND</div>
+                  <div>{ price }</div>
                 </div>
                 <div className="break"></div>
                 <div className="dollar-amount">
                   <div>Total Credit</div>
-                  <div>#TODO - GET FROM BACKEND</div>
+                  <div>{ price * shares }</div>
                 </div>
                 <div className="break"></div>
                 <div className="completion-message">
