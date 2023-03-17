@@ -27,7 +27,7 @@ export default function OrderConfirmation({
     <>
       <div className="purchase-container">
         <div className="confirmation-title">
-          { ticker + ( buySelected ? ' Purchased': ' Sold')}
+          { ticker + ( buySelected ? ' Purchased!': ' Sold!')}
         </div>
         <div className="break"></div>
         <div className="transaction-details">
