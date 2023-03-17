@@ -103,6 +103,12 @@ function Watchlists({ watchlists, activeWatchlistId }) {
     }));
   };
 
+  const handleListStockClick = (e, ticker) => {
+    e.stopPropagation();
+
+    navigate(`/stocks/${ticker}`)
+  }
+
   if (location.pathname === '/home') {
     return (
       <div className='watchlists-container-home' ref={componentRef}>
@@ -145,7 +151,7 @@ function Watchlists({ watchlists, activeWatchlistId }) {
                         return null;
                       }
                       return (
-                        <div className='watchlist-stock-container-home' key={ticker}>
+                        <div className='watchlist-stock-container-home' key={ticker} onClick={e => handleListStockClick(e, ticker)}>
                           <div className='watchlist-stock-name-home'>{ticker}</div>
                           <div className="watchlist-graph-home">
                             {/* CHART GOES HERE */}
