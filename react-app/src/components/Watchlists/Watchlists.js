@@ -137,7 +137,7 @@ function Watchlists({ watchlists, activeWatchlistId }) {
 
               </div>
               <div>
-              {openedLists[watchlist.id] && watchlist.tickers.length !== 0 &&
+              {openedLists[watchlist.id] &&
                 watchlist.tickers.map((ticker) => {
                   const stockData = markusKim[ticker];
                   if (!stockData) {
