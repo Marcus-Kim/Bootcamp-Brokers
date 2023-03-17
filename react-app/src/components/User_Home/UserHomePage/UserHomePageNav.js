@@ -85,6 +85,12 @@ export default function UserHomePageNav() {
 
     return (
         <>
+            {!isLoaded && (
+            <div className="loading-container">
+                <img src="https://media0.giphy.com/media/KG4PMQ0jyimywxNt8i/giphy.gif?cid=ecf05e47bpnr0mt98srhcmw3409sc0u0doju0lh87y0l534w&rid=giphy.gif&ct=g" alt="Loading..." />
+            </div>
+            )}
+{/* */}
 
             {isLoaded && (
                 <div className="home-container">
