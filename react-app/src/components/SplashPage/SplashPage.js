@@ -21,8 +21,7 @@ export default function SplashPage() {
   const navigate = useNavigate()
   const { menuOpen } = useMenu();
   const [slidePosition, setSlidePosition] = useState(0);
-  const user = useSelector(state => state.session)
-  const userArray = Object.values(user)
+  const user = useSelector(state => state.session.user)
   const images = [
     {
       images: Crypto,
@@ -54,12 +53,12 @@ export default function SplashPage() {
 
 
   useEffect(() => {
-    if (userArray[0] === null) {
+    if (!user) {
       navigate('/')
     } else {
       navigate('/home')
     }
-  }, [])
+  }, [user])
 
 
 
