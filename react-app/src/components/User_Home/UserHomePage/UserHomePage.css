@@ -271,6 +271,12 @@
     }
 }
 
+.underprice-container {
+    display: flex;
+    justify-content: start;
+    
+}
+
 .dropdown-menu {
     
     position: absolute;
