@@ -77,35 +77,35 @@ export default function WatchlistDetails() {
             </div>
             <div className="watchlist-details-item-count">{selectedWatchlist.stocks.length} Items</div>
           </div>
-          <table className='watchlist-details-table'>
-            <thead className='watchlist-details-table-header'>
-              <tr className='watchlist-details-table-header'>
-                <th className='watchlist-details-list-header-name'>Name</th>
-                <th className='watchlist-details-list-header-symbol'>Symbol</th>
-                <th className='watchlist-details-list-header'>Price</th>
-                <th className='watchlist-details-list-header'>Today</th>
-                <th className='watchlist-details-list-header-market-cap'>Market Cap</th>
-              </tr>
-            </thead>
-            <tbody className='watchlist-details-list-body'>
+          <div className='watchlist-details-table'>
+            <div className='watchlist-details-table-header'>
+                <div className='watchlist-details-list-header-name'>Name</div>
+                <div className='watchlist-details-list-header-symbol'>Symbol</div>
+                <div className='watchlist-details-list-header-price'>Price</div>
+                <div className='watchlist-details-list-header-change'>Today</div>
+                <div className='watchlist-details-list-header-market-cap'>Market Cap</div>
+            </div>
+            <div className='watchlist-details-list-body'>
               {selectedWatchlistStocks?.map(stock => {
                 const stockData = markusKim[stock.ticker];
                 if (!stockData) {
                   return null;
                 }
               return (
-                <tr className='watchlist-details-list-row' onClick={e => navigate(`/stocks/${stock.ticker}`)} key={stock.ticker}>
-                  <td className='watchlist-details-list-header-name' id='watchlist-details-list-header-name'>{stock.company_name}</td>
-                  <td className='watchlist-details-list-header-symbol'>{stock.ticker}</td>
-                  <td className='watchlist-details-list-header'>${markusKim[stock.ticker]['dailyPrice'].close}</td>
-                  <td className='watchlist-details-list-header'>{markusKim[stock.ticker]['dailyPrice'].percentageChange.toFixed(2)}%</td>
-                  <td className='watchlist-details-list-header-market-cap'>{convertMarketCap(stockData.marketCap)}</td>
-                  <FontAwesomeIcon icon={faXmark} className='watchlist-details-stock-delete-button' onClick={e => handleDeleteClick(e, selectedWatchlist.id, stock.ticker)}/>
-                </tr>
+                  <div className='watchlist-details-list-row' onClick={e => navigate(`/stocks/${stock.ticker}`)} key={stock.ticker}>
+                    <div className='watchlist-details-list-name' id='watchlist-details-list-header-name'>{stock.company_name}</div>
+                    <div className='watchlist-details-list-symbol'>{stock.ticker}</div>
+                    <div className='watchlist-details-list-price'>${markusKim[stock.ticker]['dailyPrice'].close}</div>
+                    <div className='watchlist-details-list-today'>{markusKim[stock.ticker]['dailyPrice'].percentageChange.toFixed(2)}%</div>
+                    <div className='watchlist-details-list-header-market-cap-delete'>
+                      <div className='watchlist-details-list-market-cap'>{convertMarketCap(stockData.marketCap)}</div>
+                      <FontAwesomeIcon icon={faXmark} className='watchlist-details-stock-delete-button' onClick={e => handleDeleteClick(e, selectedWatchlist.id, stock.ticker)}/>
+                    </div>
+                  </div>
               )
             })}
-            </tbody>
-          </table>
+            </div>
+          </div>
         </div>
         <div className='watchlist-details-lists'> {/* LIST COMPONENT */}
           <Watchlists watchlists={watchlists} activeWatchlistId={selectedWatchlist.id}/>

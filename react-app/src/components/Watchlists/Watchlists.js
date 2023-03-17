@@ -84,11 +84,11 @@ function Watchlists() {
     e.stopPropagation();
     // close any other dropdowns
     if (openDropdown && openDropdown !== e.target) {
-      openDropdown.nextElementSibling.classList.remove('showModal')
+      openDropdown.nextElementSibling?.classList.remove('showModal')
     }
 
     // toggle current dropdown
-    e.target.nextElementSibling.classList.toggle('showModal')
+    e.target.nextElementSibling?.classList.toggle('showModal')
 
     // update openDropdown state
     setOpenDropdown(openDropdown === e.target ? null : e.target)
@@ -205,7 +205,6 @@ function Watchlists() {
             <div className='watchlist-item' onClick={e => navigate(`/watchlists/${watchlist.id}`)} key={watchlist.id}>
               <div className='watchlist-item-name' >{watchlist.list_name}</div>
               <FontAwesomeIcon icon={faEllipsis} className='watchlist-edit-button' onClick={e => handleDropdown(e)}/>
-
               <div className='watchlist-list-edit-dropdown' onClick={e => stopPropagation(e)}>
                 <WatchlistModalButton modalComponent={<RenameWatchlistModal watchlist={watchlist}/>} buttonText={'Edit List'}/>
                 <WatchlistModalButton modalComponent={<DeleteWatchlistModal watchlist={watchlist} watchlistId={watchlistId}/>}  buttonText={'Delete List'}/>
