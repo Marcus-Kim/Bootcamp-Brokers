@@ -38,20 +38,26 @@ def all_watchlists_by_user(userId):
     watchlists = Watchlist.query.filter_by(user_id=userId).all()
 
     watchlist_data = None
+    data = [stock.to_dict() for watchlist in watchlists for stock in watchlist.stocks]
 
-    if len(watchlists) > 0:
-        watchlist_data = [watchlist.to_dict() for watchlist in watchlists]
-        #? Modifying the 'watchlist_data' to include the related tickers list
-        for watchlist in watchlist_data:
-            watchlist_id = watchlist['id']
-            sql = text(f'SELECT * FROM watchlist_stocks WHERE watchlist_stocks.watchlist_id = {watchlist_id}')
-            result = db.session.execute(sql)
-            watchlist_stocks = [dict(row) for row in result]
-            watchlist_ticker_list = [ stock['ticker_id'] for stock in watchlist_stocks]
-            watchlist['tickers'] = watchlist_ticker_list
-        return jsonify(watchlist_data)
-    else:
-        return jsonify([])
+
+
+    print('DATA: ', data)
+    return jsonify(data)
+
+    # if len(watchlists) > 0:
+    #     watchlist_data = [watchlist.to_dict() for watchlist in watchlists]
+    #     #? Modifying the 'watchlist_data' to include the related tickers list
+    #     for watchlist in watchlist_data:
+    #         watchlist_id = watchlist['id']
+    #         sql = text(f'SELECT * FROM watchlist_stocks WHERE watchlist_stocks.watchlist_id = {watchlist_id}')
+    #         result = db.session.execute(sql)
+    #         watchlist_stocks = [dict(row) for row in result]
+    #         watchlist_ticker_list = [ stock['ticker_id'] for stock in watchlist_stocks]
+    #         watchlist['tickers'] = watchlist_ticker_list
+    #     return jsonify(watchlist_data)
+    # else:
+    #     return jsonify([])
 
 
 

@@ -3,7 +3,7 @@ import { useParams, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux"
 import { useFinanceAPI } from "../../../context/FinanceApiContext";
 import "./IndividualStockPage.css"
-import { thunkGetStockNews, thunkGetStockFundamentals, thunkGetStockIntraDay, thunkGetStockDaily } from "../../../store/stock";
+import { thunkGetStockNews, thunkGetStockFundamentals, thunkGetStockIntraDay, thunkGetStockDaily, thunkGetAll28Stocks } from "../../../store/stock";
 import OneDayChart from "./charts/OneDayChart";
 import OneWeekChart from "./charts/OneWeekChart";
 import OneMonthChart from "./charts/OneMonthChart";
@@ -17,7 +17,7 @@ import UserNav from "../UserHomePage/UserNav/UserNav";
 
 
 export default function IndividualStockPage() {
-
+    const [isLoaded, setIsLoaded] = useState(false)
     const { markusKim } = useFinanceAPI()
     const navigate = useNavigate()
     const dispatch = useDispatch();
@@ -29,12 +29,14 @@ export default function IndividualStockPage() {
     const stockDaily = useSelector(state => state.stocks.stockDaily)
     const stockNews = useSelector(state => state.stocks.stockNews)
     const user = useSelector(state => state.session.user)
+    const stockPrices = useSelector(state => state.stocks.all28Stocks)
     const tickers = Object.keys(markusKim)
 
     useEffect(() => {
         dispatch(thunkGetStockFundamentals(tickerCap))
         dispatch(thunkGetStockDaily(tickerCap))
         dispatch(thunkGetStockNews(tickerCap))
+        dispatch(thunkGetAll28Stocks()).then(() => setIsLoaded(true))
     }, [dispatch, tickerCap])
 
     if (!stockFundamentals) return null;
@@ -97,7 +99,8 @@ export default function IndividualStockPage() {
     return (
         <>
         <UserNav />
-        <div className="stock-page-main-container">
+        { isLoaded && (
+            <div className="stock-page-main-container">
             <div className="topleft-individualprice-container">
             <div style={{fontFamily: 'sans-serif', fontSize: '32px'}}>{stockFundamentals["Symbol"]}</div>
                 <div style={{ width: "700px" }}>{ chartObj[chart] }</div>
@@ -188,7 +191,8 @@ export default function IndividualStockPage() {
                 )) }
             </div>
         </div>
-    </>
+        )}
+        </>
     )
 }
 
