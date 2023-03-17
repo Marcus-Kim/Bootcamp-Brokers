@@ -40,7 +40,7 @@ function AddToWatchlistModal({ ticker, watchlists }) {
         <div className='add-watchlist-modal-lists'>
           {filteredWatchlistArray.map(watchlist => {
             return (
-              <label>
+              <label key={watchlist.id}>
                 <input type='checkbox' checked={listValues.includes(watchlist.id)} onChange={e => handleCheckboxChange(e, watchlist)}/>
                 {watchlist.list_name}
               </label>
