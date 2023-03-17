@@ -241,8 +241,8 @@ export default function UserHomePage() {
       <span className="underprice-container">
         {profitLoss > 0 ? <img className="green-triangle" src={Triangle} alt="" /> : <div>🔻</div>}
         
-        <span style={{marginLeft: '10px'}}>${Number(parseFloat(profitLoss)).toFixed(2)} </span>
-        <span style={{marginLeft: '15px'}}>{timeFrame}</span>
+        <span className={profitLoss > 0 ? "profit" : "loss"}>${Number(parseFloat(profitLoss)).toFixed(2)} </span>
+        <span className={profitLoss > 0 ? "profit" : "loss"}>{timeFrame}</span>
       </span>
     </div>
   </div>
