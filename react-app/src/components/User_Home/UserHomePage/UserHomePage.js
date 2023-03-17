@@ -1,24 +1,15 @@
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { thunkGetBTCPrice } from '../../../store/stock';
 import Triangle from './triangle-16.png';
 import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
-import { CategoryScale } from 'chart.js';
-import { thunkGetNasdaq } from '../../../store/stock';
-import { thunkGetSPY } from '../../../store/stock';
-import { thunkGetRandomStockNews } from '../../../store/stock'
 import Watchlists from '../../Watchlists/Watchlists';
-import { thunkGetAllWatchlistsUserId } from '../../../store/watchlist';
-import { thunkCreatePortfolioSnapshot, thunkGetPortfolioHistoricalValues, thunkGetPortfolioHoldings, thunkGetUserPortfolio } from '../../../store/portfolio';
-import { thunkGetAll28Stocks } from "../../../store/stock";
 
 
 export default function UserHomePage() {
   const portfolio = useSelector(state => state.portfolio)
   const dispatch = useDispatch()
-  const [price, setPrice] = useState(portfolio.overall_value)
+  const [price, setPrice] = useState(parseFloat(portfolio.overall_value))
   const [graph, setGraph] = useState([])
   const [profitLoss, setProfitLoss] = useState("0")
   const watchlists = useSelector(state => state.watchlist)
@@ -32,7 +23,7 @@ export default function UserHomePage() {
   yesterday.setDate(yesterday.getDate() - 1);
   const yesterdayString = yesterday.toISOString().substring(0, 10);
   const historicalValues = portfolio.historicalValues
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [timeFrame, setTimeFrame] = useState("1D")
 
 
 
@@ -79,30 +70,37 @@ export default function UserHomePage() {
   // Change data displayed on chart
   const displayDailyView = () => {
     console.log('HISTORICAL VALUES', historicalValues)
+    setTimeFrame("1D")
     setGraph(historicalValues.slice(-300, historicalValues.length))
   }
 
   const displayWeeklyView = () => {
+    setTimeFrame("1W")
     setGraph(historicalValues.slice(-450, historicalValues.length))
   }
 
   const displayMonthlyView = () => {
+    setTimeFrame("1M")
     setGraph(historicalValues.slice(-600, historicalValues.length))
   }
 
   const displayThreeMonthView = () => {
+    setTimeFrame("3M")
     setGraph(historicalValues.slice(-900, historicalValues.length))
   }
 
   const displayYTDView = () => {
+    setTimeFrame("YTD")
     setGraph(historicalValues.slice(-1200, historicalValues.length))
   }
 
   const displayYearlyView = () => {
+    setTimeFrame("1Y")
     setGraph(historicalValues.slice(-1500, historicalValues.length))
   }
 
   const displayAllView = () => {
+    setTimeFrame("All")
     setGraph(historicalValues.slice(-2000, historicalValues.length))
   }
 
@@ -240,9 +238,11 @@ export default function UserHomePage() {
   <div className="portfolio-data-container">
     <div className="price">${price}</div>
     <div>
-      <span>
-        <img className="green-triangle" src={Triangle} alt="" />
-        <div>{profitLoss}</div>
+      <span className="underprice-container">
+        {profitLoss > 0 ? <img className="green-triangle" src={Triangle} alt="" /> : <div>🔻</div>}
+        
+        <span style={{marginLeft: '10px'}}>${Number(parseFloat(profitLoss)).toFixed(2)} </span>
+        <span style={{marginLeft: '15px'}}>{timeFrame}</span>
       </span>
     </div>
   </div>
