@@ -66,6 +66,28 @@ export default function IndividualStockPage() {
         "5Y": <FiveYearChart ticker={tickerCap} close={close} />,
     }
 
+    const convertMarketCap = (marketCap) => { // Converts market cap to a readable number
+        const billion = 1000000000;
+        const trillion = 1000000000000;
+
+        let value;
+        let suffix;
+
+        if (marketCap >= trillion) {
+          value = marketCap / trillion;
+          suffix = 'T';
+        } else if (marketCap >= billion) {
+          value = marketCap / billion;
+          suffix = 'B';
+        } else {
+          // Return the original value if it's less than a billion
+          return marketCap.toFixed(2);
+        }
+
+        // Limit the number to 3 digits on the left and 2 on the right of the decimal
+        return `${value.toFixed(2)}${suffix}`;
+      };
+
     if (!user) {
         navigate("/login")
         return null
@@ -98,7 +120,7 @@ export default function IndividualStockPage() {
                  <div className="stat-value-container">
                     <div className="stat-box">
                         <div>Market Cap </div>
-                        <div>{Number(stockFundamentals["MarketCapitalization"]).toLocaleString()}</div>
+                        <div>{convertMarketCap(stockFundamentals["MarketCapitalization"])}</div>
                     </div>
                     <div className="stat-box">
                         <div>Price-Earning ratio </div>
