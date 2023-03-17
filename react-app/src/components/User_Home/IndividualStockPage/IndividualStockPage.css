@@ -74,7 +74,7 @@
 .purchase-container {
     position: fixed;
     width: 270px;
-    height: 480px;
+    height: 470px;
     /* padding: 20px; */
     top: 100px;
     right: 150px;
@@ -103,6 +103,8 @@
     margin-right: 10px;
     font-size: 13px;
 }
+
+
 
 .left-buy-in--div {
     padding: 10px;
@@ -159,6 +161,11 @@
 .shares-input::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+.confirmation-title {
+    font-weight: bold;
+    font-size: 14px;
 }
 
 .shares-input:focus {
