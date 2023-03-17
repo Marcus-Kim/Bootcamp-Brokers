@@ -1,12 +1,13 @@
 import { useSelector } from 'react-redux'
 import './OrderConfirmation.css'
 
-export default function OrderConfirmation({ ticker, buySelected, shares, setHasSubmitted }) {
+export default function OrderConfirmation({ ticker, buySelected, shares, setHasSubmitted, setShares }) {
   // const stock = useSelector()
 
   const doneReviewing = (e) => {
     e.preventDefault()
     
+    setShares('')
     setHasSubmitted(false)
   }
   return (

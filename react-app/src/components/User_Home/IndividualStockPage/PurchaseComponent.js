@@ -10,7 +10,7 @@ import OrderConfirmation from "./OrderConfirmation";
 
 export default function PurchaseComponent({ ticker, user, close }) {
     const dispatch = useDispatch();
-    const [shares, setShares] = useState(0)
+    const [shares, setShares] = useState('')
     const [errors, setErrors] = useState([])
     const [hasSubmitted, setHasSubmitted] = useState(false)
     const [tickerInHoldings, setTickerInHoldings] = useState(false)
@@ -18,7 +18,7 @@ export default function PurchaseComponent({ ticker, user, close }) {
 
     const portfolio = useSelector(state => state.portfolio)
     const holdingsArray = Object.values(portfolio.holdings);
-    const [sharesAvailable, setSharesAvailable] = useState(0)
+    const [sharesAvailable, setSharesAvailable] = useState('')
 
     // const estimatedCost = Number(+close * +shares)
     // const cashBalance = Number(portfolio.cash_balance)
@@ -28,6 +28,16 @@ export default function PurchaseComponent({ ticker, user, close }) {
 
     // frontend error handing
     useEffect(() => {
+        isStockInHoldings(ticker);
+    }, [shares, estimatedCost, cashBalance, ticker, portfolio.holdings, close]);
+    // useEffect(() => {
+    //     isStockInHoldings(ticker)
+    // }, [ticker, portfolio.holdings])
+        const watchlists = useSelector(state => state.watchlist)
+
+    const validateBuy = () => {
+        const newErrors = [];
+
         const newEstimatedCost = Number(+close * +shares);
         const newCashBalance = Number(portfolio.cash_balance);
 
@@ -35,24 +45,31 @@ export default function PurchaseComponent({ ticker, user, close }) {
         setEstimatedCost(newEstimatedCost);
         setCashBalance(newCashBalance);
 
-        const newErrors = [];
         if (newEstimatedCost <= 0) newErrors.push("Please enter valid number of shares")
         if (newEstimatedCost > newCashBalance) {
             newErrors.push("User has insufficient funds to complete purchase");
         }
         setErrors(newErrors);
+        console.log('real errors', newErrors)
+        return newErrors
+    }
 
+    const validateSell = () => {
+        const newErrors = [];
 
+        const newEstimatedCost = Number(+close * +shares);
+        const newCashBalance = Number(portfolio.cash_balance);
 
-        isStockInHoldings(ticker);
-    }, [shares, estimatedCost, cashBalance, ticker, portfolio.holdings, close]);
+        // Update the state values
+        setEstimatedCost(newEstimatedCost);
+        setCashBalance(newCashBalance);
 
-    console.log("errors: ", errors);
-    // useEffect(() => {
-    //     isStockInHoldings(ticker)
-    // }, [ticker, portfolio.holdings])
-        const watchlists = useSelector(state => state.watchlist)
-
+        if (shares <= 0) newErrors.push("Please enter valid number of shares")
+        if (shares > sharesAvailable) newErrors.push("You do not have enough shares")
+        setErrors(newErrors)
+        return newErrors
+    }
+    
     useEffect(() => {
         dispatch(thunkGetAllWatchlistsUserId(user.id))
     }, [dispatch])
@@ -85,31 +102,31 @@ export default function PurchaseComponent({ ticker, user, close }) {
     const handlePurchase = async (e) => {
         e.preventDefault();
 
-        setHasSubmitted(true)
-        if (errors.length > 0) return
+        setErrors([])
+        const validationErrors = validateBuy();
 
+        if (validationErrors.length > 0) return
+        setHasSubmitted(true)
+        
 
         await dispatch(thunkBuyStock(ticker, +shares))
             .then(() => dispatch(thunkGetTransactionsByUserId()))
             .then(() => dispatch(thunkGetUserPortfolio()))
-            .then(() => setHasSubmitted(false))
-            .then(() => setShares(0))
 
     }
 
     const handleSale = async (e) => {
         e.preventDefault();
 
-        setHasSubmitted(() => true);
-        console.log('Submitted')
+        setErrors([])
+        const validationErrors = validateSell();
+
+        if (validationErrors.length > 0) return
+        setHasSubmitted(true)
 
         await dispatch(thunkSellStock(ticker, +shares))
             .then(() => dispatch(thunkGetTransactionsByUserId()))
             .then(() => dispatch(thunkGetUserPortfolio()))
-            .catch(async (response) => {
-                const data = await response.json();
-                if (data && data.error) setErrors(data.error);
-            })
 
     }
 
@@ -123,6 +140,7 @@ export default function PurchaseComponent({ ticker, user, close }) {
             buySelected={buySelected}
             shares={shares}
             setHasSubmitted={setHasSubmitted}
+            setShares={setShares}
         />
     } else {
         return (
@@ -179,7 +197,7 @@ export default function PurchaseComponent({ ticker, user, close }) {
                             </div>
                         </div>
                         <div>
-                            {hasSubmitted && errors.length > 0 && (
+                            {errors.length > 0 && (
                                     <div className="purchase-error">
                                         {errors.map((error) => (
                                             <li key={error}
