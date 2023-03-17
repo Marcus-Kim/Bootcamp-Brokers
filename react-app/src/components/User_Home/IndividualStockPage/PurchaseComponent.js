@@ -152,6 +152,9 @@ export default function PurchaseComponent({ ticker, user, close }) {
             shares={shares}
             setHasSubmitted={setHasSubmitted}
             setShares={setShares}
+            setBuySelected={setBuySelected}
+            sharesAvailable={sharesAvailable}
+            setSharesAvailable={setSharesAvailable}
         />
     } else {
         return (

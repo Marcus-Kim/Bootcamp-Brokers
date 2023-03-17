@@ -1,12 +1,25 @@
 import { useSelector } from 'react-redux'
 import './OrderConfirmation.css'
 
-export default function OrderConfirmation({ ticker, buySelected, shares, setHasSubmitted, setShares }) {
+export default function OrderConfirmation({ 
+  ticker, 
+  buySelected, 
+  shares, 
+  setHasSubmitted, 
+  setShares,
+  setBuySelected,
+  sharesAvailable, 
+  setSharesAvailable 
+}) {
   // const stock = useSelector()
 
   const doneReviewing = (e) => {
     e.preventDefault()
     
+    // When a sale zeros out a specific holding, set 'buySelected' to true (because the sell button will be unavailable immediately after transaction)
+    if (sharesAvailable === +shares && !buySelected) setBuySelected(true)
+
+    setSharesAvailable(prev => prev - +shares)
     setShares('')
     setHasSubmitted(false)
   }
