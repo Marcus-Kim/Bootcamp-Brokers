@@ -17,6 +17,7 @@ export default function PurchaseComponent({ ticker, user, close }) {
     const [buySelected, setBuySelected] = useState(true)
 
     const portfolio = useSelector(state => state.portfolio)
+    const cashBalance = useSelector(state => state.portfolio.cash_balance)
     const holdingsArray = Object.values(portfolio.holdings);
     const [sharesAvailable, setSharesAvailable] = useState('')
 
@@ -24,12 +25,25 @@ export default function PurchaseComponent({ ticker, user, close }) {
     // const cashBalance = Number(portfolio.cash_balance)
 
     const [estimatedCost, setEstimatedCost] = useState(0)
-    const [cashBalance, setCashBalance] = useState(portfolio.cash_balance)
+    const [isLoaded, setIsLoaded] = useState(false)
 
     // frontend error handing
     useEffect(() => {
+        const fetchAsync = async () => {
+            await dispatch(thunkGetUserPortfolio())
+            await dispatch(thunkGetTransactionsByUserId())
+            await setIsLoaded(true)
+        }
+        fetchAsync();
+
         isStockInHoldings(ticker);
-    }, [shares, estimatedCost, cashBalance, ticker, portfolio.holdings, close]);
+        const newEstimatedCost = Number(+close * +shares);
+
+        // Update the state values
+        setEstimatedCost(newEstimatedCost);
+        setErrors([])
+
+    }, [shares, estimatedCost, ticker, portfolio.holdings, close]);
     // useEffect(() => {
     //     isStockInHoldings(ticker)
     // }, [ticker, portfolio.holdings])
@@ -39,11 +53,10 @@ export default function PurchaseComponent({ ticker, user, close }) {
         const newErrors = [];
 
         const newEstimatedCost = Number(+close * +shares);
-        const newCashBalance = Number(portfolio.cash_balance);
+        const newCashBalance = Number(cashBalance);
 
         // Update the state values
         setEstimatedCost(newEstimatedCost);
-        setCashBalance(newCashBalance);
 
         if (newEstimatedCost <= 0) newErrors.push("Please enter valid number of shares")
         if (newEstimatedCost > newCashBalance) {
@@ -58,11 +71,9 @@ export default function PurchaseComponent({ ticker, user, close }) {
         const newErrors = [];
 
         const newEstimatedCost = Number(+close * +shares);
-        const newCashBalance = Number(portfolio.cash_balance);
 
         // Update the state values
         setEstimatedCost(newEstimatedCost);
-        setCashBalance(newCashBalance);
 
         if (shares <= 0) newErrors.push("Please enter valid number of shares")
         if (shares > sharesAvailable) newErrors.push("You do not have enough shares")
@@ -144,101 +155,106 @@ export default function PurchaseComponent({ ticker, user, close }) {
         />
     } else {
         return (
-            <div className="purchase-container">
-                        <div className="order-selector">
-                            <div
-                                className={
-                                    "purchase-buy-div" +
-                                    (buySelected ? ' active-type' : '')
-                                }
-                                onClick={selectBuy}
-                            >
-                                Buy {ticker}
-                            </div>
-                            <div
-                                className={
-                                    "sell-div" +
-                                    (tickerInHoldings ? '' : ' hidden') +
-                                    (buySelected ? '' : ' active-type')
-                                }
-                                onClick={selectSell}
-                            >
-                                Sell {ticker}
-                            </div>
-                        </div>
-                        <div style= {{ display: "flex", justifyContent: "space-between", }}>
-                            <div className="left-order-type-div">
-                                Order Type
-                            </div>
-                            <div className="right-order-type-div">
-                                { buySelected ? 'Buy Market Order' : 'Sell Market Order'}
-                            </div>
-                        </div>
-                        <div style= {{ display: "flex", justifyContent: "space-between", borderBottom: "solid 1px rgb(172, 171, 171)" }}>
-                            <div className="left-shares-div">Shares</div>
-                            <div className="right-shares-div">
-                                <input
-                                    className="shares-input"
-                                    type="number"
-                                    min="1"
-                                    placeholder="0"
-                                    value={shares}
-                                    onChange={e => setShares(e.target.value)}
-                                    >
-                                </input>
-                            </div>
-                        </div>
-                        <div style= {{ display: "flex", justifyContent: "space-between" }}>
-                            <div className="left-est-div">
-                                Estimated Cost
-                            </div>
-                            <div className="right-est-div">
-                                {`$ ${Number(estimatedCost).toFixed(2)}`}
-                            </div>
-                        </div>
-                        <div>
-                            {errors.length > 0 && (
-                                    <div className="purchase-error">
-                                        {errors.map((error) => (
-                                            <li key={error}
-                                                style={{ color: "red", listStyle: "none", fontSize: "10px", textAlign: "center"}}
-                                                >{error}</li>
-                                        ))}
-                                    </div>
-                            )}
-                        </div>
-                        <div className="transaction-button-div">
-                            { buySelected ?
-                                (
-                                <button
-                                    className="button"
-                                    onClick={handlePurchase}
-                                >
-                                    Purchase Stock
-                                </button>)
-                                : (
-                                <button
-                                    className="button"
-                                    onClick={handleSale}
-                                >
-                                    Sell Stock
-                                </button>
-                                )
+            <>
+                { isLoaded && (
+                    <div className="purchase-container">
+                    <div className="order-selector">
+                        <div
+                            className={
+                                "purchase-buy-div" +
+                                (buySelected ? ' active-type' : '')
                             }
+                            onClick={selectBuy}
+                        >
+                            Buy {ticker}
                         </div>
-                        <div style={{ display: "flex", justifyContent: "center", padding: "10px", borderTop: "1px solid rgb(172, 171, 171)", borderBottom: "1px solid rgb(172, 171, 171)" }}>
-                            { buySelected ?
-                                <div className="buying-power-div"> ${cashBalance} buying power available</div>
-                                : (<div className="shares-available-div">{sharesAvailable}.0 Shares Available</div>)
+                        <div
+                            className={
+                                "sell-div" +
+                                (tickerInHoldings ? '' : ' hidden') +
+                                (buySelected ? '' : ' active-type')
                             }
-                        </div>
-                        {/* <div style={{ display: "flex", padding: "10px", justifyContent: "center", alignItems: "center" }}>
-                            <div className="transaction-bottom-div">Brokerage</div>
-                        </div> */}
-                        <div className="transaction-button-div">
-                            <AddToWatchlistModalButton modalComponent={<AddToWatchlistModal ticker={ticker} watchlists={watchlists}/>} buttonText={'Add to Watchlist'}/>
+                            onClick={selectSell}
+                        >
+                            Sell {ticker}
                         </div>
                     </div>
+                    <div style= {{ display: "flex", justifyContent: "space-between", }}>
+                        <div className="left-order-type-div">
+                            Order Type
+                        </div>
+                        <div className="right-order-type-div">
+                            { buySelected ? 'Buy Market Order' : 'Sell Market Order'}
+                        </div>
+                    </div>
+                    <div style= {{ display: "flex", justifyContent: "space-between", borderBottom: "solid 1px rgb(172, 171, 171)" }}>
+                        <div className="left-shares-div">Shares</div>
+                        <div className="right-shares-div">
+                            <input
+                                className="shares-input"
+                                type="number"
+                                min="1"
+                                placeholder="0"
+                                value={shares}
+                                onChange={e => setShares(e.target.value)}
+                                >
+                            </input>
+                        </div>
+                    </div>
+                    <div style= {{ display: "flex", justifyContent: "space-between" }}>
+                        <div className="left-est-div">
+                            Estimated Cost
+                        </div>
+                        <div className="right-est-div">
+                            {`$ ${Number(estimatedCost).toFixed(2)}`}
+                        </div>
+                    </div>
+                    <div>
+                        {errors.length > 0 && (
+                                <div className="purchase-error">
+                                    {errors.map((error) => (
+                                        <li key={error}
+                                            style={{ color: "red", listStyle: "none", fontSize: "10px", textAlign: "center"}}
+                                            >{error}</li>
+                                    ))}
+                                </div>
+                        )}
+                    </div>
+                    <div className="transaction-button-div">
+                        { buySelected ?
+                            (
+                            <button
+                                className="button"
+                                onClick={handlePurchase}
+                            >
+                                Purchase Stock
+                            </button>)
+                            : (
+                            <button
+                                className="button"
+                                onClick={handleSale}
+                            >
+                                Sell Stock
+                            </button>
+                            )
+                        }
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "center", padding: "10px", borderTop: "1px solid rgb(172, 171, 171)", borderBottom: "1px solid rgb(172, 171, 171)" }}>
+                        { buySelected ?
+                            <div className="buying-power-div"> ${cashBalance} buying power available</div>
+                            : (<div className="shares-available-div">{sharesAvailable}.0 Shares Available</div>)
+                        }
+                    </div>
+                    {/* <div style={{ display: "flex", padding: "10px", justifyContent: "center", alignItems: "center" }}>
+                        <div className="transaction-bottom-div">Brokerage</div>
+                    </div> */}
+                    <div className="transaction-button-div">
+                        <AddToWatchlistModalButton modalComponent={<AddToWatchlistModal ticker={ticker} watchlists={watchlists}/>} buttonText={'Add to Watchlist'}/>
+                    </div>
+                </div>
+                )}
+            </>
+            
         )
     }
 }
