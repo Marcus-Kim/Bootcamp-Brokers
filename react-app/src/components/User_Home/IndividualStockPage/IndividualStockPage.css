@@ -60,7 +60,7 @@
     right: 150px;
     background-color: white;
     box-shadow: 0px 0px 5px 7px  rgba(232, 232, 232);
-    z-index: 1000;
+    z-index: 3;
 }
 
 .purchase-buy-div {
