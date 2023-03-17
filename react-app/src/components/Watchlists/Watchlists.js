@@ -20,7 +20,6 @@ function Watchlists({ watchlists, activeWatchlistId }) {
   const componentRef = useRef();
   const location = useLocation()
   const { markusKim } = useFinanceAPI()
-  console.log(markusKim)
   // *USE SELECTORS
   const user = useSelector(state => state.session.user.id)
 
@@ -81,7 +80,6 @@ function Watchlists({ watchlists, activeWatchlistId }) {
 
   const handleDropdown = (e) => { // Edit menu dropdown toggle handler
     e.stopPropagation();
-    console.log(e.target.nextElementSibling)
     // close any other dropdowns
     if (openDropdown && openDropdown !== e.target) {
       openDropdown.nextElementSibling.classList.remove('showModal')
@@ -139,7 +137,7 @@ function Watchlists({ watchlists, activeWatchlistId }) {
 
               </div>
               <div>
-              {openedLists[watchlist.id] &&
+              {openedLists[watchlist.id] && watchlist.tickers.length &&
                 watchlist.tickers.map((ticker) => {
                   const stockData = markusKim[ticker];
                   if (!stockData) {

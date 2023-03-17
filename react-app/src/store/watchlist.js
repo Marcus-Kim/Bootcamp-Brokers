@@ -117,7 +117,6 @@ export default function watchlistReducer(state = initialState, action) {
     switch(action.type) {
         case GET_WATCHLISTS_USER_ID: {
             const newState = {...state}
-            console.log(action.watchlists)
             for (let watchlist of action.watchlists) {
                 newState[watchlist.id] = watchlist
             }
