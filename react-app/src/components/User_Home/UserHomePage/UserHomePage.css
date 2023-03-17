@@ -277,6 +277,16 @@
     
 }
 
+.profit {
+    margin-left: 10px;
+    color: rgb(0,200,6)
+}
+
+.loss {
+    margin-left: 10px;
+    color: red;
+}
+
 .dropdown-menu {
     
     position: absolute;
