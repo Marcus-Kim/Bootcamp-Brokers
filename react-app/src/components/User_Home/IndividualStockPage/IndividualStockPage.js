@@ -37,6 +37,7 @@ export default function IndividualStockPage() {
         dispatch(thunkGetStockDaily(tickerCap))
         dispatch(thunkGetStockNews(tickerCap))
         dispatch(thunkGetAll28Stocks()).then(() => setIsLoaded(true))
+
     }, [dispatch, tickerCap])
 
     if (!stockFundamentals) return null;
@@ -58,6 +59,7 @@ export default function IndividualStockPage() {
     // To pass into chart components
     const close = Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["4. close"]).toFixed(2)
 
+    
 
     const chartObj = {
         "1D": <OneDayChart ticker={tickerCap} close={close} />,
@@ -162,7 +164,12 @@ export default function IndividualStockPage() {
                     </div>
                 { (tickers.includes(tickerCap))
                     ? <PurchaseComponent ticker={tickerCap} user={user} close={close} />
-                    : <div style={{ position: "fixed", top: "150px",right: "150px"}}>This isn't in the Broke Database</div>
+                    : <div className="too-broke">We're currently too broke and are unable to afford to offer this ticker. Please come back when we have more money. Or feel free to 
+                    pick one of the following tickers instead that we currently offer. 
+                    
+                    TSLA / AAPL / AMZN / GOOG / CRM / AMD / NVDA / KO / BBY / IBM / CRSP / COIN / HOOD / MSFT / AI / LULU / MSFT / AI / LULU / NKE / GME / AMC / BBBY / BB / T / SPY / QQQ / BEAM / APLS / CRBU / VRTX
+                    </div>
+
                 }
                 </div>
                     <TransactionComponent ticker={tickerCap} user={user} />
