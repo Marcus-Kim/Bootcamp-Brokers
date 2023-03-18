@@ -3,19 +3,18 @@ import './ChatBubble.css'
 import Bubble from './chat.png'
 import { useSelector, useDispatch } from 'react-redux';
 
-export default function ChatBubble() {
+export default function ChatBubble({ isChatModalOpen, setIsChatModalOpen }) {
     const [chatHistory, setChatHistory] = useState([])
     const [inputValue, setInputValue] = useState("")
     const currentDate = new Date().toLocaleDateString
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
 
     const handleChatClick = () => {
-      setIsModalOpen(true);
+      setIsChatModalOpen(true);
     };
 
     const handleCloseModal = () => {
-      setIsModalOpen(false);
+      setIsChatModalOpen(false);
     };
 
     const sendMessage = async() => {
@@ -88,7 +87,7 @@ export default function ChatBubble() {
 
     return (
       <div className="chat-container">
-      {isModalOpen && (
+      {isChatModalOpen && (
         <div className="modal">
           <div className="modal-content">
             <div className="chat-header">
