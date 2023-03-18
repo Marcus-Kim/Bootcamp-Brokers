@@ -217,9 +217,10 @@ export default function UserHomePage() {
 
     await dispatch(thunkDepositCash(amount))
     setDepositDivOpen(() => false)
+    setPrice(prev => Number(prev) + amount)
   }
 
-  // Helper function to format Buying Power
+  // Helper function to format dollar values with commas
   const numberWithCommas = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
@@ -230,12 +231,12 @@ export default function UserHomePage() {
 <div className="portfolio-container">
 <div className="chart-container">
   <div className="portfolio-data-container">
-    <div className="price price-transition">${price}</div>
+    <div className="price price-transition">${numberWithCommas(price)}</div>
     <div className="profit-loss profit-loss-transition">
       <span className="underprice-container">
         {profitLoss > 0 ? <img className="green-triangle" src={Triangle} alt="" /> : <div style={{fontSize: '11.5px'}}>🔻</div>}
         
-        <span className={profitLoss > 0 ? "profit" : "loss"}>${Math.abs(Number(parseFloat(profitLoss)).toFixed(2))} </span>
+        <span className={profitLoss > 0 ? "profit" : "loss"}>${numberWithCommas(Math.abs(Number(parseFloat(profitLoss)).toFixed(2)))} </span>
         <span className={profitLoss > 0 ? "profit" : "loss"}>{timeFrame}</span>
       </span>
     </div>
