@@ -74,7 +74,7 @@
 
 .list-supported-stocks {
     color: blue;
-    margin-top: 5px;
+    margin-top: 8px;
     font-size: 13px;
 }
 
@@ -97,7 +97,7 @@
 .purchase-container {
     position: fixed;
     width: 270px;
-    height: 430px;
+    height: fit-content;
     /* padding: 20px; */
     top: 100px;
     right: 150px;
@@ -106,6 +106,7 @@
     z-index: 3;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 10px;
     border: solid 1px rgb(227, 233, 237);
     border-radius: 4px;
@@ -282,6 +283,7 @@
 .watchlist-button {
     width: 200px;
     height: 40px;
+    margin: 10px;
     background-color: white;
     color: rgb(0,200,6);
     border-radius: 50px;
