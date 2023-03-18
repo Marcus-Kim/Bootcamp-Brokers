@@ -33,9 +33,26 @@ function Watchlists() {
   const [showList, setShowList] = useState(false);
   const [openedLists, setOpenedLists] = useState({});
   const [isRotated, setIsRotated] = useState(false);
+  const [errors, setErrors] = useState([])
+  const [hasSubmitted, setHasSubmited] = useState(false)
 
 
   // *USE_EFFECTS
+  useEffect(() => {
+
+    const error = []
+    const watchlistArray = Object.values(watchlists)
+
+    for (let watchlist of watchlistArray) {
+      console.log('watchlist.list_name', watchlist.list_name)
+      console.log('listName', listName)
+      if (watchlist.list_name.toLowerCase() === listName.toLowerCase()) {
+        error.push('List name must be unique')
+      }
+    }
+    setErrors(error);
+  }, [listName])
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (componentRef.current && !componentRef.current.contains(e.target)) {
@@ -55,12 +72,18 @@ function Watchlists() {
 
   // *FIRST RENDER
   if (!user) return null // If no user
-
+  if (!watchlists) return null;
   // *VARIABLES
   const watchlistArray = Object.values(watchlists)
   // *HANDLERS
   const handleCreateList = async (e) => { // Create list handler
     e.preventDefault()
+
+    setHasSubmited(true)
+
+    if (errors.length) return
+
+
 
     const newWatchlist = {
       user_id: user,
@@ -72,6 +95,8 @@ function Watchlists() {
       setShowForm(!showForm);
       setListName('');
     }
+
+    setHasSubmited(false)
   }
 
   const handleCreateListToggle = (e) => { // Form toggle handler
@@ -197,6 +222,7 @@ function Watchlists() {
         <button className='add-watchlist-button' onClick={e => handleCreateListToggle(e)}>+</button>
       </div>
       {showForm && <form className='create-watchlist-form' onSubmit={e => handleCreateList(e)}>
+        {hasSubmitted && !!errors.length && <div className='create-watchlist-error'>{errors[0]}</div>}
         <div className='create-watchlist-form-name'>
           <input className='create-watchlist-input-name' value={listName} placeholder='List Name' required onChange={e => setListName(e.target.value)} maxLength={30}/>
         </div>

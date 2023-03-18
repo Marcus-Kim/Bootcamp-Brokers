@@ -165,3 +165,8 @@
 .watchlist-list-edit-menu-items:hover {
   background-color: rgb(245,248,250);
 }
+
+.create-watchlist-error {
+  color: red;
+  font-size: small;
+}

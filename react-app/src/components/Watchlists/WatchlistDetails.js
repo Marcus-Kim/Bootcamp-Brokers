@@ -54,7 +54,7 @@ export default function WatchlistDetails() {
       suffix = 'B';
     } else {
       // Return the original value if it's less than a billion
-      return marketCap.toFixed(2);
+      return marketCap?.toFixed(2);
     }
 
     // Limit the number to 3 digits on the left and 2 on the right of the decimal
