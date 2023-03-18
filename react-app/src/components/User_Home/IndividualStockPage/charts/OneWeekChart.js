@@ -48,8 +48,9 @@ export default function OneWeekChart({ ticker, close }) {
 
     useEffect(() => {
         dispatch(thunkGetOneWeekStockData(ticker))
+        setPrice(close)
 
-    }, [dispatch, ticker])
+    }, [dispatch, ticker, close])
 
     if (!weeklyData) return null
     if (!weeklyData["Meta Data"]) return null
@@ -119,8 +120,7 @@ export default function OneWeekChart({ ticker, close }) {
 
     return (
         <div>
-            <h3>OneWeekChart Component</h3>
-            <div>{`$ ${Number(price).toFixed(2)}`}</div>
+            <div className="chart-price">{`$${Number(price).toFixed(2)}`}</div>
             <Line data={chartData} options={chartData.options} ></Line>
         </div>
     )
