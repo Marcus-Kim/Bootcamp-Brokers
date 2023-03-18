@@ -8,7 +8,7 @@ import "./IndividualStockPage.css"
 import { thunkGetAllWatchlistsUserId } from '../../../store/watchlist'
 import OrderConfirmation from "./OrderConfirmation";
 
-export default function PurchaseComponent({ ticker, user, close }) {
+export default function PurchaseComponent({ ticker, user, close, isSupported }) {
     const dispatch = useDispatch();
     const [shares, setShares] = useState('')
     const [errors, setErrors] = useState([])
@@ -224,25 +224,41 @@ export default function PurchaseComponent({ ticker, user, close }) {
                                 </div>
                         )}
                     </div>
-                    <div className="transaction-button-div">
-                        { buySelected ?
-                            (
-                            <button
-                                className="button"
-                                onClick={handlePurchase}
-                            >
-                                Purchase Stock
-                            </button>)
-                            : (
-                            <button
-                                className="button"
-                                onClick={handleSale}
-                            >
-                                Sell Stock
-                            </button>
-                            )
-                        }
-                    </div>
+                    {/* Render purchase button conditionally depending on platform support for stock */}
+                    { isSupported ? 
+                        (<div className="transaction-button-div">
+                            { buySelected ?
+                                (
+                                <button
+                                    className="button"
+                                    onClick={handlePurchase}
+                                >
+                                    Purchase Stock
+                                </button>)
+                                : (
+                                <button
+                                    className="button"
+                                    onClick={handleSale}
+                                >
+                                    Sell Stock
+                                </button>
+                                )
+                            }
+                        </div>)
+                        
+                        : (
+                            <div className="transaction-button-div">
+                                <button className="button not-supported">
+                                    Stock Not Supported
+                                </button>
+                                <div className="list-supported-stocks">
+                                    See Supported Stocks
+                                    {/* TSLA / AAPL / AMZN / GOOG / CRM / AMD / NVDA / KO / BBY / IBM / CRSP / COIN / HOOD / MSFT / AI / LULU / MSFT / AI / LULU / NKE / GME / AMC / BBBY / BB / T / SPY / QQQ / BEAM / APLS / CRBU / VRTX */}
+                                </div>
+                            </div>
+                        )
+                    }
+                    
                     <div style={{ display: "flex", justifyContent: "center", padding: "10px", borderTop: "1px solid rgb(172, 171, 171)", borderBottom: "1px solid rgb(172, 171, 171)" }}>
                         { buySelected ?
                             <div className="buying-power-div"> ${cashBalance} buying power available</div>

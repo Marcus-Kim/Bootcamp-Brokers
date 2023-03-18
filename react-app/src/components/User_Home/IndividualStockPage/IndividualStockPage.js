@@ -25,13 +25,14 @@ export default function IndividualStockPage() {
     const [chart, setChart] = useState("1D")
     let { ticker } = useParams();
     let tickerCap = ticker.toUpperCase()
-
+    
     const stockFundamentals = useSelector(state => state.stocks.stockFundamentals)
     const stockDaily = useSelector(state => state.stocks.stockDaily)
     const stockNews = useSelector(state => state.stocks.stockNews)
     const user = useSelector(state => state.session.user)
     const stockPrices = useSelector(state => state.stocks.all28Stocks)
     const tickers = Object.keys(markusKim)
+    const isSupported = tickers.includes(tickerCap)
 
     useEffect(() => {
         dispatch(thunkGetStockFundamentals(tickerCap))
@@ -168,15 +169,7 @@ export default function IndividualStockPage() {
                         <div className="actual-stat">Today Close </div>
                         <div className="true-stat">${Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["4. close"]).toFixed(2)}</div>
                     </div>
-                { (tickers.includes(tickerCap))
-                    ? <PurchaseComponent ticker={tickerCap} user={user} close={close} />
-                    : <div className="too-broke">We're currently too broke and are unable to afford to offer this ticker. Please come back when we have more money. Or feel free to
-                    pick one of the following tickers instead that we currently offer.
-
-                    TSLA / AAPL / AMZN / GOOG / CRM / AMD / NVDA / KO / BBY / IBM / CRSP / COIN / HOOD / MSFT / AI / LULU / MSFT / AI / LULU / NKE / GME / AMC / BBBY / BB / T / SPY / QQQ / BEAM / APLS / CRBU / VRTX
-                    </div>
-
-                }
+                    <PurchaseComponent ticker={tickerCap} user={user} close={close} isSupported={isSupported} />
                 </div>
                     <TransactionComponent ticker={tickerCap} user={user} />
             </div>
