@@ -5,6 +5,7 @@ import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import Watchlists from '../../Watchlists/Watchlists';
 import News from './NewsComponent/News';
+import { thunkDepositCash } from '../../../store/portfolio';
 
 export default function UserHomePage() {
   const portfolio = useSelector(state => state.portfolio)
@@ -211,6 +212,13 @@ export default function UserHomePage() {
   };
   if (!BTC || !SPY) return null;
 
+  const makeDeposit = async (e, amount) => {
+    e.preventDefault()
+
+    await dispatch(thunkDepositCash(amount))
+    setDepositDivOpen(() => false)
+  }
+
   return (
   
 <div className="homepage-container">
@@ -297,11 +305,36 @@ export default function UserHomePage() {
       </button>
     </div>
     <div className={"deposit-container" + (depositDivOpen ? '' : ' hidden')}>
-      <button>+$100</button>
-      <button>+$1,000</button>
-      <button>+$10,000</button>
-      <button>+$100,000</button>
-      <button>+$1,000,000</button>
+      <button
+        onClick={(e) => makeDeposit(e, 100)}
+      >
+        +$100
+
+      </button>
+      <button
+        onClick={(e) => makeDeposit(e, 1000)}
+      >
+        +$1,000
+
+      </button>
+      <button
+        onClick={(e) => makeDeposit(e, 10000)}
+      >
+        +$10,000
+
+      </button>
+      <button
+        onClick={(e) => makeDeposit(e, 100000)}
+      >
+        +$100,000
+
+      </button>
+      <button
+        onClick={(e) => makeDeposit(e, 1000000)}
+      >
+        +$1,000,000
+
+      </button>
     </div>
   </div>
   <hr className="break"/>
