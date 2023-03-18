@@ -31,7 +31,7 @@ export default function News({ newsObject, numArticlesDisplayed }) {
   return (
     <>
       {newsObject?.feed?.slice(0, numArticlesDisplayed).map((news) => (
-        <Link to={news.url} style={{ textDecoration: 'none' }} target="_blank" rel="noopener noreferrer">
+        <Link key={news.url} to={news.url} style={{ textDecoration: 'none' }} target="_blank" rel="noopener noreferrer">
           <div className="news-carders" key={news.url}>
             <hr className="break" />
             <div className="news-card">
