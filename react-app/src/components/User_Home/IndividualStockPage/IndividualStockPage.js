@@ -112,7 +112,7 @@ export default function IndividualStockPage() {
         { isLoaded && (
             <div 
                 className="stock-page-main-container"
-                onClick={() => setIsSupportedStocksListHidden(true)}
+                onClick={() => setIsSupportedStocksListHidden(prev => true)}
             >
             <div className="topleft-individualprice-container">
             <div style={{fontFamily: 'sans-serif', fontSize: '32px'}}>{stockFundamentals["Symbol"]}</div>
