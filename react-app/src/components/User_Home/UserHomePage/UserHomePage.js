@@ -68,7 +68,6 @@ export default function UserHomePage() {
 
   // Change data displayed on chart
   const displayDailyView = () => {
-    console.log('HISTORICAL VALUES', historicalValues)
     setTimeFrame("1D")
     setGraph(historicalValues.slice(-300, historicalValues.length))
   }
