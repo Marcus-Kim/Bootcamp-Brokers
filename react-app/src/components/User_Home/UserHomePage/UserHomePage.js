@@ -344,7 +344,7 @@ export default function UserHomePage() {
   </div>
 </div>
 <div className="news-container">
-  <h2 className="section-header">News</h2>
+  <h2 className="section-header news-header">News</h2>
   <hr className="break"/>
   <div className="indexes-container">
     <div className="index-and-price">
