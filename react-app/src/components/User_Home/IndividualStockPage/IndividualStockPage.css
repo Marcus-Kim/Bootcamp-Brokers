@@ -72,7 +72,19 @@
     margin-top: 15px;
 }
 
+.list-supported-stocks {
+    color: blue;
+    margin-top: 5px;
+    font-size: 13px;
+}
 
+.not-supported {
+    background-color: gray;
+}
+
+.not-supported:hover {
+    background-color: gray;
+}
 
 .order-selector {
     align-items: center;
@@ -262,6 +274,7 @@
 .transaction-button-div {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
     padding: 20px 10px;
 
