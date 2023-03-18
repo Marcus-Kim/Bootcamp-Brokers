@@ -157,13 +157,13 @@ function Watchlists() {
                           <div className='watchlist-stock-name-home'>{ticker}</div>
                           <div className="watchlist-graph-home">
                             {/* CHART GOES HERE */}
-                            <WatchlistChart ticker={ticker}/>
+                            <WatchlistChart ticker={ticker} percentChange={markusKim[ticker].dailyPrice.percentageChange}/>
                           </div>
                           <div className='watchlist-stock-price-daily-container'>
                             <div className='watchlist-stock-price-home'>
                               ${markusKim[ticker].dailyPrice.close}
                             </div>
-                            <div className='watchlist-stock-daily-home'>
+                            <div className={markusKim[ticker].dailyPrice.percentageChange < 0 ? 'watchlist-stock-daily-home-loss' : 'watchlist-stock-daily-home'}>
                               {markusKim[ticker].dailyPrice.percentageChange.toFixed(2)}%
                             </div>
                           </div>

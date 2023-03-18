@@ -163,3 +163,8 @@
 .watchlist-details-filters-button:hover {
   background-color: rgb(227,233,237);
 }
+
+.watchlist-details-triangle {
+  height: 10px;
+  margin-right: 5px;
+}

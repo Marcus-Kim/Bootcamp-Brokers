@@ -217,6 +217,16 @@
   color: rgb(0,183,5);
 }
 
+.watchlist-stock-daily-home-loss {
+  font-size: small;
+  font-weight: 700;
+  display: flex;
+  align-items: start;
+  height: 50%;
+  justify-content: end;
+  color: rgb(255,80,0);
+}
+
 .watchlist-graph-home {
   height: 100%;
   width: 100%;
