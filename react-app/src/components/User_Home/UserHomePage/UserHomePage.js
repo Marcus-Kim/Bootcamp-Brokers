@@ -29,7 +29,7 @@ export default function UserHomePage() {
   
   useEffect(() => {
     displayDailyView()
-  },[])
+  },[historicalValues.length])
 
   const verticalLinePlugin = {
     id: "verticalLine",
