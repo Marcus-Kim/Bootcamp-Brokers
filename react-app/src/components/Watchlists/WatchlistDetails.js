@@ -9,6 +9,8 @@ import UserNav from '../User_Home/UserHomePage/UserNav/UserNav'
 import { useFinanceAPI } from '../../context/FinanceApiContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark, faFilter, faEllipsis } from '@fortawesome/free-solid-svg-icons'
+import greenTriangle from './triangle-16.png'
+import redTriangle from './triangle-16-red.png'
 
 export default function WatchlistDetails() {
   const dispatch = useDispatch()
@@ -91,12 +93,20 @@ export default function WatchlistDetails() {
                 if (!stockData) {
                   return null;
                 }
+                const isLoss = (percentChange) => {
+                  return percentChange < 0 ? true : false
+                }
+                const noMinus = (percentChange) => {
+                  const stringPercentChange = percentChange.toString().split('')
+                  if (stringPercentChange[0] == '-') return +stringPercentChange.slice(1).join('')
+                  return percentChange;
+                }
               return (
                   <div className='watchlist-details-list-row' onClick={e => navigate(`/stocks/${stock.ticker}`)} key={stock.ticker}>
                     <div className='watchlist-details-list-name' id='watchlist-details-list-header-name'>{stock.company_name}</div>
                     <div className='watchlist-details-list-symbol'>{stock.ticker}</div>
                     <div className='watchlist-details-list-price'>${markusKim[stock.ticker]['dailyPrice'].close}</div>
-                    <div className='watchlist-details-list-today'>{markusKim[stock.ticker]['dailyPrice'].percentageChange.toFixed(2)}%</div>
+                    <div className='watchlist-details-list-today'><img className='watchlist-details-triangle' src={isLoss(markusKim[stock.ticker]['dailyPrice'].percentageChange) ? greenTriangle : redTriangle} />{noMinus(markusKim[stock.ticker]['dailyPrice'].percentageChange.toFixed(2))}%</div>
                     <div className='watchlist-details-list-header-market-cap-delete'>
                       <div className='watchlist-details-list-market-cap'>{convertMarketCap(stockData.marketCap)}</div>
                       <FontAwesomeIcon icon={faXmark} className='watchlist-details-stock-delete-button' onClick={e => handleDeleteClick(e, selectedWatchlist.id, stock.ticker)}/>

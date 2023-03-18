@@ -4,11 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { thunkGetStockIntraDay } from "../../store/stock";
 import "./watchlistsHome.css";
 
-export default function WatchlistChart({ ticker }) {
+export default function WatchlistChart({ ticker, percentChange }) {
   const dispatch = useDispatch();
   const interval = "5min";
   const [chartData, setChartData] = useState(null); // Add this line to create a separate state for each chart component
 
+  const switchLineColor = (percentChange) => {
+    if (percentChange < 0) {
+      return '#c53b3b'
+    } else {
+      return '#5AC53B'
+    }
+  }
   useEffect(() => {
     (async () => {
       const fetchedData = await dispatch(thunkGetStockIntraDay(ticker, interval));
@@ -31,7 +38,7 @@ export default function WatchlistChart({ ticker }) {
             {
               label: "Stock Price",
               data: result.map((data) => data.price),
-              borderColor: "#5AC53B",
+              borderColor: switchLineColor(percentChange),
               borderWidth: 2,
               pointBorderColor: "rgb(0, 200, 0, 0)",
               pointBackgroundColor: "rgba(0, 0, 0, 0)",
