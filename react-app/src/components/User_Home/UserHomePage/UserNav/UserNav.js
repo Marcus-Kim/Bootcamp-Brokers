@@ -21,17 +21,51 @@ export default function UserNav() {
     const user = useSelector(state => state.session)
     const userArray = Object.values(user)
     const [searchValue, setSearchValue] = useState("")
+    const [placeholder, setPlaceholder] = useState("Search...")
+    const [matchedTickers, setMatchedTickers] = useState([]);
 
+    const allTickers = [
+    'TSLA', 'AAPL', 'AMZN', 
+    'GOOG', 'CRM', 'AMD', 
+    'NVDA', 'KO', 'BBY', 
+    'IBM', 'CRSP', 'COIN',
+    'HOOD', 'MSFT', 'AI', 
+    'LULU', 'NKE', 'GME', 
+    'AMC', 'BBBY', 'BB', 
+    'T', 'SPY', 'QQQ', 
+    'BEAM', 'APLS', 'CRBU', 
+    'VRTX'
+  ]
+
+
+    
 
     const [dropdownVisible, setDropdownVisible] = useState(false)
 
-    // useEffect(() => {
-    //     if (userArray[0] === null) {
-    //       navigate('/')
-    //     } else {
-    //       navigate('/home')
-    //     }
-    //   }, [])
+
+    const searchTickers = (userSearch) => {
+        if (!userSearch) {
+            return []
+        }
+        const matches = [];
+        for (let i = 0; i < allTickers.length; i++) {
+          const ticker = allTickers[i];
+          if (ticker.startsWith(userSearch.toUpperCase())) {
+            matches.push(ticker);
+          }
+        }
+        return matches;
+    };
+
+    useEffect(() => {
+        const userSearch = searchValue.trim()
+        
+        if (!userSearch) {
+            setMatchedTickers([])
+        }
+        const matchedTickers = searchTickers(userSearch)
+        setMatchedTickers(matchedTickers)
+    }, [searchValue])
 
     const handleLogout = async () => {
         dispatch(logout()).then(navigate("/loggedout"))
@@ -47,9 +81,14 @@ export default function UserNav() {
 
     const handleSearch = (e) => {
         e.preventDefault()
-        navigate(`/stocks/${searchValue}`)
-        setSearchValue("")
-
+        const userSearch = searchValue.trim()
+        if (userSearch === '') { // check if searchValue is empty
+            setMatchedTickers([])
+        } else {
+            const matches = searchTickers(userSearch)
+            setMatchedTickers(matches)
+            navigate(`/stocks/${searchValue.toUpperCase()}`)
+        }
     }
 
 
@@ -66,8 +105,22 @@ export default function UserNav() {
                     type="text"
                     value={searchValue}
                     onChange={(e) => setSearchValue(e.target.value)}
-                    placeholder="Search..."
+                    placeholder={placeholder}
                     />
+
+                    {matchedTickers.length > 0 && (
+                                <div className="suggestions-container">
+                                {matchedTickers.map((ticker) => (
+                                    <div
+                                    key={ticker}
+                                    className="suggestions"
+                                    onClick={() => navigate(`/stocks/${ticker}`)}
+                                    >
+                                    {ticker}
+                                    </div>
+                                ))}
+                                </div>
+                            )}
                 </form>
 
                 <span className="homepage-rightcontainer">

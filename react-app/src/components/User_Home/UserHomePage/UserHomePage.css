@@ -260,6 +260,29 @@
     scrollbar-width: none;  /* Firefox */
 }
 
+.suggestions-container {
+    position: absolute;
+    top: 55px; /* adjust this value to position the suggestions container */
+    left: 160px;
+    width: 445px;
+    z-index: 1;
+    background-color: white;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    padding: 0.5rem;
+    border-radius: 4px
+}
+
+.suggestions {
+cursor: pointer;
+padding: 0.25rem 0.5rem;
+border-radius: 4px;
+}
+
+.suggestions:hover {
+background-color: #f2f2f2;
+}
+
 .watchlist-container::-webkit-scrollbar {
     /* Hide scrollbar */
     display: none;  /* Safari and Chrome */

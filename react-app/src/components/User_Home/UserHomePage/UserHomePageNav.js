@@ -30,8 +30,45 @@ export default function UserHomePageNav({ setIsChatModalOpen }) {
     const userId = useSelector(state => state.session.user?.id)
     const [isLoaded, setIsLoaded] = useState(false)
     const stocks = useSelector(state => state.stocks.all28Stocks)
+    const [matchedTickers, setMatchedTickers] = useState([])
 
 
+    const allTickers = [
+        'TSLA', 'AAPL', 'AMZN', 
+        'GOOG', 'CRM', 'AMD', 
+        'NVDA', 'KO', 'BBY', 
+        'IBM', 'CRSP', 'COIN',
+        'HOOD', 'MSFT', 'AI', 
+        'LULU', 'NKE', 'GME', 
+        'AMC', 'BBBY', 'BB', 
+        'T', 'SPY', 'QQQ', 
+        'BEAM', 'APLS', 'CRBU', 
+        'VRTX'
+      ]
+    
+    const searchTickers = (userSearch) => {
+        if (!userSearch) {
+            return []
+        }
+        const matches = [];
+        for (let i = 0; i < allTickers.length; i++) {
+          const ticker = allTickers[i];
+          if (ticker.startsWith(userSearch.toUpperCase())) {
+            matches.push(ticker);
+          }
+        }
+        return matches;
+    };
+
+    useEffect(() => {
+        const userSearch = searchValue.trim()
+        
+        if (!userSearch) {
+            setMatchedTickers([])
+        }
+        const matchedTickers = searchTickers(userSearch)
+        setMatchedTickers(matchedTickers)
+    }, [searchValue])
 
     const [dropdownVisible, setDropdownVisible] = useState(false)
 
@@ -63,9 +100,12 @@ export default function UserHomePageNav({ setIsChatModalOpen }) {
 
     const handleSearch = (e) => {
         e.preventDefault()
-        navigate(`/stocks/${searchValue}`)
-    }
-
+        if (searchValue === '') {
+          setMatchedTickers([])
+        } else {
+          navigate(`/stocks/${searchValue}`)
+        }
+      }
 
     useEffect(() => {
         const fetchAsync = async () => {
@@ -94,7 +134,6 @@ export default function UserHomePageNav({ setIsChatModalOpen }) {
                 <img src="https://media0.giphy.com/media/KG4PMQ0jyimywxNt8i/giphy.gif?cid=ecf05e47bpnr0mt98srhcmw3409sc0u0doju0lh87y0l534w&rid=giphy.gif&ct=g" alt="Loading..." />
             </div>
             )}
-{/* */}
 
             {isLoaded && (
                 <div className="home-container">
@@ -110,6 +149,20 @@ export default function UserHomePageNav({ setIsChatModalOpen }) {
                                 onChange={(e) => setSearchValue(e.target.value)}
                                 placeholder="Search..."
                             />
+
+                    {matchedTickers.length > 0 && (
+                                <div className="suggestions-container">
+                                {matchedTickers.map((ticker) => (
+                                    <div
+                                    key={ticker}
+                                    className="suggestions"
+                                    onClick={() => navigate(`/stocks/${ticker}`)}
+                                    >
+                                    {ticker}
+                                    </div>
+                                ))}
+                                </div>
+                            )}
                         </form>
 
 
