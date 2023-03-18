@@ -11,19 +11,31 @@
 
 .add-watchlist-modal-container {
   border: 1px solid red;
-  height: 500px;
-  width: 400px;
+  height: 400px;
+  width: 300px;
   padding: 20px;
   display: flex;
   flex-direction: column;
+  padding: 30px;
 }
 
 .add-watchlist-modal-title-exit {
   display: flex;
   justify-content: space-between;
+  padding-bottom: 20px;
 }
 
 .add-watchlist-modal-lists {
   display: flex;
   flex-direction: column;
+}
+
+.watchlist-lists {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.input-div {
+  margin-right: 25px;
 }

@@ -34,16 +34,21 @@ function AddToWatchlistModal({ ticker, watchlists }) {
     <div className="add-watchlist-modal-container">
       <div className="add-watchlist-modal-title-exit">
         <div className='add-watchlist-modal-title'>{`Add ${ticker} to Your Lists`}</div>
-        <div className='add-watchlist-modal-exit'>X</div>
+        <div className='add-watchlist-modal-exit' onClick={() => closeModal()}>X</div>
       </div>
       <form className='add-watchlist-modal-form' onSubmit={handleSubmit}>
         <div className='add-watchlist-modal-lists'>
           {filteredWatchlistArray.map(watchlist => {
             return (
-              <label key={watchlist.id}>
-                <input type='checkbox' checked={listValues.includes(watchlist.id)} onChange={e => handleCheckboxChange(e, watchlist)}/>
+              <div className='watchlist-lists' key={watchlist.id}>
+                <input
+                  type='checkbox'
+                  className='input-div'
+                  checked={listValues.includes(watchlist.id)}
+                  onChange={e => handleCheckboxChange(e, watchlist)}
+                  />
                 {watchlist.list_name}
-              </label>
+              </div>
             )
           })}
         </div>

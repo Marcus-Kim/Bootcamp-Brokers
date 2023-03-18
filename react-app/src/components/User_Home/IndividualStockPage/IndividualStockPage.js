@@ -25,7 +25,7 @@ export default function IndividualStockPage() {
     const [chart, setChart] = useState("1D")
     let { ticker } = useParams();
     let tickerCap = ticker.toUpperCase()
-    
+
     const stockFundamentals = useSelector(state => state.stocks.stockFundamentals)
     const stockDaily = useSelector(state => state.stocks.stockDaily)
     const stockNews = useSelector(state => state.stocks.stockNews)
@@ -120,7 +120,7 @@ export default function IndividualStockPage() {
                 onClick={() => setIsSupportedStocksListHidden(prev => true)}
             >
             <div className="topleft-individualprice-container">
-            <div style={{fontFamily: 'sans-serif', fontSize: '32px'}}>{stockFundamentals["Symbol"]}</div>
+            <div style={{fontFamily: 'sans-serif', fontSize: '32px'}}>{tickerCap}</div>
                 <div style={{ width: "700px" }}>{ chartObj[chart] }</div>
 
             </div>
