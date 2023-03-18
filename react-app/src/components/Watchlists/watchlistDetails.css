@@ -41,27 +41,33 @@
   text-align: left;
   padding-top: 20px;
   padding-bottom: 20px;
+  font-size: 13px;
+
 }
 
 .watchlist-details-list-header,
 .watchlist-details-list-header-symbol {
   text-align: left;
+  font-size: 13px;
 }
 
 .watchlist-details-list-header-market-cap {
   text-align: left;
+  font-size: 13px;
   /* display: flex; */
 }
 
 .watchlist-details-table {
   display: flex;
   flex-direction: column;
+  
 }
 
 .watchlist-details-table-header {
   border-bottom: 1px solid rgb(227,233,237);
   display: flex;
   align-items: center;
+  align-content: center;
 }
 
 .watchlist-details-list-header-name {
@@ -74,16 +80,21 @@
 
 .watchlist-details-list-header-price {
   width: 15%;
+  font-size: 13px;
 }
 
 .watchlist-details-list-header-change {
   width: 18%;
+  font-size: 13px;
 }
 
 .watchlist-details-list-header-market-cap {
   width: 15%
 }
 
+.watchlist-details-list-body {
+  font-size: 13px;
+}
 
 
 #hello {
