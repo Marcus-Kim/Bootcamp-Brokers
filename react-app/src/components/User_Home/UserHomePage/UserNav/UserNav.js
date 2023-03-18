@@ -12,6 +12,7 @@ import { faHandHoldingDollar } from '@fortawesome/free-solid-svg-icons';
 import { faClockRotateLeft } from '@fortawesome/free-solid-svg-icons'
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { logout } from '../../../../store/session'
+import { thunkGetStockDaily } from '../../../../store/stock'
 
 
 export default function UserNav() {
@@ -49,6 +50,7 @@ export default function UserNav() {
         navigate(`/stocks/${searchValue}`)
 
     }
+
 
     return (
         <div className="home-container">
