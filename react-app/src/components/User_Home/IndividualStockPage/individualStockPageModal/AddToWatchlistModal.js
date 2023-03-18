@@ -8,6 +8,7 @@ function AddToWatchlistModal({ ticker, watchlists }) {
   const watchlistArray = Object.values(watchlists) // Array of watchlists
   const filteredWatchlistArray = watchlistArray?.filter(watchlist => !(watchlist.tickers?.includes(ticker)))
   const [listValues, setListValues] = useState([]) // Array of watchlist IDs
+  const [isButtonActive, setIsButtonActive] = useState(false);
   const dispatch = useDispatch()
   const { closeModal } = useModal()
 
@@ -25,8 +26,10 @@ function AddToWatchlistModal({ ticker, watchlists }) {
   const handleCheckboxChange = (e, watchlist) => {
     if (e.target.checked) { // If the id is in the array
       setListValues([...listValues, watchlist.id]);
+      setIsButtonActive(true);
     } else {
       setListValues(listValues.filter((id) => id !== watchlist.id));
+      setIsButtonActive(listValues.length > 1);
     }
   };
 
@@ -43,7 +46,7 @@ function AddToWatchlistModal({ ticker, watchlists }) {
               <div className='watchlist-lists' key={watchlist.id}>
                 <input
                   type='checkbox'
-                  className='input-div'
+                  className='checkbox'
                   checked={listValues.includes(watchlist.id)}
                   onChange={e => handleCheckboxChange(e, watchlist)}
                   />
@@ -52,7 +55,12 @@ function AddToWatchlistModal({ ticker, watchlists }) {
             )
           })}
         </div>
-        <button type='submit' className='add-watchlist-submit-button'>Save Changes</button>
+        <button
+          type='submit'
+          className={`add-watchlist-submit-button ${isButtonActive ? 'active' : ''}`}
+          disabled={!isButtonActive}
+          >
+            Save Changes</button>
       </form>
 
     </div>

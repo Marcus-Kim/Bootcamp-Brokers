@@ -93,7 +93,7 @@ export default function IndividualStockPage() {
 
         } else {
           // Return the original value if it's less than a billion
-          return number.toFixed(2);
+          return number?.toFixed(2);
         }
 
         // Limit the number to 3 digits on the left and 2 on the right of the decimal
@@ -115,7 +115,7 @@ export default function IndividualStockPage() {
             </div>
         )}
         { isLoaded && (
-            <div 
+            <div
                 className="stock-page-main-container"
                 onClick={() => setIsSupportedStocksListHidden(prev => true)}
             >
@@ -178,13 +178,13 @@ export default function IndividualStockPage() {
                         <div className="actual-stat">Today Close </div>
                         <div className="true-stat">${Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["4. close"]).toFixed(2)}</div>
                     </div>
-                    <PurchaseComponent 
-                    ticker={tickerCap} 
-                    user={user} 
-                    close={close} 
+                    <PurchaseComponent
+                    ticker={tickerCap}
+                    user={user}
+                    close={close}
                     isSupported={isSupported}
                     isSupportedStocksListHidden={isSupportedStocksListHidden}
-                    setIsSupportedStocksListHidden={setIsSupportedStocksListHidden} 
+                    setIsSupportedStocksListHidden={setIsSupportedStocksListHidden}
                     />
                 </div>
                     <TransactionComponent ticker={tickerCap} user={user} />
