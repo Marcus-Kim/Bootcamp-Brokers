@@ -21,7 +21,7 @@ import { thunkGetAll28Stocks } from "../../../store/stock";
 import { thunkGetBTCPrice } from '../../../store/stock';
 
 
-export default function UserHomePageNav() {
+export default function UserHomePageNav({ setIsChatModalOpen }) {
     const [searchValue, setSearchValue] = useState("")
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -149,9 +149,14 @@ export default function UserHomePageNav() {
                                                 <hr style={{ borderColor: 'light gray' }} />
                                             </div>
                                             <NavLink to="/profile" className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faSmile} /> Profile</NavLink>
-                                            <NavLink to="/investing" className="dropdown-nav"><FontAwesomeIcon className="dropdown-hand" icon={faHandHoldingDollar} />Investing</NavLink>
+                                            <NavLink to="/home" className="dropdown-nav"><FontAwesomeIcon className="dropdown-hand" icon={faHandHoldingDollar} />Investing</NavLink>
                                             <NavLink to="/history" className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faClockRotateLeft} />History</NavLink>
-                                            <NavLink className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faPhone} /> Support</NavLink>
+                                            <NavLink 
+                                                className="dropdown-nav"
+                                                onClick={() => setIsChatModalOpen(true)}
+                                            >
+                                                <FontAwesomeIcon className="dropdown-icon" icon={faPhone} /> Support
+                                            </NavLink>
                                             <button
                                                 onClick={handleLogout}
                                                 className="dropdown-logout"><FontAwesomeIcon className="dropdown-icon" icon={faArrowRightFromBracket} />
