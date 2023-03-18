@@ -97,7 +97,7 @@
 .purchase-container {
     position: fixed;
     width: 270px;
-    height: 470px;
+    height: 430px;
     /* padding: 20px; */
     top: 100px;
     right: 150px;
@@ -276,8 +276,7 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    padding: 20px 10px;
-
+    padding-bottom: 10px;
 }
 
 .watchlist-button {
