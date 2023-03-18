@@ -12,18 +12,32 @@
 }
 
 .rename-list-modal-container {
-  width: 475px;
+  width: 400px;
   height: 140px;
   display: flex;
   flex-direction: column;
   padding: 30px;
-  border: 1px solid red;
   z-index: 99999999;
+}
+
+.rename-list-modal-title {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
 }
 
 .rename-list-modal-title-exit {
   display: flex;
   justify-content: space-between;
+}
+
+.rename-list-modal-exit-button {
+  padding:  5px 6px;
+  border-radius: 5px;
+}
+
+.rename-list-modal-exit-button:hover {
+  background-color: rgb(214, 229, 240);
 }
 
 .rename-list-modal-form {
@@ -32,13 +46,62 @@
   justify-content: center;
   width: 300px;
   margin: auto;
+  row-gap: 20px;
 }
 
 .rename-list-modal-input {
   display: flex;
   align-items: center;
+  border: none;
+  background-color: rgb(240, 243, 245);
+  height: 30px;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+
+.rename-list-modal-submit-button {
+  background-color: rgb(0,200,5);
+  border: none;
+  color: white;
+  font-weight: bold;
+  padding: 10px 30px;
+  border-radius: 40px;
+}
+
+.rename-list-modal-error {
+  color: red;
+  font-size: small;
 }
 
 .delete-list-modal-container {
+  height: 100px;
+  width: 400px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+}
 
+.delete-list-modal-title-exit {
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete-list-modal-title {
+  max-width: 350px;
+  font-weight: bold;
+}
+
+.delete-list-modal-button {
+  background-color: red;
+  border: none;
+  color: white;
+  font-weight: bold;
+  padding: 10px 30px;
+  border-radius: 30px;
+}
+
+.delete-list-modal-button:hover {
+  cursor: pointer;
+  background-color: rgb(156, 0, 0);
 }
