@@ -72,7 +72,6 @@ export default function PurchaseComponent({
             newErrors.push("User has insufficient funds to complete purchase");
         }
         setErrors(newErrors);
-        console.log('real errors', newErrors)
         return newErrors
     }
 
@@ -157,7 +156,6 @@ export default function PurchaseComponent({
     const toggleStockList = (e) => {
         e.preventDefault()
         e.stopPropagation()
-        console.log('toggle')
         setIsSupportedStocksListHidden(prev => !prev)
     }
 

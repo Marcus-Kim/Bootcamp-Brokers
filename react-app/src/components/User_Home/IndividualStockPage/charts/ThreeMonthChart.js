@@ -69,7 +69,6 @@ export default function ThreeMonthChart({ ticker, close }) {
         const obj = { date: key, price: parseFloat(value) }
         result.push(obj)
     }
-    console.log("result: ", result)
     const slicedResult = result.slice(0, 60)
 
     let chartData = ({
