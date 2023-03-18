@@ -48,7 +48,8 @@ export default function OneDayChart({ ticker, close }) {
 
     useEffect(() => {
         dispatch(thunkGetStockIntraDay(ticker, interval))
-    }, [dispatch, ticker])
+        setPrice(close)
+    }, [dispatch, ticker, close])
 
     if (!intraDayData) return null
     if (!intraDayData["Meta Data"]) return null
