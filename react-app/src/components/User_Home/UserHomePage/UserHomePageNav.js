@@ -19,6 +19,7 @@ import { thunkGetAllWatchlistsUserId } from '../../../store/watchlist';
 import { thunkCreatePortfolioSnapshot, thunkGetPortfolioHistoricalValues, thunkGetPortfolioHoldings, thunkGetUserPortfolio } from '../../../store/portfolio';
 import { thunkGetAll28Stocks } from "../../../store/stock";
 import { thunkGetBTCPrice } from '../../../store/stock';
+import UserNav from './UserNav/UserNav'
 
 
 export default function UserHomePageNav({ setIsChatModalOpen }) {
@@ -130,9 +131,12 @@ export default function UserHomePageNav({ setIsChatModalOpen }) {
     return (
         <>
             {!isLoaded && (
-            <div className="loading-container">
-                <img src="https://i.imgur.com/JVtVoeb.gif" alt="Loading..." />
-            </div>
+            <>
+                <UserNav />
+                <div className="loading-container">
+                    <img src="https://i.imgur.com/JVtVoeb.gif" alt="Loading..." />
+                </div>
+            </>
             )}
 
             {isLoaded && (
