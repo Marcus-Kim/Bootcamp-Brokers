@@ -69,7 +69,7 @@ export default function UserNav() {
                 
                 <span className="homepage-rightcontainer">
                     <NavLink className="home-nav">Rewards</NavLink>
-                    <NavLink className="home-nav">Investing</NavLink>
+                    <NavLink to='/home' className="home-nav">Investing</NavLink>
                     <NavLink className="home-nav">Spending</NavLink>
                     <NavLink className="home-nav">Retirement</NavLink>
                     <NavLink className="home-nav">Notifications</NavLink>
