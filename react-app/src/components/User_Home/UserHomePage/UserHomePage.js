@@ -219,6 +219,11 @@ export default function UserHomePage() {
     setDepositDivOpen(() => false)
   }
 
+  // Helper function to format Buying Power
+  const numberWithCommas = (num) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   return (
   
 <div className="homepage-container">
@@ -290,7 +295,7 @@ export default function UserHomePage() {
 </div>
 <div className="buying-power">
   <span>Buying Power</span>
-  <span>${portfolio?.cash_balance}</span>
+  <span>${numberWithCommas(portfolio?.cash_balance)}</span>
 </div>
 <hr className="break"/>
 <div className="cash-container">
@@ -309,31 +314,26 @@ export default function UserHomePage() {
         onClick={(e) => makeDeposit(e, 100)}
       >
         +$100
-
       </button>
       <button
         onClick={(e) => makeDeposit(e, 1000)}
       >
         +$1,000
-
       </button>
       <button
         onClick={(e) => makeDeposit(e, 10000)}
       >
         +$10,000
-
       </button>
       <button
         onClick={(e) => makeDeposit(e, 100000)}
       >
         +$100,000
-
       </button>
       <button
         onClick={(e) => makeDeposit(e, 1000000)}
       >
         +$1,000,000
-
       </button>
     </div>
   </div>
