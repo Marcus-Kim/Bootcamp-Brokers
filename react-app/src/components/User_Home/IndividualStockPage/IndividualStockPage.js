@@ -109,6 +109,11 @@ export default function IndividualStockPage() {
     return (
         <>
         <UserNav />
+        { !isLoaded && (
+            <div className="loading-container">
+                <img src="https://i.imgur.com/JVtVoeb.gif" alt="Loading..." />
+            </div>
+        )}
         { isLoaded && (
             <div 
                 className="stock-page-main-container"
