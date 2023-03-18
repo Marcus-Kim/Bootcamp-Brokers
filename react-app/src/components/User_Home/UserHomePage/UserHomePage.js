@@ -24,8 +24,11 @@ export default function UserHomePage() {
   const yesterdayString = yesterday.toISOString().substring(0, 10);
   const historicalValues = portfolio.historicalValues
   const [timeFrame, setTimeFrame] = useState("1D")
-
-
+  const [depositDivOpen, setDepositDivOpen] = useState(false);
+  
+  useEffect(() => {
+    displayDailyView()
+  },[])
 
   const verticalLinePlugin = {
     id: "verticalLine",
@@ -103,9 +106,6 @@ export default function UserHomePage() {
     setGraph(historicalValues.slice(-2000, historicalValues.length))
   }
 
-  useEffect(() => {
-    displayDailyView()
-  },[])
  
 
   if (!portfolio) return null
@@ -287,8 +287,17 @@ export default function UserHomePage() {
 <hr className="break"/>
 <div className="cash-container">
   <div className="cash-header-section">
-    <h2 className="section-header">Cash</h2>
-    <button className="deposit-button">Deposit cash</button>
+    <div className="cash-and-deposit">
+      <h2 className="section-header">Cash</h2>
+      <button className="deposit-button">Deposit cash</button>
+    </div>
+    <div className="deposit-container">
+      <button>+$100</button>
+      <button>+$1,000</button>
+      <button>+$10,000</button>
+      <button>+$100,000</button>
+      <button>+$1,000,000</button>
+    </div>
   </div>
   <hr className="break"/>
   <div className="earn-interest">

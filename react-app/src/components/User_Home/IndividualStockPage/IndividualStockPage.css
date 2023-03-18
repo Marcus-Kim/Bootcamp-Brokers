@@ -22,9 +22,17 @@
     color: #e69a00;
 }
 
+.cash-and-deposit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
 .cash-header-section {
     align-items: center;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
 }
 
@@ -32,12 +40,48 @@
     color: white;
     background-color: #00C806;
     border: none;
-    border-radius: 15px;
-    padding: 5px 15px;
+    border-radius: 10px;
+    padding: 5px 10px;
 }
 
 .deposit-button:hover {
     background-color: #01a504;
+}
+
+.deposit-container {
+    display: flex;
+    column-gap: 15px;
+    margin-bottom: 20px;
+}
+
+.deposit-container > button {
+  background: #00C806;
+  border: 0;
+  border-radius: 10px;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 2.5;
+  outline: transparent;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  transition: box-shadow .2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.deposit-container > button:not([disabled]):focus {
+  box-shadow: 0 0 .25rem #00fd04, -.125rem -.125rem 1rem #00fd04, .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+}
+
+.deposit-container > button:not([disabled]):hover {
+  box-shadow: 0 0 .25rem #00fd04, -.125rem -.125rem 1rem #00fd04, .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
 }
 
 .diamond {
