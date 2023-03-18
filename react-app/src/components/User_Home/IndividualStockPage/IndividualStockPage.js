@@ -13,6 +13,7 @@ import FiveYearChart from "./charts/FiveYearChart";
 import PurchaseComponent from "./PurchaseComponent";
 import TransactionComponent from "./Transactions";
 import UserNav from "../UserHomePage/UserNav/UserNav";
+import News from "../UserHomePage/NewsComponent/News";
 
 
 
@@ -55,7 +56,7 @@ export default function IndividualStockPage() {
     const yesterdayFormatted = `${year}-${month}-${day}`;
     // console.log("yesterdayFormatted: ", yesterdayFormatted)
 
-    const slicedNews = stockNews["feed"].slice(0, 10)
+    const slicedNews = stockNews?.feed?.slice(0, 10)
     // To pass into chart components
     const close = Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["4. close"]).toFixed(2)
 
@@ -181,26 +182,7 @@ export default function IndividualStockPage() {
             </div>
             <div>
                 <div className="news-stat-title-div">News</div>
-                { slicedNews.map(news => (
-                    <NavLink
-                        to={news.url}
-                        key={news.title}
-                        className="news-navlink"
-                        >
-                            <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                <div style={{ padding: "5px", width: "550px"}}>
-                                    <div style={{ fontSize: "12px", color: "gray"}}>{news.source}</div>
-                                    <div style={{ fontSize: "15px"}}>{news.title}</div>
-                                    <div style={{ fontSize: "10px", color: "gray"}}>{news.summary}</div>
-                                </div>
-                                <div>
-                                    <img
-                                        style={{width: "140px", height: "100px"}}
-                                        src={news.banner_image} />
-                                </div>
-                            </div>
-                    </NavLink>
-                )) }
+                <News newsObject={stockNews} numArticlesDisplayed={10} />
             </div>
         </div>
         )}
