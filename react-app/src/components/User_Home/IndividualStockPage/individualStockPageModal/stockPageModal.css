@@ -32,19 +32,67 @@
 .add-watchlist-modal-lists {
   display: flex;
   flex-direction: column;
-  max-height: 250px;
+  max-height: 210px;
   overflow-y: auto;
+  margin-bottom: 10px;
 }
 
 .watchlist-lists {
-  padding: 20px;
+  padding: 12px;
   display: flex;
   align-items: center;
+
 }
 
+
+
 .checkbox {
-  margin-right: 30px;
-  border: 1px solid rgb(0,200,6);
+  position: relative;
+  display: inline-block;
+  font-size: 0;
+  cursor: pointer;
+}
+
+.checkbox input[type='checkbox'] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkbox-custom {
+  position: relative;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.checkbox-custom:before {
+  content: '';
+  display: block;
+  width: 11px;
+  height: 11px;
+  background-color: rgb(0,200,6);
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.1s ease-in-out;
+}
+
+.checkbox input[type='checkbox']:checked + .checkbox-custom:before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.checkbox-label {
+  font-size: 16px;
+  vertical-align: middle;
 }
 
 .add-watchlist-submit-button {
