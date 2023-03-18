@@ -52,7 +52,17 @@
     display: flex;
     column-gap: 15px;
     margin-bottom: 20px;
+    overflow: hidden;
+    max-height: 1000px; /* Set a max-height large enough to accommodate the content */
+    transition: max-height 3s ease-out;
 }
+  
+.deposit-hidden {
+    max-height: 0;
+    margin-bottom: 0;
+    transition: max-height 0.01s ease-in;
+}
+  
 
 .deposit-container > button {
   background: #00C806;
