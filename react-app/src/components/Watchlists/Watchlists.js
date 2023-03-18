@@ -32,6 +32,7 @@ function Watchlists() {
   const [openDropdown, setOpenDropdown] = useState(null)
   const [showList, setShowList] = useState(false);
   const [openedLists, setOpenedLists] = useState({});
+  const [isRotated, setIsRotated] = useState(false);
 
 
   // *USE_EFFECTS
@@ -111,6 +112,10 @@ function Watchlists() {
     navigate(`/stocks/${ticker}`)
   }
 
+  const handleRotate = (index) => {
+    setIsRotated(!isRotated[index], index)
+  }
+
   if (location.pathname === '/home') {
     return (
       <div className='watchlists-container-home' ref={componentRef}>
@@ -128,17 +133,18 @@ function Watchlists() {
         </div>
       </form>}
       <div className='watchlists-list-home'>
-        {watchlistArray.map(watchlist => {
+        {watchlistArray.map((watchlist, index) => {
           return(
             <div key={watchlist.id}>
               <div className='watchlist-item-home' onClick={e => navigate(`/watchlists/${watchlist.id}`)} key={watchlist.id}>
                 <div className='watchlist-item-name-home' >{watchlist.list_name}</div>
                 <FontAwesomeIcon
-                  className='watchlist-edit-button-home'
+                  className={`watchlist-edit-button-home ${isRotated[index] ? 'icon-rotate' : ''}`}
                   icon={faAngleDown}
                   onClick={(e) => {
                     stopPropagation(e);
                     handleListToggle(watchlist.id);
+                    handleRotate(index)
                   }}
                 />
                 <div className='watchlist-list-edit-dropdown-home' onClick={e => stopPropagation(e)}></div>

@@ -67,7 +67,8 @@
   padding: 5px;
   border-radius: 5px;
   position: relative;
-  right: -30px
+  right: -30px;
+  transition: all 0.3s ease-in-out;
 }
 .watchlist-edit-button-home:hover {
   background-color: rgb(214, 229, 240);
@@ -242,4 +243,9 @@
 
 .empty-watchlist-container-message {
   color: rgb(180, 180, 180)
+}
+
+.icon-rotate {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease-in-out;
 }
