@@ -59,7 +59,7 @@ export default function IndividualStockPage() {
     // To pass into chart components
     const close = Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["4. close"]).toFixed(2)
 
-    
+
 
     const chartObj = {
         "1D": <OneDayChart ticker={tickerCap} close={close} />,
@@ -70,22 +70,27 @@ export default function IndividualStockPage() {
         "5Y": <FiveYearChart ticker={tickerCap} close={close} />,
     }
 
-    const convertMarketCap = (marketCap) => { // Converts market cap to a readable number
+    const numConverter = (number) => { // Converts market cap to a readable number
         const billion = 1000000000;
         const trillion = 1000000000000;
+        const million = 1000000
 
         let value;
         let suffix;
 
-        if (marketCap >= trillion) {
-          value = marketCap / trillion;
+        if (number >= trillion) {
+          value = number / trillion;
           suffix = 'T';
-        } else if (marketCap >= billion) {
-          value = marketCap / billion;
+        } else if (number >= billion) {
+          value = number / billion;
           suffix = 'B';
+        } else if (number >= million){
+          value = number / million;
+          suffix = "M"
+
         } else {
           // Return the original value if it's less than a billion
-          return marketCap.toFixed(2);
+          return number.toFixed(2);
         }
 
         // Limit the number to 3 digits on the left and 2 on the right of the decimal
@@ -106,7 +111,7 @@ export default function IndividualStockPage() {
             <div className="topleft-individualprice-container">
             <div style={{fontFamily: 'sans-serif', fontSize: '32px'}}>{stockFundamentals["Symbol"]}</div>
                 <div style={{ width: "700px" }}>{ chartObj[chart] }</div>
-                
+
             </div>
 
             <div className='individualstockpage-timeline'>
@@ -129,7 +134,7 @@ export default function IndividualStockPage() {
                  <div className="stat-value-container">
                     <div className="stat-box">
                         <div className="actual-stat">Market Cap </div>
-                        <div className="true-stat">{convertMarketCap(stockFundamentals["MarketCapitalization"])}</div>
+                        <div className="true-stat">{numConverter(stockFundamentals["MarketCapitalization"])}</div>
                     </div>
                     <div className="stat-box">
                         <div className="actual-stat">Price-Earning ratio </div>
@@ -137,7 +142,7 @@ export default function IndividualStockPage() {
                     </div>
                     <div className="stat-box">
                         <div className="actual-stat">Volume </div>
-                        <div className="true-stat">{Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["6. volume"]).toLocaleString()}</div>
+                        <div className="true-stat">{numConverter(Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["6. volume"]))}</div>
                     </div>
                     <div className="stat-box">
                         <div className="actual-stat">Dividend yield </div>
@@ -164,9 +169,9 @@ export default function IndividualStockPage() {
                     </div>
                 { (tickers.includes(tickerCap))
                     ? <PurchaseComponent ticker={tickerCap} user={user} close={close} />
-                    : <div className="too-broke">We're currently too broke and are unable to afford to offer this ticker. Please come back when we have more money. Or feel free to 
-                    pick one of the following tickers instead that we currently offer. 
-                    
+                    : <div className="too-broke">We're currently too broke and are unable to afford to offer this ticker. Please come back when we have more money. Or feel free to
+                    pick one of the following tickers instead that we currently offer.
+
                     TSLA / AAPL / AMZN / GOOG / CRM / AMD / NVDA / KO / BBY / IBM / CRSP / COIN / HOOD / MSFT / AI / LULU / MSFT / AI / LULU / NKE / GME / AMC / BBBY / BB / T / SPY / QQQ / BEAM / APLS / CRBU / VRTX
                     </div>
 

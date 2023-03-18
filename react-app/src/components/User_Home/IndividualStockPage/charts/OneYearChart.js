@@ -48,7 +48,8 @@ export default function OneYearChart({ ticker, close }) {
 
     useEffect(() => {
         dispatch(thunkGetOneYearStockData(ticker))
-    }, [dispatch, ticker])
+        setPrice(close)
+    }, [dispatch, ticker, close])
 
     if (!oneYearData) return null
     if (!oneYearData["Meta Data"]) return null
@@ -116,8 +117,8 @@ export default function OneYearChart({ ticker, close }) {
 
     return (
         <div>
-            <h3>One Year Chart Component</h3>
-            <div>{`$ ${Number(price).toFixed(2)}`}</div>
+
+            <div className="chart-price">{`$${Number(price).toFixed(2)}`}</div>
             <Line data={chartData} options ={chartData.options} ></Line>
         </div>
     )
