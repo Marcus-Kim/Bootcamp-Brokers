@@ -170,6 +170,10 @@
     font-weight: bold;
 }
 
+.news-header {
+    margin-bottom: 0;
+}
+
 .portfolio-container {
     max-width: 1400px;
     min-width: 721px;

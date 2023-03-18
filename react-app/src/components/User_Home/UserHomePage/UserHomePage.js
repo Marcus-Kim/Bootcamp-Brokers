@@ -29,7 +29,7 @@ export default function UserHomePage() {
   
   useEffect(() => {
     displayDailyView()
-  },[])
+  },[historicalValues.length])
 
   const verticalLinePlugin = {
     id: "verticalLine",
@@ -217,6 +217,12 @@ export default function UserHomePage() {
 
     await dispatch(thunkDepositCash(amount))
     setDepositDivOpen(() => false)
+    setPrice(prev => Number(prev) + amount)
+  }
+
+  // Helper function to format dollar values with commas
+  const numberWithCommas = (num) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
   return (
@@ -225,12 +231,12 @@ export default function UserHomePage() {
 <div className="portfolio-container">
 <div className="chart-container">
   <div className="portfolio-data-container">
-    <div className="price price-transition">${price}</div>
+    <div className="price price-transition">${numberWithCommas(price)}</div>
     <div className="profit-loss profit-loss-transition">
       <span className="underprice-container">
         {profitLoss > 0 ? <img className="green-triangle" src={Triangle} alt="" /> : <div style={{fontSize: '11.5px'}}>🔻</div>}
         
-        <span className={profitLoss > 0 ? "profit" : "loss"}>${Math.abs(Number(parseFloat(profitLoss)).toFixed(2))} </span>
+        <span className={profitLoss > 0 ? "profit" : "loss"}>${numberWithCommas(Math.abs(Number(parseFloat(profitLoss)).toFixed(2)))} </span>
         <span className={profitLoss > 0 ? "profit" : "loss"}>{timeFrame}</span>
       </span>
     </div>
@@ -290,7 +296,7 @@ export default function UserHomePage() {
 </div>
 <div className="buying-power">
   <span>Buying Power</span>
-  <span>${portfolio?.cash_balance}</span>
+  <span>${numberWithCommas(portfolio?.cash_balance)}</span>
 </div>
 <hr className="break"/>
 <div className="cash-container">
@@ -309,31 +315,26 @@ export default function UserHomePage() {
         onClick={(e) => makeDeposit(e, 100)}
       >
         +$100
-
       </button>
       <button
         onClick={(e) => makeDeposit(e, 1000)}
       >
         +$1,000
-
       </button>
       <button
         onClick={(e) => makeDeposit(e, 10000)}
       >
         +$10,000
-
       </button>
       <button
         onClick={(e) => makeDeposit(e, 100000)}
       >
         +$100,000
-
       </button>
       <button
         onClick={(e) => makeDeposit(e, 1000000)}
       >
         +$1,000,000
-
       </button>
     </div>
   </div>
@@ -344,7 +345,7 @@ export default function UserHomePage() {
   </div>
 </div>
 <div className="news-container">
-  <h2 className="section-header">News</h2>
+  <h2 className="section-header news-header">News</h2>
   <hr className="break"/>
   <div className="indexes-container">
     <div className="index-and-price">

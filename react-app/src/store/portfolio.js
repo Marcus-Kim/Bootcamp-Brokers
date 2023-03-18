@@ -138,6 +138,7 @@ export const thunkDepositCash = (amount) => async (dispatch) => {
     if (response.ok) {
         const updatedPortfolio = await response.json()
         await dispatch(actionGetUserPortfolio(updatedPortfolio))
+        await dispatch(thunkCreatePortfolioSnapshot())
         return updatedPortfolio
     }
 }

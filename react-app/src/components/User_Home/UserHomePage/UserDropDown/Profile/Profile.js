@@ -12,6 +12,10 @@ export default function Profile() {
   const userArray = Object.values(user)
   const userPortfolio = useSelector(state => state.portfolio)
   
+  // Helper function to format User dollar values
+  const numberWithCommas = (num) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
 
   return (
     <>
@@ -27,7 +31,7 @@ export default function Profile() {
           </div>
         </div>
         <div className="cashy-container">
-          <div className="usercash">${userPortfolio.overall_value}</div>
+          <div className="usercash">${numberWithCommas(userPortfolio.overall_value)}</div>
           <div style={{fontSize: '13px', marginTop: 10}}>Total in Bootcamp Brokers</div>
         </div>
         <div className="investing-container">
@@ -36,15 +40,15 @@ export default function Profile() {
             <div className="holdings-container">
               <div className="profile-investments">
                 <div>Total Investing Value </div>
-                <span style={{fontWeight: 'bold'}}>${userPortfolio.overall_value}</span>
+                <span style={{fontWeight: 'bold'}}>${numberWithCommas(userPortfolio.overall_value)}</span>
               </div>
               <div className="profile-holdings">
                 <div style={{color: "rgb(106, 114, 120)"}}>Brokerage Holdings </div>
-                <span style={{color: "rgb(106, 114, 120)"}}>${userPortfolio.total_stock_value}</span>
+                <span style={{color: "rgb(106, 114, 120)"}}>${numberWithCommas(userPortfolio.total_stock_value)}</span>
               </div>
               <div className="profile-holdings">
                 <div style={{color: "rgb(106, 114, 120)"}}>Brokerage Cash </div>
-                <span style={{color: "rgb(106, 114, 120)"}}>{userPortfolio.cash_balance}</span>
+                <span style={{color: "rgb(106, 114, 120)"}}>${numberWithCommas(userPortfolio.cash_balance)}</span>
               </div>
             </div>
         </div>
