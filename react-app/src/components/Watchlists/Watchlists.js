@@ -192,7 +192,7 @@ function Watchlists() {
                               ${markusKim[ticker].dailyPrice.close}
                             </div>
                             <div className={markusKim[ticker].dailyPrice.percentageChange < 0 ? 'watchlist-stock-daily-home-loss' : 'watchlist-stock-daily-home'}>
-                              {markusKim[ticker].dailyPrice.percentageChange.toFixed(2)}%
+                              {markusKim[ticker].dailyPrice.percentageChange > 0 ? "+" + markusKim[ticker].dailyPrice.percentageChange.toFixed(2) : markusKim[ticker].dailyPrice.percentageChange.toFixed(2)}%
                             </div>
                           </div>
                         </div>

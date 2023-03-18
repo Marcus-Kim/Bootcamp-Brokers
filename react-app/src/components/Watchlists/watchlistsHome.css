@@ -43,6 +43,7 @@
   width: 180px;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: small;
 }
 
 .watchlists-list-home {
@@ -165,7 +166,7 @@
 
 .watchlist-modal-button {
   z-index: 9999;
-  
+
 
 }
 
