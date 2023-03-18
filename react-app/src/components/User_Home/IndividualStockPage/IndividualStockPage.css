@@ -73,7 +73,8 @@
 }
 
 .list-supported-stocks {
-    color: blue;
+    color: #0055fe;
+    cursor: pointer;
     margin-top: 8px;
     font-size: 13px;
 }
@@ -211,6 +212,28 @@
     font-size: 13px;
 }
 
+.supported-stocks {
+    align-items: center;
+    background-color: white;
+    border: solid 1px rgb(227, 233, 237);
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px -12px 24px 0px, rgba(0, 0, 0, 0.06) 0px 12px 24px 0px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    right: 300px;
+    position: absolute;
+    padding: 15px 10px;
+    row-gap: 10px;
+    top: 150px;
+    width: 180px;
+}
+
+.supported-ticker {
+    color: #0055fe;
+    margin: 10px 10px;
+}
+
 .actual-stat {
     font-weight: bold;
 }
@@ -269,8 +292,6 @@
 .stock-timeline:hover {
     color: rgb(0,200,6);
 }
-
-
 
 .transaction-button-div {
     display: flex;
