@@ -28,6 +28,7 @@ function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isChatModalOpen, setIsChatModalOpen] = useState(false);
   const userId = useSelector(state => state.session.user?.id)
   const today = new Date();
   const yesterday = new Date(today);
@@ -52,7 +53,10 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      <ChatBubble/>
+      <ChatBubble 
+        isChatModalOpen={isChatModalOpen} 
+        setIsChatModalOpen={setIsChatModalOpen}
+      />
 
       {isLoaded && (
         <Routes>
@@ -62,7 +66,7 @@ function App() {
           <Route path="/learn" element={<Learn />}></Route>
           <Route path="/snacks" element={<Snack />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
-          <Route path="/home" element={<UserHomePageNav />}></Route>
+          <Route path="/home" element={<UserHomePageNav setIsChatModalOpen={setIsChatModalOpen}/>}></Route>
           <Route path="/stocks/:ticker" element={<IndividualStockPage />} />
           <Route path="/watchlists/:watchlistId" element={<WatchlistDetails />} />
           <Route path="/profile" element={<Profile/>}></Route>
