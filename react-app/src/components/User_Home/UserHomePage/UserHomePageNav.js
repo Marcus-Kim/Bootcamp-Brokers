@@ -173,7 +173,12 @@ export default function UserHomePageNav({ setIsChatModalOpen }) {
                             >
                                 Rewards
                             </NavLink>
-                            <NavLink to='/home' className="home-nav">Investing</NavLink>
+                            <NavLink 
+                                onClick={comingSoon}
+                                className="home-nav">
+                                
+                                Investing
+                                </NavLink>
                             <NavLink 
                                 className="home-nav"
                                 onClick={comingSoon}
