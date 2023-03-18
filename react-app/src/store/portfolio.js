@@ -3,6 +3,7 @@ const GET_PORTFOLIO_HISTORICAL_VALUES = 'portfolio/GET_HISTORY' // Getting histo
 const GET_PORTFOLIO_HOLDINGS = 'portfolio/GET_PORTFOLIO_HOLDINGS' // Getting portfolio holdings
 const GET_USER_PORTFOLIO = 'portfolio/GET_USER_PORTFOLIO' // Getting user portfolio by id
 const BUY_STOCK = 'portfolio/BUY_STOCK' // Buying a stock
+const DEPOSIT = 'portfolio/DEPOSIT_CASH'
 const SELL_STOCK = 'portfolio/SELL_STOCK' // Selling a stock
 const CREATE_PORTFOLIO_SNAPSHOT = 'portfolio/CREATE_PORTFOLIO_SNAPSHOT' // Creating a new snapshot of portfolio current value
 
@@ -120,6 +121,24 @@ export const thunkSellStock = (ticker, shares) => async (dispatch) => {
         const updatedHolding = await response.json()
         await dispatch(actionSellStock(updatedHolding))
         return updatedHolding
+    }
+}
+
+// Deposit additional cash
+export const thunkDepositCash = (amount) => async (dispatch) => {
+    const response = await fetch('/api/portfolio/deposit', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            amount
+        })
+    })
+    if (response.ok) {
+        const updatedPortfolio = await response.json()
+        await dispatch(actionGetUserPortfolio())
+        return updatedPortfolio
     }
 }
 
