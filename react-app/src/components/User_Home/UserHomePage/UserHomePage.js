@@ -289,9 +289,14 @@ export default function UserHomePage() {
   <div className="cash-header-section">
     <div className="cash-and-deposit">
       <h2 className="section-header">Cash</h2>
-      <button className="deposit-button">Deposit cash</button>
+      <button 
+        className="deposit-button"
+        onClick={() => setDepositDivOpen(prev => !prev)}
+      >
+        Deposit cash
+      </button>
     </div>
-    <div className="deposit-container">
+    <div className={"deposit-container" + (depositDivOpen ? '' : ' hidden')}>
       <button>+$100</button>
       <button>+$1,000</button>
       <button>+$10,000</button>
