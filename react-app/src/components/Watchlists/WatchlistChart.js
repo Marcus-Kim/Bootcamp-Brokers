@@ -16,7 +16,7 @@ export default function WatchlistChart({ ticker, percentChange }) {
       return '#5AC53B'
     }
   }
-  
+
   useEffect(() => {
     (async () => {
       const fetchedData = await dispatch(thunkGetStockIntraDay(ticker, interval));

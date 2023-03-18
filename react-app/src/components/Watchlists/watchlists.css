@@ -43,6 +43,7 @@
   width: 180px;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: small;
 }
 
 .watchlists-list {
@@ -149,7 +150,7 @@
   width: 200px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   border-radius: 12px;
-  
+
 }
 
 .showModal {
