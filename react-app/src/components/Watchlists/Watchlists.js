@@ -36,12 +36,12 @@ function Watchlists() {
   const [errors, setErrors] = useState([])
   const [hasSubmitted, setHasSubmited] = useState(false)
 
+  const watchlistArray = Object.values(watchlists)
 
   // *USE_EFFECTS
   useEffect(() => {
 
     const error = []
-    const watchlistArray = Object.values(watchlists)
 
     for (let watchlist of watchlistArray) {
       if (watchlist.list_name.toLowerCase() === listName.toLowerCase()) {
@@ -72,7 +72,8 @@ function Watchlists() {
   if (!user) return null // If no user
   if (!watchlists) return null;
   // *VARIABLES
-  const watchlistArray = Object.values(watchlists)
+
+
   // *HANDLERS
   const handleCreateList = async (e) => { // Create list handler
     e.preventDefault()
@@ -80,8 +81,6 @@ function Watchlists() {
     setHasSubmited(true)
 
     if (errors.length) return
-
-
 
     const newWatchlist = {
       user_id: user,
@@ -236,7 +235,7 @@ function Watchlists() {
               <div className='watchlist-item-name' >{watchlist.list_name}</div>
               <FontAwesomeIcon icon={faEllipsis} className='watchlist-edit-button' onClick={e => handleDropdown(e)}/>
               <div className='watchlist-list-edit-dropdown' onClick={e => stopPropagation(e)}>
-                <WatchlistModalButton modalComponent={<RenameWatchlistModal watchlist={watchlist}/>} buttonText={'Edit List'}/>
+                <WatchlistModalButton modalComponent={<RenameWatchlistModal watchlist={watchlist} watchlistArray={watchlistArray}/>} buttonText={'Edit List'}/>
                 <WatchlistModalButton modalComponent={<DeleteWatchlistModal watchlist={watchlist} watchlistId={watchlistId}/>}  buttonText={'Delete List'}/>
               </div>
             </div>
