@@ -11,9 +11,6 @@ function DeleteWatchlistModal({ watchlist, watchlistId }) {
   const { closeModal } = useModal()
   const navigate = useNavigate()
 
-  console.log('WatchlistID Param: ', +watchlistId)
-  console.log('Watchlist.id: ', watchlist.id)
-
   const handleDeleteClick = async () => {
     if (watchlist.id === +watchlistId) {
       await dispatch(thunkDeleteWatchlistById(watchlist.id)).then(() => closeModal()).then(() => navigate('/home'));

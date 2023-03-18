@@ -14,7 +14,6 @@ export default function OrderConfirmation({
   const stockPrices = useSelector(state => state.stocks.all28Stocks)
   let price;
   if (stockPrices) price = stockPrices[ticker]
-  console.log('price', price)
 
   const doneReviewing = (e) => {
     e.preventDefault()

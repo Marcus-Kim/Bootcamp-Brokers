@@ -44,8 +44,6 @@ function Watchlists() {
     const watchlistArray = Object.values(watchlists)
 
     for (let watchlist of watchlistArray) {
-      console.log('watchlist.list_name', watchlist.list_name)
-      console.log('listName', listName)
       if (watchlist.list_name.toLowerCase() === listName.toLowerCase()) {
         error.push('List name must be unique')
       }
