@@ -286,9 +286,16 @@ export default function UserHomePage() {
 </div>
 <hr className="break"/>
 <div className="cash-container">
-  <h2 className="section-header">Cash</h2>
+  <div className="cash-header-section">
+    <h2 className="section-header">Cash</h2>
+    <button className="deposit-button">Deposit cash</button>
+  </div>
+  <hr className="break"/>
+  <div className="earn-interest">
+    <span className="diamond">⟡</span>
+    <span className="cash">Earn 4.15% on your uninvested cash. No cap. Terms apply.</span>
+  </div>
 </div>
-<hr className="break"/>
 <div className="news-container">
   <h2 className="section-header">News</h2>
   <hr className="break"/>
