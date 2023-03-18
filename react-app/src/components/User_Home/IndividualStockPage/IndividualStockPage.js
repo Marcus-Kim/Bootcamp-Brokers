@@ -33,6 +33,7 @@ export default function IndividualStockPage() {
     const stockPrices = useSelector(state => state.stocks.all28Stocks)
     const tickers = Object.keys(markusKim)
     const isSupported = tickers.includes(tickerCap)
+    const [isSupportedStocksListHidden, setIsSupportedStocksListHidden] = useState(true)
 
     useEffect(() => {
         dispatch(thunkGetStockFundamentals(tickerCap))
@@ -109,7 +110,10 @@ export default function IndividualStockPage() {
         <>
         <UserNav />
         { isLoaded && (
-            <div className="stock-page-main-container">
+            <div 
+                className="stock-page-main-container"
+                onClick={() => setIsSupportedStocksListHidden(prev => true)}
+            >
             <div className="topleft-individualprice-container">
             <div style={{fontFamily: 'sans-serif', fontSize: '32px'}}>{stockFundamentals["Symbol"]}</div>
                 <div style={{ width: "700px" }}>{ chartObj[chart] }</div>
@@ -169,7 +173,14 @@ export default function IndividualStockPage() {
                         <div className="actual-stat">Today Close </div>
                         <div className="true-stat">${Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["4. close"]).toFixed(2)}</div>
                     </div>
-                    <PurchaseComponent ticker={tickerCap} user={user} close={close} isSupported={isSupported} />
+                    <PurchaseComponent 
+                    ticker={tickerCap} 
+                    user={user} 
+                    close={close} 
+                    isSupported={isSupported}
+                    isSupportedStocksListHidden={isSupportedStocksListHidden}
+                    setIsSupportedStocksListHidden={setIsSupportedStocksListHidden} 
+                    />
                 </div>
                     <TransactionComponent ticker={tickerCap} user={user} />
             </div>
