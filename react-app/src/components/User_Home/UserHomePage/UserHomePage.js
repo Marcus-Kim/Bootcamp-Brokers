@@ -5,6 +5,7 @@ import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import Watchlists from '../../Watchlists/Watchlists';
 import News from './NewsComponent/News';
+import { thunkDepositCash } from '../../../store/portfolio';
 
 export default function UserHomePage() {
   const portfolio = useSelector(state => state.portfolio)
@@ -24,8 +25,11 @@ export default function UserHomePage() {
   const yesterdayString = yesterday.toISOString().substring(0, 10);
   const historicalValues = portfolio.historicalValues
   const [timeFrame, setTimeFrame] = useState("1D")
-
-
+  const [depositDivOpen, setDepositDivOpen] = useState(false);
+  
+  useEffect(() => {
+    displayDailyView()
+  },[])
 
   const verticalLinePlugin = {
     id: "verticalLine",
@@ -103,9 +107,6 @@ export default function UserHomePage() {
     setGraph(historicalValues.slice(-2000, historicalValues.length))
   }
 
-  useEffect(() => {
-    displayDailyView()
-  },[])
  
 
   if (!portfolio) return null
@@ -211,6 +212,13 @@ export default function UserHomePage() {
   };
   if (!BTC || !SPY) return null;
 
+  const makeDeposit = async (e, amount) => {
+    e.preventDefault()
+
+    await dispatch(thunkDepositCash(amount))
+    setDepositDivOpen(() => false)
+  }
+
   return (
   
 <div className="homepage-container">
@@ -287,8 +295,47 @@ export default function UserHomePage() {
 <hr className="break"/>
 <div className="cash-container">
   <div className="cash-header-section">
-    <h2 className="section-header">Cash</h2>
-    <button className="deposit-button">Deposit cash</button>
+    <div className="cash-and-deposit">
+      <h2 className="section-header">Cash</h2>
+      <button 
+        className="deposit-button"
+        onClick={() => setDepositDivOpen(prev => !prev)}
+      >
+        Deposit cash
+      </button>
+    </div>
+    <div className={"deposit-container" + (depositDivOpen ? '' : ' hidden')}>
+      <button
+        onClick={(e) => makeDeposit(e, 100)}
+      >
+        +$100
+
+      </button>
+      <button
+        onClick={(e) => makeDeposit(e, 1000)}
+      >
+        +$1,000
+
+      </button>
+      <button
+        onClick={(e) => makeDeposit(e, 10000)}
+      >
+        +$10,000
+
+      </button>
+      <button
+        onClick={(e) => makeDeposit(e, 100000)}
+      >
+        +$100,000
+
+      </button>
+      <button
+        onClick={(e) => makeDeposit(e, 1000000)}
+      >
+        +$1,000,000
+
+      </button>
+    </div>
   </div>
   <hr className="break"/>
   <div className="earn-interest">

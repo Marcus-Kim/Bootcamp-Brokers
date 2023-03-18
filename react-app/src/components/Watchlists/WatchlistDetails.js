@@ -73,8 +73,8 @@ export default function WatchlistDetails() {
             <div className='watchlist-details-name-buttons'>
               <div className='watchlist-details-name'>{selectedWatchlist.list_name}</div>
               <div className='watchlist-details-buttons-conatiner'>
-                <FontAwesomeIcon icon={faFilter} className='watchlist-details-filters-button' />
-                <FontAwesomeIcon icon={faEllipsis} className='watchlist-details-more-button' />
+                {/* <FontAwesomeIcon icon={faFilter} className='watchlist-details-filters-button' />
+                <FontAwesomeIcon icon={faEllipsis} className='watchlist-details-more-button' /> */}
               </div>
             </div>
             <div className="watchlist-details-item-count">{selectedWatchlist.stocks.length} Items</div>

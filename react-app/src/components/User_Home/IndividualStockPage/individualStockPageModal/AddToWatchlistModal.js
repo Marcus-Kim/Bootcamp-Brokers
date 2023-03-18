@@ -8,6 +8,7 @@ function AddToWatchlistModal({ ticker, watchlists }) {
   const watchlistArray = Object.values(watchlists) // Array of watchlists
   const filteredWatchlistArray = watchlistArray?.filter(watchlist => !(watchlist.tickers?.includes(ticker)))
   const [listValues, setListValues] = useState([]) // Array of watchlist IDs
+  const [isButtonActive, setIsButtonActive] = useState(false);
   const dispatch = useDispatch()
   const { closeModal } = useModal()
 
@@ -25,8 +26,10 @@ function AddToWatchlistModal({ ticker, watchlists }) {
   const handleCheckboxChange = (e, watchlist) => {
     if (e.target.checked) { // If the id is in the array
       setListValues([...listValues, watchlist.id]);
+      setIsButtonActive(true);
     } else {
       setListValues(listValues.filter((id) => id !== watchlist.id));
+      setIsButtonActive(listValues.length > 1);
     }
   };
 
@@ -34,20 +37,30 @@ function AddToWatchlistModal({ ticker, watchlists }) {
     <div className="add-watchlist-modal-container">
       <div className="add-watchlist-modal-title-exit">
         <div className='add-watchlist-modal-title'>{`Add ${ticker} to Your Lists`}</div>
-        <div className='add-watchlist-modal-exit'>X</div>
+        <div className='add-watchlist-modal-exit' onClick={() => closeModal()}>X</div>
       </div>
       <form className='add-watchlist-modal-form' onSubmit={handleSubmit}>
         <div className='add-watchlist-modal-lists'>
           {filteredWatchlistArray.map(watchlist => {
             return (
-              <label key={watchlist.id}>
-                <input type='checkbox' checked={listValues.includes(watchlist.id)} onChange={e => handleCheckboxChange(e, watchlist)}/>
+              <div className='watchlist-lists' key={watchlist.id}>
+                <input
+                  type='checkbox'
+                  className='checkbox'
+                  checked={listValues.includes(watchlist.id)}
+                  onChange={e => handleCheckboxChange(e, watchlist)}
+                  />
                 {watchlist.list_name}
-              </label>
+              </div>
             )
           })}
         </div>
-        <button type='submit' className='add-watchlist-submit-button'>Save Changes</button>
+        <button
+          type='submit'
+          className={`add-watchlist-submit-button ${isButtonActive ? 'active' : ''}`}
+          disabled={!isButtonActive}
+          >
+            Save Changes</button>
       </form>
 
     </div>
