@@ -7,8 +7,16 @@ import AddToWatchlistModal from "./individualStockPageModal/AddToWatchlistModal"
 import "./IndividualStockPage.css"
 import { thunkGetAllWatchlistsUserId } from '../../../store/watchlist'
 import OrderConfirmation from "./OrderConfirmation";
+import { Link } from "react-router-dom";
 
-export default function PurchaseComponent({ ticker, user, close, isSupported }) {
+export default function PurchaseComponent({ 
+    ticker, 
+    user, 
+    close, 
+    isSupported,
+    isSupportedStocksListHidden,
+    setIsSupportedStocksListHidden 
+}) {
     const dispatch = useDispatch();
     const [shares, setShares] = useState('')
     const [errors, setErrors] = useState([])
@@ -19,6 +27,7 @@ export default function PurchaseComponent({ ticker, user, close, isSupported }) 
     const portfolio = useSelector(state => state.portfolio)
     const cashBalance = useSelector(state => state.portfolio.cash_balance)
     const holdingsArray = Object.values(portfolio.holdings);
+    const supportedStocks = useSelector(state => state.stocks.all28Stocks)
     const [sharesAvailable, setSharesAvailable] = useState('')
 
     // const estimatedCost = Number(+close * +shares)
@@ -43,7 +52,7 @@ export default function PurchaseComponent({ ticker, user, close, isSupported }) 
         setEstimatedCost(newEstimatedCost);
         setErrors([])
 
-    }, [shares, estimatedCost, ticker, portfolio.holdings, close]);
+    }, [shares, estimatedCost, ticker, portfolio.holdings, close, isSupportedStocksListHidden]);
     // useEffect(() => {
     //     isStockInHoldings(ticker)
     // }, [ticker, portfolio.holdings])
@@ -143,6 +152,13 @@ export default function PurchaseComponent({ ticker, user, close, isSupported }) 
 
     const disabled = () => {
         return Number(close * shares).toFixed(2) > Number(portfolio.cash_balance).toFixed(2)
+    }
+
+    const toggleStockList = (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        console.log('toggle')
+        setIsSupportedStocksListHidden(prev => !prev)
     }
 
     if (hasSubmitted && errors.length === 0) {
@@ -251,9 +267,20 @@ export default function PurchaseComponent({ ticker, user, close, isSupported }) 
                                 <button className="button not-supported">
                                     Stock Not Supported
                                 </button>
-                                <div className="list-supported-stocks">
+                                <div 
+                                    className="list-supported-stocks"
+                                    onClick={toggleStockList}
+                                >
                                     See Supported Stocks
-                                    {/* TSLA / AAPL / AMZN / GOOG / CRM / AMD / NVDA / KO / BBY / IBM / CRSP / COIN / HOOD / MSFT / AI / LULU / MSFT / AI / LULU / NKE / GME / AMC / BBBY / BB / T / SPY / QQQ / BEAM / APLS / CRBU / VRTX */}
+                                    <div 
+                                        className={`supported-stocks${ isSupportedStocksListHidden ? ' hidden' : ''}`}
+                                    >
+                                        { Object.keys(supportedStocks).sort().map(ticker => (
+                                            <div key={ticker}>
+                                                <Link to={`/stocks/${ticker}`}  className="supported-ticker">{ticker}</Link>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         )
