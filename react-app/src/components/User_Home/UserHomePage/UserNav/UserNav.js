@@ -21,7 +21,7 @@ export default function UserNav() {
     const user = useSelector(state => state.session)
     const userArray = Object.values(user)
     const [searchValue, setSearchValue] = useState("")
-    
+
 
     const [dropdownVisible, setDropdownVisible] = useState(false)
 
@@ -48,6 +48,7 @@ export default function UserNav() {
     const handleSearch = (e) => {
         e.preventDefault()
         navigate(`/stocks/${searchValue}`)
+        setSearchValue("")
 
     }
 
@@ -60,15 +61,15 @@ export default function UserNav() {
                 </NavLink>
 
                 <form className="search-bar" onSubmit={handleSearch}>
-                    <input 
+                    <input
                     className="searching"
-                    type="text" 
+                    type="text"
                     value={searchValue}
                     onChange={(e) => setSearchValue(e.target.value)}
                     placeholder="Search..."
                     />
                 </form>
-                
+
                 <span className="homepage-rightcontainer">
                     <NavLink className="home-nav">Rewards</NavLink>
                     <NavLink to='/home' className="home-nav">Investing</NavLink>
@@ -88,7 +89,7 @@ export default function UserNav() {
                                     <NavLink to="/investing" className="dropdown-nav"><FontAwesomeIcon className="dropdown-hand" icon={faHandHoldingDollar} />Investing</NavLink>
                                     <NavLink to="/history" className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faClockRotateLeft} />History</NavLink>
                                     <NavLink className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faPhone}/> Support</NavLink>
-                                    <button 
+                                    <button
                                     onClick={handleLogout}
                                     className="dropdown-logout"><FontAwesomeIcon className="dropdown-icon" icon={faArrowRightFromBracket}/>
                                     Logout
