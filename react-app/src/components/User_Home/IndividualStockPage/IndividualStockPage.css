@@ -18,12 +18,52 @@
     background-color: #01a504;
 }
 
+.cash {
+    color: #e69a00;
+}
+
+.cash-header-section {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.deposit-button {
+    color: white;
+    background-color: #00C806;
+    border: none;
+    border-radius: 15px;
+    padding: 5px 15px;
+}
+
+.deposit-button:hover {
+    background-color: #01a504;
+}
+
+.diamond {
+    color: #e69a00;
+    font-size: 24px;
+    margin-right: 10px;
+}
+
 .disabled {
     background-color: rgb(157, 157, 157);
 }
 
 .disabled:hover {
     background-color: rgb(157, 157, 157);
+}
+
+.earn-interest {
+    align-items: center;
+    display: flex;
+    background-color: #F5F8FA;
+    border: 1px solid #E3E9ED;
+    border-radius: 4px;
+    color: #FBC356;
+    font-size: 13px;
+    margin-top: 20px;
+    padding: 20px;
 }
 
 .buying-power-div {
