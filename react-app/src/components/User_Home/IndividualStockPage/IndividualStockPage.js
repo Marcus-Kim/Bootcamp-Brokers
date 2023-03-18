@@ -55,7 +55,7 @@ export default function IndividualStockPage() {
     const yesterdayFormatted = `${year}-${month}-${day}`;
     // console.log("yesterdayFormatted: ", yesterdayFormatted)
 
-    const slicedNews = stockNews["feed"].slice(0, 10)
+    const slicedNews = stockNews?.feed?.slice(0, 10)
     // To pass into chart components
     const close = Number(stockDaily["Time Series (Daily)"][yesterdayFormatted]["4. close"]).toFixed(2)
 

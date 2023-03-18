@@ -1,4 +1,6 @@
-export default function News({ newsObject }) {
+import { Link } from "react-router-dom";
+
+export default function News({ newsObject, numArticlesDisplayed }) {
   
   // Convert timestamp from Stock News API into readable time passed format
   // Eg. "20230318T153400" => "30m" or "1h" etc.
@@ -28,25 +30,27 @@ export default function News({ newsObject }) {
 
   return (
     <>
-      {newsObject?.feed?.slice(0, 30).map((news) => (
-        <div className="news-carders" key={news.url}>
-          <hr className="break" />
-          <div className="news-card">
-            <div className="news-cardleft">
-              <div>
-                <span className="source">{news.source}</span>{" "}
-                <span className="time-units">{timePassed(news.time_published)}</span>
+      {newsObject?.feed?.slice(0, numArticlesDisplayed).map((news) => (
+        <Link to={news.url} style={{ textDecoration: 'none' }} target="_blank" rel="noopener noreferrer">
+          <div className="news-carders" key={news.url}>
+            <hr className="break" />
+            <div className="news-card">
+              <div className="news-cardleft">
+                <div>
+                  <span className="source">{news.source}</span>{" "}
+                  <span className="time-units">{timePassed(news.time_published)}</span>
+                </div>
+                <div className="title">{news.title}</div>
+                <div className="story-ticker">
+                  {news.ticker_sentiment[0]?.ticker}
+                </div>
               </div>
-              <div className="title">{news.title}</div>
-              <div className="story-ticker">
-                {news.ticker_sentiment[0]?.ticker}
-              </div>
+              <a href={news.url} target="_blank" rel="noopener noreferrer">
+                <img className="news-image" src={news.banner_image} alt="" />
+              </a>
             </div>
-            <a href={news.url} target="_blank" rel="noopener noreferrer">
-              <img className="news-image" src={news.banner_image} alt="" />
-            </a>
           </div>
-        </div>
+        </Link>
       ))}
     </>
   )

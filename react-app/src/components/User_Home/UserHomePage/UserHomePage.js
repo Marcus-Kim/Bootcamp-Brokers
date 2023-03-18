@@ -308,7 +308,7 @@ export default function UserHomePage() {
       </span>
     </div>
   </div>
-  <News newsObject={randomNews} />
+  <News newsObject={randomNews} numArticlesDisplayed={30} />
 </div>
 <div>
 <p className="disclaimer-container">
