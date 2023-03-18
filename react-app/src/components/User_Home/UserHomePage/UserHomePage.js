@@ -310,7 +310,7 @@ export default function UserHomePage() {
         Deposit cash
       </button>
     </div>
-    <div className={"deposit-container" + (depositDivOpen ? '' : ' hidden')}>
+    <div className={"deposit-container" + (depositDivOpen ? '' : ' deposit-hidden')}>
       <button
         onClick={(e) => makeDeposit(e, 100)}
       >
