@@ -78,7 +78,7 @@ export default function IndividualStockPage() {
 
     // console.log("date: ", stockDaily["Time Series (Daily)"])
     // "2023-03-17"
-    const close = Number(stockDaily["Time Series (Daily)"][formattedDate]["4. close"]).toFixed(2)
+    const close = Number(stockDaily["Time Series (Daily)"][formattedDate]?.["4. close"]).toFixed(2)
 
 
 
@@ -171,7 +171,7 @@ export default function IndividualStockPage() {
                     </div>
                     <div className="stat-box">
                         <div className="actual-stat">Volume </div>
-                        <div className="true-stat">{numConverter(Number(stockDaily["Time Series (Daily)"][formattedDate]["6. volume"]))}</div>
+                        <div className="true-stat">{numConverter(Number(stockDaily["Time Series (Daily)"][formattedDate]?.["6. volume"]))}</div>
                     </div>
                     <div className="stat-box">
                         <div className="actual-stat">Dividend yield </div>
@@ -182,19 +182,19 @@ export default function IndividualStockPage() {
                     </div>
                     <div className="stat-box">
                         <div className="actual-stat">Today High </div>
-                        <div className="true-stat">${Number(stockDaily["Time Series (Daily)"][formattedDate]["2. high"]).toFixed(2)}</div>
+                        <div className="true-stat">${Number(stockDaily["Time Series (Daily)"][formattedDate]?.["2. high"]).toFixed(2)}</div>
                     </div>
                     <div className="stat-box">
                         <div className="actual-stat">Today Low </div>
-                        <div className="true-stat">${Number(stockDaily["Time Series (Daily)"][formattedDate]["3. low"]).toFixed(2)}</div>
+                        <div className="true-stat">${Number(stockDaily["Time Series (Daily)"][formattedDate]?.["3. low"]).toFixed(2)}</div>
                     </div>
                     <div className="stat-box">
                         <div className="actual-stat">Today Open </div>
-                        <div className="true-stat">${Number(stockDaily["Time Series (Daily)"][formattedDate]["1. open"]).toFixed(2)}</div>
+                        <div className="true-stat">${Number(stockDaily["Time Series (Daily)"][formattedDate]?.["1. open"]).toFixed(2)}</div>
                     </div>
                     <div className="stat-box">
                         <div className="actual-stat">Today Close </div>
-                        <div className="true-stat">${Number(stockDaily["Time Series (Daily)"][formattedDate]["4. close"]).toFixed(2)}</div>
+                        <div className="true-stat">${Number(stockDaily["Time Series (Daily)"][formattedDate]?.["4. close"]).toFixed(2)}</div>
                     </div>
                     <PurchaseComponent
                     ticker={tickerCap}
