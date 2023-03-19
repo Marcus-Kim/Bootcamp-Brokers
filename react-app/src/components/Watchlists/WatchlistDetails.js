@@ -17,14 +17,15 @@ export default function WatchlistDetails() {
   const navigate = useNavigate()
   const user = useSelector(state => state.session.user.id)
   const watchlists = useSelector(state => state.watchlist)
-  const { watchlistId } = useParams()
+  const { watchlistId } = useParams();
   const selectedWatchlist = useSelector(state => state.watchlist[+watchlistId])
   const selectedWatchlistStocks = useSelector(state => state.watchlist[+watchlistId]?.stocks)
   const { markusKim } = useFinanceAPI();
 
   useEffect(() => {
+    console.log(user)
     dispatch(thunkGetAllWatchlistsUserId(user))
-  }, [dispatch])
+  }, [dispatch, user])
 
 
   if (!watchlists) return null;

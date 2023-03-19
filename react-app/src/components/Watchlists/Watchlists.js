@@ -2,7 +2,7 @@ import './watchlists.css';
 import './watchlistsHome.css';
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react';
-import { thunkCreateWatchlist } from '../../store/watchlist';
+import { thunkCreateWatchlist, thunkGetAllWatchlistsUserId } from '../../store/watchlist';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRef } from 'react';
 import WatchlistModalButton from './WatchlistModals/WatchlistModal';
@@ -24,7 +24,7 @@ function Watchlists() {
   const { watchlistId } = useParams();
   const watchlists = useSelector(state => state.watchlist)
   // *USE SELECTORS
-  const user = useSelector(state => state.session.user.id)
+  const user = useSelector(state => state.session.user?.id)
 
   // *STATE
   const [showForm, setShowForm] = useState(false);
@@ -37,6 +37,10 @@ function Watchlists() {
   const [hasSubmitted, setHasSubmited] = useState(false)
 
   const watchlistArray = Object.values(watchlists)
+  const filteredArray = watchlistArray.filter(watchlist => {
+    return +watchlist.user_id === +user
+  })
+  console.log('WATCHLIST ARRAY: ', watchlistArray)
 
   // *USE_EFFECTS
   useEffect(() => {
@@ -61,12 +65,17 @@ function Watchlists() {
       }
     };
 
+
     window.addEventListener('click', handleClickOutside);
 
     return () => {
       window.removeEventListener('click', handleClickOutside);
     };
   }, [componentRef, openDropdown]);
+
+  useEffect(() => {
+    dispatch(thunkGetAllWatchlistsUserId(user))
+  }, [dispatch])
 
   // *FIRST RENDER
   if (!user) return null // If no user
@@ -155,7 +164,7 @@ function Watchlists() {
         </div>
       </form>}
       <div className='watchlists-list-home'>
-        {watchlistArray.map((watchlist, index) => {
+        {filteredArray.map((watchlist, index) => {
           return(
             <div key={watchlist.id}>
               <div className='watchlist-item-home' onClick={e => navigate(`/watchlists/${watchlist.id}`)} key={watchlist.id}>
@@ -229,7 +238,7 @@ function Watchlists() {
         </div>
       </form>}
       <div className='watchlists-list'>
-        {watchlistArray.map(watchlist => {
+        {filteredArray.map(watchlist => {
           return(
             <div className='watchlist-item' onClick={e => navigate(`/watchlists/${watchlist.id}`)} key={watchlist.id}>
               <div className='watchlist-item-name' >{watchlist.list_name}</div>

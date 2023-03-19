@@ -15,7 +15,7 @@ import { logout } from '../../../store/session'
 import { thunkGetNasdaq } from '../../../store/stock';
 import { thunkGetSPY } from '../../../store/stock';
 import { thunkGetRandomStockNews } from '../../../store/stock'
-import { thunkGetAllWatchlistsUserId } from '../../../store/watchlist';
+import { thunkGetAllWatchlistsUserId, thunkResetWatchlistState } from '../../../store/watchlist';
 import { thunkCreatePortfolioSnapshot, thunkGetPortfolioHistoricalValues, thunkGetPortfolioHoldings, thunkGetUserPortfolio } from '../../../store/portfolio';
 import { thunkGetAll28Stocks } from "../../../store/stock";
 import { thunkGetBTCPrice } from '../../../store/stock';
@@ -33,6 +33,7 @@ export default function UserHomePageNav({ setIsChatModalOpen }) {
     const stocks = useSelector(state => state.stocks.all28Stocks)
     const [matchedTickers, setMatchedTickers] = useState([])
 
+    console.log('USER ID: ', userId)
 
     const allTickers = [
         'TSLA', 'AAPL', 'AMZN',
@@ -114,11 +115,11 @@ export default function UserHomePageNav({ setIsChatModalOpen }) {
             await dispatch(thunkGetNasdaq());
             await dispatch(thunkGetSPY());
             await dispatch(thunkGetRandomStockNews());
+            await dispatch(thunkResetWatchlistState());
             await dispatch(thunkGetAllWatchlistsUserId(userId));
             await dispatch(thunkGetPortfolioHistoricalValues());
             await dispatch(thunkGetPortfolioHoldings());
             await dispatch(thunkGetUserPortfolio());
-            await dispatch(thunkGetAllWatchlistsUserId(userId));
             await dispatch(thunkCreatePortfolioSnapshot());
             await dispatch(thunkGetAll28Stocks());
             await setIsLoaded(true);
