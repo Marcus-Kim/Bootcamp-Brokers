@@ -7,7 +7,7 @@ import AddToWatchlistModal from "./individualStockPageModal/AddToWatchlistModal"
 import "./IndividualStockPage.css"
 import { thunkGetAllWatchlistsUserId } from '../../../store/watchlist'
 import OrderConfirmation from "./OrderConfirmation";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function PurchaseComponent({ 
     ticker, 
@@ -56,6 +56,10 @@ export default function PurchaseComponent({
     // useEffect(() => {
     //     isStockInHoldings(ticker)
     // }, [ticker, portfolio.holdings])
+
+    useEffect(() => {
+        selectBuy()
+    }, [ticker])
         const watchlists = useSelector(state => state.watchlist)
 
     const validateBuy = () => {
@@ -111,7 +115,7 @@ export default function PurchaseComponent({
     }
 
     const selectBuy = () => {
-        setBuySelected(true)
+        setBuySelected(() => true)
     }
 
     const selectSell = () => {

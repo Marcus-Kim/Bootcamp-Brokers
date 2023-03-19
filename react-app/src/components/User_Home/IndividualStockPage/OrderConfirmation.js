@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom';
 import './OrderConfirmation.css'
 
 export default function OrderConfirmation({ 
@@ -25,6 +27,10 @@ export default function OrderConfirmation({
     setShares('')
     setHasSubmitted(false)
   }
+
+  useEffect(() => {
+  }, [buySelected, ticker])
+
   return (
     <>
       <div className="purchase-container">

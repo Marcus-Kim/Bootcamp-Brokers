@@ -14,6 +14,7 @@ import PurchaseComponent from "./PurchaseComponent";
 import TransactionComponent from "./Transactions";
 import UserNav from "../UserHomePage/UserNav/UserNav";
 import News from "../UserHomePage/NewsComponent/News";
+import { thunkGetPortfolioHistoricalValues } from "../../../store/portfolio";
 
 
 
@@ -32,6 +33,7 @@ export default function IndividualStockPage() {
     const user = useSelector(state => state.session.user)
     const stockPrices = useSelector(state => state.stocks.all28Stocks)
     const tickers = Object.keys(markusKim)
+    const cashBalance = useSelector(state => state.portfolio.cash_balance)
     const isSupported = tickers.includes(tickerCap)
     const [isSupportedStocksListHidden, setIsSupportedStocksListHidden] = useState(true)
 
@@ -47,6 +49,13 @@ export default function IndividualStockPage() {
         fetchAsync()
 
     }, [dispatch, tickerCap])
+
+    useEffect(() => {
+        const fetchAsync = async() => {
+            await dispatch(thunkGetPortfolioHistoricalValues())
+        }
+        fetchAsync()
+    }, [cashBalance])
 
     if (!stockFundamentals) return null;
     if (!stockDaily) return null;

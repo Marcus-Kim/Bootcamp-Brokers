@@ -116,16 +116,6 @@ class Portfolio(db.Model):
             self.cash_balance += stock.calculate_value(num_shares)
             db.session.commit()
 
-            # Check if user has sold all remaining shares of stock, remove from portfolio in this case
-            if table_row.shares == num_shares:
-                db.session.delete(table_row)
-                db.session.commit()
-
-                table_row.shares = 0
-                return table_row.to_dict()
-            # Decrement number of shares by num_shares in portfolio_shares table
-            table_row.shares -= num_shares
-
             # Create transaction to reflect change in shares
             db.session.add(Transaction(
                 user_id=self.user_id,
@@ -133,6 +123,18 @@ class Portfolio(db.Model):
                 shares=(num_shares * -1),
             ))
             db.session.commit()
+            
+            # Decrement number of shares by num_shares in portfolio_shares table
+            table_row.shares -= num_shares
+
+            # Check if user has sold all remaining shares of stock, remove from portfolio in this case
+            if table_row.shares == num_shares:
+                db.session.delete(table_row)
+                db.session.commit()
+
+                table_row.shares = 0
+                return table_row.to_dict()
+
             return table_row.to_dict()
         else:
             return {'error': 'Stock with this ticker symbol not found in user portfolio'}
