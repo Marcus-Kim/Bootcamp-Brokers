@@ -11,42 +11,47 @@ export default function Signup() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const sessionUser = useSelector((state) => state.session.user)
-
   const [name, setName] = useState("")
   const { menuOpen } = useMenu()
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
-  const [errors, setErrors] = useState([])
+  const [newErrors, setErrors] = useState([])
 
-  // if (sessionUser) navigate("/home")
+  if (sessionUser) navigate("/home")
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (password === confirmPassword) {
-      await dispatch(signUp(name, email, password)).then(navigate("/home"));
-      } 
-      
+        const data = await dispatch(signUp(username, email, password));
+        if (data) {
+          setErrors(data)
+        }
+    } else {
+        setErrors(['Confirm Password field must be the same as the Password field']);
+    }
   };
 
   useEffect(() => {
-    const errors = [
+    const newErrors = [
       "You must have a name with more than 2 characters",
       "Email must be a valid email",
       "Email must have at least 4 characters and be no more than 30 characters",
       "Password is required",
       "Confirm Password is required"
     ]
+    
 
-      if (name.length > 2) errors.splice(errors.indexOf("You must have a name with more than 2 characters"), 1)
-      if (email.length > 4) errors.splice(errors.indexOf("Email must have at least 4 characters and be no more than 30 characters"), 1)
-      if (email.includes('@') || email.includes('.com')) errors.splice(errors.indexOf("Email must be a valid email"), 1)
-      if (password.length > 0) errors.splice(errors.indexOf("Password is required"), 1)
-      if (confirmPassword.length > 0) errors.splice(errors.indexOf("Confirm Password is required"), 1)
+      if (username.length > 2) newErrors.splice(newErrors.indexOf("You must have a name with more than 2 characters"), 1)
+      if (email.length > 4) newErrors.splice(newErrors.indexOf("Email must have at least 4 characters and be no more than 30 characters"), 1)
+      if (email.includes('@') || email.includes('.com')) newErrors.splice(newErrors.indexOf("Email must be a valid email"), 1)
+      if (password.length > 0) newErrors.splice(newErrors.indexOf("Password is required"), 1)
+      if (confirmPassword.length > 0) newErrors.splice(newErrors.indexOf("Confirm Password is required"), 1)
 
-      setErrors(errors)
+      setErrors(newErrors)
 
-  }, [name, email, password, confirmPassword])
+  }, [username, email, password, confirmPassword])
     
   
 
@@ -66,7 +71,7 @@ export default function Signup() {
         <h3>Enter your information as they appear on your government ID</h3>
         <form className='signup-form' onSubmit={handleSubmit} action="">
           <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+          {newErrors.map((error, idx) => <li key={idx}>{error}</li>)}
           </ul>
           <div >
 
@@ -75,9 +80,9 @@ export default function Signup() {
             <input 
                 className="signup-email"
                 type="text" 
-                placeholder="Full Name"
-                value={name}
-                onChange={(e => setName(e.target.value))}
+                placeholder="User Name"
+                value={username}
+                onChange={(e => setUsername(e.target.value))}
                 required
                 />
             </span>
@@ -119,7 +124,7 @@ export default function Signup() {
             <NavLink to="/login" style={{fontWeight: 'bold'}}>Log in to complete your application</NavLink>
             </div>
             <div>
-            <button disabled={errors.length > 0} type="submit" className="submit-signup">Continue</button>
+            <button disabled={newErrors.length > 0} type="submit" className="submit-signup">Continue</button>
             </div>
             
 
