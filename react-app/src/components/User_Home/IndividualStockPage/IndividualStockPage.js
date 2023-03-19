@@ -36,10 +36,14 @@ export default function IndividualStockPage() {
     const [isSupportedStocksListHidden, setIsSupportedStocksListHidden] = useState(true)
 
     useEffect(() => {
-        dispatch(thunkGetStockFundamentals(tickerCap))
-        dispatch(thunkGetStockDaily(tickerCap))
-        dispatch(thunkGetStockNews(tickerCap))
-        dispatch(thunkGetAll28Stocks()).then(() => setIsLoaded(true))
+
+        const fetchAsync = async () => {
+            await dispatch(thunkGetStockFundamentals(tickerCap))
+            await dispatch(thunkGetStockDaily(tickerCap))
+            await dispatch(thunkGetStockNews(tickerCap))
+            await dispatch(thunkGetAll28Stocks()).then(() => setIsLoaded(true))
+        }
+        fetchAsync()
 
     }, [dispatch, tickerCap])
 

@@ -27,7 +27,9 @@
   font-weight: bold;
 }
 
-
+.add-watchlist-modal-exit {
+  cursor: pointer;
+}
 
 .add-watchlist-modal-lists {
   display: flex;
@@ -105,8 +107,10 @@
   border: none;
   font-size: 10pt;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .add-watchlist-submit-button.active {
   background-color: rgb(0,200,6);
+  color: white;
 }
