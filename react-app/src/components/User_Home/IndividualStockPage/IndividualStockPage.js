@@ -41,7 +41,8 @@ export default function IndividualStockPage() {
             await dispatch(thunkGetStockFundamentals(tickerCap))
             await dispatch(thunkGetStockDaily(tickerCap))
             await dispatch(thunkGetStockNews(tickerCap))
-            await dispatch(thunkGetAll28Stocks()).then(() => setIsLoaded(true))
+            await dispatch(thunkGetAll28Stocks())
+            await setIsLoaded(true)
         }
         fetchAsync()
 
