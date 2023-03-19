@@ -30,9 +30,9 @@ export default function News({ newsObject, numArticlesDisplayed }) {
 
   return (
     <>
-      {newsObject?.feed?.slice(0, numArticlesDisplayed).map((news) => (
-        <Link key={news.url} to={news.url} style={{ textDecoration: 'none' }} target="_blank" rel="noopener noreferrer">
-          <div className="news-carders" key={news.url}>
+      {newsObject?.feed?.slice(0, numArticlesDisplayed).map((news, index) => (
+        <Link key={index} to={news.url} style={{ textDecoration: 'none' }} target="_blank" rel="noopener noreferrer">
+          <div className="news-carders">
             <hr className="break" />
             <div className="news-card">
               <div className="news-cardleft">
@@ -45,9 +45,7 @@ export default function News({ newsObject, numArticlesDisplayed }) {
                   {news.ticker_sentiment[0]?.ticker}
                 </div>
               </div>
-              <a href={news.url} target="_blank" rel="noopener noreferrer">
                 <img className="news-image" src={news.banner_image} alt="" />
-              </a>
             </div>
           </div>
         </Link>
