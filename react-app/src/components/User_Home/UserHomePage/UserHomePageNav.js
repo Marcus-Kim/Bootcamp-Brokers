@@ -35,18 +35,18 @@ export default function UserHomePageNav({ setIsChatModalOpen }) {
 
 
     const allTickers = [
-        'TSLA', 'AAPL', 'AMZN', 
-        'GOOG', 'CRM', 'AMD', 
-        'NVDA', 'KO', 'BBY', 
+        'TSLA', 'AAPL', 'AMZN',
+        'GOOG', 'CRM', 'AMD',
+        'NVDA', 'KO', 'BBY',
         'IBM', 'CRSP', 'COIN',
-        'HOOD', 'MSFT', 'AI', 
-        'LULU', 'NKE', 'GME', 
-        'AMC', 'BBBY', 'BB', 
-        'T', 'SPY', 'QQQ', 
-        'BEAM', 'APLS', 'CRBU', 
+        'HOOD', 'MSFT', 'AI',
+        'LULU', 'NKE', 'GME',
+        'AMC', 'BBBY', 'BB',
+        'T', 'SPY', 'QQQ',
+        'BEAM', 'APLS', 'CRBU',
         'VRTX'
       ]
-    
+
     const searchTickers = (userSearch) => {
         if (!userSearch) {
             return []
@@ -63,7 +63,7 @@ export default function UserHomePageNav({ setIsChatModalOpen }) {
 
     useEffect(() => {
         const userSearch = searchValue.trim()
-        
+
         if (!userSearch) {
             setMatchedTickers([])
         }
@@ -121,7 +121,7 @@ export default function UserHomePageNav({ setIsChatModalOpen }) {
             await dispatch(thunkGetAllWatchlistsUserId(userId));
             await dispatch(thunkCreatePortfolioSnapshot());
             await dispatch(thunkGetAll28Stocks());
-            setIsLoaded(true);
+            await setIsLoaded(true);
         };
         fetchAsync();
     }, [dispatch]);
@@ -171,31 +171,31 @@ export default function UserHomePageNav({ setIsChatModalOpen }) {
 
 
                         <span className="homepage-rightcontainer">
-                            <NavLink 
+                            <NavLink
                                 className="home-nav"
                                 onClick={comingSoon}
                             >
                                 Rewards
                             </NavLink>
-                            <NavLink 
+                            <NavLink
                                 onClick={comingSoon}
                                 className="home-nav">
-                                
+
                                 Investing
                                 </NavLink>
-                            <NavLink 
+                            <NavLink
                                 className="home-nav"
                                 onClick={comingSoon}
                             >
                                 Spending
                             </NavLink>
-                            <NavLink 
+                            <NavLink
                                 className="home-nav"
                                 onClick={comingSoon}
                             >
                                 Retirement
                             </NavLink>
-                            <NavLink 
+                            <NavLink
                                 className="home-nav"
                                 onClick={comingSoon}
                             >
@@ -213,7 +213,7 @@ export default function UserHomePageNav({ setIsChatModalOpen }) {
                                             <NavLink to="/profile" className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faSmile} /> Profile</NavLink>
                                             <NavLink to="/home" className="dropdown-nav"><FontAwesomeIcon className="dropdown-hand" icon={faHandHoldingDollar} />Investing</NavLink>
                                             <NavLink to="/history" className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faClockRotateLeft} />History</NavLink>
-                                            <NavLink 
+                                            <NavLink
                                                 className="dropdown-nav"
                                                 onClick={() => setIsChatModalOpen(true)}
                                             >
