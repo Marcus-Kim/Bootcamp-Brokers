@@ -24,17 +24,29 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (password === confirmPassword) {
-      const data = await dispatch(signUp(name, email, password)).then(navigate("/home"));
-      if (data) {
-        setErrors(data)
-        if (!errors) {
-          navigate("/home")
-        }
-        }
-    } else {
-        setErrors(['Confirm Password field must be the same as the Password field']);
-    }
+      await dispatch(signUp(name, email, password)).then(navigate("/home"));
+      } 
+      
   };
+
+  useEffect(() => {
+    const errors = [
+      "You must have a name with more than 2 characters",
+      "Email must be a valid email",
+      "Email must have at least 4 characters and be no more than 30 characters",
+      "Password is required",
+      "Confirm Password is required"
+    ]
+
+      if (name.length > 2) errors.splice(errors.indexOf("You must have a name with more than 2 characters"), 1)
+      if (email.length > 4) errors.splice(errors.indexOf("Email must have at least 4 characters and be no more than 30 characters"), 1)
+      if (email.includes('@') || email.includes('.com')) errors.splice(errors.indexOf("Email must be a valid email"), 1)
+      if (password.length > 0) errors.splice(errors.indexOf("Password is required"), 1)
+      if (confirmPassword.length > 0) errors.splice(errors.indexOf("Confirm Password is required"), 1)
+
+      setErrors(errors)
+
+  }, [name, email, password, confirmPassword])
     
   
 
@@ -71,7 +83,7 @@ export default function Signup() {
             <div>
                 <input 
                 className="signup-email"
-                type="text" 
+                type="email" 
                 placeholder="Email address"
                 value={email}
                 onChange={(e => setEmail(e.target.value))}
