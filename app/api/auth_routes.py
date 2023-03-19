@@ -51,33 +51,33 @@ def logout():
     """
     Logs a user out
     """
-    if current_user.id == 1:
-        # Reset balance of Demo User
-        demo_user_portfolio = Portfolio.query.get(1)
-        demo_user_portfolio.cash_balance = 10000
-        demo_user_portfolio.initial_principle = 10000
+    # if current_user.id == 1:
+    #     # Reset balance of Demo User
+    #     demo_user_portfolio = Portfolio.query.get(1)
+    #     demo_user_portfolio.cash_balance = 10000
+    #     demo_user_portfolio.initial_principle = 10000
 
-        # Reset portfolio history
-        user_2_portfolio = Portfolio.query.get(2)
-        user_3_portfolio = Portfolio.query.get(3)
+    #     # Reset portfolio history
+    #     user_2_portfolio = Portfolio.query.get(2)
+    #     user_3_portfolio = Portfolio.query.get(3)
 
-        demo_user_portfolio_values = demo_user_portfolio.portfolio_values
-        user_2_portfolio_values = user_2_portfolio.portfolio_values
-        user_3_portfolio_values = user_3_portfolio.portfolio_values
+    #     demo_user_portfolio_values = demo_user_portfolio.portfolio_values
+    #     user_2_portfolio_values = user_2_portfolio.portfolio_values
+    #     user_3_portfolio_values = user_3_portfolio.portfolio_values
 
-        for value in demo_user_portfolio_values:
-            db.session.delete(value)
+    #     for value in demo_user_portfolio_values:
+    #         db.session.delete(value)
 
-        for value in user_2_portfolio_values:
-            db.session.delete(value)
+    #     for value in user_2_portfolio_values:
+    #         db.session.delete(value)
 
-        for value in user_3_portfolio_values:
-            db.session.delete(value)
+    #     for value in user_3_portfolio_values:
+    #         db.session.delete(value)
 
-        db.session.commit()
+    #     db.session.commit()
 
-        # Seed new portfolio values
-        seed_portfolio_values()
+    #     # Seed new portfolio values
+    #     seed_portfolio_values()
 
     # Log the user out
     logout_user()
