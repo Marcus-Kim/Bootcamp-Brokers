@@ -40,7 +40,6 @@ function Watchlists() {
   const filteredArray = watchlistArray.filter(watchlist => {
     return +watchlist.user_id === +user
   })
-  console.log('WATCHLIST ARRAY: ', watchlistArray)
 
   // *USE_EFFECTS
   useEffect(() => {

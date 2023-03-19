@@ -30,7 +30,6 @@ export default function Learn() {
   // CASH_FLOW -- API returns incoming cash flow data
   // NEWS_SENTIMENT -- API returns FInancial news data on the ticker
   // EARNINGS -- API Returns Companies financial earnings
-  console.log('stocks', stocks)
   
 
   useEffect(() => {

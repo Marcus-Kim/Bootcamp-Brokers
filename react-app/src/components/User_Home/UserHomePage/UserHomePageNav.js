@@ -34,8 +34,6 @@ export default function UserHomePageNav({ setIsChatModalOpen }) {
     const [matchedTickers, setMatchedTickers] = useState([])
     const [errors, setErrors] = useState([])
 
-    console.log('USER ID: ', userId)
-
     const allTickers = [
         'TSLA', 'AAPL', 'AMZN',
         'GOOG', 'CRM', 'AMD',
