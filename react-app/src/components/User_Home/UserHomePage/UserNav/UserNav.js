@@ -91,6 +91,10 @@ export default function UserNav() {
         }
     }
 
+    const comingSoon = (e) => {
+        e.preventDefault()
+        alert('Coming Soon...')
+    }
 
     return (
         <div className="home-container">
@@ -124,11 +128,36 @@ export default function UserNav() {
                 </form>
 
                 <span className="homepage-rightcontainer">
-                    <NavLink className="home-nav">Rewards</NavLink>
-                    <NavLink to='/home' className="home-nav">Investing</NavLink>
-                    <NavLink className="home-nav">Spending</NavLink>
-                    <NavLink className="home-nav">Retirement</NavLink>
-                    <NavLink className="home-nav">Notifications</NavLink>
+                    <NavLink
+                        className="home-nav"
+                        onClick={comingSoon}
+                    >
+                        Rewards
+                    </NavLink>
+                    <NavLink
+                        to='/home'
+                        className="home-nav">
+
+                        Investing
+                        </NavLink>
+                    <NavLink
+                        className="home-nav"
+                        onClick={comingSoon}
+                    >
+                        Spending
+                    </NavLink>
+                    <NavLink
+                        className="home-nav"
+                        onClick={comingSoon}
+                    >
+                        Retirement
+                    </NavLink>
+                    <NavLink
+                        className="home-nav"
+                        onClick={comingSoon}
+                    >
+                        Notifications
+                    </NavLink>
                     <div className="dropdown-container">
                         <NavLink style={{borderStyle: 'none', backgroundColor: 'white', padding: 'none'}} onClick={toggleDropdown} className="home-nav">Account</NavLink>
                         {dropdownVisible && (
