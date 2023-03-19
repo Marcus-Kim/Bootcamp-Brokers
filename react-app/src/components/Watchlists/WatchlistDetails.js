@@ -23,7 +23,6 @@ export default function WatchlistDetails() {
   const { markusKim } = useFinanceAPI();
 
   useEffect(() => {
-    console.log(user)
     dispatch(thunkGetAllWatchlistsUserId(user))
   }, [dispatch, user])
 
