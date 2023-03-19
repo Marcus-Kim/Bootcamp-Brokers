@@ -1,26 +1,35 @@
 import React, {useEffect, useState} from 'react'
 import UserNav from '../../UserNav/UserNav'
 import './Profile.css'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import { thunkGetUserPortfolio } from '../../../../../store/portfolio';
 
 
 export default function Profile() {
   const user = useSelector(state => state.session)
   const userArray = Object.values(user)
   const userPortfolio = useSelector(state => state.portfolio)
+  const dispatch = useDispatch()
+  const [isLoaded, setIsLoaded] = useState(false)
   
   // Helper function to format User dollar values
   const numberWithCommas = (num) => {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return num?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
+
+  useEffect(() => {
+    dispatch(thunkGetUserPortfolio())
+      .then(() => setIsLoaded(true))
+  }, [])
 
   return (
     <>
       <UserNav/>
-      <div className="profile-page-container">
+      { isLoaded && (
+        <div className="profile-page-container">
         <div className="profile-container">
           <div className="profile-image">
           <FontAwesomeIcon style={{height: 72, width: 72}} icon={faCircleUser} />
@@ -62,6 +71,7 @@ export default function Profile() {
         Bootcamp Brokers is not responsible for the content of external websites linked to from this website. But we are responsible for all of your profits.
         </p>
       </div>
+      )}
     </>
 
   )
