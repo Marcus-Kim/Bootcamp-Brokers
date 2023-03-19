@@ -3,6 +3,7 @@ from app.models import User, Portfolio, PortfolioValue, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
+from ..seeds.portfolio_values import seed_portfolio_values, undo_portfolios_values
 
 auth_routes = Blueprint('auth', __name__)
 
@@ -50,7 +51,35 @@ def logout():
     """
     Logs a user out
     """
+    # Reset balance of Demo User
+    demo_user_portfolio = Portfolio.query.get(1)
+    demo_user_portfolio.cash_balance = 10000
+    demo_user_portfolio.initial_principle = 10000
+
+    # Reset portfolio history
+    user_2_portfolio = Portfolio.query.get(2)
+    user_3_portfolio = Portfolio.query.get(3)
+
+    demo_user_portfolio_values = demo_user_portfolio.portfolio_values
+    user_2_portfolio_values = user_2_portfolio.portfolio_values
+    user_3_portfolio_values = user_3_portfolio.portfolio_values
+
+    for value in demo_user_portfolio_values:
+        db.session.delete(value)
+
+    for value in user_2_portfolio_values:
+        db.session.delete(value)
+
+    for value in user_3_portfolio_values:
+        db.session.delete(value)
+
+    db.session.commit()
+
+    # Log the user out
     logout_user()
+
+    # Seed new portfolio values
+    seed_portfolio_values()
     return {'message': 'User logged out'}
 
 
