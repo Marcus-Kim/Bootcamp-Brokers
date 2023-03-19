@@ -55,6 +55,8 @@ export default function OneDayChart({ ticker, close }) {
     if (!intraDayData["Meta Data"]) return null
     if (!intraDayData["Time Series (5min)"]) return null
 
+    // console.log("intraDay", intraDayData)
+
 
     const rawData = {}
     const entries = Object.entries(intraDayData["Time Series (5min)"])
