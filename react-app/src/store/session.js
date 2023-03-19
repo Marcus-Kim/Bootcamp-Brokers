@@ -1,6 +1,7 @@
 // constants
 const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
+const GET_ALL_USERS = "session/GET_ALL_USERS"
 
 const setUser = (user) => ({
 	type: SET_USER,
@@ -93,6 +94,11 @@ export const signUp = (username, email, password) => async (dispatch) => {
 		return ["An error occurred. Please try again."];
 	}
 };
+
+export const thunkGetAllUsers = () => {
+	const response = fetch('/api/auth/users/get/all');
+	return response;
+}
 
 export default function reducer(state = initialState, action) {
 	switch (action.type) {
