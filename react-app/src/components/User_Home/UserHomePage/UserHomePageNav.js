@@ -214,12 +214,12 @@ export default function UserHomePageNav({ setIsChatModalOpen }) {
                                             <NavLink to="/profile" className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faSmile} /> Profile</NavLink>
                                             <NavLink to="/home" className="dropdown-nav"><FontAwesomeIcon className="dropdown-hand" icon={faHandHoldingDollar} />Investing</NavLink>
                                             <NavLink to="/history" className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faClockRotateLeft} />History</NavLink>
-                                            <NavLink
+                                            {/* <NavLink
                                                 className="dropdown-nav"
                                                 onClick={() => setIsChatModalOpen(true)}
                                             >
                                                 <FontAwesomeIcon className="dropdown-icon" icon={faPhone} /> Support
-                                            </NavLink>
+                                            </NavLink> */}
                                             <button
                                                 onClick={handleLogout}
                                                 className="dropdown-logout"><FontAwesomeIcon className="dropdown-icon" icon={faArrowRightFromBracket} />
