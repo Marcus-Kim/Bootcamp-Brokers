@@ -32,6 +32,7 @@ export default function UserHomePageNav({ setIsChatModalOpen }) {
     const [isLoaded, setIsLoaded] = useState(false)
     const stocks = useSelector(state => state.stocks.all28Stocks)
     const [matchedTickers, setMatchedTickers] = useState([])
+    const [errors, setErrors] = useState([])
 
     console.log('USER ID: ', userId)
 
@@ -61,6 +62,11 @@ export default function UserHomePageNav({ setIsChatModalOpen }) {
         }
         return matches;
     };
+
+    function isInputAllLetters(input) {
+        return /^[a-zA-Z]+$/.test(input);
+    }
+
 
     useEffect(() => {
         const userSearch = searchValue.trim()
@@ -102,6 +108,13 @@ export default function UserHomePageNav({ setIsChatModalOpen }) {
 
     const handleSearch = (e) => {
         e.preventDefault()
+        if (searchValue.length > 6) {
+            alert("There are no tickers above the 6 character limit")
+        }
+        if (!isInputAllLetters(searchValue)) {
+            alert("Search input can only contain letters.");
+            return;
+          }
         if (searchValue === '') {
           setMatchedTickers([])
         } else {
@@ -126,6 +139,7 @@ export default function UserHomePageNav({ setIsChatModalOpen }) {
         };
         fetchAsync();
     }, [dispatch]);
+
 
     if (!stocks) return null
 
@@ -153,6 +167,7 @@ export default function UserHomePageNav({ setIsChatModalOpen }) {
                                 value={searchValue}
                                 onChange={(e) => setSearchValue(e.target.value)}
                                 placeholder="Search..."
+                                required
                             />
 
                     {matchedTickers.length > 0 && (

@@ -155,6 +155,7 @@ function Watchlists() {
         <button className='add-watchlist-button-home' onClick={e => handleCreateListToggle(e)}>+</button>
       </div>
       {showForm && <form className='create-watchlist-form-home' onSubmit={e => handleCreateList(e)}>
+        {hasSubmitted && !!errors.length && <div className='create-watchlist-error'>{errors[0]}</div>}
         <div className='create-watchlist-form-name-home'>
           <input className='create-watchlist-input-name-home' value={listName} placeholder='List Name' required onChange={e => setListName(e.target.value)} maxLength={30}/>
         </div>
