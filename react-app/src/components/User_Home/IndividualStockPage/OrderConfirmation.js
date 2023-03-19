@@ -61,6 +61,7 @@ export default function OrderConfirmation({
                 <div className="completion-message">
                   Your order to buy {shares}.0 shares of {ticker} is complete.
                 </div>
+                <div className="break"></div>
               </>
             ) 
             : (
