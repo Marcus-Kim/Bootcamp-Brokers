@@ -15,6 +15,11 @@ export default function Navigation() {
     e.preventDefault();
     setMenuOpen(prev => !prev)
   }
+
+  const comingSoon = (e) => {
+    e.preventDefault()
+    alert('Coming Soon...')
+  }
   
   if (user) return null
   
@@ -31,18 +36,19 @@ export default function Navigation() {
           <span className="past-vertical">
             <NavLink
               className="nav-font"
+              onClick={comingSoon}
             >
               What We Offer
             </NavLink>
             <NavLink
               className="nav-font"
-              to="/learn"
+              onClick={comingSoon}
             >
               Learn
             </NavLink>
             <NavLink
               className="nav-font"
-              to="/snacks"
+              onClick={comingSoon}
             >
               Snacks
             </NavLink>
@@ -73,10 +79,10 @@ export default function Navigation() {
           </div>
       </div>
       <div className={'dropdown' + (!menuOpen ? ' hidden' : '')}>
-        <Link to='/invest'>Invest</Link>
-        <Link to='/learn'>Learn</Link>
-        <Link to='/snacks'>Snacks</Link>
-        <Link to='/support'>Support</Link>
+        <Link onClick={comingSoon}>Invest</Link>
+        <Link onClick={comingSoon}>Learn</Link>
+        <Link onClick={comingSoon}>Snacks</Link>
+        <Link onClick={comingSoon}>Support</Link>
       </div>
     </div>
     )
