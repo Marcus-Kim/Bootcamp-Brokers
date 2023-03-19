@@ -12,7 +12,7 @@ function AddToWatchlistModal({ ticker, watchlists }) {
   const dispatch = useDispatch()
   const { closeModal } = useModal()
 
-  if (!watchlistArray.length) return null;
+  // if (!watchlistArray.length) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault()
