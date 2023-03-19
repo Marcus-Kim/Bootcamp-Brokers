@@ -57,6 +57,8 @@ export default function SplashPage() {
 
   ];
 
+  
+
 
   useEffect(() => {
     if (!user) {
@@ -139,6 +141,7 @@ export default function SplashPage() {
             <h2>Broke Bootcamp Developers</h2>
           </div>
           <div>
+          <NavLink style={{textDecoration: 'none', fontWeight: 'bold', color: 'purple' }} to="https://github.com/Marcus-Kim/Bootcamp-Brokers"><FontAwesomeIcon icon={faGithub} size="lg"/> Project Repository</NavLink>
             <h3>Follow us on: </h3>
           </div>
           <div className='developer-card-container'>
@@ -161,6 +164,7 @@ export default function SplashPage() {
                 </div>
               </div>
             </div>
+            
             <div className='developer-card'>
               <div className='name-div'>Marcus Kim</div>
               <img className='developer-image' src={marcus} />

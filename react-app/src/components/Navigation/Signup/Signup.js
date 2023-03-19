@@ -78,6 +78,7 @@ export default function Signup() {
                 placeholder="Full Name"
                 value={name}
                 onChange={(e => setName(e.target.value))}
+                required
                 />
             </span>
             <div>
@@ -87,6 +88,7 @@ export default function Signup() {
                 placeholder="Email address"
                 value={email}
                 onChange={(e => setEmail(e.target.value))}
+                required
                 />
             </div>
 
@@ -97,6 +99,7 @@ export default function Signup() {
                 placeholder="Password (min. 10 characters)"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
                 />
             </div>
 
@@ -107,6 +110,7 @@ export default function Signup() {
                 placeholder="Confirm Password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
+                required
                 />
             </div>
             
@@ -115,7 +119,7 @@ export default function Signup() {
             <NavLink to="/login" style={{fontWeight: 'bold'}}>Log in to complete your application</NavLink>
             </div>
             <div>
-            <button type="submit" className="submit-signup">Continue</button>
+            <button disabled={errors.length > 0} type="submit" className="submit-signup">Continue</button>
             </div>
             
 
