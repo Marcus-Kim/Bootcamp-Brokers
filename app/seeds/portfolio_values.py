@@ -44,8 +44,6 @@ def seed_portfolio_values():
 
     portfolios_values = [
         generate_portfolio_values(1, start_date, end_date, 8000, 9800),
-        generate_portfolio_values(2, start_date, end_date, 900, 1800),
-        generate_portfolio_values(3, start_date, end_date, 1800, 2800)
     ]
 
     for portfolio_id, portfolio_values in enumerate(portfolios_values, start=1):

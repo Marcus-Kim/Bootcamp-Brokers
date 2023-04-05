@@ -6,14 +6,6 @@ def seed_portfolio_shares():
         {'portfolio_id': 1, 'ticker_id': 'TSLA', 'shares': 3},
         {'portfolio_id': 1, 'ticker_id': 'AAPL', 'shares': 2},
         {'portfolio_id': 1, 'ticker_id': 'GOOG', 'shares': 2},
-        {'portfolio_id': 2, 'ticker_id': 'AAPL', 'shares': 1},
-        {'portfolio_id': 2, 'ticker_id': 'AMZN', 'shares': 1},
-        {'portfolio_id': 2, 'ticker_id': 'GOOG', 'shares': 2},
-        {'portfolio_id': 2, 'ticker_id': 'TSLA', 'shares': 1},
-        {'portfolio_id': 3, 'ticker_id': 'AAPL', 'shares': 2},
-        {'portfolio_id': 3, 'ticker_id': 'AMZN', 'shares': 1},
-        {'portfolio_id': 3, 'ticker_id': 'GOOG', 'shares': 3},
-        {'portfolio_id': 3, 'ticker_id': 'TSLA', 'shares': 3},
     ]
     
     for share in portfolio_shares:
