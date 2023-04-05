@@ -17,22 +17,6 @@ def seed_watchlist_stocks():
         {'watchlist_id': 3, 'ticker_id': 'COIN'},
         {'watchlist_id': 3, 'ticker_id': 'HOOD'},
         {'watchlist_id': 3, 'ticker_id': 'MSFT'},
-        {'watchlist_id': 4, 'ticker_id': 'AI'},
-        {'watchlist_id': 4, 'ticker_id': 'GOOG'},
-        {'watchlist_id': 4, 'ticker_id': 'LULU'},
-        {'watchlist_id': 4, 'ticker_id': 'NKE'},
-        {'watchlist_id': 5, 'ticker_id': 'GME'},
-        {'watchlist_id': 5, 'ticker_id': 'AMC'},
-        {'watchlist_id': 5, 'ticker_id': 'BBBY'},
-        {'watchlist_id': 5, 'ticker_id': 'BB'},
-        {'watchlist_id': 6, 'ticker_id': 'AMZN'},
-        {'watchlist_id': 6, 'ticker_id': 'T'},
-        {'watchlist_id': 6, 'ticker_id': 'SPY'},
-        {'watchlist_id': 6, 'ticker_id': 'QQQ'},
-        {'watchlist_id': 7, 'ticker_id': 'BEAM'},
-        {'watchlist_id': 7, 'ticker_id': 'APLS'},
-        {'watchlist_id': 7, 'ticker_id': 'CRBU'},
-        {'watchlist_id': 7, 'ticker_id': 'VRTX'},
     ]
 
     for data in watchlist_stock_data:

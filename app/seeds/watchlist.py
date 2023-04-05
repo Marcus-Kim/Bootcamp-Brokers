@@ -15,24 +15,8 @@ def seed_watchlists():
         list_name = "Stuff I believe In",
         user_id = 1
     )
-    watchlist4 = Watchlist(
-        list_name = "Wishful thinking",
-        user_id = 2
-    )
-    watchlist5 = Watchlist(
-        list_name = "Money Printer",
-        user_id = 2
-    )
-    watchlist6 = Watchlist(
-        list_name = "Long Term",
-        user_id = 2
-    )
-    watchlist7 = Watchlist(
-        list_name = "Gene Stocks",
-        user_id = 3
-    )
 
-    all_watchlists = [watchlist1, watchlist2, watchlist3, watchlist4, watchlist5, watchlist6, watchlist7]
+    all_watchlists = [watchlist1, watchlist2, watchlist3]
 
     for watchlist in all_watchlists:
         db.session.add(watchlist)
