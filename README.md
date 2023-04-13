@@ -2,6 +2,8 @@
 
 Bootcamp Brokers is a web app that helps users manage their portfolios, watchlists, and stay up-to-date with financial news, with the added bonus of a support bot for easy assistance.
 
+[Check out the live site!](https://bootcampbrokers.onrender.com)
+
 [![My Skills](https://skillicons.dev/icons?i=react,redux,py,flask,js,html,css,)](https://skillicons.dev)
 
 Contents
