@@ -16,8 +16,8 @@ export default function UserHomePage() {
   const watchlists = useSelector(state => state.watchlist)
   const userId = useSelector(state => state.session.user?.id)
   const BTC = useSelector(state => state.stocks.BTCPrice)
-  const SPY = useSelector(state => state.stocks.SPY) // This is not working
-  const Nasdaq = useSelector(state => state.stocks.Nasdaq) // This is not working
+  const SPY = useSelector(state => state.stocks.SPY)
+  const Nasdaq = useSelector(state => state.stocks.Nasdaq)
   const randomNews = useSelector(state => state.stocks.randomStockNews)
   const today = new Date();
   const yesterday = new Date(today);
