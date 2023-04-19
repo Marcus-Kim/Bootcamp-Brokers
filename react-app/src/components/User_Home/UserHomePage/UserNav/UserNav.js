@@ -128,30 +128,30 @@ export default function UserNav() {
                 </form>
 
                 <span className="homepage-rightcontainer">
-                    <NavLink
+                    {/* <NavLink
                         className="home-nav"
                         onClick={comingSoon}
                     >
                         Rewards
-                    </NavLink>
+                    </NavLink> */}
                     <NavLink
                         to='/home'
                         className="home-nav">
 
                         Investing
                         </NavLink>
-                    <NavLink
+                    {/* <NavLink
                         className="home-nav"
                         onClick={comingSoon}
                     >
                         Spending
-                    </NavLink>
-                    <NavLink
+                    </NavLink> */}
+                    {/* <NavLink
                         className="home-nav"
                         onClick={comingSoon}
                     >
                         Retirement
-                    </NavLink>
+                    </NavLink> */}
                     <NavLink
                         className="home-nav"
                         onClick={comingSoon}
@@ -168,7 +168,7 @@ export default function UserNav() {
                                     <hr style={{borderColor: 'light gray'}} />
                                     </div>
                                     <NavLink to="/profile" className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faSmile}/> Profile</NavLink>
-                                    <NavLink to="/investing" className="dropdown-nav"><FontAwesomeIcon className="dropdown-hand" icon={faHandHoldingDollar} />Investing</NavLink>
+                                    <NavLink to="/home" className="dropdown-nav"><FontAwesomeIcon className="dropdown-hand" icon={faHandHoldingDollar} />Investing</NavLink>
                                     <NavLink to="/history" className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faClockRotateLeft} />History</NavLink>
                                     {/* <NavLink className="dropdown-nav"><FontAwesomeIcon className="dropdown-icon" icon={faPhone}/> Support</NavLink> */}
                                     <button

@@ -185,30 +185,30 @@ export default function UserHomePageNav({ setIsChatModalOpen }) {
 
 
                         <span className="homepage-rightcontainer">
-                            <NavLink
+                            {/* <NavLink
                                 className="home-nav"
                                 onClick={comingSoon}
                             >
                                 Rewards
-                            </NavLink>
+                            </NavLink> */}
                             <NavLink
                                 to='/home'
                                 className="home-nav"
                             >
                                 Investing
                                 </NavLink>
-                            <NavLink
+                            {/* <NavLink
                                 className="home-nav"
                                 onClick={comingSoon}
                             >
                                 Spending
-                            </NavLink>
-                            <NavLink
+                            </NavLink> */}
+                            {/* <NavLink
                                 className="home-nav"
                                 onClick={comingSoon}
                             >
                                 Retirement
-                            </NavLink>
+                            </NavLink> */}
                             <NavLink
                                 className="home-nav"
                                 onClick={comingSoon}
