@@ -3,7 +3,7 @@ from flask_login import login_required
 from app.models import Stock, db
 
 stock_routes = Blueprint('stocks', __name__)
-apiKey = "CRN1I5X51XQTTFBH"
+apiKey = "GRF5OMG8NG79W0WR"
 
 @stock_routes.route('/update', methods=['POST'])
 @login_required

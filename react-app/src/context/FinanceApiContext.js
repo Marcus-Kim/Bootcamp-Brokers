@@ -11,7 +11,7 @@ export default function FinanceAPIProvider({children}) {
   const [marketCap, setMarketCap] = useState({})
   const [dailyPrice, setDailyPrices] = useState({})
   const [markusKim, setMarkusKim] = useState({})
-  const apiKey = "0MPIU2TLAS20RTTM"
+  const apiKey = "GRF5OMG8NG79W0WR"
 
   //Query Types:
   // TIME_SERIES_INTRADAY -- API Returns the intraday stock price data
@@ -27,39 +27,39 @@ export default function FinanceAPIProvider({children}) {
   // EARNINGS -- API Returns Companies financial earnings
 
   const allTickers = [
-    'TSLA', 'AAPL', 'AMZN', 
-    'GOOG', 'CRM', 'AMD', 
-    'NVDA', 'KO', 'BBY', 
+    'TSLA', 'AAPL', 'AMZN',
+    'GOOG', 'CRM', 'AMD',
+    'NVDA', 'KO', 'BBY',
     'IBM', 'CRSP', 'COIN',
-    'HOOD', 'MSFT', 'AI', 
-    'LULU', 'NKE', 'GME', 
-    'AMC', 'BBBY', 'BB', 
-    'T', 'SPY', 'QQQ', 
-    'BEAM', 'APLS', 'CRBU', 
+    'HOOD', 'MSFT', 'AI',
+    'LULU', 'NKE', 'GME',
+    'AMC', 'BBBY', 'BB',
+    'T', 'SPY', 'QQQ',
+    'BEAM', 'APLS', 'CRBU',
     'VRTX'
   ]
 
   const fetchMarketCaps = async (tickers) => {
     const marketCaps = {};
-  
+
     const promises = tickers.map(async (ticker) => {
       const marketCapData = await fetchStockData("OVERVIEW", ticker);
       marketCaps[ticker] = marketCapData;
     });
-  
+
     await Promise.all(promises);
     setMarketCap(marketCaps);
   };
-  
-  
+
+
   const fetchDailyStockPrices = async (tickers) => {
     const tempDailyPrices = {};
-  
+
     const promises = tickers.map(async (ticker) => {
       const data = await fetchStockData("TIME_SERIES_DAILY_ADJUSTED", ticker);
       tempDailyPrices[ticker] = data;
     });
-  
+
     await Promise.all(promises);
     setDailyPrices(tempDailyPrices);
   };
@@ -97,22 +97,22 @@ export default function FinanceAPIProvider({children}) {
 
   const generateMarkusKimObject = (marketCaps, dailyPrices) => {
     const result = {};
-  
+
     Object.keys(marketCaps).forEach((symbol) => {
       const marketCapData = marketCaps[symbol];
       const dailyPriceData = dailyPrices[symbol] && dailyPrices[symbol]["Time Series (Daily)"];
-  
+
       if (dailyPriceData) {
         // Extract the most recent date from the dailyPriceData
         const mostRecentDate = Object.keys(dailyPriceData)[0];
-  
+
         // Extract the open and close prices for the most recent date
         const openPrice = parseFloat(dailyPriceData[mostRecentDate]["1. open"]);
         const closePrice = parseFloat(dailyPriceData[mostRecentDate]["4. close"]);
-  
+
         // Calculate the percentage change between open and close
         const percentageChange = ((closePrice - openPrice) / openPrice) * 100;
-  
+
         result[symbol] = {
           marketCap: marketCapData.MarketCapitalization,
           dailyPrice: {
@@ -122,7 +122,7 @@ export default function FinanceAPIProvider({children}) {
         };
       }
     });
-  
+
     return result;
   };
 
@@ -134,7 +134,7 @@ export default function FinanceAPIProvider({children}) {
     }
   }, [marketCap, dailyPrice]);
 
-  
+
 
   return (
     <AlphaVantageAPIContext.Provider
