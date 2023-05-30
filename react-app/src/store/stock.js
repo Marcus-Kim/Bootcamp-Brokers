@@ -1,4 +1,4 @@
-const apiKey="0MPIU2TLAS20RTTM"
+const apiKey="GRF5OMG8NG79W0WR"
 
 
 
@@ -88,15 +88,15 @@ const actionGetNasdaq = (stocks) => ({
 })
 
 const allTickers = [
-    'TSLA', 'AAPL', 'AMZN', 
-    'GOOG', 'CRM', 'AMD', 
-    'NVDA', 'KO', 'BBY', 
+    'TSLA', 'AAPL', 'AMZN',
+    'GOOG', 'CRM', 'AMD',
+    'NVDA', 'KO', 'BBY',
     'IBM', 'CRSP', 'COIN',
-    'HOOD', 'MSFT', 'AI', 
-    'LULU', 'NKE', 'GME', 
-    'AMC', 'BBBY', 'BB', 
-    'T', 'SPY', 'QQQ', 
-    'BEAM', 'APLS', 'CRBU', 
+    'HOOD', 'MSFT', 'AI',
+    'LULU', 'NKE', 'GME',
+    'AMC', 'BBBY', 'BB',
+    'T', 'SPY', 'QQQ',
+    'BEAM', 'APLS', 'CRBU',
     'VRTX'
   ]
 
@@ -352,7 +352,7 @@ export default function stocksReducer(state = initialState, action) {
             const newState = {...state}
             newState.SPY = {...state.SPY, ...action.stocks}
             return newState
-        }        
+        }
         case GET_ONE_YEAR_CHART_DATA: {
             const newState = {...state}
             newState.oneYearChartData = {...state.oneYearChartData, ...action.stocks}
