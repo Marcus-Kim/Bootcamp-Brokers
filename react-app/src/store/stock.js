@@ -1,5 +1,6 @@
-const apiKey="GRF5OMG8NG79W0WR"
+import getCurrentDateTimeString from "../util/date"
 
+const apiKey="GRF5OMG8NG79W0WR"
 
 
 // constants
@@ -94,7 +95,7 @@ const allTickers = [
     'IBM', 'CRSP', 'COIN',
     'HOOD', 'MSFT', 'AI',
     'LULU', 'NKE', 'GME',
-    'AMC', 'BBBY', 'BB',
+    'AMC', 'TEAM', 'BB',
     'T', 'SPY', 'QQQ',
     'BEAM', 'APLS', 'CRBU',
     'VRTX'
@@ -135,6 +136,9 @@ export const thunkGetAll28Stocks = () => async(dispatch) => {
                 const closingPrice = parseFloat(stockData[timeSeriesKey][latestTimestamp][closingPriceKey]);
 
                 allStockData[ticker] = closingPrice;
+            } else if (response.status === 503) {
+                console.log(`Service Unavailable for ticker: ${ticker}. Retry after some time.`);
+                allStockData[ticker] = 150.00; // temp default when alphavantage returns 500-range error
             }
         })
     );
