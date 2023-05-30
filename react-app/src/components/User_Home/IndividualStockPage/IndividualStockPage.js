@@ -15,6 +15,7 @@ import TransactionComponent from "./Transactions";
 import UserNav from "../UserHomePage/UserNav/UserNav";
 import News from "../UserHomePage/NewsComponent/News";
 import { thunkGetPortfolioHistoricalValues } from "../../../store/portfolio";
+import { getMostRecentDateKey } from "../../../util/date";
 
 
 
@@ -26,6 +27,11 @@ export default function IndividualStockPage() {
     const [chart, setChart] = useState("1D")
     let { ticker } = useParams();
     let tickerCap = ticker.toUpperCase()
+    const [formattedDate, setFormattedDate] = useState("");
+    const [high, setHigh] = useState(150.00);
+    const [low, setLow] = useState(100.00);
+    const [open, setOpen] = useState(110.00);
+    const [close, setClose] = useState(150.00);
 
     const stockFundamentals = useSelector(state => state.stocks.stockFundamentals)
     const stockDaily = useSelector(state => state.stocks.stockDaily)
@@ -38,17 +44,15 @@ export default function IndividualStockPage() {
     const [isSupportedStocksListHidden, setIsSupportedStocksListHidden] = useState(true)
 
     useEffect(() => {
-
         const fetchAsync = async () => {
             await dispatch(thunkGetStockFundamentals(tickerCap))
             await dispatch(thunkGetStockDaily(tickerCap))
             await dispatch(thunkGetStockNews(tickerCap))
             await dispatch(thunkGetAll28Stocks())
             await dispatch(thunkGetStockIntraDay(tickerCap, "5min"))
-            await setIsLoaded(true)
+            setIsLoaded(true)
         }
         fetchAsync()
-
     }, [dispatch, tickerCap])
 
     useEffect(() => {
@@ -58,29 +62,23 @@ export default function IndividualStockPage() {
         fetchAsync()
     }, [cashBalance])
 
+    useEffect(() => {
+        if (stockDaily && stockDaily["Time Series (Daily)"] && stockDaily["Time Series (Daily)"]) {
+          const date = getMostRecentDateKey(stockDaily["Time Series (Daily)"])
+          setFormattedDate(date);
+          setClose(Number(stockDaily["Time Series (Daily)"][date]?.["4. close"]).toFixed(2));
+          setHigh(Number(stockDaily["Time Series (Daily)"][date]?.["2. high"]).toFixed(2));
+          setOpen(Number(stockDaily["Time Series (Daily)"][formattedDate]?.["1. open"]).toFixed(2));
+          setLow(Number(stockDaily["Time Series (Daily)"][formattedDate]?.["3. low"]).toFixed(2))
+        }
+      }, [stockDaily]); 
+
     if (!stockFundamentals) return null;
     if (!stockDaily) return null;
     if (!stockDaily["Time Series (Daily)"]) return null;
     if (!stockNews["feed"]) return null;
 
-
-    const today = new Date();
-    const dayOfWeek = today.getDay();
-    const daysToSubtract = dayOfWeek === 0 ? 2
-                                : dayOfWeek === 1 ? 3 : 1;
-    const previousDate = new Date(today.getTime() - daysToSubtract * 24 * 60 * 60 * 1000);
-    const year = previousDate.getFullYear();
-    const month = (previousDate.getMonth() + 1).toString().padStart(2, '0');
-    const day = previousDate.getDate().toString().padStart(2, '0');
-    const formattedDate = `${year}-${month}-${day}`;
-
     const slicedNews = stockNews?.feed?.slice(0, 10)
-
-    // console.log("date: ", stockDaily["Time Series (Daily)"])
-    // "2023-03-17"
-    const close = Number(stockDaily["Time Series (Daily)"][formattedDate]?.["4. close"]).toFixed(2)
-
-
 
     const chartObj = {
         "1D": <OneDayChart ticker={tickerCap} close={close} />,
@@ -116,7 +114,7 @@ export default function IndividualStockPage() {
 
         // Limit the number to 3 digits on the left and 2 on the right of the decimal
         return `${value.toFixed(2)}${suffix}`;
-      };
+    };
 
     if (!user) {
         navigate("/login")
@@ -182,19 +180,19 @@ export default function IndividualStockPage() {
                     </div>
                     <div className="stat-box">
                         <div className="actual-stat">Today High </div>
-                        <div className="true-stat">${Number(stockDaily["Time Series (Daily)"][formattedDate]?.["2. high"]).toFixed(2)}</div>
+                        <div className="true-stat">${high}</div>
                     </div>
                     <div className="stat-box">
                         <div className="actual-stat">Today Low </div>
-                        <div className="true-stat">${Number(stockDaily["Time Series (Daily)"][formattedDate]?.["3. low"]).toFixed(2)}</div>
+                        <div className="true-stat">${low}</div>
                     </div>
                     <div className="stat-box">
                         <div className="actual-stat">Today Open </div>
-                        <div className="true-stat">${Number(stockDaily["Time Series (Daily)"][formattedDate]?.["1. open"]).toFixed(2)}</div>
+                        <div className="true-stat">${open}</div>
                     </div>
                     <div className="stat-box">
                         <div className="actual-stat">Today Close </div>
-                        <div className="true-stat">${Number(stockDaily["Time Series (Daily)"][formattedDate]?.["4. close"]).toFixed(2)}</div>
+                        <div className="true-stat">${close}</div>
                     </div>
                     <PurchaseComponent
                     ticker={tickerCap}
