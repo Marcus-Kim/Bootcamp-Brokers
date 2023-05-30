@@ -24,7 +24,7 @@ def seed_stocks():
         {'ticker': 'NKE', 'company_name': 'Nike, Inc.', 'current_price': 117.69, 'daily_change': 0.0094 },
         {'ticker': 'GME', 'company_name': 'GameStop Corp.', 'current_price': 16.89, 'daily_change': -0.0249 },
         {'ticker': 'AMC', 'company_name': 'AMC Entertainment Holdings, Inc.', 'current_price': 5.41, 'daily_change': 0.0056 },
-        {'ticker': 'BBBY', 'company_name': 'Bed Bath & Beyond Inc.', 'current_price': 1.29, 'daily_change': -0.0410 },
+        {'ticker': 'TEAM', 'company_name': 'ATlassian Corp.', 'current_price': 169.33, 'daily_change': 0.0110 },
         {'ticker': 'BB', 'company_name': 'BlackBerry Limited', 'current_price': 3.59, 'daily_change': 0.0014 },
         {'ticker': 'T', 'company_name': 'AT&T Inc.', 'current_price': 18.24, 'daily_change': 0.0103 },
         {'ticker': 'SPY', 'company_name': 'The SPDR S&P 500 ETF', 'current_price': 386.90, 'daily_change': 0.0017 },

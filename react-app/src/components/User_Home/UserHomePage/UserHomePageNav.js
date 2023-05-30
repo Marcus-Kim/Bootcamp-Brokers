@@ -41,7 +41,7 @@ export default function UserHomePageNav({ setIsChatModalOpen }) {
         'IBM', 'CRSP', 'COIN',
         'HOOD', 'MSFT', 'AI',
         'LULU', 'NKE', 'GME',
-        'AMC', 'BBBY', 'BB',
+        'AMC', 'TEAM', 'BB',
         'T', 'SPY', 'QQQ',
         'BEAM', 'APLS', 'CRBU',
         'VRTX'
