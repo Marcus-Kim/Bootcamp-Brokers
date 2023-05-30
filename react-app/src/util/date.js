@@ -10,3 +10,9 @@ export default function getCurrentDateTimeString() {
 
   return `${year}-${month}-${day} ${hour}:${minutes}:${seconds}`;
 }
+
+export function getMostRecentDateKey(obj) {
+  let keys = Object.keys(obj);
+  let mostRecentDate = keys.reduce((a, b) => (a > b ? a : b));
+  return mostRecentDate;
+}
