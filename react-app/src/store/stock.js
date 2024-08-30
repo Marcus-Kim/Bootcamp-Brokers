@@ -1,6 +1,6 @@
 import getCurrentDateTimeString from "../util/date"
 
-const apiKey="GRF5OMG8NG79W0WR"
+const apiKey="8FTZB1IE3KP1Q779"
 
 
 // constants
